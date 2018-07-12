@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Guava优美代码-14-Strings | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Guava,字符串" />
+    
+    <meta name="description" content="Guava字符串处理字符串不管在什么时候都是我们最为关心的，尤其是从事Web开发的朋友，字符串的各种操作也都是工作中必备的技能。Google也看到了我们广大的开发者处理字符串的痛点，于是他们为我们带来了Strings的工具类，这个工具类套件包含了很多有用的类，比如Strings类本身，还有用于分割的Splitter类，用于连接的Joiner类以及用于字符串匹配的CharMatcher类等等。下面我">
+<meta name="keywords" content="Guava,字符串">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guava优美代码-14-Strings">
+<meta property="og:url" content="http://qinjiangbo.com/guava-strings-14.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="Guava字符串处理字符串不管在什么时候都是我们最为关心的，尤其是从事Web开发的朋友，字符串的各种操作也都是工作中必备的技能。Google也看到了我们广大的开发者处理字符串的痛点，于是他们为我们带来了Strings的工具类，这个工具类套件包含了很多有用的类，比如Strings类本身，还有用于分割的Splitter类，用于连接的Joiner类以及用于字符串匹配的CharMatcher类等等。下面我">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-02T09:03:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guava优美代码-14-Strings">
+<meta name="twitter:description" content="Guava字符串处理字符串不管在什么时候都是我们最为关心的，尤其是从事Web开发的朋友，字符串的各种操作也都是工作中必备的技能。Google也看到了我们广大的开发者处理字符串的痛点，于是他们为我们带来了Strings的工具类，这个工具类套件包含了很多有用的类，比如Strings类本身，还有用于分割的Splitter类，用于连接的Joiner类以及用于字符串匹配的CharMatcher类等等。下面我">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-guava-strings-14" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Guava优美代码-14-Strings
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/guava-strings-14.html" class="article-date">
+    <time datetime="2016-11-06T08:32:14.000Z" itemprop="datePublished">2016-11-06</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Guava/">Guava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串/">字符串</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Guava字符串处理"><a href="#Guava字符串处理" class="headerlink" title="Guava字符串处理"></a>Guava字符串处理</h2><p>字符串不管在什么时候都是我们最为关心的，尤其是从事Web开发的朋友，字符串的各种操作也都是工作中必备的技能。Google也看到了我们广大的开发者处理字符串的痛点，于是他们为我们带来了<code>Strings</code>的工具类，这个工具类套件包含了很多有用的类，比如<code>Strings</code>类本身，还有用于分割的<code>Splitter</code>类，用于连接的<code>Joiner</code>类以及用于字符串匹配的<code>CharMatcher</code>类等等。下面我们就针对这些类进行详细的说明。</p>
+<h2 id="Strings类使用实例"><a href="#Strings类使用实例" class="headerlink" title="Strings类使用实例"></a>Strings类使用实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.base.Strings;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/12/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringsTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testNullOrEmptyString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Strings.isNullOrEmpty(<span class="string">""</span>)); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testNullOrEmptyString2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Strings.isNullOrEmpty(<span class="keyword">null</span>)); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringsPadEnd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Strings.padEnd(<span class="string">"Hello World"</span>, <span class="number">20</span>, <span class="string">'-'</span>));</span><br><span class="line">        <span class="comment">// Hello World---------</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringsPadStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Strings.padStart(<span class="string">"Hello World"</span>, <span class="number">20</span>, <span class="string">'*'</span>));</span><br><span class="line">        <span class="comment">// *********Hello World</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringsRepeat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Strings.repeat(<span class="string">"I love you!\n"</span>, <span class="number">20</span>));</span><br><span class="line">        <span class="comment">// I love you!</span></span><br><span class="line">        <span class="comment">// I love you!</span></span><br><span class="line">        <span class="comment">// ......</span></span><br><span class="line">        <span class="comment">// I love you!</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中的测试方法都是自解释型的，所以我就不一一做详细的介绍了。不过需要解释一下其中的pad相关的方法，pad就是padding的简写，有两个方法<code>padStart</code>和<code>padEnd</code>，这两个方法说的是字符串的偏移，案例中<code>Strings.padStart(&quot;Hello World&quot;, 20, &#39;*&#39;)</code>是从起始位置向右偏移，左边空出来的位置使用<code>*</code>号填充，同理，<code>Strings.padEnd(&quot;Hello World&quot;, 20, &#39;-&#39;)</code>是从起始位置向左边偏移，右边空出来的部分使用<code>-</code>填充。</p>
+<h2 id="Splitter类使用实例"><a href="#Splitter类使用实例" class="headerlink" title="Splitter类使用实例"></a>Splitter类使用实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.base.CharMatcher;</span><br><span class="line"><span class="keyword">import</span> com.google.common.base.Splitter;</span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Lists;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/10/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SplitterTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSplitOnSemicolons</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterable&lt;String&gt; iterable = Splitter.on(<span class="string">";"</span>).split(<span class="string">"Java;Scala;Php;Haskell"</span>);</span><br><span class="line">        List&lt;String&gt; splittedList = Lists.newArrayList(iterable);</span><br><span class="line">        System.out.println(splittedList.get(<span class="number">2</span>).equals(<span class="string">"Php"</span>)); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSplitOnRegExp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterable&lt;String&gt; iterable = Splitter.onPattern(<span class="string">"\\d+"</span>).split(<span class="string">"Java13Scala41Php5C#6"</span>);</span><br><span class="line">        List&lt;String&gt; splittedList = Lists.newArrayList(iterable);</span><br><span class="line">        System.out.println(splittedList.get(<span class="number">2</span>).equals(<span class="string">"Php"</span>)); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSplitUsingCharMatcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterable&lt;String&gt; iterable = Splitter.on(CharMatcher.inRange(<span class="string">'3'</span>, <span class="string">'8'</span>)).split(<span class="string">"Java3Scala4Haskell7Brain9Kotlin"</span>);</span><br><span class="line">        List&lt;String&gt; splittedList = Lists.newArrayList(iterable);</span><br><span class="line">        System.out.println(splittedList.get(<span class="number">3</span>)); <span class="comment">// Brain9Kotlin</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSplitOmitEmptyStrings</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterable&lt;String&gt; iterable = Splitter.on(<span class="string">";"</span>).omitEmptyStrings().split(<span class="string">"Java;Scala; ;;Haskell;;Kotlin"</span>);</span><br><span class="line">        List&lt;String&gt; splittedList = Lists.newArrayList(iterable);</span><br><span class="line">        System.out.println(splittedList.get(<span class="number">2</span>)); <span class="comment">// [说明一下,这里输出是空格]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSplitTrimResults</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterable&lt;String&gt; iterable = Splitter.on(<span class="string">";"</span>).trimResults().omitEmptyStrings().split(<span class="string">"Java;Scala; ;;Haskell;;Kotlin"</span>);</span><br><span class="line">        List&lt;String&gt; splittedList = Lists.newArrayList(iterable);</span><br><span class="line">        System.out.println(splittedList.get(<span class="number">2</span>)); <span class="comment">// Haskell</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSplitOnFixedLength</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterable&lt;String&gt; iterable = Splitter.fixedLength(<span class="number">7</span>).split(<span class="string">"Someone once told me that I was lucky!"</span>);</span><br><span class="line">        List&lt;String&gt; splittedList = Lists.newArrayList(iterable);</span><br><span class="line">        System.out.println(splittedList.get(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们很容易从这个类的名字知道，这个类是用来分割字符串的，其实Java中的<code>String</code>类也可以分割字符串，比如<code>String.split()</code>方法，但是为什么我们要使用Guava的<code>Splitter</code>类呢？原因很简单，因为它更简单而且更强大！上面的测试方法也都是自解释型的，所以我还是只打算解释其中一两个测试方法的使用。<code>testSplitUsingCharMatcher</code>这个方法使用了我们即将要介绍的<code>CharMatcher</code>类，这个类能极大地提升这个分割的灵活性和多样性，基本上能涵盖我们平时开发中的所有要求。关于<code>CharMatcher</code>类具体的使用方式我们接下来介绍。</p>
+<h2 id="CharMatcher类使用实例"><a href="#CharMatcher类使用实例" class="headerlink" title="CharMatcher类使用实例"></a>CharMatcher类使用实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.base.CharMatcher;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/10/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CharMatcherTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testNotMatchChar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.noneOf(<span class="string">"xZ"</span>).matchesAnyOf(<span class="string">"anything"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchAny</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.ANY.matchesAllOf(<span class="string">"anything"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchBreakingWhiteSpace</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.BREAKING_WHITESPACE.matchesAllOf(<span class="string">"\r\n\r\n"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchDigits</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.matchesAllOf(<span class="string">"1212121"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchDigits2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.matchesAnyOf(<span class="string">"123abc123"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchJavaDigits</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.JAVA_DIGIT.matchesAllOf(<span class="string">"123456"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchJavaLetter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.JAVA_LETTER.matchesAllOf(<span class="string">"Opera"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchAscii</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.ASCII.matchesAllOf(<span class="string">"azt*1"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchUpperCase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.JAVA_UPPER_CASE.matchesAllOf(<span class="string">"JAVAC"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchDigitsWithWhiteSpaces</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.matchesAnyOf(<span class="string">"1111 abc"</span>));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchRetainsDigits</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.retainFrom(<span class="string">"123gb6789"</span>));</span><br><span class="line">    &#125; <span class="comment">// 1236789</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchRetainsDigitsOrWhiteSpaces</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.or(CharMatcher.WHITESPACE).retainFrom(<span class="string">"Hello world 123 javac!"</span>));</span><br><span class="line">    &#125; <span class="comment">//   123 [注意123前后都变成空格了]</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchRetainsNothingAsConstrainsAreExcluding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.and(CharMatcher.JAVA_LETTER).retainFrom(<span class="string">"hello 123 abc!"</span>));</span><br><span class="line">    &#125; <span class="comment">// [这里是空格]</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchRetainsDigitsAndLetters</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.or(CharMatcher.JAVA_LETTER).retainFrom(<span class="string">"hello 123 abc!"</span>));</span><br><span class="line">    &#125; <span class="comment">// hello123abc</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchCollapseAllDigitsByX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.collapseFrom(<span class="string">"Hello 167 j176"</span>, <span class="string">'x'</span>));</span><br><span class="line">    &#125; <span class="comment">// Hello x jx</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchReplaceAllDigitsByX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.replaceFrom(<span class="string">"Hello 17689 jik009"</span>, <span class="string">'x'</span>));</span><br><span class="line">    &#125; <span class="comment">// Hello xxxxx jikxxx</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchReplaceAllLettersByX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.JAVA_LETTER.or(CharMatcher.is(<span class="string">'*'</span>)).replaceFrom(<span class="string">"password 97321321 **65"</span>, <span class="string">'X'</span>));</span><br><span class="line">    &#125; <span class="comment">// XXXXXXXX 97321321 XX65</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchCountIn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.DIGIT.countIn(<span class="string">"*** 121 * a ** b"</span>));</span><br><span class="line">    &#125; <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchCountIn2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'*'</span>).countIn(<span class="string">"*** 121 * a ** b"</span>));</span><br><span class="line">    &#125; <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchIndexIn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'*'</span>).indexIn(<span class="string">"666 *** 121 * a ** b"</span>));</span><br><span class="line">    &#125; <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchLastIndexIn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'*'</span>).lastIndexIn(<span class="string">"666 *** 121 * a ** b"</span>));</span><br><span class="line">    &#125; <span class="comment">// 17</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMatchRemoveDigitsBetween3And6</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.inRange(<span class="string">'3'</span>, <span class="string">'8'</span>).removeFrom(<span class="string">"117787321daa096aa453aa299"</span>));</span><br><span class="line">    &#125; <span class="comment">// 1121daa09aaaa299</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testNegateMatchingAbove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.inRange(<span class="string">'3'</span>, <span class="string">'8'</span>).negate().removeFrom(<span class="string">"117787321daa096aa453aa299"</span>));</span><br><span class="line">    &#125; <span class="comment">// 778736453</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRemoveStartingAndEndingDollarsAndKeepOthersUnchanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'$'</span>).trimFrom(<span class="string">"$$$ This is a $ sign $$$"</span>));</span><br><span class="line">    &#125; <span class="comment">//  This is a $ sign [前后都有空格]</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRemoveOnlyStartingDollarsAndKeepOthersUnchanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'$'</span>).trimLeadingFrom(<span class="string">"$$$ This is a $ sign $$$"</span>));</span><br><span class="line">    &#125; <span class="comment">//  This is a $ sign $$$</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRemoveOnlyEndingDollarsAndKeepOthersUnchanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'$'</span>).trimTrailingFrom(<span class="string">"$$$ This is a $ sign $$$"</span>));</span><br><span class="line">    &#125; <span class="comment">// $$$ This is a $ sign</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRemoveStartingAndEndingDollarsAndReplaceOtherDollarsWithX</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(CharMatcher.is(<span class="string">'$'</span>).trimAndCollapseFrom(<span class="string">"$$$ This is a $$ and $ sign $$$"</span>, <span class="string">'X'</span>));</span><br><span class="line">    &#125; <span class="comment">//  This is a X and X sign</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>CharMatcher</code>为我们提供了非常强大的处理字符串的能力，可以看到<code>CharMatcher</code>类基本上涵盖了我们操作字符串的各种方式。大家可以仔细看看上面的测试实例，并且好好琢磨琢磨它的使用方式。</p>
+<h2 id="Joiner类使用实例"><a href="#Joiner类使用实例" class="headerlink" title="Joiner类使用实例"></a>Joiner类使用实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.base.Joiner;</span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Maps;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/10/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JoinerTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJoinerOn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; languages = Arrays.asList(<span class="string">"Java"</span>, <span class="string">"Haskell"</span>, <span class="string">"Scala"</span>, <span class="string">"Brainfuck"</span>);</span><br><span class="line">        System.out.println(Joiner.on(<span class="string">','</span>).join(languages));</span><br><span class="line">    &#125; <span class="comment">// Java,Haskell,Scala,Brainfuck</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJoinerJoinWithCommasAndOmitNulls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; countriesWithNullValue = Arrays.asList(<span class="string">"Poland"</span>, <span class="string">"Brazil"</span>, <span class="string">"Ukraine"</span>, <span class="keyword">null</span>, <span class="string">"China"</span>);</span><br><span class="line">        System.out.println(Joiner.on(<span class="string">','</span>).skipNulls().join(countriesWithNullValue));</span><br><span class="line">    &#125; <span class="comment">// Poland,Brazil,Ukraine,China</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJoinerJoinWithCommasAndReplaceNullWithDefaultValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; countriesWithNullValue = Arrays.asList(<span class="string">"Poland"</span>, <span class="string">"Brazil"</span>, <span class="string">"Ukraine"</span>, <span class="keyword">null</span>, <span class="string">"China"</span>);</span><br><span class="line">        System.out.println(Joiner.on(<span class="string">','</span>).useForNull(<span class="string">"NONE"</span>).join(countriesWithNullValue));</span><br><span class="line">    &#125; <span class="comment">// Poland,Brazil,Ukraine,NONE,China</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJoinerJoinMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;Integer, String&gt; numberWords = Maps.newHashMap();</span><br><span class="line">        numberWords.put(<span class="number">1</span>, <span class="string">"one"</span>);</span><br><span class="line">        numberWords.put(<span class="number">2</span>, <span class="string">"two"</span>);</span><br><span class="line">        numberWords.put(<span class="number">3</span>, <span class="keyword">null</span>);</span><br><span class="line">        numberWords.put(<span class="number">4</span>, <span class="string">"four"</span>);</span><br><span class="line">        System.out.println(Joiner.on(<span class="string">" | "</span>).withKeyValueSeparator(<span class="string">" -&gt; "</span>).useForNull(<span class="string">"Unknown"</span>).join(numberWords));</span><br><span class="line">    &#125; <span class="comment">// 1 -&gt; one | 2 -&gt; two | 3 -&gt; Unknown | 4 -&gt; four</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要说明一下最后一个测试方法，这个是将Joiner类应用到了Map上面，我们可以利用Joiner类将Map表现形式转换成为我们想要的形式，这样更加易于读和理解。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>好了，Guava中的Strings相关的操作类在上面已经用实例代码进行了说明，每段代码都给出了相应的输出，测试全部通过。大家可以将上面的代码拷贝下来，自己到本机上跑一下，感受一下这段代码给我们带来的便捷与强大的操作能力。总的来说，Guava中涉及到字符串操作相关的类还有很多，这里不一一列出了。因为那些都没有上面列出的这些类方便和强大。我们主要是关注主要的类，我建议读者朋友们有时间自己还是多跑一跑上面的这些代码，更好地就是自己能动手敲一遍，这样更能加深自己的理解。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/guava-strings-14.html" data-id="cjjisw3wh010m6lko5vmmompv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/guava-strings-14.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/guava-strings-14.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/guava-primitive-15.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Guava优美代码-15-基本类型
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/guava-pridicate-13.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Guava优美代码-13-Predicate</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

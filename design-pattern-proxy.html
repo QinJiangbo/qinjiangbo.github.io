@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>设计模式学习之代理模式 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="设计模式,代理模式" />
+    
+    <meta name="description" content="什么是代理模式代理模式(Proxy Design Pattern)为另一个对象提供一个替身或占位符以控制对这个对象的访问。 理解代理模式代理模式所要解决的问题其实是要控制对某一个对象的访问，这句话怎么理解呢？就好比生活中我们需要去做某些事情，比如买房，出国旅游等，由于我们对买房，出国旅游的相关办理手续不是很熟悉，所以我们希望找一个人帮助我们去解决这个事情。委托他代理我们去找相关的机构办理相关的业务">
+<meta name="keywords" content="代理模式,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式学习之代理模式">
+<meta property="og:url" content="http://qinjiangbo.com/design-pattern-proxy.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="什么是代理模式代理模式(Proxy Design Pattern)为另一个对象提供一个替身或占位符以控制对这个对象的访问。 理解代理模式代理模式所要解决的问题其实是要控制对某一个对象的访问，这句话怎么理解呢？就好比生活中我们需要去做某些事情，比如买房，出国旅游等，由于我们对买房，出国旅游的相关办理手续不是很熟悉，所以我们希望找一个人帮助我们去解决这个事情。委托他代理我们去找相关的机构办理相关的业务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/proxy-pattern.png">
+<meta property="og:updated_time" content="2017-12-23T14:19:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式学习之代理模式">
+<meta name="twitter:description" content="什么是代理模式代理模式(Proxy Design Pattern)为另一个对象提供一个替身或占位符以控制对这个对象的访问。 理解代理模式代理模式所要解决的问题其实是要控制对某一个对象的访问，这句话怎么理解呢？就好比生活中我们需要去做某些事情，比如买房，出国旅游等，由于我们对买房，出国旅游的相关办理手续不是很熟悉，所以我们希望找一个人帮助我们去解决这个事情。委托他代理我们去找相关的机构办理相关的业务">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/proxy-pattern.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/设计模式/">设计模式</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-design-pattern-proxy" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        设计模式学习之代理模式
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/design-pattern-proxy.html" class="article-date">
+    <time datetime="2017-12-22T03:13:34.000Z" itemprop="datePublished">2017-12-22</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代理模式/">代理模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="什么是代理模式"><a href="#什么是代理模式" class="headerlink" title="什么是代理模式"></a>什么是代理模式</h2><p><strong>代理模式(Proxy Design Pattern)</strong><code>为另一个对象提供一个替身或占位符以控制对这个对象的访问。</code></p>
+<h2 id="理解代理模式"><a href="#理解代理模式" class="headerlink" title="理解代理模式"></a>理解代理模式</h2><p>代理模式所要解决的问题其实是要控制对某一个对象的访问，这句话怎么理解呢？就好比生活中我们需要去做某些事情，比如买房，出国旅游等，由于我们对买房，出国旅游的相关办理手续不是很熟悉，所以我们希望找一个人帮助我们去解决这个事情。<strong>委托</strong>他<strong>代理</strong>我们去找相关的机构办理相关的业务。注意，这个时候机构直接面对的对象是我们委托的人，而不是我们本人。虽然很多事情本来是要我们自己完成的，但是<strong>代理</strong>替我们更加好地完成了。</p>
+<h3 id="一些不同的代理控制"><a href="#一些不同的代理控制" class="headerlink" title="一些不同的代理控制"></a>一些不同的代理控制</h3><ul>
+<li>远程代理控制访问远程对象</li>
+<li>虚拟代理控制访问创建开销大的资源</li>
+<li>保护代理基于权限控制对资源的访问</li>
+</ul>
+<h2 id="代理模式类图"><a href="#代理模式类图" class="headerlink" title="代理模式类图"></a>代理模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-class-diagram.png" alt="代理模式类图"></p>
+<p>下面分别介绍类图中各个组件的作用：</p>
+<p><code>Proxy</code>和<code>RealSubject</code>都实现了<code>Subject</code>接口，这允许任何客户都可以像处理<code>RealSubject</code>对象一样来处理<code>Proxy</code>对象。</p>
+<p><code>Proxy</code>持有<code>Subject</code>的引用，所以必要时它可以将请求转发给<code>Subject</code>。</p>
+<p><code>RealSubject</code>就是<code>真实对象</code>啦，也就是实际做事的那个对象，<code>Proxy</code>会控制对<code>RealSubject</code>的访问。</p>
+<p>在某些例子中，<code>Proxy</code>还会负责<code>RealSubject</code>对象的创建和销毁。客户和<code>RealSubject</code>的交互都必须通过<code>Proxy</code>。因为<code>Proxy</code>和<code>RealSubject</code>实现了想用的接口（<code>Subject</code>），所以任何用到<code>RealSubject</code>的地方都可以用<code>Proxy</code>取代。<code>Proxy</code>也控制了对<code>RealSubject</code>的访问，在某些情况下，我们可能需要这样的控制。这些情况包括<code>RealSubject</code>是远程的对象，<code>RealSubject</code>创建开销大，或者是<code>RealSubject</code>需要被保护。</p>
+<h2 id="实例分析-CD封面虚拟代理"><a href="#实例分析-CD封面虚拟代理" class="headerlink" title="实例分析-CD封面虚拟代理"></a>实例分析-CD封面虚拟代理</h2><p>我们知道使用CD播放机来播放CD的时候我们可以看到每一首歌曲的封面，其实这里面也是使用到了代理模式。现在其实播放CD的很少了，不过很久以前非常流行，那个时候电脑内存小，磁盘速度慢，因此打开一张图需要缓冲一段时间，因此需要在加载的时候给用户提供一个不错的提示，能让他“耐心”地等一会儿。</p>
+<p>先展示这个CD封面加载模式的类图结构吧：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-instance-class-diagram.png" alt="CD封面虚拟代理模式"></p>
+<p>简单说明一下系统的逻辑，我们可以看到，代理<code>ProxyImage</code>比真实对象<code>RealImage</code>少了一个方法<code>loadFromDisk()</code>。这个非常重要，说明代理对象最终的目的是为了控制这个对象的访问而不是改变或者新增这个对象的行为。</p>
+<p>创建一个Image接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.proxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 23/12/2017 9:44 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Image</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后先实现RealImage类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.proxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 23/12/2017 9:45 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealImage</span> <span class="keyword">implements</span> <span class="title">Image</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String fileName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RealImage</span><span class="params">(String fileName)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.fileName = fileName;</span><br><span class="line">        loadFromDisk(fileName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Displaying "</span> + fileName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadFromDisk</span><span class="params">(String fileName)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Loading "</span> + fileName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再实现<code>ProxyImage</code>类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.proxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 23/12/2017 9:46 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyImage</span> <span class="keyword">implements</span> <span class="title">Image</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RealImage realImage;</span><br><span class="line">    <span class="keyword">private</span> String fileName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ProxyImage</span><span class="params">(String fileName)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.fileName = fileName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(realImage == <span class="keyword">null</span>)&#123;</span><br><span class="line">            realImage = <span class="keyword">new</span> RealImage(fileName);</span><br><span class="line">        &#125;</span><br><span class="line">        realImage.display();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实例测试"><a href="#实例测试" class="headerlink" title="实例测试"></a>实例测试</h2><p>写一个带有main函数的类进行测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.proxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 23/12/2017 9:47 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Image image = <span class="keyword">new</span> ProxyImage(<span class="string">"yesterday-once-more.png"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// image will be loaded from disk</span></span><br><span class="line">        image.display();</span><br><span class="line">        <span class="comment">// separate line</span></span><br><span class="line">        System.out.println(<span class="string">"=================================="</span>);</span><br><span class="line">        <span class="comment">// image will be loaded directly</span></span><br><span class="line">        image.display();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Loading yesterday-once-more.png</span><br><span class="line">Displaying yesterday-once-more.png</span><br><span class="line">==================================</span><br><span class="line">Displaying yesterday-once-more.png</span><br></pre></td></tr></table></figure>
+<h2 id="装饰者模式-vs-代理模式"><a href="#装饰者模式-vs-代理模式" class="headerlink" title="装饰者模式 vs 代理模式"></a>装饰者模式 vs 代理模式</h2><p>其实这个两个模式非常容易被人搞混，为什么呢？因为这两个模式在结构上几乎没什么区别。我们再来回顾一下装饰者模式的类图：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/decorator-01.png" alt="装饰者模式类图"></p>
+<p>可以看到装饰者模式和代理模式都是需要实现一个公共的接口，不管是装饰者与被装饰者还是代理者与被代理者。当然还是有很多不一样的地方的，我们细细道来：</p>
+<ol>
+<li>代理模式中只是对真实对象的“代表”，而不是“装饰”对象。</li>
+<li>代理模式和装饰者模式虽然结构很像，但是目的意图完全不同。</li>
+<li>比较重要的一点是代理模式能够实例化它代理的对象，而装饰者模式不行，它只能从外部传入进来。</li>
+</ol>
+<h2 id="远程方法调用"><a href="#远程方法调用" class="headerlink" title="远程方法调用"></a>远程方法调用</h2><p>Java中的远程方法调用调用就是代理模式的典型代表，我们可以看一下这个过程：</p>
+<ul>
+<li>客户端调用某个对象的方法，代理接收到这个请求以后将相关方法、参数等信息通过序列化的方式发送给服务端，服务端收到以后完成本地方法调用。</li>
+<li>服务端调用完成以后，返回给本地代理，代理奖将结果进行序列化传递给客户端，客户端收到结果，就像在本地一样，完全无感知。</li>
+</ul>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-01.png" alt="客户端发送请求"><br><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-02.png" alt="客户端接收结果"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>代理模式非常的重要，以至于我后面还会重点写一篇文章来介绍代理模式在Java中的几种典型代表。它在我们的生产中有着非常重要的作用，比如我们最常见的Dubbo，HSF等RPC框架，都是基于代理模式来实现的。掌握好代理模式，我们也能自己实现一个RPC框架，这对于我们理解网络，代理，反射等各种技术要点理解都是有非常重要的提升和锻炼作用的。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/design-pattern-proxy.html" data-id="cjjisw3m900266lkorf8jrqhg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/design-pattern-proxy.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/design-pattern-proxy.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/understand-three-proxy-design-patterns-in-java.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            理解Java中三种代理模式
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/weka-machine-learning-practice-performance-evaluation.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Weka机器学习实战之性能度量</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

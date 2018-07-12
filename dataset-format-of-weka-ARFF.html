@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Weka数据集文件格式ARFF | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Weka,机器学习,ARFF" />
+    
+    <meta name="description" content="开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发">
+<meta name="keywords" content="Weka,机器学习,ARFF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Weka数据集文件格式ARFF">
+<meta property="og:url" content="http://qinjiangbo.com/dataset-format-of-weka-ARFF.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/weka-thumbnail.png">
+<meta property="og:updated_time" content="2017-11-28T09:19:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Weka数据集文件格式ARFF">
+<meta name="twitter:description" content="开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/weka-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/数据科学/">数据科学</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/数据科学/机器学习/">机器学习</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-dataset-format-of-weka-ARFF" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Weka数据集文件格式ARFF
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/dataset-format-of-weka-ARFF.html" class="article-date">
+    <time datetime="2017-11-28T05:21:22.000Z" itemprop="datePublished">2017-11-28</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARFF/">ARFF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Weka/">Weka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/weka-thumbnail.png" alt=""></p>
+<p>开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发布出来，比如Tensorflow等。好啦，废话不多说了，开始进入Weka的学习，第一步就是搞清楚Weka是什么？Weka处理的数据集又是什么？</p>
+<h2 id="Weka是什么？"><a href="#Weka是什么？" class="headerlink" title="Weka是什么？"></a>Weka是什么？</h2><p>Weka是一种鸡，叫<code>新西兰秧鸡</code>。这种鸟类天生就不具备飞行的能力，而且只在新西兰被发现，所以叫<code>新西兰秧鸡</code>。另外，英文<code>Weka</code>这个名字的来源也是因为这种鸟的叫声就是这个样子的，weka…weka…weka…，这种鸟类长这个模样：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/weka-animal.png?imageView2/2/w/480/h/300/q/75|imageslim" alt="Weka"></p>
+<p>好了，言归正传，本文所指的<code>Weka</code>其实是一种机器学习的工具包，里面有一系列用于数据挖掘任务的机器学习算法。这些算法可以被直接应用于数据集也可以从你的Java代码中进行调用。<code>Weka</code>包含了数据预处理、分类、回归、聚类、关联规则和可视化的一系列工具。而且也非常适合开发出新的机器学习模式。 <a href="https://www.cs.waikato.ac.nz/ml/weka/" target="_blank" rel="noopener">官网</a>原文介绍如下：</p>
+<blockquote>
+<p>Weka is a collection of machine learning algorithms for data mining tasks. The algorithms can either be applied directly to a dataset or called from your own Java code. Weka contains tools for data pre-processing, classification, regression, clustering, association rules, and visualization. It is also well-suited for developing new machine learning schemes.</p>
+</blockquote>
+<h2 id="Weka数据集格式-ARFF"><a href="#Weka数据集格式-ARFF" class="headerlink" title="Weka数据集格式-ARFF"></a>Weka数据集格式-ARFF</h2><p>说到Weka的学习，它的数据集是跑不掉的，Weka处理的数据集通常是存放在一种叫<code>ARFF</code>格式的文件中的。那么，什么是ARFF呢？</p>
+<h3 id="ARFF定义"><a href="#ARFF定义" class="headerlink" title="ARFF定义"></a>ARFF定义</h3><p>ARFF全称是Attribute-Relation File Format，属性关系文件格式。ARFF文件是一种描述了一系列具有相同属性的实例的ASCII文本文件。具体一点来说，就是数据集主要是有两部分组成，一部分是属性描述，一部分是数据。属性描述的这一部分也叫<strong>头信息</strong>，一般是放在数据集开始，而数据部分叫<strong>数据信息</strong>，一般是跟在<strong>头信息</strong>的后面。</p>
+<h3 id="ARFF头信息"><a href="#ARFF头信息" class="headerlink" title="ARFF头信息"></a>ARFF头信息</h3><p>ARFF的头信息包含这个关系的名称，还有一系列属性以及它们的数据类型。以IRIS数据集(<a href="https://archive.ics.uci.edu/ml/datasets/iris" target="_blank" rel="noopener">https://archive.ics.uci.edu/ml/datasets/iris</a>)为例，标准的IRIS数据集的头信息如下表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">% source: https://archive.ics.uci.edu/ml/datasets/iris</span><br><span class="line"></span><br><span class="line">@RELATION iris</span><br><span class="line"></span><br><span class="line">@ATTRIBUTE sepal_length NUMERIC</span><br><span class="line">@ATTRIBUTE sepal_width  NUMERIC</span><br><span class="line">@ATTRIBUTE petal_length NUMERIC</span><br><span class="line">@ATTRIBUTE petal_width  NUMERIC</span><br><span class="line">@ATTRIBUTE class       &#123;Iris-setosa,Iris-versicolor,Iris-virginica&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到了上面的以<code>%</code>开头的那行了吗？那一句是ARFF文件的注释。在ARFF文件中，注释通常都是以<code>%</code>开头的。另外<code>@RELATION</code>，<code>@ATTRIBUTE</code>，<code>@DATA</code>都是大小写不敏感的，都可以使用。</p>
+<h4 id="RELATION声明"><a href="#RELATION声明" class="headerlink" title="@RELATION声明"></a>@RELATION声明</h4><p>通常来说，<code>@RELATION</code>声明应该是在ARFF文件的第一行出现，前面注释啥的不算哈！具体的格式如下：<code>@RELATION &lt;relation-name&gt;</code>，这里<code>&lt;relation-name&gt;</code>是一个字符串，表示这个关系的名称。如果这个字符串包含空格的话一定要记得加上<code>空格</code>，否则识别会出现问题的。另外对于名称也有要求，不要使用<code>&#39;{&#39;, &#39;}&#39;, &#39;,&#39; 或者 &#39;%&#39;</code>开头，或者是在ASCII表中低于<code>\u0021[!]</code>的字符。</p>
+<h4 id="ATTRIBUTE声明"><a href="#ATTRIBUTE声明" class="headerlink" title="@ATTRIBUTE声明"></a>@ATTRIBUTE声明</h4><p><code>@ATTRIBUTE</code>声明主要是用来指定属性的数据名称和类型，具体的格式如下：<code>@ATTRIBUTE &lt;attribute-name&gt; &lt;data-type&gt;</code>，一般来说，<code>&lt;attribute-name&gt;</code>的要求和上面<code>&lt;relation-name&gt;</code>的要求是一样的，Weka支持的数据格式<code>&lt;data-type&gt;</code>主要有以下几种：</p>
+<ul>
+<li>numeric</li>
+<li>integer is treated as numeric</li>
+<li>real is treated as numeric</li>
+<li>&lt;nominal-specification&gt;</li>
+<li>string</li>
+<li>date [&lt;date-format&gt;]</li>
+<li>relational for multi-instance data (for future use)</li>
+</ul>
+<p>其它的几个估计大家挺好明白，而<code>&lt;nominal-specification&gt;</code>和<code>date</code>估计不太好明白，没关系，我们下面再讲。</p>
+<h5 id="Nominal属性"><a href="#Nominal属性" class="headerlink" title="Nominal属性"></a>Nominal属性</h5><p>所谓的Nominal属性就是后面列举一系列的值，比如<code>{&lt;nominal-value1&gt;,&lt;nominal-value2&gt;,&lt;nominal-value3&gt;...}</code>，IRIS数据集的class属性就是这么定义的：<code>@ATTRIBUTE class       {Iris-setosa,Iris-versicolor,Iris-virginica}</code>。</p>
+<h5 id="date属性"><a href="#date属性" class="headerlink" title="date属性"></a>date属性</h5><p>date属性的定义比较特殊，因为它还涉及到一个格式的问题，所以我们需要指定相关的格式：<code>@ATTRIBUTE &lt;attribute-name&gt; date [&lt;date-format&gt;]</code>。日期的格式是比较复杂的，比如<code>yyyy-MM-dd</code>或者是<code>MM-dd-yyyy</code>等等，因此需要指定。具体的例子如下：<code>@ATTRIBUTE birthday DATE &quot;yyyy-MM-dd HH:mm:ss&quot;</code>对应的可参考的数据集如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RELATION Timestamps</span><br><span class="line"> </span><br><span class="line">@ATTRIBUTE timestamp DATE &quot;yyyy-MM-dd HH:mm:ss&quot;</span><br><span class="line"> </span><br><span class="line">@DATA </span><br><span class="line">&quot;2001-04-03 12:12:12&quot;</span><br><span class="line">&quot;2001-05-03 12:59:55&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="ARFF数据信息"><a href="#ARFF数据信息" class="headerlink" title="ARFF数据信息"></a>ARFF数据信息</h3><p>ARFF的数据信息主要是一系列的以<code>,</code>分隔的数据，并且开头的注解是<code>@DATA</code>，还是以IRIS数据集为例，它的标准数据信息如下表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@DATA</span><br><span class="line">5.1,3.5,1.4,0.2,Iris-setosa</span><br><span class="line">4.9,3.0,1.4,0.2,Iris-setosa</span><br><span class="line">4.7,3.2,1.3,0.2,Iris-setosa</span><br><span class="line">4.6,3.1,1.5,0.2,Iris-setosa</span><br><span class="line">5.0,3.6,1.4,0.2,Iris-setosa</span><br><span class="line">5.4,3.9,1.7,0.4,Iris-setosa</span><br><span class="line">4.6,3.4,1.4,0.3,Iris-setosa</span><br><span class="line">5.0,3.4,1.5,0.2,Iris-setosa</span><br><span class="line">4.4,2.9,1.4,0.2,Iris-setosa</span><br><span class="line">4.9,3.1,1.5,0.1,Iris-setosa</span><br><span class="line">5.4,3.7,1.5,0.2,Iris-setosa</span><br><span class="line">4.8,3.4,1.6,0.2,Iris-setosa</span><br><span class="line">4.8,3.0,1.4,0.1,Iris-setosa</span><br></pre></td></tr></table></figure>
+<h4 id="DATA声明"><a href="#DATA声明" class="headerlink" title="@DATA声明"></a>@DATA声明</h4><p>ARFF文件的数据部分都是跟在<code>@DATA</code>声明后面的。关于数据部分没有什么过多注意的地方，主要是注意数据缺失的情况，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@DATA</span><br><span class="line">4.4,?,1.5,?,Iris-setosa</span><br></pre></td></tr></table></figure>
+<p>可以看到，第二个数据和第四个数据缺失，缺失的数据在ARFF文件中统一使用<code>?</code>问号代替。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于ARFF文件的相关理解就是这些，重点是需要知道Weka需要处理什么样的数据文件，以及如何理解并产生这些数据文件。后面会陆续推出一些算法的实际学习过程，都是偏向实战型的，后面会在会用算法解决实际问题的基础上再加深理论上的理解。不过目前如果想要学习理论的同学可以去看看机器学习算法研究相关书籍哈。</p>
+<p><code>参考文献</code>：<a href="http://weka.wikispaces.com/ARFF+%28stable+version%29" target="_blank" rel="noopener">http://weka.wikispaces.com/ARFF+%28stable+version%29</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/dataset-format-of-weka-ARFF.html" data-id="cjjisw3m1001r6lko41l32gvb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/dataset-format-of-weka-ARFF.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/dataset-format-of-weka-ARFF.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/weka-machine-learning-practice-kmeans.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Weka机器学习实战之KMeans
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/macOS-ssh-terminal-Chinese-character-display-setting.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">macOS命令行SSH中文显示</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

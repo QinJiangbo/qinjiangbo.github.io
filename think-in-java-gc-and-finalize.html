@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Java编程思想之GC与finalize()（六） | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java,编程思想" />
+    
+    <meta name="description" content="垃圾回收与终结处理程序员都了解初始化的重要性，但是常常会忘记同样也重要的清理工作。毕竟。谁需要清理一个int呢？但是我们知道把一个对象用完了以后“不管不顾”总是不安全的。因为很容易导致内存泄漏。当然了，你可能会说，我们有Java内存回收器啊。需要说明白的是，Java内存回收器只知道释放哪些由new创建的对象。假如你的代码没有通过new创建对象而是通过别的途径（比如说，调用了JNI本地方法，C++里">
+<meta name="keywords" content="Java,编程思想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java编程思想之GC与finalize()（六）">
+<meta property="og:url" content="http://qinjiangbo.com/think-in-java-gc-and-finalize.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="垃圾回收与终结处理程序员都了解初始化的重要性，但是常常会忘记同样也重要的清理工作。毕竟。谁需要清理一个int呢？但是我们知道把一个对象用完了以后“不管不顾”总是不安全的。因为很容易导致内存泄漏。当然了，你可能会说，我们有Java内存回收器啊。需要说明白的是，Java内存回收器只知道释放哪些由new创建的对象。假如你的代码没有通过new创建对象而是通过别的途径（比如说，调用了JNI本地方法，C++里">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/ThinkingInJava.png">
+<meta property="og:updated_time" content="2017-04-15T14:12:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java编程思想之GC与finalize()（六）">
+<meta name="twitter:description" content="垃圾回收与终结处理程序员都了解初始化的重要性，但是常常会忘记同样也重要的清理工作。毕竟。谁需要清理一个int呢？但是我们知道把一个对象用完了以后“不管不顾”总是不安全的。因为很容易导致内存泄漏。当然了，你可能会说，我们有Java内存回收器啊。需要说明白的是，Java内存回收器只知道释放哪些由new创建的对象。假如你的代码没有通过new创建对象而是通过别的途径（比如说，调用了JNI本地方法，C++里">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/ThinkingInJava.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-think-in-java-gc-and-finalize" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Java编程思想之GC与finalize()（六）
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/think-in-java-gc-and-finalize.html" class="article-date">
+    <time datetime="2017-04-15T13:13:47.000Z" itemprop="datePublished">2017-04-15</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程思想/">编程思想</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="垃圾回收与终结处理"><a href="#垃圾回收与终结处理" class="headerlink" title="垃圾回收与终结处理"></a>垃圾回收与终结处理</h2><p>程序员都了解初始化的重要性，但是常常会忘记同样也重要的清理工作。毕竟。谁需要清理一个int呢？但是我们知道把一个对象用完了以后“不管不顾”总是不安全的。因为很容易导致内存泄漏。当然了，你可能会说，我们有Java内存回收器啊。需要说明白的是，Java内存回收器只知道释放哪些由<code>new</code>创建的对象。假如你的代码没有通过<code>new</code>创建对象而是通过别的途径（比如说，调用了JNI本地方法，C++里面通过<code>malloc</code>方法开辟的一片空间）获得一块内存空间，你如何释放？针对这种情况，Java允许在对象中添加一个<code>finalize()</code>方法。</p>
+<h3 id="finalize-工作原理"><a href="#finalize-工作原理" class="headerlink" title="finalize()工作原理"></a><code>finalize()</code>工作原理</h3><p>一旦垃圾回收器准备好回收某一个对象的时候，它将首先调用这个对象的<code>finalize()</code>方法，并且在下一次执行垃圾回收的动作时才会真正回收对象占用的内存，这里实际上就是说<code>finalize()</code>会做一些垃圾回收前的重要的垃圾清理工作。</p>
+<h3 id="析构函数-finalize-？"><a href="#析构函数-finalize-？" class="headerlink" title="析构函数 == finalize()？"></a>析构函数 == finalize()？</h3><p>学过C++的同学都知道C++里面有一个析构函数（C++中销毁对象必须使用这个函数），很多人常常会将<code>finalize()</code>方法类比为Java中的析构函数。这样想对么？这里需要明确地区分一下啊，C++里面，对象一定会被回收；但是在Java中，对象不一定会被回收。或者可以这么说：<strong>对象是有可能不被垃圾回收器回收的，垃圾回收并不等于“析构”。</strong></p>
+<p>Java中并没有提供“析构函数”或者相似的概念，如果必须执行某些清理前的动作，你必须自己手动地去编写一个执行清理动作的方法。比如（这个例子摘自ThinkingInJava），假设某个对象在创建的时候会将自己绘制在屏幕上，如果不是明确地从屏幕上将其擦除，它可能永远也得不到清理，如果在<code>finalize()</code>里加入某种擦除的功能，当“垃圾回收”发生时（不一定保证会发生），<code>finalize()</code>得到了调用，图像就会被擦除。要是“垃圾回收”没有发生，图像就会一直保存下去。什么时候会发生“垃圾回收”，这个又是另一个话题了，我们在另一篇博客里面会仔细讲解JVM垃圾回收的相关细节，在本文中仅仅介绍一下相关的理论。<strong>一般来说，有一个大的原则就是，内存不够用的时候就会发生GC（包括Minor GC 或 Full GC）。</strong></p>
+<h3 id="finalize-有何用途"><a href="#finalize-有何用途" class="headerlink" title="finalize()有何用途"></a>finalize()有何用途</h3><p>我们可能已经有所体会就是，我们不能太相信或者说太依赖<code>finalize()</code>方法了，因为它不一定会发生。这里说一说垃圾回收的目标是什么，那就是<strong>内存</strong>，<strong>垃圾回收只与内存相关</strong>。也就是说，使用垃圾回收器的唯一原因就是为了回收程序不再使用的内存。所以对于垃圾回收有关的任何行为来说（尤其是<code>finalize()</code>方法），它们也必须同内存及其回收有关。但这是否意味着要是对象中含有其它对象，<code>finalize()</code>方法就应该明确释放那些呢？不是的，无论这个对象是如何创建的，垃圾回收器都会负责释放对象占据的所有内存。这个就将<code>finalize()</code>方法的使用先知道了一种特殊情况，即通过某种创建对象方式以外的方式为对象分配了存储空间。不过，大家也都知道，Java中一切皆为对象，那这种特殊的情况是什么情况呢？</p>
+<p>看来之所以要使用<code>finalize()</code>方法，是因为我们在分配内存的时候可能会使用到类似C语言中的做法，而非Java中的通常做法。这种情况主要发生在使用“本地方法”的情况下。什么是“本地方法”？“本地方法”是一种在Java程序中使用非Java代码的方式。本地方法目前只支持C和C++，也就是说，我们通过调用C的<code>malloc()</code>方法分配了一块空间，这个空间保存在哪儿呢？在线程栈中。关于线程栈的内容，我们在后面的JMM博客中会给大家仔细介绍。如果我们的Java代码没有及时地释放掉这部分“特殊”的内存空间，很容易会出现内存泄漏的情况。当然啦，<code>free()</code>方法是C和C++中的函数，所以，我们要在<code>finalize()</code>中调用本地方法<code>free()</code>来释放掉这些特殊的内存。</p>
+<h2 id="一定要记得清理"><a href="#一定要记得清理" class="headerlink" title="一定要记得清理"></a>一定要记得清理</h2><p>Java中不允许创建局部对象，必须使用<code>new</code>创建对象。在Java中，也没有用于释放对象的<code>delete</code>，因为垃圾回收器会帮助你释放存储空间。甚至可以很肤浅地认为，正是由于垃圾回收机制的存在，是的Java没有析构函数。然而随着时间的深入，我们就会明白垃圾回收器的存在并不能完全替代析构函数。而且绝对不能直接调用<code>finalize()</code>方法，所以这也不是一种解决的方法。不管是“垃圾回收”还是“终结”，都不一定保证会发生。如果Java虚拟机（JVM）并没有面临内存耗尽的情况，它是不会浪费时间去执行垃圾回收以恢复内存的。要知道，一次<code>stop-the-world</code>会给应用程序带来多大的损失！</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/think-in-java-gc-and-finalize.html" data-id="cjjisw3r400dr6lko0bmgzf51" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/think-in-java-gc-and-finalize.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/think-in-java-gc-and-finalize.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/high-performance-mysql-architecture.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            高性能MySQL之逻辑架构（一）
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/talk-of-empty-cup-spirit.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">聊一聊“空杯精神”</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

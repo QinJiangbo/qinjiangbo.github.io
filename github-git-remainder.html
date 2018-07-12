@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>GitHub Git 备忘单 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Git,Cheat Sheet" />
+    
+    <meta name="description" content="Git是一个开源的分布式版本控制系统，方便你在笔记本或桌面端进行GitHub的操作，这个备忘单总结了常用的Git命令行指令，以便快速查询。 安装GitGitHub提供了包含图形界面的桌面客户端，通过客户端可以完成大部分常用的仓库操作，同时可以自动更新Git的命令行版本，以适应新的场景。 GitHub for Windowshttp://windows.github.com GitHub for M">
+<meta name="keywords" content="Git,Cheat Sheet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub Git 备忘单">
+<meta property="og:url" content="http://qinjiangbo.com/github-git-remainder.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="Git是一个开源的分布式版本控制系统，方便你在笔记本或桌面端进行GitHub的操作，这个备忘单总结了常用的Git命令行指令，以便快速查询。 安装GitGitHub提供了包含图形界面的桌面客户端，通过客户端可以完成大部分常用的仓库操作，同时可以自动更新Git的命令行版本，以适应新的场景。 GitHub for Windowshttp://windows.github.com GitHub for M">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/git-thumbnail.png">
+<meta property="og:updated_time" content="2016-08-26T03:43:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GitHub Git 备忘单">
+<meta name="twitter:description" content="Git是一个开源的分布式版本控制系统，方便你在笔记本或桌面端进行GitHub的操作，这个备忘单总结了常用的Git命令行指令，以便快速查询。 安装GitGitHub提供了包含图形界面的桌面客户端，通过客户端可以完成大部分常用的仓库操作，同时可以自动更新Git的命令行版本，以适应新的场景。 GitHub for Windowshttp://windows.github.com GitHub for M">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/git-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/架构师/">架构师</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-github-git-remainder" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        GitHub Git 备忘单
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/github-git-remainder.html" class="article-date">
+    <time datetime="2016-08-25T15:04:40.000Z" itemprop="datePublished">2016-08-25</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cheat-Sheet/">Cheat Sheet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Git是一个开源的分布式版本控制系统，方便你在笔记本或桌面端进行GitHub的操作，这个备忘单总结了常用的Git命令行指令，以便快速查询。</p>
+<h1 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h1><p>GitHub提供了包含图形界面的桌面客户端，通过客户端可以完成大部分常用的仓库操作，同时可以自动更新Git的命令行版本，以适应新的场景。</p>
+<h2 id="GitHub-for-Windows"><a href="#GitHub-for-Windows" class="headerlink" title="GitHub for Windows"></a>GitHub for Windows</h2><p><a href="http://windows.github.com" target="_blank" rel="noopener">http://windows.github.com</a></p>
+<h2 id="GitHub-for-Mac"><a href="#GitHub-for-Mac" class="headerlink" title="GitHub for Mac"></a>GitHub for Mac</h2><p><a href="http://mac.github.com" target="_blank" rel="noopener">http://mac.github.com</a></p>
+<p>GitHub的Linux和POSIX版本可以在官方的Git SCM网站上获取。</p>
+<h2 id="Git-全平台版"><a href="#Git-全平台版" class="headerlink" title="Git 全平台版"></a>Git 全平台版</h2><p><a href="http://git-scm.com" target="_blank" rel="noopener">http://git-scm.com</a></p>
+<h1 id="配置工具"><a href="#配置工具" class="headerlink" title="配置工具"></a>配置工具</h1><p>对所有本地仓库的用户信息进行配置</p>
+<p><code>$ git config --global user.name &quot;[name]&quot;</code> <br><br>对你的commit操作设置关联的用户名</p>
+<p><code>$ git config --global user.email &quot;[email address]&quot;</code> <br><br>对你的commit操作设置关联的邮箱地址</p>
+<h1 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h1><p>创建一个新的仓库或者从一个现有的链接获取仓库</p>
+<p><code>$ git init [project-name]</code><br><br>创建一个本地的仓库，并设置名字</p>
+<p><code>$ git clone [url]</code><br><br>下载一个项目以及它所有的版本历史</p>
+<h1 id="重构文件"><a href="#重构文件" class="headerlink" title="重构文件"></a>重构文件</h1><p>重定位并移除版本文件</p>
+<p><code>$ git rm [file]</code><br><br>从工作目录中删除文件并暂存此删除</p>
+<p><code>$ git rm --cached [file]</code><br><br>从版本控制中移除文件，并在本地保存文件</p>
+<p><code>$ git mv [file-original] [file-renamed]</code><br><br>改变文件名并准备commit</p>
+<h1 id="停止追踪"><a href="#停止追踪" class="headerlink" title="停止追踪"></a>停止追踪</h1><p>不包含临时文件和路径</p>
+<pre><code>*.log
+build/
+temp-*
+</code></pre><p>文本文件<code>.gitignore</code>可以防止一些特定的文件进入到版本控制中</p>
+<p><code>$ git ls-files --other --ignored --exclude-standard</code><br><br>列出所有项目中忽略的文件</p>
+<h1 id="保存临时更改"><a href="#保存临时更改" class="headerlink" title="保存临时更改"></a>保存临时更改</h1><p>暂存一些未完成的更改</p>
+<p><code>$ git stash</code><br><br>临时存储所有修改的已跟踪文件</p>
+<p><code>$ git stash pop</code><br><br>重新存储所有最近被stash的文件</p>
+<p><code>$ git stash list</code><br><br>列出所有被stash的更改</p>
+<p><code>$ git stash drop</code><br><br>放弃所有最近stash的更改</p>
+<h1 id="更改"><a href="#更改" class="headerlink" title="更改"></a>更改</h1><p>检查已有的编辑并执行commit操作</p>
+<p><code>$ git status</code><br><br>列出所有新建或者更改的文件，这些文件需要被commit</p>
+<p><code>$ git diff</code><br><br>展示那些没有暂存文件的差异</p>
+<p><code>$ git add [file]</code><br><br>将文件进行快照处理用于版本控制</p>
+<p><code>$ git diff --staged</code><br><br>展示暂存文件与最新版本之间的不同</p>
+<p><code>$ git reset [file]</code><br><br>将文件移除暂存区，但是保留其内容</p>
+<p><code>$ git commit -m [commit-message]</code><br><br>将文件快照永久地记录在版本历史中</p>
+<h1 id="批量更改"><a href="#批量更改" class="headerlink" title="批量更改"></a>批量更改</h1><p>命名一系列commit以及合并已完成的工作</p>
+<p><code>$ git branch</code> <br><br>列出当前仓库中所有的本地分支</p>
+<p><code>$ git branch [branch-name]</code><br><br>建立一个新分支</p>
+<p><code>$ git checkout [branch-name]</code><br><br>切换到一个特定的分支上并更新工作目录</p>
+<p><code>$ git merge [branch-name]</code><br><br>合并特定分支的历史到当前分支</p>
+<p><code>$ git branch -d [branch-name]</code><br><br>删除特定的分支</p>
+<h1 id="查阅历史"><a href="#查阅历史" class="headerlink" title="查阅历史"></a>查阅历史</h1><p>浏览并检查项目文件的发展</p>
+<p><code>$ git log</code> <br><br>列出当前分支的版本历史</p>
+<p><code>$ git log --follow [file]</code><br><br>列出文件的版本历史，包括重命名</p>
+<p><code>$ git diff [branch-first] ... [branch-last]</code><br><br>展示两个不同分支之间的差异</p>
+<p><code>$ git show [commit]</code><br><br>输出元数据以及特定commit的内容变化</p>
+<h1 id="撤销commit"><a href="#撤销commit" class="headerlink" title="撤销commit"></a>撤销commit</h1><p>擦除错误并更改历史</p>
+<p><code>$ git reset [commit]</code><br><br>撤销所有<code>[commit]</code>后的的commit，在本地保存更改</p>
+<p><code>$ git reset --hard [commit]</code><br><br>放弃所有更改并回到某个特定的commit</p>
+<h1 id="同步更改"><a href="#同步更改" class="headerlink" title="同步更改"></a>同步更改</h1><p>注册一个远程的链接，交换仓库的版本历史</p>
+<p><code>$ git fetch [remote]</code><br><br>下载远程仓库的所有历史</p>
+<p><code>$ git merge [remote] / [branch]</code><br><br>合并远程分支到当前本地分支</p>
+<p><code>$ git push [remote] [branch]</code><br><br>上传所有本地分支commit到GitHub上</p>
+<p><code>$ git pull</code><br><br>下载书签历史并合并更改</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/github-git-remainder.html" data-id="cjjisw3mq003a6lko5cltfmme" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/github-git-remainder.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/github-git-remainder.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/getting-started-with-github-pages.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            GitHub Pages入门指南
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/could-not-read-from-remote-repository.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Could not read from remote repository</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

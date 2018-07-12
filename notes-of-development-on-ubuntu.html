@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Ubuntu开发笔记 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Linux,开发经验" />
+    
+    <meta name="description" content="安装JDK解压文件，文件夹为jdk 1.8.0_20，并且sudo gedit /etc/environment 在后面加入以下几行： 123PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/lib/jdk1.7.0/bin&quot;  CLASSPATH=.:/usr/loca">
+<meta name="keywords" content="Linux,开发经验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu开发笔记">
+<meta property="og:url" content="http://qinjiangbo.com/notes-of-development-on-ubuntu.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="安装JDK解压文件，文件夹为jdk 1.8.0_20，并且sudo gedit /etc/environment 在后面加入以下几行： 123PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/lib/jdk1.7.0/bin&quot;  CLASSPATH=.:/usr/loca">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/ubuntu2-thumbnail.jpg">
+<meta property="og:updated_time" content="2016-10-19T15:53:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu开发笔记">
+<meta name="twitter:description" content="安装JDK解压文件，文件夹为jdk 1.8.0_20，并且sudo gedit /etc/environment 在后面加入以下几行： 123PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/lib/jdk1.7.0/bin&quot;  CLASSPATH=.:/usr/loca">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/ubuntu2-thumbnail.jpg">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/架构师/Linux/">Linux</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-notes-of-development-on-ubuntu" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Ubuntu开发笔记
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/notes-of-development-on-ubuntu.html" class="article-date">
+    <time datetime="2016-04-11T15:07:11.000Z" itemprop="datePublished">2016-04-11</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开发经验/">开发经验</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h1><p>解压文件，文件夹为jdk 1.8.0_20，并且sudo gedit /etc/environment</p>
+<p>在后面加入以下几行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PATH=<span class="string">"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/lib/jdk1.7.0/bin"</span>  </span><br><span class="line">CLASSPATH=.:/usr/<span class="built_in">local</span>/lib/jdk1.7.0/lib  </span><br><span class="line">JAVA_HOME=/usr/<span class="built_in">local</span>/lib/jdk1.7.0</span><br></pre></td></tr></table></figure>
+<p>安装mysql命令<br>sudo apt-get install mysql-server </p>
+<p>安装图形化界面<br>sudo apt-get install mysql-admin</p>
+<p>启动服务<br>sudo service mysql start</p>
+<p>关闭服务<br>sudo service mysql stop</p>
+<p>安装mysql workbench<br>(先进入包所在目录)</p>
+<p>sudo dpkg -i ./mysql-workbench-community-6.1.7-1ubu1404-amd64.deb sql</p>
+<p>接下来会报一系列依赖错误，一个一个去安装缺省的包<br>sudo apt-get install [package_name]</p>
+<h1 id="安装Tomcat"><a href="#安装Tomcat" class="headerlink" title="安装Tomcat"></a>安装Tomcat</h1><p>只需要在环境变量里面增加tomcat的bin路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PATH=<span class="string">"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/richard/jdk1.8.0_20/bin:/home/richard/apache-tomcat-8.0.12/bin"</span></span><br><span class="line">CLASSPATH=<span class="string">"/home/richard/jdk1.8.0_20/lib"</span></span><br><span class="line">JAVA_HOME=<span class="string">"/home/richard/jdk1.8.0_20"</span></span><br></pre></td></tr></table></figure>
+<p>注意，后面如果报错，就在catalin.sh文件第一行加上JAVA_HOME=”/home/richard/jdk1.8.0_20”</p>
+<h1 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h1><p>php的安装要注意:</p>
+<ol>
+<li>sudo gedit /etc/apache2/sites-enabled/000-default.conf</li>
+<li>修改DocumentRoot为/var/www/（删掉默认的/html/）</li>
+</ol>
+<p>apache2配置的时候要注意以后服务器名会变，所以加上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Server Name</span></span><br><span class="line">ServerName 127.0.0.1</span><br></pre></td></tr></table></figure>
+<h2 id="apache2默认路径更改"><a href="#apache2默认路径更改" class="headerlink" title="apache2默认路径更改"></a>apache2默认路径更改</h2><p>cd /etc/apache2/sites-enabled/<br>sudo gedit 000-default.conf<br>修改一下DocumentRoot即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DocumentRoot /var/www/</span></span><br><span class="line">DocumentRoot /home/richard/workspace/</span><br><span class="line">&lt;Directory /home/richard/workspace/&gt;  </span><br><span class="line">Options Indexes FollowSymLinks Multiviews  </span><br><span class="line">AllowOverride all  </span><br><span class="line">Order allow,deny  </span><br><span class="line">Allow from all</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<p>注意！！！需要修改workspace目录的读写权限</p>
+<h3 id="sudo-chmod-777-R-home-richard-workspace"><a href="#sudo-chmod-777-R-home-richard-workspace" class="headerlink" title="sudo chmod 777 -R /home/richard/workspace"></a>sudo chmod 777 -R /home/richard/workspace</h3><p>php5安装以后会改变默认权限<br>cd /etc/apache2/<br>sudo gedit apache2.conf<br>修改以下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory /&gt;</span><br><span class="line">Options FollowSymLinks</span><br><span class="line">AllowOverride None</span><br><span class="line">Require all granted&lt;!-- 这个默认是deny,会造成403,permission denied --&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Apache2服务器重启"><a href="#Apache2服务器重启" class="headerlink" title="Apache2服务器重启"></a>Apache2服务器重启</h1><p>sudo /etc/init.d/apache2 restart</p>
+<p>管理工具phpmyadmin404解决方法<br>Include /etc/phpmyadmin/apache.conf<br>(目录同上述的文件目录一样)</p>
+<p>tomcat设置开机启动<br>cd /etc<br>sudo gedit rc.local</p>
+<p>添加startup.sh的路径即可<br>cd /home/richard/apache-tomcat-8.0.12/bin &amp;&amp; ./startup.sh</p>
+<h1 id="配置JAVA环境"><a href="#配置JAVA环境" class="headerlink" title="配置JAVA环境"></a>配置JAVA环境</h1><p>sudo gvim /etc/environment  </p>
+<p>打开环境配置文件。对了，这一步各们不一定要用 gvim 去打开，因为你不一定装了gvim，用 gedit, vi 等打开也一样。不熟悉 vim 的请使用 gedit<br>打开后可以看到: </p>
+<p>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games”  </p>
+<p>一行文字，你们的可能跟我的有些出入。将其修改为： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PATH=<span class="string">"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/lib/jdk1.7.0/bin"</span>  </span><br><span class="line">CLASSPATH=.:/usr/<span class="built_in">local</span>/lib/jdk1.7.0/lib  </span><br><span class="line">JAVA_HOME=/usr/<span class="built_in">local</span>/lib/jdk1.7.0</span><br></pre></td></tr></table></figure>
+<p>其中的jvm/jdk1.7.0等请跟据自己下载的安装包和安装目录对号修改。然后重新加载.bashrc<br>    source ~/.bashrc  </p>
+<p>5、到这里后运行 javac, java, 等命令还是不能用，和 windows 安装配置后就可以用不一样。接下来再执行下面命令： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --install /usr/bin/java java /home/richard/Softwares/jdk1.8.0_25/bin/java 300  </span><br><span class="line">sudo update-alternatives --install /usr/bin/javac javac /home/richard/Softwares/jdk1.8.0_25/bin/javac 300  </span><br><span class="line">sudo update-alternatives --install /usr/bin/javap javap /home/richard/Softwares/jdk1.8.0_25/bin/javap 300  </span><br><span class="line">sudo update-alternatives --install /usr/bin/javadoc javadoc /home/richard/Softwares/jdk1.8.0_25/bin/javadoc 300</span><br></pre></td></tr></table></figure>
+<p>6,sudo gedit /etc/profile</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/richard/Softwares/jdk1.8.0_25</span><br><span class="line"><span class="built_in">export</span> PATH=PATH:JAVA_HOME/bin:JAVA_HOME/jre/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:JAVA_HOME/lib/dt.jar: JAVA_HOME/lib/tools.jar</span><br></pre></td></tr></table></figure>
+<h1 id="LAMP-phpmyadmin安装教程"><a href="#LAMP-phpmyadmin安装教程" class="headerlink" title="LAMP+phpmyadmin安装教程"></a>LAMP+phpmyadmin安装教程</h1><h2 id="一-安装"><a href="#一-安装" class="headerlink" title="一.安装"></a>一.安装</h2><h3 id="1-安装LAMP"><a href="#1-安装LAMP" class="headerlink" title="1.安装LAMP"></a>1.安装LAMP</h3><p>在新立得软件包管理器中选择 编辑－－使用任务分组标记软件包</p>
+<p>在打开的窗口中 勾选 LAMP SERVER 然后确定。</p>
+<p>在主窗口中 点击绿色的对号 应用 按钮</p>
+<p>好了 。接下来就是等待…等待新立得 自动下载安装完。</p>
+<p>中间会有一次提示输入mysql的root用户的密码</p>
+<p>您还可以在终端模式下，通过命令行安装：<br>sudo apt-get install apache2 libapache2-mod-php5 php5 php5-gd mysql-server php5-mysql phpmyadmin</p>
+<h3 id="2-安装phpmyadmin"><a href="#2-安装phpmyadmin" class="headerlink" title="2.安装phpmyadmin"></a>2.安装phpmyadmin</h3><p>终端中运行命令<br>sudo apt-get install phpmyadmin</p>
+<h2 id="二-配置"><a href="#二-配置" class="headerlink" title="二.配置"></a>二.配置</h2><p>1&gt; apache 的配置文件路径 /etc/apache2/apache2.conf<br>2&gt; php.ini 路径 /etc/php5/apache2/php5.ini<br>3&gt; mysql配置文件 路径 /etc/mysql/my.cnf<br>4&gt; phpmyadmin配置文件路径 /etc/phpmyadmin/apache.conf<br>5&gt; 网站根目录 /var/www</p>
+<h3 id="1-配置apache"><a href="#1-配置apache" class="headerlink" title="1. 配置apache"></a>1. 配置apache</h3><p>终端中 使用命令<br>sudo gedit /etc/apache2/apache2.conf<br>在配置文件最后面加入下面几行：<br>添加文件类型支持<br>AddType application/x-httpd-php .php .htm .html<br>默认字符集 根据自己需要<br>AddDefaultCharset UTF-8<br>服务器地址<br>ServerName 127.0.0.1<br>添加首页文件 三个的顺序可以换 前面的访问优先 （当然你也可以加别的 比如default.php）<br>DirectoryIndex index.htm index.html index.php</p>
+<h3 id="2-配置PHP5"><a href="#2-配置PHP5" class="headerlink" title="2.配置PHP5"></a>2.配置PHP5</h3><p>这个没什么好说的 根据个人自己需要<br>下面是默认时区<br>;default.timezone=去掉前面的分号 后面加个PRC 。表示中华人民共和国（就是GMT＋8时区）<br>default.timezone= PRC</p>
+<h3 id="3-配置mysql"><a href="#3-配置mysql" class="headerlink" title="3.配置mysql"></a>3.配置mysql</h3><p>sudo gedit /etc/mysql/my.cnf<br>这里有一个地方要注意</p>
+<p>因为默认是只允许本地访问数据库的 如果你有需要 可以打开。</p>
+<p>bind-address 127.0.0.1这一句是限制只能本地访问mysql的。如果有需要其他机器访问 把这句话用#注释掉</p>
+<p># bind-address 127.0.0.1</p>
+<h3 id="4-配置phpmyadmin"><a href="#4-配置phpmyadmin" class="headerlink" title="4.配置phpmyadmin"></a>4.配置phpmyadmin</h3><p>phpmyadmin 默认并不是安装在 /var/www下面的而是在 /usr/share/phpmyadmin</p>
+<p>你可以把phpmyadmin复制过去 或者 网上有人说你可以创建一个链接 然后把链接复制过去（没有试过）</p>
+<p>然后 终端中运行命令</p>
+<p>sudo gedit /etc/phpmyadmin/apache.conf</p>
+<p>然后把下面两句的路径 改为/var/www/phpmyadmin</p>
+<p>Alias /phpmyadmin /usr/share/phpmyadmin</p>
+<p>改为：</p>
+<p>Alias /phpmyadmin /var/www/phpmyadmin</p>
+<h3 id="符：常用命令"><a href="#符：常用命令" class="headerlink" title="符：常用命令"></a>符：常用命令</h3><ol>
+<li>重启apache<br>sudo /etc/init.d/apache2 restart</li>
+<li>重启mysql<br>sudo /etc/init.d/mysql restart<br>至此 LAMP环境配置成功,试一下 echo phpinfo(); 吧！</li>
+<li>LAMP并没有那么神秘！除去下载的时间，整个配置过程决不会花费您五分钟。</li>
+<li>GD库的安装</li>
+<li>sudo apt-get install php5-gd<br> 记得装完重启apache</li>
+<li>sudo /etc/init.d/apache2 restart</li>
+<li>启用 mod_rewrite 模块<br> sudo a2enmod rewrite</li>
+</ol>
+<h1 id="Sublime-text-2-安装"><a href="#Sublime-text-2-安装" class="headerlink" title="Sublime text 2 安装"></a>Sublime text 2 安装</h1><p>ubuntu 12.04 sublime text 2 破解</p>
+<ol>
+<li><p>将sublime_text文件复制一份并重命名为sublime_text.bak做一个备份</p>
+</li>
+<li><p>用sublime text 2打开sublime_text.bak文件，搜索 3342 并替换为 3242(所有都替换)， 然后保存</p>
+</li>
+<li><p>关闭 sublime text 2应用程序， 并删除 sublime_text 文件, 把备份文件sublime_text.bak修改为 sublime_text.bak</p>
+</li>
+<li><p>输入序列号</p>
+</li>
+</ol>
+<p>打开sublime_text，点击help-&gt;enter lisence key，在弹出对话框粘帖以下内容：（从——BEGIN到LICENSE——）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">—–BEGIN LICENSE—–</span><br><span class="line">USA</span><br><span class="line">Unlimited User License</span><br><span class="line">EA7E-<span class="number">1640</span></span><br><span class="line"><span class="number">763</span>D05839CA08BDA7B0103B5BABF0150</span><br><span class="line"><span class="number">195</span>EE53CC33B569858AFD553F080A9BC</span><br><span class="line"><span class="number">1F</span>678C88A1342AC92CA596FE775E7014</span><br><span class="line"><span class="number">5</span>A0EE55DC2F8DE3C4ED6B5B02FD4DB3C</span><br><span class="line"><span class="number">493F</span>CE3EE61FC0588CDAFAAD731BB47F</span><br><span class="line">FD047777D02A5BE92202B3D3EB59A696</span><br><span class="line">A69DFEF6687D16FCD4443556912A1F62</span><br><span class="line"><span class="number">82</span>DA125263C5BC270CEE7664B5D0CEB9</span><br><span class="line">—–END LICENSE—–</span><br></pre></td></tr></table></figure>
+<h1 id="Ubuntu-Nginx-安装及其配置"><a href="#Ubuntu-Nginx-安装及其配置" class="headerlink" title="Ubuntu Nginx 安装及其配置"></a>Ubuntu Nginx 安装及其配置</h1><h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><h3 id="3-1-安装Nginx"><a href="#3-1-安装Nginx" class="headerlink" title="3.1 安装Nginx"></a>3.1 安装Nginx</h3><ol>
+<li>在线安装</li>
+</ol>
+<p>sudo apt-get install nginx</p>
+<p>Nginx的版本是1.2.1</p>
+<p>ubuntu安装Nginx之后的文件结构大致为：</p>
+<p>所有的配置文件都在/etc/nginx下，并且每个虚拟主机已经安排在了/etc/nginx/sites-available下</p>
+<p>启动程序文件在/usr/sbin/nginx</p>
+<p>日志放在了/var/log/nginx中，分别是access.log和error.log</p>
+<p>并已经在/etc/init.d/下创建了启动脚本nginx</p>
+<p>默认的虚拟主机的目录设置在了/usr/share/nginx/www</p>
+<ol start="2">
+<li>源代码安装</li>
+</ol>
+<p>下载地址：<a href="http://nginx.org/download/" target="_blank" rel="noopener">http://nginx.org/download/</a></p>
+<p>我这里下载的是 nginx-1.3.9.tar.gz，安装过程很简单，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>安装成功之后，nginx放置在/usr/local/nginx目录下，主要的配置文件为conf目录下的nginx.conf，</p>
+<p>nginx的启动文件在sbin目录下的nginx文件。</p>
+<h3 id="3-2-启动Nginx"><a href="#3-2-启动Nginx" class="headerlink" title="3.2 启动Nginx"></a>3.2 启动Nginx</h3><ol>
+<li><p>在线安装的启动过程<br>sudo /etc/init.d/nginx start</p>
+</li>
+<li><p>源代码安装的启动过程</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx</span><br><span class="line">sbin/nginx</span><br></pre></td></tr></table></figure>
+<p>然后就可以访问了，<a href="http://localhost/" target="_blank" rel="noopener">http://localhost/</a> ， 一切正常！如果不能访问，先不要继续，看看是什么原因，解决之后再继续。</p>
+<p>如果你的机器同时安装了Apache，那上面的访问方式就不能使用了，而且nginx都可能启动不了，这是<br>因为它们都是用了80这个端口。我们这里将nginx的端口修改为8080，<br>这里主要修改nginx的配置文件nginx.conf，将一下这一行</p>
+<p>listen 80;</p>
+<p>修改为</p>
+<p>listen 8080;</p>
+<p>然后就可以访问了，<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> 。</p>
+<h3 id="3-3-安装PHP和MySQL"><a href="#3-3-安装PHP和MySQL" class="headerlink" title="3.3 安装PHP和MySQL"></a>3.3 安装PHP和MySQL</h3><p>sudo apt-get install php5-cli php5-cgi mysql-server php5-mysql</p>
+<h3 id="3-4-测试Nginx对PHP的支持"><a href="#3-4-测试Nginx对PHP的支持" class="headerlink" title="3.4 测试Nginx对PHP的支持"></a>3.4 测试Nginx对PHP的支持</h3><p>(1). 重新启动nginx:</p>
+<p>/etc/init.d/nginx restart</p>
+<p>(2). 启动FastCGI:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spawn-fcgi -a 127.0.0.1 -p 9000 -C 10 -u www-data -f /usr/bin/php-cgi</span><br><span class="line">spawn-fcgi启动出现错误时，查看php-cgi是否安装，如果么有的话，安装php5-cgi。</span><br></pre></td></tr></table></figure>
+<p>sudo apt-get install php5-cgi</p>
+<p>(3). 测试</p>
+<p>打开<a href="http://localhost/phpinfo.php" target="_blank" rel="noopener">http://localhost/phpinfo.php</a></p>
+<p>(4). Nginx配置</p>
+<p>Nginx的配置文件是/etc/nginx/nginx.conf，其中设置了一些必要的参数，我们发现其中这样的语句：</p>
+<p>include /etc/nginx/sites-enabled/*</p>
+<p>可以看出/etc/nginx/sites-enabled/default文件也是一个核心的配置文件，其中包含了主要的配置信息，</p>
+<p>如服务器跟目录、服务器名称、location信息和server信息。</p>
+<p>对于源代码安装的nginx，配置文件为/usr/local/nginx/conf/nginx.conf。</p>
+<p>下面主要说明location的匹配规则：</p>
+<ol>
+<li><p>= 前缀的指令严格匹配这个查询。如果找到，停止搜索。</p>
+</li>
+<li><p>剩下的常规字符串，最长的匹配优先使用。如果这个匹配使用 ^~ 前缀，搜索停止。</p>
+</li>
+<li><p>正则表达式，按配置文件里的顺序，第一个匹配的被使用。</p>
+</li>
+<li><p>如果第三步产生匹配，则使用这个结果。否则使用第二步的匹配结果。</p>
+</li>
+</ol>
+<p>在location中可以使用常规字符串和正则表达式。</p>
+<p>如果使用正则表达式，你必须使用以下规则：</p>
+<p>（1）~* 前缀选择不区分大小写的匹配</p>
+<p>（2）~  选择区分大小写的匹配</p>
+<p>例子：</p>
+<figure class="highlight nginxconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> = / &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　　　\# 只匹配 / 查询。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　　　[ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line"></span><br><span class="line">　　　　\# 匹配任何查询，因为所有请求都以 / 开头。</span><br><span class="line"></span><br><span class="line">              \# 但是正则表达式规则和长的块规则将被优先和查询匹配。</span><br><span class="line"></span><br><span class="line">　　　　[ configuration B ]</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　<span class="attribute">location</span><span class="regexp"> ^~</span> /images/ &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　　　\# 匹配任何以 /images/ 开头的任何查询并且停止搜索。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\# 任何正则表达式将不会被测试。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　　　[ configuration C ]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">　　<span class="attribute">location</span> <span class="regexp">~* \.(gif|jpg|jpeg)</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\# 匹配任何以 gif、jpg 或 jpeg 结尾的请求。</span><br><span class="line"></span><br><span class="line">\# 然而所有 /images/ 目录的请求将使用 Configuration C。</span><br><span class="line"></span><br><span class="line">　　　[ configuration D ]</span><br><span class="line"></span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure>
+<p>这里你还要对正则表达式有一定的了解！！！</p>
+<h1 id="PDO常用方法及其应用"><a href="#PDO常用方法及其应用" class="headerlink" title="PDO常用方法及其应用"></a>PDO常用方法及其应用</h1><ul>
+<li>PDO::query() 主要是用于有记录结果返回的操作，特别是SELECT操作</li>
+<li>PDO::exec() 主要是针对没有结果集合返回的操作，如INSERT、UPDATE等操作</li>
+<li>PDO::lastInsertId() 返回上次插入操作，主键列类型是自增的最后的自增ID</li>
+<li>PDOStatement::fetch() 是用来获取一条记录</li>
+<li>PDOStatement::fetchAll() 是获取所有记录集到一个中 </li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/notes-of-development-on-ubuntu.html" data-id="cjjisw3xk012c6lkofj8l4t97" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/notes-of-development-on-ubuntu.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/notes-of-development-on-ubuntu.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/static-block-load-ordering.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            static静态代码块，静态变量等加载顺序研究
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/thought-about-list-contains-method.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">关于List-contains方法的一些思考</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

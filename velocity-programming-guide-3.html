@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Velocity编程指南（三） | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Velocity,模板引擎" />
+    
+    <meta name="description" content="前面说了Velocity的VTL语法，关于Velocity的对象，引用等有了比较清晰的认识。但是，Velocity本身有哪些强大的功能呢？本章我们就来讨论一下Velocity中有哪些非常强大的命令（directives）和操作。 命令directives在Velocity中，我们重点需要了解的命令列举如下，以便于大家提前有一个简单的认识。  #set()[单行命令] #literal()[多行命令">
+<meta name="keywords" content="Velocity,模板引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Velocity编程指南（三）">
+<meta property="og:url" content="http://qinjiangbo.com/velocity-programming-guide-3.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="前面说了Velocity的VTL语法，关于Velocity的对象，引用等有了比较清晰的认识。但是，Velocity本身有哪些强大的功能呢？本章我们就来讨论一下Velocity中有哪些非常强大的命令（directives）和操作。 命令directives在Velocity中，我们重点需要了解的命令列举如下，以便于大家提前有一个简单的认识。  #set()[单行命令] #literal()[多行命令">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/velocity-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-02T09:03:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Velocity编程指南（三）">
+<meta name="twitter:description" content="前面说了Velocity的VTL语法，关于Velocity的对象，引用等有了比较清晰的认识。但是，Velocity本身有哪些强大的功能呢？本章我们就来讨论一下Velocity中有哪些非常强大的命令（directives）和操作。 命令directives在Velocity中，我们重点需要了解的命令列举如下，以便于大家提前有一个简单的认识。  #set()[单行命令] #literal()[多行命令">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/velocity-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-velocity-programming-guide-3" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Velocity编程指南（三）
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/velocity-programming-guide-3.html" class="article-date">
+    <time datetime="2017-06-29T15:21:49.000Z" itemprop="datePublished">2017-06-29</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Velocity/">Velocity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模板引擎/">模板引擎</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>前面说了Velocity的VTL语法，关于Velocity的对象，引用等有了比较清晰的认识。但是，Velocity本身有哪些强大的功能呢？本章我们就来讨论一下Velocity中有哪些非常强大的命令（directives）和操作。</p>
+<h2 id="命令directives"><a href="#命令directives" class="headerlink" title="命令directives"></a>命令directives</h2><p>在Velocity中，我们重点需要了解的命令列举如下，以便于大家提前有一个简单的认识。</p>
+<ul>
+<li><code>#set()</code>[单行命令]</li>
+<li><code>#literal()</code>[多行命令]</li>
+<li><code>#if() / #elseif() / #else</code>[多行命令]</li>
+<li><code>#foreach()</code>[多行命令]</li>
+<li><code>#include()</code>[单行命令]</li>
+<li><code>#parse()</code>[单行命令]</li>
+<li><code>#stop()</code>[单行命令]</li>
+<li><code>#macro()</code>[单行命令]（后面一章会学习）</li>
+</ul>
+<h3 id="set命令"><a href="#set命令" class="headerlink" title="#set命令"></a><code>#set</code>命令</h3><p>很简单就可以想到，<code>#set</code>命令主要是设置一个值对吧，具体点来说就是给一个引用赋值。我们直接来点例子吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 赋给一个变量值</span><br><span class="line">#set( $name = &quot;alibaba&quot; )</span><br><span class="line"></span><br><span class="line">## 赋给一个属性值</span><br><span class="line">#set( $customer.Favourite = $name )</span><br></pre></td></tr></table></figure>
+<p>从上面的例子我们可以看到等号左边的被赋值的引用类型只能是变量引用或者是属性引用，其它的类型都无效，这和我们的Java中的赋值语法是一致的。重点是等号右边的元素可以是一下类型：</p>
+<ul>
+<li>变量引用（Variable reference）</li>
+<li>字符串常量（String literal）</li>
+<li>属性引用（Property reference）</li>
+<li>方法引用（Method reference）</li>
+<li>数值常量（Number literal）</li>
+<li>链表（List）</li>
+<li>映射（Map）</li>
+<li>表达式（Expression）</li>
+</ul>
+<p>比如说下面的这些都是可以的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">## 变量引用</span><br><span class="line">#set( $fruit = $selectedFruit )</span><br><span class="line"></span><br><span class="line">## 字符串常量</span><br><span class="line">#set( $fruit.flavor = &quot;sweet&quot; )</span><br><span class="line"></span><br><span class="line">## 属性引用</span><br><span class="line">#set( $fruit.amount = $cart.total )</span><br><span class="line"></span><br><span class="line">## 方法引用</span><br><span class="line">#set( $fruit.color = $colorlist.selectColor($select) )</span><br><span class="line"></span><br><span class="line">## 数值常量</span><br><span class="line">#set( $fruit.value = 123 )</span><br><span class="line"></span><br><span class="line">## 链表</span><br><span class="line">#set( $fruit.sorts = [&quot;Apple&quot;, &quot;Pear&quot;, &quot;Orange&quot;] )</span><br><span class="line"></span><br><span class="line">## 映射</span><br><span class="line">#set( $fruit.shapes = &#123;&quot;Apple&quot; : &quot;round&quot;, &quot;Pear&quot; : &quot;conical&quot;&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong><code>多说一句</code>：如何获取Velocity中的链表List和映射Map中的值呢？以上面的例子来说，对于List，我们可以就类似于<code>java.util.List</code>的方式来取值，像这样<code>$fruit.sorts.get(0)</code>；对于Map，一样的，类似<code>java.util.Map</code>，如<code>$fruit.shapes.get(&quot;Apple&quot;)</code>。</strong></p>
+<p>至于表达式嘛！我们看一看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#set( $value = $hello + 1 )</span><br><span class="line">#set( $value = $hello - 1 )</span><br><span class="line">#set( $value = $hello * $world )</span><br><span class="line">#set( $value = $hello / $world )</span><br></pre></td></tr></table></figure>
+<p>加减乘除其实都是OK的。</p>
+<h3 id="给引用赋空值null"><a href="#给引用赋空值null" class="headerlink" title="给引用赋空值null"></a>给引用赋空值null</h3><p>一般来说，Velocity是不允许给引用赋空值的，就是说，如果这个引用所指向的是一个非空的值，那么后面给它赋空值以后，它的值是不会变的，还是之前的值。怎样解除这个限制呢？Velocity从1.5版本以后给出了自己的方案，就是设置一个运行时属性<code>directive.set.null.allowed</code>为<code>true</code>，否则是不能设置控制的。下面给出一个简单的例子说明一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#set( $result = $query.criteria(&quot;fruit&quot;) )</span><br><span class="line">The result of the first query is $result</span><br><span class="line"></span><br><span class="line">#set( $result = $query.criteria(&quot;customer&quot;) )</span><br><span class="line">The result of the second query is $result</span><br></pre></td></tr></table></figure>
+<p>如果说<code>$query.criteria(&quot;fruit&quot;)</code>返回的是<code>apple</code> ，而<code>$query.criteria(&quot;customer&quot;)</code>返回的是<code>null</code>，上面的代码运行结果是什么？好好想一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The result of the first query is apple</span><br><span class="line"></span><br><span class="line">The result of the second query is apple</span><br></pre></td></tr></table></figure>
+<p>没错！你想的是正确结果！那我们下面来一个难度更高一点的：我们使用一个<code>#foreach</code>命令来遍历一个集合中所有非空的元素，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#set( $criteria = [&quot;fruit&quot;, $name ,&quot;customer&quot;] )</span><br><span class="line">#foreach( $criterion in $criteria )</span><br><span class="line">    #set( $result = $criterion )</span><br><span class="line">    #if( $result )</span><br><span class="line">        $result</span><br><span class="line">    #end</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>说明一下，上面的代码中<code>$name</code>没有赋任何值，也就是说它为空，想一下，这段代码的运行结果会是什么？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fruit</span><br><span class="line">fruit</span><br><span class="line">customer</span><br></pre></td></tr></table></figure>
+<p>为什么？因为第一个元素被访问以后<code>$result</code>的值变为了<code>fruit</code>，由于第二个元素是空的，所以<code>$result</code>的值不变，还是<code>fruit</code>，但是第三个元素的值是<code>customer</code>不为空，那么<code>$result</code>呗赋值成功。</p>
+<p><strong>正确的做法应该是什么呢？怎样不重复地输出整个List中非空的元素呢？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#set( $criteria = [&quot;name&quot;, &quot;address&quot;] )</span><br><span class="line">#foreach( $criterion in $criteria )</span><br><span class="line">    #set( $result = &quot;&quot; )</span><br><span class="line">    #set( $result = $criterion )</span><br><span class="line">    #if( $result != &quot;&quot; )</span><br><span class="line">        $result</span><br><span class="line">    #end</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>结果就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fruit</span><br><span class="line">customer</span><br></pre></td></tr></table></figure>
+<p>Bingo！</p>
+<h3 id="字符串常量-literal命令"><a href="#字符串常量-literal命令" class="headerlink" title="字符串常量#literal命令"></a>字符串常量<code>#literal</code>命令</h3><p>当我们使用<code>#set</code>命令的时候，其实即使是在双引号中括起来的变量，一样的会被解析出来，就像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#set( $hello = &quot;I LOVE&quot; )</span><br><span class="line">#set ( $world = &quot;ALIBABA&quot; )</span><br><span class="line">#set ( $mylove = &quot;$hello $world&quot; )</span><br></pre></td></tr></table></figure>
+<p>结果就是<code>I LOVE ALIBABA</code>。惊不惊喜？意不意外？如果我们仅仅只是想表达<code>$hello $world</code>这个字符串呢，何解？答案是<code>#literal</code>命令和单引号。分别看一看：</p>
+<p><strong>单引号</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#set ( $name = &apos;hello&apos; )</span><br><span class="line">#set ( $hobby = &apos;$name&apos; )</span><br><span class="line">我的兴趣是$&#123;hobby&#125;.</span><br></pre></td></tr></table></figure>
+<p>结果是<code>我的兴趣是$name.</code>然后再看看<code>#literal</code>命令。</p>
+<p><strong><code>#literal</code>命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#set ( $name = &quot;hello&quot; )</span><br><span class="line">#literal()</span><br><span class="line">我的名字是$name.</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>结果是<code>我的名字是$name.</code>并不是<code>我的名字是hello.</code>为什么？因为在<code>#literal</code>命令体里面，所有的命令都失效了，全部都会被当做纯文本来处理。</p>
+<h3 id="if-elseif-else命令"><a href="#if-elseif-else命令" class="headerlink" title="#if / #elseif / #else命令"></a><code>#if / #elseif / #else</code>命令</h3><p>和所有的编程语言一样，Velocity的模板语言也有自己的流程控制逻辑，通过<code>#if / #elseif / #else</code>命令来实现的。这个不用多说，给出一个demo就可以体会了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#set ($direction = 15)</span><br><span class="line">#set ($wind = 6)</span><br><span class="line"></span><br><span class="line">#if( $direction &lt; 10 )</span><br><span class="line">    &lt;strong&gt;Go North&lt;/strong&gt;</span><br><span class="line">#elseif( $direction == 10 )</span><br><span class="line">    &lt;strong&gt;Go East&lt;/strong&gt;</span><br><span class="line">#elseif( $wind == 6 )</span><br><span class="line">    &lt;strong&gt;Go South&lt;/strong&gt;</span><br><span class="line">#else</span><br><span class="line">    &lt;strong&gt;Go West&lt;/strong&gt;</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，如果一个引用没有被赋值，那么默认为空，在条件判断的时候为<code>false</code>。这一点和Java中的对象为空判断保持一致。</p>
+<h3 id="foreach命令"><a href="#foreach命令" class="headerlink" title="#foreach命令"></a><code>#foreach</code>命令</h3><p>我们知道在Java中我们通过<code>foreach</code>循环遍历一个集合或者数组，同样的，在Velocity中，我们同样也是通过<code>#foreach</code>命令来遍历一个集合或者数组的。在Velocity中，使用<code>#foreach</code>命令的时候，第一个变量是循环遍历变量，第二个变量是需要被迭代遍历的集合或者数组等，中间使用关键字<code>in</code>来连接。使用方式比较简单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">    #foreach( $product in $allProducts )</span><br><span class="line">        &lt;li&gt;$product&lt;/li&gt;</span><br><span class="line">    #end</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<p>Velocity<code>#foreach</code>命令支持的Java类型是以下几种：</p>
+<ul>
+<li>任何数组类型</li>
+<li><strong>java.lang.Collection</strong>，使用<code>obj.iterator()</code>返回的迭代器遍历</li>
+<li><strong>java.lang.Map</strong>，使用<code>map.values().iterator()</code>返回的迭代器遍历</li>
+<li><strong>java.lang.Iterator</strong>，直接使用这个迭代器遍历</li>
+<li><strong>java.lang.Enumeration</strong>，Velocity会把枚举包装成迭代器再遍历</li>
+</ul>
+<p><code>注意</code>：不推荐直接使用<code>java.lang.Iterator</code>和<code>java.lang.Enumeration</code>来直接遍历，因为它们不支持循环多遍，迭代器循环完一遍以后指针就不在前面了，再次遍历就取不到元素了。</p>
+<p>遍历的时候我们需要统计这个元素的次序怎么办？很简单，Velocity为我们提供了步数（<code>$velocityCount</code>）和步长（<code>counter</code>）的支持。可以在运行时配置它，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Default name of the loop counter</span><br><span class="line"># variable reference.</span><br><span class="line">directive.foreach.counter.name = velocityCount</span><br><span class="line"></span><br><span class="line"># Default starting value of the loop</span><br><span class="line"># counter variable reference.</span><br><span class="line">directive.foreach.counter.initial.value = 1</span><br></pre></td></tr></table></figure>
+<p>从上面可以看到，<code>$velocityCount</code>这个名字是可以被替换成任何你想要的名字的。但是，一般我们用默认的就行啦，很多Java框架解析的时候一般也是使用默认框架的。</p>
+<p><strong>单次遍历</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">    #foreach( $customer in $customerList )</span><br><span class="line">        &lt;tr&gt;&lt;td&gt;$velocityCount&lt;/td&gt;&lt;td&gt;$customer.Name&lt;/td&gt;&lt;/tr&gt;</span><br><span class="line">    #end</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>嵌套遍历</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#foreach ($category in $allCategories)</span><br><span class="line">    Category # $velocityCount is $category</span><br><span class="line">    #foreach ($item in $allItems)</span><br><span class="line">        Item # $velocitycount is $item</span><br><span class="line">    #end</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>为了避免死锁，Velocity还针对<code>#foreach</code>命令给出了一个限制的办法，就是设置一个运行时变量的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># The maximum allowed number of loops.</span><br><span class="line">directive.foreach.maxloops = -1</span><br></pre></td></tr></table></figure>
+<p>默认为<code>-1</code>，表示不作限制。</p>
+<h3 id="加载资源-include和-parse命令"><a href="#加载资源-include和-parse命令" class="headerlink" title="加载资源#include和#parse命令"></a>加载资源<code>#include</code>和<code>#parse</code>命令</h3><p>Velocity中资源有两种方式，一种是普通文件，另一种是模板文件。针对普通文件和模板文件加载的命令也是不一样的，不能搞混了。<strong>一般来说<code>#include</code>命令是用来加载普通文件的，而<code>#parse</code>命令被用来加载模板文件。</strong>从命令的英文名字上也可以看出来对吧，<code>include</code>表示包括的意思，<code>parse</code>表示解析的意思。模板文件比普通文件多的是一些待解析的Velocity命令。 </p>
+<p><strong>加载普通文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 加载普通文件one.txt</span><br><span class="line">#include( &quot;one.txt&quot; )</span><br><span class="line"></span><br><span class="line">## 加载多个文件</span><br><span class="line">#include( &quot;one.txt&quot;,&quot;two.txt&quot;,&quot;three.txt&quot; )</span><br></pre></td></tr></table></figure>
+<p>另外，我们还可以使用引用的形式表示待加载文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 将文件one.txt赋给变量$file0</span><br><span class="line">#set( $file0 = &quot;one.txt&quot; )</span><br><span class="line"></span><br><span class="line">## 加载多个文件</span><br><span class="line">#include( $file0,&quot;two.txt&quot;,&quot;three.txt&quot; )</span><br></pre></td></tr></table></figure>
+<p><strong>加载模板文件</strong></p>
+<p><code>#parse</code>命令和<code>#include</code>命令很相似，但是<code>#parse</code>命令只能带一个参数，不像<code>#include</code>命令能带多个参数，这点需要大家多多注意。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">## ########################################</span><br><span class="line">## 模板文件 &quot;alibaba.vm&quot;</span><br><span class="line">## ########################################</span><br><span class="line">Hello, Alibaba!</span><br><span class="line">#set( $name = &quot;Alibaba&quot; )</span><br><span class="line">#parse(&quot;taobao.vm&quot;)</span><br><span class="line">#parse(&quot;tmall.vm&quot;)</span><br><span class="line">## ########################################</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## ########################################</span><br><span class="line">## 模板文件 &quot;taobao.vm&quot;</span><br><span class="line">## ########################################</span><br><span class="line">#set( $name0 = &quot;Taobao&quot; )</span><br><span class="line">Hello, $!&#123;name&#125; from $!&#123;name0&#125;!</span><br><span class="line">## ########################################</span><br><span class="line"></span><br><span class="line">## ########################################</span><br><span class="line">## 模板文件 &quot;tmall.vm&quot;</span><br><span class="line">## ########################################</span><br><span class="line">#set( $name0 = &quot;Tmall&quot; )</span><br><span class="line">Hello, $!&#123;name&#125; from $!&#123;name0&#125;!</span><br><span class="line">## ########################################</span><br></pre></td></tr></table></figure>
+<p>结果就是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">This is a Alibaba day.</span><br><span class="line">Hello, Alibaba from Taobao!</span><br><span class="line">Hello, Alibaba from Tmall!</span><br></pre></td></tr></table></figure>
+<h3 id="stop命令"><a href="#stop命令" class="headerlink" title="#stop命令"></a><code>#stop</code>命令</h3><p>在调试的时候，如果我们只想让模板被解析一部分呢？因为可能某个模板特别长，而我们需要被解析的部分可能就是开头的那么一小段，如果整个模板被解析的话可能非常耗时，这个时候我们就需要手动地告诉模板引擎不要再解析了，到此为止，后面的内容就会全部丢弃掉，不再解析。Velocity中<code>#stop</code>命令可以实现这个功能。直接来例子说话。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#set( $name = &quot;alibaba&quot; )</span><br><span class="line">My name is $name.</span><br><span class="line">#stop</span><br><span class="line">This line won&apos;t be displayed!</span><br></pre></td></tr></table></figure>
+<p>结果就是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">My name is alibaba.</span><br></pre></td></tr></table></figure>
+<p>可以看到，下面那句<code>This line won&#39;t be displayed!</code>真的没有显示出来。但是不代表你的模板文件存在语法错误的时候它会忽略掉哈，如果说你的模板中在<code>#stop</code>命令后面的代码存在语法错误的时候，引擎依然会报错的。<strong>两个英文单词可以区分，<code>#stop</code>命令是<code>stop rendering</code>，而不是<code>stop parsing</code>。</strong></p>
+<h3 id="操作符operators"><a href="#操作符operators" class="headerlink" title="操作符operators"></a>操作符operators</h3><p>操作符比较简单，大家注意一下就是文本的写法比如<code>and</code>表示<strong>与</strong>和简略的写法<code>&amp;&amp;</code>表示<strong>与</strong>是一样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#set ($a = true)</span><br><span class="line">#set ($b = false)</span><br><span class="line"></span><br><span class="line">#if ($a || $b)</span><br><span class="line">    换做or也是对的</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">#if ($a and $b)</span><br><span class="line">    换做&amp;&amp;也是对的</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>来一张对照表格：</p>
+<table>
+<thead>
+<tr>
+<th>Type of operator</th>
+<th style="text-align:center">short version</th>
+<th style="text-align:center">text version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>equal</td>
+<td style="text-align:center">==</td>
+<td style="text-align:center">eq</td>
+</tr>
+<tr>
+<td>not equal</td>
+<td style="text-align:center">!=</td>
+<td style="text-align:center">ne</td>
+</tr>
+<tr>
+<td>greater than</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">gt</td>
+</tr>
+<tr>
+<td>greater or equal than</td>
+<td style="text-align:center">&gt;=</td>
+<td style="text-align:center">ge</td>
+</tr>
+<tr>
+<td>less than</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">lt</td>
+</tr>
+<tr>
+<td>less or equal than</td>
+<td style="text-align:center">&lt;=</td>
+<td style="text-align:center">le</td>
+</tr>
+<tr>
+<td>logical and</td>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center">and</td>
+</tr>
+<tr>
+<td>logical or</td>
+<td style="text-align:center">&#124;&#124;</td>
+<td style="text-align:center">or</td>
+</tr>
+<tr>
+<td>logical not</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">not</td>
+</tr>
+</tbody>
+</table>
+<p><code>前方高能预警</code>：<strong>非常需要大家注意的是不像其它的语言那样，数字<code>0</code>和字符串空串<code>&quot;&quot;</code>可以表示为<code>false</code>，Velocity中是不可以的，它只允许布尔型的值<code>false</code>和空值<code>null</code>转为<code>false</code>，其它一切的对象都会被当做是<code>true</code>。务必注意啦！</strong></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/velocity-programming-guide-3.html" data-id="cjjisw3y3013b6lkoxvug2by8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/velocity-programming-guide-3.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/velocity-programming-guide-3.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/velocity-programming-guide-4.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Velocity编程指南（四）
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/add-changyan-donation-plugin-to-hexo-blog.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Hexo添加畅言打赏插件</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

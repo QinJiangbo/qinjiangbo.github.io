@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>细说Java8之新增API上 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java8" />
+    
+    <meta name="description" content="JDK8发布已经有三年的时间了，虽然每次都在用JDK8去开发应用程序，但是在工作中对JDK8的新特性真的是使用不多。不过，我相信JDK8的开发者们这么辛辛苦苦编写出来的新特性一定是有它非常好的一面的，只是我们目前还没有习惯这种编程方式，不熟悉它并不代表它不优秀！ 接口中新增的default方法以前我们会说接口只能声明抽象方法，而抽象类才能既声明抽象方法又能实现具体方法。但是从JDK8开始，我们再">
+<meta name="keywords" content="Java8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="细说Java8之新增API上">
+<meta property="og:url" content="http://qinjiangbo.com/java8-new-interfaces-1.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="JDK8发布已经有三年的时间了，虽然每次都在用JDK8去开发应用程序，但是在工作中对JDK8的新特性真的是使用不多。不过，我相信JDK8的开发者们这么辛辛苦苦编写出来的新特性一定是有它非常好的一面的，只是我们目前还没有习惯这种编程方式，不熟悉它并不代表它不优秀！ 接口中新增的default方法以前我们会说接口只能声明抽象方法，而抽象类才能既声明抽象方法又能实现具体方法。但是从JDK8开始，我们再">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-thumbnail.png">
+<meta property="og:updated_time" content="2017-09-02T15:07:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="细说Java8之新增API上">
+<meta name="twitter:description" content="JDK8发布已经有三年的时间了，虽然每次都在用JDK8去开发应用程序，但是在工作中对JDK8的新特性真的是使用不多。不过，我相信JDK8的开发者们这么辛辛苦苦编写出来的新特性一定是有它非常好的一面的，只是我们目前还没有习惯这种编程方式，不熟悉它并不代表它不优秀！ 接口中新增的default方法以前我们会说接口只能声明抽象方法，而抽象类才能既声明抽象方法又能实现具体方法。但是从JDK8开始，我们再">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-java8-new-interfaces-1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        细说Java8之新增API上
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/java8-new-interfaces-1.html" class="article-date">
+    <time datetime="2017-03-24T11:55:51.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java8/">Java8</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/java8-thumbnail.png" alt="JDK8"></p>
+<p>JDK8发布已经有三年的时间了，虽然每次都在用JDK8去开发应用程序，但是在工作中对JDK8的新特性真的是使用不多。不过，我相信JDK8的开发者们这么辛辛苦苦编写出来的新特性一定是有它非常好的一面的，只是我们目前还没有习惯这种编程方式，<strong>不熟悉它并不代表它不优秀！</strong></p>
+<h2 id="接口中新增的default方法"><a href="#接口中新增的default方法" class="headerlink" title="接口中新增的default方法"></a>接口中新增的default方法</h2><p>以前我们会说接口只能声明抽象方法，而抽象类才能既声明抽象方法又能实现具体方法。但是从JDK8开始，我们再也没有这种说法啦！因为，JDK8中为我们带来了接口的default默认方法。也就是说我们可以给接口中声明的方法加上默认的实现啦~</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Formula</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.sqrt(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到<code>Formula</code>类有两个方法，一个是未实现的<code>calculate</code>方法，另一个是具有默认实现的<code>sqrt</code>方法。实现<code>Formula</code>接口的具体类不必实现<code>sqrt</code>就可以直接使用这个方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Formula formula = <span class="keyword">new</span> Formula() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sqrt(a * <span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">formula.calculate(<span class="number">100</span>);     <span class="comment">// 100.0</span></span><br><span class="line">formula.sqrt(<span class="number">16</span>);           <span class="comment">// 4.0</span></span><br></pre></td></tr></table></figure>
+<p>是不是很Nice?但是我估计大家一时半会儿也很难使用这个特性，凡事得有一个过程。</p>
+<h2 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h2><p>Lambda表达式可能是JDK8与之前版本最大的一个区别了！Lambda表达式在Python3中也开始支持了，二者的使用方式几乎相同，说明Lambda表达式已经被越来越多的平台支持啦，也说明Lambda表达式被越来越多的人所知晓。好啦，我们先来看看没有Lambda表达式的时候我们怎么写代码？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names = Arrays.asList(<span class="string">"Richard"</span>, <span class="string">"Jack"</span>, <span class="string">"Pony"</span>);</span><br><span class="line"></span><br><span class="line">Collections.sort(names, <span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String a, String b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> b.compareTo(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这种方式够啦！！！代码好多都是可以省略的，其实真正起作用的就是<code>b.compareTo(a)</code>不是吗？那我们直接用它！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names = Arrays.asList(<span class="string">"Richard"</span>, <span class="string">"Jack"</span>, <span class="string">"Pony"</span>);</span><br><span class="line"></span><br><span class="line">Collections.sort(names, (String a, String b) -&gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> b.compareTo(a)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>还可以更简洁~</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names, (String a, String b) -&gt; (b.compareTo(a)));</span><br></pre></td></tr></table></figure>
+<p>为什么还要加上类型？也可以去掉嘛！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(names, (a, b) -&gt; b.compareTo(a));</span><br></pre></td></tr></table></figure>
+<p>Java编译器自己会<strong>推断</strong>出<code>a</code>和<code>b</code>的类型，所以我们只需要写出它们需要做什么就行~现在继续看看Lambda表达式会发挥出什么样的威力？</p>
+<h2 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h2><p>Java8中引入了函数式编程，但是这里需要给大家说明的是Lambda表达式适用的场景，Lambda表达式的实质是什么？<strong>Lambda表达式就是一个匿名方法， 每一个Lambda表达式必须匹配一个只包含一个方法的接口。</strong>这样的方法就是函数式接口，这种接口在以前也叫SAM（Single Abstract Method）单抽象方法类型。</p>
+<p>我们可以使用任意的接口来作为Lambda表达式，只要这个接口只有一个抽象方法就行。为了保证在生产中不出现一些没有声明但是却满足条件的接口，这种很有可能是误报，所以我们需要使用<code>@FunctionalInterface</code>注解。这样编译器就会知道这个注解了，并且在你尝试向其中添加额外的抽象方法时就会报错。来看一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Converter</span>&lt;<span class="title">F</span>, <span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">T <span class="title">convert</span><span class="params">(F from)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Converter&lt;String, Integer&gt; converter = (from) -&gt; Integer.valueOf(from);</span><br><span class="line">Integer converted = converter.convert(<span class="string">"123"</span>);</span><br><span class="line">System.out.println(converted);    <span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，<code>converter</code>对象的创建是基于一个抽象方法的实现。<code>(from) -&gt; Integer.valueOf(from)</code>这个方法是<code>T convert(F from)</code>的具体实现。如果这个时候你再添加一个抽象方法，这个Lambda表达式就没法写了，所以，函数式接口只能允许有一个抽象方法。注意一个事实就是如果你省略了这个<code>@FunctionalInterface</code>注解这个代码依然是正确的。原因我们前面讲过。</p>
+<h2 id="方法和构造函数引用"><a href="#方法和构造函数引用" class="headerlink" title="方法和构造函数引用"></a>方法和构造函数引用</h2><p>利用静态方法引用上面的代码还可以写成这个样子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Converter&lt;String, Integer&gt; converter = Integer::valueOf;</span><br><span class="line">Integer converted = converter.convert(<span class="string">"123"</span>);</span><br><span class="line">System.out.println(converted);    <span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+<p>你可能会问这个<code>::</code>是什么？没错，我们在C++里面看到过，它是作用域限定符。那么在Java8里面它的作用是什么呢？我们可以看到的是它可以被用来引用类的静态方法。其实在C++里面也有这样的作用，我估计Java8学习了这一点的。那除了引用静态方法，普通的实例方法能不能引用呢？答案当然是可以的！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Something</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">startsWith</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(s.charAt(<span class="number">0</span>)); <span class="comment">// convert first char to string</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Something something = <span class="keyword">new</span> Something();</span><br><span class="line">Converter&lt;String, String&gt; converter = something::startsWith;</span><br><span class="line">String converted = converter.convert(<span class="string">"Java"</span>);</span><br><span class="line">System.out.println(converted);    <span class="comment">// "J"</span></span><br></pre></td></tr></table></figure>
+<p>我们注意到类<code>Something</code>的实例对象<code>something</code>可以通过<code>::</code>来调用它的<code>startsWith</code>方法。以上是对方法的引用，我们来看看<code>::</code>对构造函数是如何引用的？</p>
+<p>先定义一个对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">	String name;</span><br><span class="line">	<span class="keyword">int</span> age;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后定义一个创建学生对象的地方：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">School</span> </span>&#123;</span><br><span class="line">	<span class="function">Student <span class="title">create</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在就可以这么创建学生对象啦：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">School school = Student::<span class="keyword">new</span>;</span><br><span class="line">Student stuent = school.create(<span class="string">"Richard"</span>, <span class="number">23</span>);</span><br></pre></td></tr></table></figure>
+<p>其实如果你使用IDE的话，上面的<code>Student::new</code>会自动提示出来。我们通过使用<code>Student::new</code>来引用了<code>Student</code>类的构造函数，而且Java的编译器会自己去匹配对应的构造函数。</p>
+<h2 id="Lambda访问限定域"><a href="#Lambda访问限定域" class="headerlink" title="Lambda访问限定域"></a>Lambda访问限定域</h2><h3 id="访问局部变量"><a href="#访问局部变量" class="headerlink" title="访问局部变量"></a>访问局部变量</h3><p>你可以在匿名对象中访问外部的变量，但是需要注意的是，这个被访问的变量默认是final的，因此你不可以在匿名对象中修改这个变量。在Lambda表达式中也是这样，Lambda表达式外部的变量默认是final的，如果你修改这个变量的值编译就没法通过。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line">Calculator calculator = ((a) -&gt; &#123; <span class="keyword">return</span> a+b; &#125;);</span><br><span class="line">b = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>这里就会报一个错误：<code>Variables used in lambda expression should be final or effectively final</code>。如何去修改呢？将<code>b = 0;</code>去掉即可。它就默认<code>int b = 0;</code>声明的这个变量<code>b</code>为<code>final</code>的了。为什么这些变量要设置为<code>final</code>不可变，那是因为考虑到多线程环境下更改这个变量的值是不安全的。</p>
+<h3 id="访问实例属性和静态变量"><a href="#访问实例属性和静态变量" class="headerlink" title="访问实例属性和静态变量"></a>访问实例属性和静态变量</h3><p>使用Lambda表达式访问实例属性和静态变量的时候，和访问局部变量不同，你不需要将这些属性或者变量设置为final类型。下面这样写也是合法的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Scopes</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> outerStaticNum;</span><br><span class="line">    <span class="keyword">int</span> outerNum;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">testScopes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Converter&lt;Integer, String&gt; stringConverter1 = (from) -&gt; &#123;</span><br><span class="line">            outerNum = <span class="number">23</span>;</span><br><span class="line">            <span class="keyword">return</span> String.valueOf(from + outerNum);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Converter&lt;Integer, String&gt; stringConverter2 = (from) -&gt; &#123;</span><br><span class="line">            outerStaticNum = <span class="number">72</span>;</span><br><span class="line">            <span class="keyword">return</span> String.valueOf(from + outerStaticNum);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	Scopes scopes = <span class="keyword">new</span> Scopes();</span><br><span class="line">    	scopes.testScopes();</span><br><span class="line">    	System.out.println(outerStaticNum + <span class="string">"-"</span> + outerNum);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码执行完毕的时候，请问<code>outerNum</code>和<code>outerStaticNum</code>的值各是多少？<code>23</code>和<code>72</code>?当然不是，都是零。<strong>因为我们不能改变在Lambda表达式之外定义的值。</strong>（但是匿名函数可以哦！）</p>
+<h3 id="访问default方法"><a href="#访问default方法" class="headerlink" title="访问default方法"></a>访问default方法</h3><p>在Java8中，虽然我们新增了默认方法即default方法，但是我们确不能使用Lambda表达式访问它。像下面这种方式就是编译不通过的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a -= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Calculator calculator = (a) -&gt; remove(a);</span><br></pre></td></tr></table></figure>
+<p>它会提示<code>Cannot resolve method remove(a)</code>，说明Lambda表达式无法访问默认方法。</p>
+<h2 id="内置的函数式接口"><a href="#内置的函数式接口" class="headerlink" title="内置的函数式接口"></a>内置的函数式接口</h2><p>Java8中的函数式接口有很多，其中有相当多的一部分来自于Google的开源项目Guava，如果对Guava不熟悉的同学可以看一下我的<a href="http://t.cn/RMNYOyC" target="_blank" rel="noopener">《Guava优美代码》</a>系列博客。下面让我们看看Java8为我们提供了哪些函数式接口？</p>
+<ul>
+<li>Predicates</li>
+<li>Functions</li>
+<li>Suppliers</li>
+<li>Consumers</li>
+<li>Comparators</li>
+<li>Optionals</li>
+</ul>
+<h3 id="Predicates"><a href="#Predicates" class="headerlink" title="Predicates"></a>Predicates</h3><p>中文翻译是什么，<code>预言</code>对吧。它的作用就是用来判断一些条件成不成立，而这些条件都会提前在<code>Predicate</code>对象中定义好。下面给出一个简单的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Predicate&lt;String&gt; predicate = s -&gt; s.startsWith(<span class="string">"f"</span>);</span><br><span class="line">System.out.println(predicate.test(<span class="string">"funny"</span>)); <span class="comment">// true</span></span><br><span class="line">System.out.println(predicate.negate().test(<span class="string">"funny"</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>另外还有一些方法，比如<code>and</code>和<code>or</code>，这两个方法是用来创建<code>复合预言</code>的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Predicate&lt;String&gt; predicate0 = s -&gt; s.contains(<span class="string">"k"</span>);</span><br><span class="line">Predicate&lt;String&gt; andPredicate = predicate.and(predicate0);</span><br><span class="line">Predicate&lt;String&gt; orPredicate = predicate.or(predicate0);</span><br><span class="line">System.out.println(andPredicate.test(<span class="string">"funk"</span>)); <span class="comment">// true</span></span><br><span class="line">System.out.println(orPredicate.test(<span class="string">"joke"</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>也可以使用<code>::</code>来创建<code>Predicate</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Predicate&lt;Boolean&gt; nonNull = Objects::nonNull;</span><br><span class="line">System.out.println(nonNull.test(<span class="keyword">null</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>可以看到Java8中的Predicate使用还是很多样的。但是Guava中的Predicate使用方式更多。留一个悬念，自己到本博客Guava系列博客中寻找答案吧！</p>
+<h3 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h3><p>这个是啥意思大家都明白，<code>函数</code>嘛！函数的功能是干什么用的，执行一些动作！所以我们这里有必要给大家再区（啰）分（嗦）一下，<strong>函数Function是用来执行一些操作的所以它有可能有返回值，有可能没有返回值；而预言Predicate主要是用来判断一些条件成不成立的，所以它的返回值只能是Boolean类型。</strong>下面来看一下Function具体怎么用？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Function&lt;String, Integer&gt; function = Integer::valueOf;</span><br><span class="line">Function&lt;Integer, Boolean&gt; function0 = (s) -&gt; s.intValue() &gt; <span class="number">1000</span>;</span><br><span class="line">Function &lt;String, Boolean&gt; composedFunc = function.andThen(function0);</span><br><span class="line">System.out.println(composedFunc.apply(<span class="string">"123"</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>是不是很好玩？很灵活吧！可以非常自由地组合一些方法。</p>
+<h3 id="Suppliers"><a href="#Suppliers" class="headerlink" title="Suppliers"></a>Suppliers</h3><p>Suppliers又是啥？<code>提供者</code>？一般我们更倾向于将其称之为<code>生产者</code>。和<code>Function</code>不同的是<code>Supplier</code>不支持任何参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Supplier&lt;Student&gt; supplier = Student::<span class="keyword">new</span>;</span><br><span class="line">System.out.println(supplier.get()); <span class="comment">// Student@133314b</span></span><br></pre></td></tr></table></figure>
+<p>啥也不说了，它就这一个方法。。。类似于一种工厂。</p>
+<h3 id="Consumers"><a href="#Consumers" class="headerlink" title="Consumers"></a>Consumers</h3><p>Consumers就是<code>消费者</code>，<code>消费者</code>的作用当然是消费从<code>生产者</code>那里产出的产品啦。我们来看看消费者到底如何开始消费？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Consumer&lt;Student&gt; consumer = p -&gt;</span><br><span class="line">        System.out.println(p.name + <span class="string">"+"</span> + p.age);</span><br><span class="line">consumer.accept(<span class="keyword">new</span> Student(<span class="string">"Richard"</span>, <span class="number">23</span>));</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，现需要定义一个消费者，告诉它具体如何消费，然后通过<code>accept</code>方法给它传递一个产品供它消费。</p>
+<h3 id="Comparators"><a href="#Comparators" class="headerlink" title="Comparators"></a>Comparators</h3><p>比较器是JDK1.7就已经出现的函数式接口。JDK1.8中为这个函数式接口添加了需要默认方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Student&gt; comparator = (s1, s2) </span><br><span class="line">		-&gt; s1.name.compareToIgnoreCase(s2.name);</span><br><span class="line">Student student1 = <span class="keyword">new</span> Student(<span class="string">"Amy"</span>, <span class="number">24</span>);</span><br><span class="line">Student student2 = <span class="keyword">new</span> Student(<span class="string">"Richard"</span>, <span class="number">23</span>);</span><br><span class="line">System.out.println(comparator.compare(student1, student2)); <span class="comment">// -17</span></span><br></pre></td></tr></table></figure>
+<h3 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h3><p>Optional就是<code>可选的</code>嘛！啥意思？也就是说返回的结构有可能是<code>Null</code>也有可能<code>Non-Null</code>。<code>Null</code>有合适和正确的使用场景，如在性能和速度方面<code>Null</code>是廉价的，而且在对象数组中，出现<code>Null</code>也是无法避免的。但相对于底层库来说，在应用级别的代码中，<code>Null</code>往往是导致混乱，疑难问题和模糊语义的元凶，就如同我们举过的<code>Map.get(key)</code>的例子。最关键的是，<code>Null</code>本身没有定义它表达的意思。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;String&gt; optional = Optional.of(<span class="string">"hello"</span>);</span><br><span class="line">System.out.println(optional.isPresent()); <span class="comment">// true</span></span><br><span class="line">System.out.println(optional.get()); <span class="comment">// "hello"</span></span><br><span class="line">System.out.println(optional.orElse(<span class="string">"world"</span>)); <span class="comment">// "hello"</span></span><br><span class="line">optional.ifPresent((s) -&gt; System.out.println(s.charAt(<span class="number">0</span>))); <span class="comment">// "h"</span></span><br></pre></td></tr></table></figure>
+<p>上面的例子是直接创建了一个<code>Optional</code>对象的，但是我们也可以在函数中返回一个<code>Optional</code>对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Optional&lt;String&gt; <span class="title">getSomething</span><span class="params">(String thing)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Optional.ofNullable(thing);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (getSomething(<span class="string">"some"</span>).isPresent()) &#123;</span><br><span class="line">    System.out.println(getSomething(<span class="string">"some"</span>).get());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (getSomething(<span class="keyword">null</span>).isPresent()) &#123;</span><br><span class="line">    System.out.println(getSomething(<span class="keyword">null</span>).get());</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">"The value is null!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般我们都是先需要判断结果是否为空，然后在执行相应的操作。而且它比较好的一点是如果返回的值为空我们还可以指定相关的替代值。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是JDK1.8中给我们带来的新特性的一部分。关于Stream流以及Map, Reduce等部分的内容我们在下一篇博文里再探讨。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/java8-new-interfaces-1.html" data-id="cjjisw3ww011e6lkog0ozyjls" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/java8-new-interfaces-1.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/java8-new-interfaces-1.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/java8-new-interfaces-2.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            细说Java8之新增API下
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/think-in-java-method-reload.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Java编程思想之方法重载（四）</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

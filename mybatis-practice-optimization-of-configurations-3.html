@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>MyBatis实战-3-优化MyBatis配置项 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="MyBatis,实战" />
+    
+    <meta name="description" content="优化MyBatis配置项前面一节说了MyBatis实现CRUD等操作的具体实践，本节将要站在代码的可读性和可维护性上优化MyBatis的配置文件的代码，已达到简洁的目的。 分离数据库配置项一般来说，数据库的配置信息是需要动态变化的。在生产环境中，应用需要连接到生产数据库，在测试环境中，应用需要连接到测试数据库。如果数据库的配置不是动态配置的，则这项配置会变得非常麻烦，大大加大了工程师的工作量，而且">
+<meta name="keywords" content="MyBatis,实战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis实战-3-优化MyBatis配置项">
+<meta property="og:url" content="http://qinjiangbo.com/mybatis-practice-optimization-of-configurations-3.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="优化MyBatis配置项前面一节说了MyBatis实现CRUD等操作的具体实践，本节将要站在代码的可读性和可维护性上优化MyBatis的配置文件的代码，已达到简洁的目的。 分离数据库配置项一般来说，数据库的配置信息是需要动态变化的。在生产环境中，应用需要连接到生产数据库，在测试环境中，应用需要连接到测试数据库。如果数据库的配置不是动态配置的，则这项配置会变得非常麻烦，大大加大了工程师的工作量，而且">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/mybatis-plus-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-02T09:00:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis实战-3-优化MyBatis配置项">
+<meta name="twitter:description" content="优化MyBatis配置项前面一节说了MyBatis实现CRUD等操作的具体实践，本节将要站在代码的可读性和可维护性上优化MyBatis的配置文件的代码，已达到简洁的目的。 分离数据库配置项一般来说，数据库的配置信息是需要动态变化的。在生产环境中，应用需要连接到生产数据库，在测试环境中，应用需要连接到测试数据库。如果数据库的配置不是动态配置的，则这项配置会变得非常麻烦，大大加大了工程师的工作量，而且">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/mybatis-plus-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-mybatis-practice-optimization-of-configurations-3" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        MyBatis实战-3-优化MyBatis配置项
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/mybatis-practice-optimization-of-configurations-3.html" class="article-date">
+    <time datetime="2016-09-14T14:45:58.000Z" itemprop="datePublished">2016-09-14</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/">MyBatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实战/">实战</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="优化MyBatis配置项"><a href="#优化MyBatis配置项" class="headerlink" title="优化MyBatis配置项"></a>优化MyBatis配置项</h2><p>前面一节说了MyBatis实现CRUD等操作的具体实践，本节将要站在代码的可读性和可维护性上优化MyBatis的配置文件的代码，已达到简洁的目的。</p>
+<h3 id="分离数据库配置项"><a href="#分离数据库配置项" class="headerlink" title="分离数据库配置项"></a>分离数据库配置项</h3><p><strong>一般来说，数据库的配置信息是需要动态变化的。</strong>在生产环境中，应用需要连接到生产数据库，在测试环境中，应用需要连接到测试数据库。如果数据库的配置不是动态配置的，则这项配置会变得非常麻烦，大大加大了工程师的工作量，而且是<strong>极易发生错误</strong>的，且发生了错误排除的成本也会非常的高，所以，我们有必要将这个数据库配置项单独分离出来。</p>
+<p>1.在conf包下面创建一个database.properties文件</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">jdbc.</span><span class="string">driver </span>= <span class="string">com.</span><span class="string">mysql.</span><span class="string">cj.</span><span class="string">jdbc.</span><span class="string">Driver</span></span><br><span class="line"><span class="string">jdbc.</span><span class="string">url </span>= <span class="string">jdbc:mysql:</span>//<span class="string">localhost:3306/</span><span class="string">mybatis</span></span><br><span class="line"><span class="string">jdbc.</span><span class="string">username </span>= <span class="string">Richard</span></span><br><span class="line"><span class="string">jdbc.</span><span class="string">password </span>= <span class="string">123456</span></span><br></pre></td></tr></table></figure>
+<p>2.在MyBatis配置文件下面添加这个配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 导入数据库相关的配置信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">"com/qinjiangbo/conf/database.properties"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driver&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"com/qinjiangbo/dao/UserMapper.xml"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">class</span>=<span class="string">"com.qinjiangbo.dao.UserMapperC"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>3.测试实例</p>
+<p>测试实例同上一节相同，请同学们自己结合之前的代码再跑一遍。博主本地的代码均通过严格的测试。</p>
+<h3 id="将实体类定义一个别名"><a href="#将实体类定义一个别名" class="headerlink" title="将实体类定义一个别名"></a>将实体类定义一个别名</h3><p>通常在UserMapper.xml文件中，我们如果需要制定参数类型或者返回数据类型为一个pojo类型，那么我们需要写上它的全类名，这样在某种程度上加大了复杂度，而且不利于开发人员维护代码。这个时候我们需要将这个全类名别名化，博主是提倡使用pojo类本身的类名作为别名的。</p>
+<p>1.在MyBatis配置文件中的configuration元素下添加一个typeAliases元素。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 导入数据库相关的配置信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">"com/qinjiangbo/conf/database.properties"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 添加别名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">"com.qinjiangbo.pojo.User"</span> <span class="attr">alias</span>=<span class="string">"User"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driver&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"com/qinjiangbo/dao/UserMapper.xml"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">class</span>=<span class="string">"com.qinjiangbo.dao.UserMapperC"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>NOTE</code>如果你想要所有的pojo类都自动使用类名来做别名，而不像一个一个配置很麻烦，你可以使用package这个元素，它会默认将这个包下面的所有的类别名化。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 导入数据库相关的配置信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">"com/qinjiangbo/conf/database.properties"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 添加别名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"com.qinjiangbo.pojo"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driver&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"com/qinjiangbo/dao/UserMapper.xml"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">class</span>=<span class="string">"com.qinjiangbo.dao.UserMapperC"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.将UserMapper.xml配置文件中的全类名全部改为类名。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 当同时使用XML和注解的时候, 这个命名空间namespace的值必须是Mapper接口的全类路径 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"com.qinjiangbo.dao.UserMapper"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 根据编号查找用户 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserById"</span> <span class="attr">parameterType</span>=<span class="string">"int"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">resultType</span>=<span class="string">"User"</span>&gt;</span></span><br><span class="line">        SELECT * FROM users WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 创建用户信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"createUser"</span> <span class="attr">parameterType</span>=<span class="string">"User"</span>&gt;</span></span><br><span class="line">        INSERT INTO users</span><br><span class="line">        VALUES (#&#123;id&#125;, #&#123;name&#125;, #&#123;pwd&#125;, #&#123;age&#125;, #&#123;email&#125;, #&#123;tel&#125;, #&#123;addr&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 删除用户信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteUser"</span> <span class="attr">parameterType</span>=<span class="string">"int"</span>&gt;</span></span><br><span class="line">        DELETE FROM users WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 更新用户信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateUser"</span> <span class="attr">parameterType</span>=<span class="string">"User"</span>&gt;</span></span><br><span class="line">        UPDATE users SET name = #&#123;name&#125;, pwd = #&#123;pwd&#125;, age = #&#123;age&#125;, email = #&#123;email&#125;,</span><br><span class="line">        tel = #&#123;tel&#125;, addr = #&#123;addr&#125; WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>3.测试实例</p>
+<p>同上一样，这个测试实例和上一节的测试实例相同，请同学们自己结合之前的代码再跑一遍。博主本地的代码均通过严格的测试。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/mybatis-practice-optimization-of-configurations-3.html" data-id="cjjisw3pb00996lkoveodm21y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/mybatis-practice-optimization-of-configurations-3.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/mybatis-practice-optimization-of-configurations-3.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/mybatis-practice-mapping-entity-and-model-4.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            MyBatis实战-4-映射表字段名与实体属性名
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/mybatis-practice-crud-2.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">MyBatis实战-2-CRUD操作</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

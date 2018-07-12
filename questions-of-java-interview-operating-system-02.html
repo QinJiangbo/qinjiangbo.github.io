@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Java面试问题集锦之操作系统02 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java面试,操作系统" />
+    
+    <meta name="description" content="13. Linux32位系统，应用程序最多能分配的内存大小？32位linux不打开PAE，则最多只能识别出4GB内存，若打开PAE，则最多可以识别出64GB内存。但是 32位系统下的进程一次最多只能寻址4GB的空间。 PAE：物理地址扩展 14. sleep和wait的区别？ sleep方法正在执行的线程主动让出CPU（然后CPU就可以去执行其他任务），在sleep指定时间后CPU再回到该线程继续">
+<meta name="keywords" content="操作系统,Java面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java面试问题集锦之操作系统02">
+<meta property="og:url" content="http://qinjiangbo.com/questions-of-java-interview-operating-system-02.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="13. Linux32位系统，应用程序最多能分配的内存大小？32位linux不打开PAE，则最多只能识别出4GB内存，若打开PAE，则最多可以识别出64GB内存。但是 32位系统下的进程一次最多只能寻址4GB的空间。 PAE：物理地址扩展 14. sleep和wait的区别？ sleep方法正在执行的线程主动让出CPU（然后CPU就可以去执行其他任务），在sleep指定时间后CPU再回到该线程继续">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/java-interview-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-23T02:25:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java面试问题集锦之操作系统02">
+<meta name="twitter:description" content="13. Linux32位系统，应用程序最多能分配的内存大小？32位linux不打开PAE，则最多只能识别出4GB内存，若打开PAE，则最多可以识别出64GB内存。但是 32位系统下的进程一次最多只能寻址4GB的空间。 PAE：物理地址扩展 14. sleep和wait的区别？ sleep方法正在执行的线程主动让出CPU（然后CPU就可以去执行其他任务），在sleep指定时间后CPU再回到该线程继续">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/java-interview-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/经验感悟/面试集锦/">面试集锦</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-questions-of-java-interview-operating-system-02" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Java面试问题集锦之操作系统02
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/questions-of-java-interview-operating-system-02.html" class="article-date">
+    <time datetime="2018-04-21T04:27:19.000Z" itemprop="datePublished">2018-04-21</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java面试/">Java面试</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="13-Linux32位系统，应用程序最多能分配的内存大小？"><a href="#13-Linux32位系统，应用程序最多能分配的内存大小？" class="headerlink" title="13. Linux32位系统，应用程序最多能分配的内存大小？"></a>13. Linux32位系统，应用程序最多能分配的内存大小？</h3><p>32位linux不打开PAE，则最多只能识别出4GB内存，若打开PAE，则最多可以识别出64GB内存。但是 32位系统下的进程一次最多只能寻址4GB的空间。</p>
+<p>PAE：物理地址扩展</p>
+<h3 id="14-sleep和wait的区别？"><a href="#14-sleep和wait的区别？" class="headerlink" title="14. sleep和wait的区别？"></a>14. sleep和wait的区别？</h3><ul>
+<li>sleep方法正在执行的线程主动让出CPU（然后CPU就可以去执行其他任务），在sleep指定时间后CPU再回到该线程继续往下执行(注意：<code>sleep方法只让出了CPU，而并不会释放同步资源锁</code>)；</li>
+<li>wait()方法则是指当前线程让自己暂时退让出同步资源锁，以便其他正在等待该资源的线程得到该资源进而运行，只有调用了notify()方法，之前调用wait()的线程才会解除wait状态，可以去参与竞争同步资源锁，进而得到执行。（注意：<code>notify的作用相当于叫醒睡着的人，而并不会给他分配任务，就是说notify只是让之前调用wait的线程有权利重新参与线程的调度</code>）；</li>
+</ul>
+<h3 id="15-什么是临界资源？什么是临界区？"><a href="#15-什么是临界资源？什么是临界区？" class="headerlink" title="15. 什么是临界资源？什么是临界区？"></a>15. 什么是临界资源？什么是临界区？</h3><ul>
+<li>临界资源：把一次只允许一个进程使用的资源成为临界资源。(独占性，如打印机，卡片输出机等)</li>
+<li>临界区：把每个进程中访问临界资源的那段代码从概念上分离出来，将其称为临界区。即临界区是指对临界资源实时操作的程序的代码段。</li>
+<li>相关临界区：并发进程中涉及相同临界资源的临界区。相关临界区必须互斥执行。</li>
+</ul>
+<h3 id="16-什么是进程互斥？"><a href="#16-什么是进程互斥？" class="headerlink" title="16. 什么是进程互斥？"></a>16. 什么是进程互斥？</h3><ul>
+<li>进程互斥是解决进程间竞争关系(间接制约关系)的手段。指任何时刻不允许两个以上的共享该资源的并发进程同时进入临界区，这种现象称为互斥。</li>
+<li>相关临界区的管理原则：互斥、空闲让进、有限等待。</li>
+</ul>
+<h3 id="17-进程同步的概念？"><a href="#17-进程同步的概念？" class="headerlink" title="17. 进程同步的概念？"></a>17. 进程同步的概念？</h3><p>进程同步指两个或多个进程为了合作完成同一个任务，在执行速度或某些确定的时序点上必须相互协调，即一个进程的执行依赖于另一个进程的消息，当一个进程到达了某一个确定点而没有得到合作伙伴发来的已完成消息时必须等待，知道该消息到达被唤醒后，才能继续向前推进。</p>
+<h3 id="18-进程同步和互斥的关系？"><a href="#18-进程同步和互斥的关系？" class="headerlink" title="18. 进程同步和互斥的关系？"></a>18. 进程同步和互斥的关系？</h3><ul>
+<li>进程的互斥实际上是进程同步的一种特殊情况，即主次使用互斥共享资源，也是对进程使用资源次序上的一种协调。进程的互斥和同步统称为进程同步。</li>
+<li>进程的互斥是进程间共享资源的使用权，这种竞争没有固定的必然联系，哪个进程竞争到资源的使用权，该资源就归哪个进程使用，直到它不再需要使用时才归还资源；而进程同步中，所涉及的共享资源的并发进程间有一种必然的联系，当进程必须同步时，即使无进程在使用共享资源，尚未得到同步消息的进程也不能去使用该资源。</li>
+</ul>
+<h3 id="19-信号量机制-PV操作"><a href="#19-信号量机制-PV操作" class="headerlink" title="19. 信号量机制(PV操作)"></a>19. 信号量机制(PV操作)</h3><p>信号量机制的实现原理是两个或多个进程可以利用彼此间收发的简单信号来实现正确的并发执行，一个进程在收到一个指令信号前，会被迫在一个确定的或者需要的地方停下来，从而保持同步或互斥。</p>
+<h3 id="20-同步的实现机制"><a href="#20-同步的实现机制" class="headerlink" title="20. 同步的实现机制"></a>20. 同步的实现机制</h3><ul>
+<li>临界区：通过多线程的串行化来访问公共资源或者一段代码，速度快，适合控制数据访问。</li>
+<li>互斥量：采用互斥对象机制，只有拥有互斥对象的线程才有访问公共资源的权限，因为互斥对象只有一个，所以可以保证公共资源不会同时被多个线程访问。</li>
+<li>信号量：允许多个线程同时访问同一资源，但是需要限制同一时刻访问此资源的最大线程数目。信号量对象对线程的同步方式与前面几种方法不同，信号允许多个线程同时使用共享资源，这与操作系统PV操作相似。</li>
+<li>事件(信号)：通过通知操作的方式保持多线程同步，还可以方便的实现多线程的优先级比较的操作。</li>
+</ul>
+<h3 id="21-经典的同步问题"><a href="#21-经典的同步问题" class="headerlink" title="21. 经典的同步问题"></a>21. 经典的同步问题</h3><ul>
+<li><strong>生产者消费者问题</strong></li>
+<li><strong>读者-写者问题</strong>（读者优先：信号量+读进程计数器rc；弱写者优先：信号量+读进程计数器rc+排队信号量read；强写者优先：信号量+读进程计数器rc+排队信号量read+写优先信号量write_first）</li>
+<li><strong>哲学家就餐问题</strong>：是在多个线程之间共享多个资源时会不会导致死锁或饥饿的典型模型。解决方案：<strong>i.</strong> 每个哲学家取得手边的两个叉子才能吃面，即仅当一个哲学家左右两边的叉子都可用时，才允许他拿叉子，否则一个叉子也不取。<strong>ii.</strong> 偶数号哲学家先取手边的叉子，奇数号哲学家先取右手边的叉子。</li>
+<li><strong>嗜睡理发师问题</strong></li>
+</ul>
+<h3 id="22-进程通信的方式"><a href="#22-进程通信的方式" class="headerlink" title="22. 进程通信的方式"></a>22. 进程通信的方式</h3><ul>
+<li><strong>共享存储</strong>：消息缓冲</li>
+<li><strong>消息传递</strong>：信箱</li>
+<li><strong>管道通信</strong></li>
+</ul>
+<h3 id="23-产生死锁的条件"><a href="#23-产生死锁的条件" class="headerlink" title="23. 产生死锁的条件"></a>23. 产生死锁的条件</h3><ul>
+<li><strong>互斥条件</strong>：同时只能有一个进程持有资源</li>
+<li><strong>请求和保持条件</strong>：一个进程请求资源得不到满足时，不释放占有的资源</li>
+<li><strong>不剥夺条件</strong>：任何一个进程不能抢夺其他进程占有的资源</li>
+<li><strong>循环等待条件</strong>：存在一个循环等待链，链中每个进程已获得资源，并分别等待前一个进程持有的资源。</li>
+</ul>
+<h3 id="24-处理死锁的方法"><a href="#24-处理死锁的方法" class="headerlink" title="24. 处理死锁的方法"></a>24. 处理死锁的方法</h3><ul>
+<li><strong>死锁预防</strong>：破坏产生死锁条件的任何一个或多个，如静态资源分配策略(2)和按序分配资源策略(4)。</li>
+<li><strong>死锁避免</strong>：采用银行家算法，每次分配都查看能否找到一种资源分配方法，使得已有的进程可以顺利完成任务，如果有，则分配，否则不分配。</li>
+<li><strong>死锁检测和解除</strong>：用软件来检查有进程和资源构成的有向图是否存在一个或多个回路。</li>
+</ul>
+<h3 id="25-分页和分段的区别"><a href="#25-分页和分段的区别" class="headerlink" title="25. 分页和分段的区别"></a>25. 分页和分段的区别</h3><ul>
+<li><strong>分页</strong>是信息的物理单位，与源程序的逻辑结构无关，用户不可见，分页的目的主要是为了减少碎片，提高主存的利用率。<strong>分段</strong>是信息的逻辑单位，由源程序的逻辑结构来决定，目的是更好地满足用户的需求。</li>
+<li><strong>页</strong>的大小固定且由系统确定，而<strong>段</strong>的长度不固定，由用户程序决定。</li>
+<li><strong>分页</strong>的作业地址空间是一维的(线性地址空间)，<strong>分段</strong>的作业地址空间是二维的(段名和段内地址)</li>
+</ul>
+<h3 id="26-缓存的局部性原理"><a href="#26-缓存的局部性原理" class="headerlink" title="26. 缓存的局部性原理"></a>26. 缓存的局部性原理</h3><p>根据研究，在较短的时间内，程序的执行会局限于某一个部分，则可以根据当前程序运行的位置，推测可能执行的程序，预先加载，来达到缓存的目的。(虚拟内存的实现)</p>
+<h3 id="27-同步和异步有什么不同？"><a href="#27-同步和异步有什么不同？" class="headerlink" title="27. 同步和异步有什么不同？"></a>27. 同步和异步有什么不同？</h3><ul>
+<li><strong>同步</strong>，就是说你的程序在执行某一个操作时一直等待直到操作完成。最常见的例子就是 SendMessage。该函数发送一个消息给某个窗口，在对方处理完消息之前，这个函数不返回。当对方处理完毕以后，该函数才把消息处理函数所返回的 RESULT值返回给调用者。</li>
+<li><strong>异步</strong>，就是说程序在执行某一个操作时，只是发出开始的指令；由另外的并行程序执行这段代码，当完成时再通知调用者。当一个客户端通过调用Connect函数发出一个连接请求后，调用者线程立刻可以朝下运行。当连接真正建立起来以后，socket底层会发送一个消息通知该对象。</li>
+</ul>
+<h3 id="28-什么是线程？有哪些状态？"><a href="#28-什么是线程？有哪些状态？" class="headerlink" title="28. 什么是线程？有哪些状态？"></a>28. 什么是线程？有哪些状态？</h3><p><strong>一个线程是进程的一个顺序执行流</strong>。同类的多个线程共享一块内存空间和一组系统资源，线程本身有一个供程序执行时的堆栈。线程在切换时负荷小，因此，线程也被称为轻负荷进程。一个进程中可以包含多个线程。</p>
+<p>状态如下：</p>
+<ul>
+<li><strong>新建状态</strong>：新建线程对象，并没有调用start()方法之前</li>
+<li><strong>就绪状态</strong>：调用start()方法之后线程就进入就绪状态，但是并不是说只要调用start()方法线程就马上变为当前线程，在变为当前线程之前都是为就绪状态。值得一提的是，线程在睡眠和挂起中恢复的时候也会进入就绪状态哦。</li>
+<li><strong>运行状态</strong>：线程被设置为当前线程，开始执行run()方法。就是线程进入运行状态</li>
+<li><strong>阻塞状态</strong>：线程被暂停，比如说调用sleep()方法后线程就进入阻塞状态</li>
+<li><strong>死亡状态</strong>：线程执行结束</li>
+</ul>
+<h3 id="29-synchronized和Lock的异同？"><a href="#29-synchronized和Lock的异同？" class="headerlink" title="29. synchronized和Lock的异同？"></a>29. synchronized和Lock的异同？</h3><style>
+table th:first-of-type {
+    width: 150px;
+}
+
+table th:nth-of-type(2) {
+    width: 300px;
+}
+
+table th:nth-of-type(3) {
+    width: 300px;
+}
+</style>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类别</th>
+<th style="text-align:left">synchronized</th>
+<th style="text-align:left">Lock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">存在层次</td>
+<td style="text-align:left">Java的关键字，在jvm层面上</td>
+<td style="text-align:left">是一个类</td>
+</tr>
+<tr>
+<td style="text-align:center">锁的释放</td>
+<td style="text-align:left">1、以获取锁的线程执行完同步代码，释放锁 2、线程执行发生异常，jvm会让线程释放锁</td>
+<td style="text-align:left">在finally中必须释放锁，不然容易造成线程死锁</td>
+</tr>
+<tr>
+<td style="text-align:center">锁的获取</td>
+<td style="text-align:left">假设A线程获得锁，B线程等待。如果A线程阻塞，B线程会一直等待</td>
+<td style="text-align:left">分情况而定，Lock有多个锁获取的方式，具体下面会说道，大致就是可以尝试获得锁，线程可以不用一直等待</td>
+</tr>
+<tr>
+<td style="text-align:center">锁状态</td>
+<td style="text-align:left">无法判断</td>
+<td style="text-align:left">可以判断</td>
+</tr>
+<tr>
+<td style="text-align:center">锁类型</td>
+<td style="text-align:left">可重入 不可中断 非公平</td>
+<td style="text-align:left">可重入 可判断 可公平（两者皆可）</td>
+</tr>
+<tr>
+<td style="text-align:center">性能</td>
+<td style="text-align:left">少量同步</td>
+<td style="text-align:left">大量同步</td>
+</tr>
+</tbody>
+</table>
+<h3 id="30-什么是序列化？什么是串行化？"><a href="#30-什么是序列化？什么是串行化？" class="headerlink" title="30. 什么是序列化？什么是串行化？"></a>30. 什么是序列化？什么是串行化？</h3><p>把对象转换为字节序列的过程称为对象的序列化。把字节序列恢复为对象的过程称为对象的反序列化。</p>
+<p>序列化就是一种用来处理对象流的机制，所谓对象流也就是将对象的内容进行流化。可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决在对对象流进行读写操作时所引发的问题。</p>
+<p>对象的序列化主要有两种用途：</p>
+<ul>
+<li>把对象的字节序列永久地保存到硬盘上，通常存放在一个文件中；</li>
+<li>在网络上传送对象的字节序列。</li>
+</ul>
+<p>串行化和并行化</p>
+<ul>
+<li>串行化也叫做序列化，就是把存在于内存的对象数据转化成可以保存成硬盘文件的形式去存储；</li>
+<li>并行化也叫反序列化，就是把序列化后的硬盘文件加载到内存,重新变成对象数据。 也就是把内存中对象数据变成硬盘文件.</li>
+</ul>
+<h3 id="31-什么是守护线程与用户线程-？举一个守护线程的例子"><a href="#31-什么是守护线程与用户线程-？举一个守护线程的例子" class="headerlink" title="31. 什么是守护线程与用户线程 ？举一个守护线程的例子"></a>31. 什么是守护线程与用户线程 ？举一个守护线程的例子</h3><ul>
+<li><strong>用户线程</strong>：我们平常创建的普通线程。</li>
+<li><strong>守护线程</strong>：用来服务于用户线程；不需要上层逻辑介入。</li>
+</ul>
+<p>当主线程结束时，结束其余的子线程（守护线程）自动关闭，就免去了还要继续关闭子线程的麻烦。如：Java垃圾回收线程就是一个典型的守护线程；内存资源或者线程的管理，但是非守护线程也可以。</p>
+<h3 id="32-synchronized关键字的用法"><a href="#32-synchronized关键字的用法" class="headerlink" title="32. synchronized关键字的用法"></a>32. synchronized关键字的用法</h3><ol>
+<li><strong>修饰一个代码块</strong>，被修饰的代码块称为同步语句块，其作用的范围是大括号{}括起来的代码，作用的对象是调用这个代码块的对象； </li>
+<li><strong>修饰一个方法</strong>，被修饰的方法称为同步方法，其作用的范围是整个方法，作用的对象是调用这个方法的对象； </li>
+<li><strong>修改一个静态的方法</strong>，其作用的范围是整个静态方法，作用的对象是这个类的所有对象； </li>
+<li><strong>修改一个类</strong>，其作用的范围是synchronized后面括号括起来的部分，作用主的对象是这个类的所有对象。</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/questions-of-java-interview-operating-system-02.html" data-id="cjjisw3xp012m6lko6dxm7z10" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/questions-of-java-interview-operating-system-02.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/questions-of-java-interview-operating-system-02.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/questions-of-java-interview-computer-networking-03.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Java面试问题集锦之计算机网络03
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/principle-of-large-image-loading.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">网站大图片加载原理</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

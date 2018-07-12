@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Docker制作镜像并提交到Docker Hub | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Docker,Docker Hub" />
+    
+    <meta name="description" content="前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。 登录Docker Hub首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库">
+<meta name="keywords" content="Docker,Docker Hub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker制作镜像并提交到Docker Hub">
+<meta property="og:url" content="http://qinjiangbo.com/make-docker-images-and-push-to-docker-hub-center.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。 登录Docker Hub首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/docker-logo.jpeg">
+<meta property="og:updated_time" content="2018-01-06T16:14:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker制作镜像并提交到Docker Hub">
+<meta name="twitter:description" content="前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。 登录Docker Hub首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/docker-logo.jpeg">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/架构师/Docker/">Docker</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-make-docker-images-and-push-to-docker-hub-center" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Docker制作镜像并提交到Docker Hub
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/make-docker-images-and-push-to-docker-hub-center.html" class="article-date">
+    <time datetime="2018-01-06T11:55:17.000Z" itemprop="datePublished">2018-01-06</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker-Hub/">Docker Hub</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。</p>
+<h2 id="登录Docker-Hub"><a href="#登录Docker-Hub" class="headerlink" title="登录Docker Hub"></a>登录Docker Hub</h2><p>首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库。如下图：</p>
+<p>第一步，找到create菜单</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/create-repository.png" alt=""></p>
+<p>第二步，填写相关信息</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/create-repository-page.png" alt=""></p>
+<p>第三步，查看已创建仓库</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/repository-detail-page.png" alt=""></p>
+<h2 id="终端登录Docker"><a href="#终端登录Docker" class="headerlink" title="终端登录Docker"></a>终端登录Docker</h2><p>我使用的是macOS版本，因此直接打开Docker应用就可以了。如果没有使用Docker应用的话，可以直接在终端输入<code>docker login</code>来登录的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don<span class="string">'t have a Docker ID, head over to https://hub.docker.com to create one.</span></span><br><span class="line"><span class="string">Username (qinjiangbo): qinjiangbo</span></span><br><span class="line"><span class="string">Password: </span></span><br><span class="line"><span class="string">Login Succeeded</span></span><br></pre></td></tr></table></figure>
+<h2 id="下载授权服务器程序"><a href="#下载授权服务器程序" class="headerlink" title="下载授权服务器程序"></a>下载授权服务器程序</h2><p>我们制作的镜像是关于IDEA的授权服务器的，因此需要先下载这个授权服务器运行程序。下面给出磁力链接：</p>
+<p>磁力链接: <a href="magnet:?xt=urn:btih:ED1FA379ECBD34D13CB7D14B0C2B024986A6FC79&amp;dn=IntelliJIDEALicenseServer" target="_blank" rel="noopener">magnet:?xt=urn:btih:ED1FA379ECBD34D13CB7D14B0C2B024986A6FC79&amp;dn=IntelliJIDEALicenseServer(v1.4).tar.tar)</a></p>
+<p>粘贴到迅雷下载，完成以后解压可以看到一下文件列表：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> IntelliJIDEALicenseServer</span><br><span class="line">$ IntelliJIDEALicenseServer ls</span><br><span class="line">IntelliJIDEALicenseServer.html              IntelliJIDEALicenseServer_linux_mips64le</span><br><span class="line">IntelliJIDEALicenseServer_darwin_386        IntelliJIDEALicenseServer_linux_mipsle</span><br><span class="line">IntelliJIDEALicenseServer_darwin_amd64      IntelliJIDEALicenseServer_netbsd_386</span><br><span class="line">IntelliJIDEALicenseServer_freebsd_386       IntelliJIDEALicenseServer_netbsd_amd64</span><br><span class="line">IntelliJIDEALicenseServer_freebsd_amd64     IntelliJIDEALicenseServer_netbsd_arm</span><br><span class="line">IntelliJIDEALicenseServer_freebsd_arm       IntelliJIDEALicenseServer_openbsd_386</span><br><span class="line">IntelliJIDEALicenseServer_linux_386         IntelliJIDEALicenseServer_openbsd_amd64</span><br><span class="line">IntelliJIDEALicenseServer_linux_amd64       IntelliJIDEALicenseServer_windows_386.exe</span><br><span class="line">IntelliJIDEALicenseServer_linux_arm         IntelliJIDEALicenseServer_windows_amd64.exe</span><br><span class="line">IntelliJIDEALicenseServer_linux_mips        md5sum</span><br><span class="line">IntelliJIDEALicenseServer_linux_mips64</span><br></pre></td></tr></table></figure>
+<p>我们后期是要放在Linux服务器上运行的，所以选择一个Linux版本，<code>IntelliJIDEALicenseServer_linux_386</code>和<code>IntelliJIDEALicenseServer_linux_amd64</code>都可以的，只是对应的处理器类型不同，我们这里选择<code>IntelliJIDEALicenseServer_linux_386</code>。</p>
+<h2 id="制作Docker镜像"><a href="#制作Docker镜像" class="headerlink" title="制作Docker镜像"></a>制作Docker镜像</h2><p>我们最终是需要制作一个Dockerfile文件，在此之前，我们需要准备一些文件。给大家列举一下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ license-server ls</span><br><span class="line">Dockerfile                          IntelliJIDEALicenseServer_linux_386</span><br><span class="line">IntelliJIDEALicenseServer.html      docker-entrypoint.sh</span><br></pre></td></tr></table></figure>
+<p>这里需要跟大家解释一下过程，首先我们需要创建一个文件夹用于存放这些文件，我们这里创建的文件夹名称是<code>license-server</code>，里面包含四个文件：</p>
+<ul>
+<li>Dockerfile，这个不解释</li>
+<li>IntelliJIDEALicenseServer_linux_386，这个是我们的授权服务器运行程序</li>
+<li>IntelliJIDEALicenseServer.html，这个是提示页面，就是用户如果在浏览器直接访问授权服务器地址，展现给用户的提示页面，一般会告诉用户如何操作</li>
+<li>docker-entrypoint.sh，这个主要是容器启动后用来执行运行程序的脚本</li>
+</ul>
+<p>重点看两个文件：</p>
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line"></span><br><span class="line">MAINTAINER qinjiangbo&lt;qinjiangbo1994@163.com&gt;</span><br><span class="line"></span><br><span class="line">RUN mkdir /idea</span><br><span class="line"></span><br><span class="line">ADD IntelliJIDEALicenseServer_linux_386 /idea</span><br><span class="line">ADD IntelliJIDEALicenseServer.html /idea</span><br><span class="line">ADD docker-entrypoint.sh /</span><br><span class="line"></span><br><span class="line">RUN chmod 755 idea -R</span><br><span class="line">RUN chmod 755 docker-entrypoint.sh</span><br><span class="line"></span><br><span class="line">EXPOSE 1017</span><br><span class="line"></span><br><span class="line">WORKDIR /idea</span><br><span class="line"></span><br><span class="line">CMD [<span class="string">"/docker-entrypoint.sh"</span>]</span><br></pre></td></tr></table></figure>
+<p>这个内容就不解释了，不明白的可以看我前面的关于Docker的几篇文章。</p>
+<h3 id="docker-entrypoint-sh"><a href="#docker-entrypoint-sh" class="headerlink" title="docker-entrypoint.sh"></a>docker-entrypoint.sh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">./IntelliJIDEALicenseServer_linux_386</span><br></pre></td></tr></table></figure>
+<h2 id="打包制作镜像"><a href="#打包制作镜像" class="headerlink" title="打包制作镜像"></a>打包制作镜像</h2><p>制作镜像的命令比较简单：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t license-server:latest .</span><br></pre></td></tr></table></figure>
+<p>注意最后有一个<code>.</code></p>
+<p>查看镜像列表：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker images                            </span><br><span class="line">REPOSITORY                       TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">license-server                   latest              34fe7d26dd9e        4 hours ago         118MB</span><br><span class="line">ubuntu                           latest              00fd29ccc6f1        3 weeks ago         111MB</span><br><span class="line">sshd_centos                      latest              f0560ea85754        2 months ago        221MB</span><br><span class="line">nginx                            latest              1e5ab59102ce        2 months ago        108MB</span><br><span class="line">gitlab/gitlab-ce                 latest              453d64ae84c7        3 months ago        1.28GB</span><br><span class="line">centos                           latest              196e0ce0c9fb        3 months ago        197MB</span><br></pre></td></tr></table></figure>
+<p>已经存在这个镜像了，接下来需要给这个镜像打标，示例就是<code>docker tag &lt;existing-image&gt; &lt;hub-user&gt;/&lt;repo-name&gt;[:&lt;tag&gt;]</code>，因此我们这样操作：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker tag 34fe7d26dd9e qinjiangbo/idea-license-server</span><br></pre></td></tr></table></figure>
+<p>再次查看可以看到列表中多了一个：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">license-server              latest              34fe7d26dd9e        About an hour ago   118MB</span><br><span class="line">qinjiangbo/license-server   latest              34fe7d26dd9e        About an hour ago   118MB</span><br><span class="line">ubuntu                      latest              00fd29ccc6f1        3 weeks ago         111MB</span><br><span class="line">sshd_centos                 latest              f0560ea85754        2 months ago        221MB</span><br><span class="line">nginx                       latest              1e5ab59102ce        2 months ago        108MB</span><br><span class="line">gitlab/gitlab-ce            latest              453d64ae84c7        3 months ago        1.28GB</span><br><span class="line">centos                      latest              196e0ce0c9fb        3 months ago        197MB</span><br></pre></td></tr></table></figure>
+<p>如果是针对容器做出修改又如何创建呢？<code>docker commit &lt;exiting-Container&gt; &lt;hub-user&gt;/&lt;repo-name&gt;[:&lt;tag&gt;]</code>这个命令可以解决。</p>
+<h2 id="提交到Docker-Hub仓库中"><a href="#提交到Docker-Hub仓库中" class="headerlink" title="提交到Docker Hub仓库中"></a>提交到Docker Hub仓库中</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ docker push qinjiangbo/idea-license-server       </span><br><span class="line">The push refers to a repository [docker.io/qinjiangbo/idea-license-server]</span><br><span class="line">9ee0aba95d5f: Pushed </span><br><span class="line">d18db1e351f0: Pushed </span><br><span class="line">cdc1754f226e: Pushed </span><br><span class="line">e65d9cc78d36: Pushed </span><br><span class="line">c15ee4074338: Pushed </span><br><span class="line">3da57500ceb4: Pushed </span><br><span class="line">f17fc24fb8d0: Pushed </span><br><span class="line">6458f770d435: Pushed </span><br><span class="line">5a876f8f1a3d: Pushed </span><br><span class="line">d2f8c05d353b: Pushed </span><br><span class="line">48e0baf45d4d: Pushed </span><br><span class="line">latest: digest: sha256:21c1dc48a12372fa4943e262f8dc57af9782664278e6f8bfaab68251de6fb8b7 size: 2607</span><br></pre></td></tr></table></figure>
+<p>中间可能会报以下错误：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker push qinjiangbo/idea-license-server:latest</span><br><span class="line">The push refers to a repository [docker.io/qinjiangbo/idea-license-server]</span><br><span class="line">Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on 192.168.65.1:53: <span class="built_in">read</span> udp 192.168.65.2:56209-&gt;192.168.65.1:53: i/o timeout</span><br></pre></td></tr></table></figure>
+<p>没关系，重试几次就好了，最好加上VPN会比较稳定一点。</p>
+<h2 id="查看Docker-Hub个人仓库"><a href="#查看Docker-Hub个人仓库" class="headerlink" title="查看Docker Hub个人仓库"></a>查看Docker Hub个人仓库</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/docker-hub-user-repository.png" alt=""></p>
+<p>可以看到，我们的镜像已经制作并提交成功了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是如何制作一个Docker镜像并提交到Docker Hub仓库的基本流程。需要注意自己是基于别人镜像的容器改进的还是自己从零开始制作的，因为方式是不一样的。上面也提到了两者的制作方式。大家有什么好的镜像都可以踊跃地向社区提交，优秀的东西应该和大家一起分享嘛！</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/make-docker-images-and-push-to-docker-hub-center.html" data-id="cjjisw3ou00816lkoo8kxbn7e" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/make-docker-images-and-push-to-docker-hub-center.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/make-docker-images-and-push-to-docker-hub-center.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/build-idea-license-server-via-docker.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            利用Docker搭建IDEA授权服务器
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/recognize-captcha-via-tesseract-ocr-engine.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">利用Tesseract OCR引擎识别验证码</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

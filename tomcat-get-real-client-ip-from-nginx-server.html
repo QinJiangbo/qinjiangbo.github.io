@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Tomcat从Nginx服务器获取客户端IP | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Nginx,Tomcat,getRemoteAddr" />
+    
+    <meta name="description" content="这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用httpServletRequest.getRemoteAddr()一直都是127.0.0.1。我们先来说一说为什么是这样？ 为什么getRemoteAddr()一直是127.0.0.1？首先需要明白整体的架构图，如下">
+<meta name="keywords" content="-Nginx - Tomcat - getRemoteAddr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat从Nginx服务器获取客户端IP">
+<meta property="og:url" content="http://qinjiangbo.com/tomcat-get-real-client-ip-from-nginx-server.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用httpServletRequest.getRemoteAddr()一直都是127.0.0.1。我们先来说一说为什么是这样？ 为什么getRemoteAddr()一直是127.0.0.1？首先需要明白整体的架构图，如下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/tomcat-nginx.png">
+<meta property="og:updated_time" content="2017-12-12T03:25:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat从Nginx服务器获取客户端IP">
+<meta name="twitter:description" content="这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用httpServletRequest.getRemoteAddr()一直都是127.0.0.1。我们先来说一说为什么是这样？ 为什么getRemoteAddr()一直是127.0.0.1？首先需要明白整体的架构图，如下">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/tomcat-nginx.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-tomcat-get-real-client-ip-from-nginx-server" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Tomcat从Nginx服务器获取客户端IP
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/tomcat-get-real-client-ip-from-nginx-server.html" class="article-date">
+    <time datetime="2017-12-11T11:43:39.000Z" itemprop="datePublished">2017-12-11</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tomcat/">Tomcat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/getRemoteAddr/">getRemoteAddr</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/tomcat-nginx.png" alt=""></p>
+<p>这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用<code>httpServletRequest.getRemoteAddr()</code>一直都是<code>127.0.0.1</code>。我们先来说一说为什么是这样？</p>
+<h2 id="为什么getRemoteAddr-一直是127-0-0-1？"><a href="#为什么getRemoteAddr-一直是127-0-0-1？" class="headerlink" title="为什么getRemoteAddr()一直是127.0.0.1？"></a>为什么getRemoteAddr()一直是127.0.0.1？</h2><p>首先需要明白整体的架构图，如下：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/nginx-tomcat-architecture.png" alt=""></p>
+<p>可以看到，用户访问网站的时候是通过Nginx做了一层反向代理，请求被分发到后端的某一台Tomcat服务器。其中，用户请求到Nginx的时候IP地址是<code>202.114.78.189</code>，而Nginx反向代理到Tomcat服务器的时候是<code>127.0.0.1</code>。我们知道在网络中可能会存在一些中间结点，比如代理服务器，而这里的代理服务器就是Nginx。</p>
+<p>好，Nginx能获取到用户的IP地址，这个没问题。那么，为什么Tomcat不能获取到用户的真实地址呢？那是因为<code>Tomcat的用户地址就是Nginx啊，Tomcat并没有直接和用户连接</code>，所以这里我们就不难理解，Tomcat通过方法<code>httpServletRequest.getRemoteAddr()</code>只能够获取到Nginx的真实地址，而这个架构图中Nginx服务器和Tomcat服务器又处于同一个局域网，所以为<code>127.0.0.1</code>很正常。那么如何来解决这个问题呢？</p>
+<h2 id="使用Nginx透传用户IP的请求头信息"><a href="#使用Nginx透传用户IP的请求头信息" class="headerlink" title="使用Nginx透传用户IP的请求头信息"></a>使用Nginx透传用户IP的请求头信息</h2><p>其实前面的几篇文章已经将Nginx的这个配置给出了，如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>        <span class="number">80</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">server_name</span>   acs.qinjiangbo.com;</span><br><span class="line">    <span class="attribute">access_log</span>    /var/log/nginx/access.log  main;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line">        <span class="attribute">proxy_redirect</span>     <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>   Host    <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>   X-Real-IP   <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span>   X-Forwarded-For   <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到上面的例子中使用了<code>proxy_set_header</code>命令，直观意思就是代理设置头方法，正是我们前面提到过的。这里解释一下<code>$host</code>，<code>$remote_addr</code>以及<code>$proxy_add_x_forwared_for</code>三个变量的意思。</p>
+<ul>
+<li><code>$host</code>这个就是客户端的主机名称。</li>
+<li><code>$remote_addr</code>这个就是客户端的主机地址。</li>
+<li><code>$proxy_add_x_forwared_for</code>这个就是在转发请求的时候加上一个<code>X-Forwared_For</code>头信息，而在这个头信息里面会加上客户端的真实IP地址。</li>
+</ul>
+<p>这样后端就能通过这几个参数获取到客户端的真实地址了。但是一般我更加喜欢使用第二个配置，就是<code>proxy_set_header   X-Real-IP   $remote_addr;</code>这里，我需要在Tomcat里面写上一个能够读取<code>X-Real-IP</code>请求头信息的方法，这样就可以拿到真实客户端地址。</p>
+<h2 id="问题解决方案"><a href="#问题解决方案" class="headerlink" title="问题解决方案"></a>问题解决方案</h2><p>使用装饰器模式来封装HttpServletRequest类，可以达到更改某一个方法的行为的目的。也就是说我们需要使用一个能包装HttpServletRequest类的包装类，在这个包装类中，我们重写<code>getRemoteAddr()</code>方法。关于装饰器模式，我不想在这里再一次说了，有需要的可以看一下我的这篇博客《<a href="https://qinjiangbo.com/design-pattern-decoration.html">设计模式学习之装饰者模式</a>》，需要注意的一点就是装饰者和被装饰者需要实现共同的接口，不然被装饰者没法被装饰者替换嘛！</p>
+<p>仔细看一下ServletRequest的类图我们就可以知道要使用哪一个类了。类图如下：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/servlet-request-class-diagram.png" alt=""></p>
+<p>我们可以看到，<code>HttpServletRequest</code>接口继承自<code>ServletRequest</code>接口。<code>ServletRequestWrapper</code>类实现了<code>ServletRequest</code>接口，而<code>HttpServletRequestWrapper</code>类继承自<code>ServletRequestWrapper</code>类，所以直观上来看，<code>HttpServletRequestWrapper</code>类是可以作为<code>HttpServletRequest</code>类的装饰者的。我们需要自己写一个类继承自<code>HttpServletRequestWrapper</code>类，然后实现自己的方法逻辑。</p>
+<h3 id="实现RequestWrapper类"><a href="#实现RequestWrapper类" class="headerlink" title="实现RequestWrapper类"></a>实现RequestWrapper类</h3><p>我实现的包装类叫做<code>RequestWrapper</code>，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequestWrapper;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 11/12/2017 5:50 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> *      装饰器类，主要用于处理Tomcat本地获取客户端IP一直都是127.0.0.1的情况</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestWrapper</span> <span class="keyword">extends</span> <span class="title">HttpServletRequestWrapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * X-Real-IP头名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String X_REAL_IP = <span class="string">"X-Real-IP"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs a request object wrapping the given request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IllegalArgumentException if the request is null</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RequestWrapper</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(request);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRemoteAddr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 直接获取X-Real-IP头的信息</span></span><br><span class="line">        String realIP = getHeader(X_REAL_IP);</span><br><span class="line">        <span class="keyword">if</span> (realIP != <span class="keyword">null</span> &amp;&amp; !<span class="string">""</span>.equals(realIP)) &#123;</span><br><span class="line">            <span class="keyword">return</span> realIP;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getRemoteAddr();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="拦截器和过滤器的区别"><a href="#拦截器和过滤器的区别" class="headerlink" title="拦截器和过滤器的区别"></a>拦截器和过滤器的区别</h3><p>实现了<code>RequestWrapper</code>类以后需要使用到它呀，我们希望原有的<code>httpServletRequest.getRemoteAddr()</code>方法不受影响，因为我这边通过<code>RequestWrapper</code>类已经实现了，希望后面的相同方法都能直接使用，我之前想到过SpringMVC的拦截器，但是这里就引出一个问题，就是过滤器和拦截器的区别。</p>
+<p>简单地来说就是<code>拦截器不能改变request和response，而过滤器能改变request和response</code>，也就是说我们只有选择使用过滤器了。在知乎上看到一个很有意思的回答“<a href="https://www.zhihu.com/question/38383980/answer/76152842" target="_blank" rel="noopener">spring中HttpServletRequestWrapper装饰者模式是如何理解的？ - ScienJus的回答 - 知乎</a>”，我觉得非常经典：</p>
+<p>拦截器模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Request request = <span class="keyword">new</span> Request();</span><br><span class="line">    preHandle(request);</span><br><span class="line">    service(request);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preHandler</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//在这里修改Request的引用，不会影响到service方法的request</span></span><br><span class="line">    request = <span class="keyword">new</span> RequestWrapper(request); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>过滤器模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Request request = <span class="keyword">new</span> Request();</span><br><span class="line">    doFilter(request);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//在这里修改Request的引用，会影响到service方法的request</span></span><br><span class="line">    request = <span class="keyword">new</span> RequestWrapper(request); </span><br><span class="line">    service(request);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到拦截器模式中，<code>preHandle</code>方法修改了<code>request</code>对象的引用，但是<code>service(request)</code>并没有任何变化，因为我们知道方法外的<code>request</code>对象引用并没有发生变化。而在过滤器模式中，<code>doFilter</code>方法也修改了<code>request</code>对象的引用，但是<code>service(request)</code>方法中能够获取到的都是装饰过的<code>request</code>对象。</p>
+<h3 id="实现HttpRequestFilter类"><a href="#实现HttpRequestFilter类" class="headerlink" title="实现HttpRequestFilter类"></a>实现HttpRequestFilter类</h3><p>我们需要实现自己的<code>Filter</code>类，通过这个过滤器将自己加工后的<code>request</code>注入到流程中去，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 11/12/2017 5:57 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpRequestFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response,</span></span></span><br><span class="line"><span class="function"><span class="params">                         FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        <span class="comment">// 替换一下</span></span><br><span class="line">        request = <span class="keyword">new</span> RequestWrapper((HttpServletRequest) request);</span><br><span class="line">        <span class="comment">// 注入进去了</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="web-xml配置注意事项"><a href="#web-xml配置注意事项" class="headerlink" title="web.xml配置注意事项"></a>web.xml配置注意事项</h3><p>我以为把上面的这些坑踩完了就没事儿了呢，没想到啊，在<code>web.xml</code>中又存在一个坑，就是<code>Filter的URL映射模式</code>。我以为和<code>Servlet</code>一样都是<code>/</code>，没想到这样添加进去并不行。下面系统总结一下过滤器的<code>url-pattern</code>相关问题。</p>
+<p>参考了《<a href="https://www.cnblogs.com/wwzyy/p/5881121.html" target="_blank" rel="noopener">Web.xml中设置Servlet和Filter时的url-pattern匹配规则</a>》这篇文章相关儿内容，它从两个方面进行了系统的阐述，在这里我们重点关注<code>url-pattern匹配规则</code>。</p>
+<h3 id="url-pattern匹配规则"><a href="#url-pattern匹配规则" class="headerlink" title="url-pattern匹配规则"></a>url-pattern匹配规则</h3><p><code>url-pattern</code>匹配原则就是<code>找到唯一一个最适合的Servlet</code>。Servlet匹配规则有以下几点：</p>
+<ul>
+<li><code>精确路径匹配</code>，模式<code>/*</code>和<code>/test</code>都存在的时候，会优先匹配<code>/test</code>。</li>
+<li><code>最长路径匹配</code>，模式<code>/test/*</code>和<code>/test/a/*</code>都存在的时候，会优先匹配<code>/test/a/*</code>。</li>
+<li><code>扩展匹配</code>，容器会根据匹配的拓展匹配，比如<code>*.do</code>，<code>/test/*.do</code>是不合法的模式。</li>
+<li><code>默认匹配</code>，如果容器前三中模式都没有匹配上，则会选择默认的Servlet来处理。</li>
+</ul>
+<p>对于Filter，不会像Servlet那样只匹配一个Servlet，因为Filter的集合是一个链，所以只会有处理的顺序不同，而不会出现只选择一个Filter。Filter的处理顺序和filter-mapping在web.xml中定义的顺序相同。</p>
+<p><strong>最重要的一句话来了，一般在做全路径匹配的时候，Servlet的url-pattern是<code>/</code>，而Filter的url-pattern是<code>/*</code>。</strong>注意后面是多了一个<code>*</code>号的，我就是在这个上面踩了大坑。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在这一次的踩坑中，收获了很多，了解了Filter和Servlet的一些关联与区别，另外也了解到了如何在不改变原有代码设计的基础上增加新的行为特征。再次重温了一下装饰者模式，收获也很大。</p>
+<h3 id="鸣谢-参考文章"><a href="#鸣谢-参考文章" class="headerlink" title="鸣谢-参考文章"></a>鸣谢-<code>参考文章</code></h3><p>感谢下面两位提供的一些思路，虽然没法当面感谢，但是还是在此谢过了！</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/38383980/answer/76152842" target="_blank" rel="noopener">spring中HttpServletRequestWrapper装饰者模式是如何理解的？ - ScienJus的回答</a></li>
+<li><a href="https://www.cnblogs.com/wwzyy/p/5881121.html" target="_blank" rel="noopener">Web.xml中设置Servlet和Filter时的url-pattern匹配规则</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/tomcat-get-real-client-ip-from-nginx-server.html" data-id="cjjisw3xv012x6lkouhfzq3rk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/tomcat-get-real-client-ip-from-nginx-server.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/tomcat-get-real-client-ip-from-nginx-server.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/weka-machine-learning-practice-performance-evaluation.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Weka机器学习实战之性能度量
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/nginx-speed-up-page-visiting-via-gzip-module.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Nginx使用Gzip压缩加速访问</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

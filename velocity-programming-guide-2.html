@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Velocity编程指南（二） | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Velocity,模板引擎" />
+    
+    <meta name="description" content="Velocity模板引擎如何使用，语法是怎样的？本博客将会在变量的赋值，引用以及注释等三个方面来谈一谈Velocity的语法。但是在开始语法之前，我们快速地搞一个Hello World出来试下水。 123456&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;#set( $name = &quot;Velocity&quot; )Hello $name World!&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;">
+<meta name="keywords" content="Velocity,模板引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Velocity编程指南（二）">
+<meta property="og:url" content="http://qinjiangbo.com/velocity-programming-guide-2.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="Velocity模板引擎如何使用，语法是怎样的？本博客将会在变量的赋值，引用以及注释等三个方面来谈一谈Velocity的语法。但是在开始语法之前，我们快速地搞一个Hello World出来试下水。 123456&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;#set( $name = &quot;Velocity&quot; )Hello $name World!&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/velocity-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-02T09:03:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Velocity编程指南（二）">
+<meta name="twitter:description" content="Velocity模板引擎如何使用，语法是怎样的？本博客将会在变量的赋值，引用以及注释等三个方面来谈一谈Velocity的语法。但是在开始语法之前，我们快速地搞一个Hello World出来试下水。 123456&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;#set( $name = &quot;Velocity&quot; )Hello $name World!&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/velocity-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-velocity-programming-guide-2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Velocity编程指南（二）
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/velocity-programming-guide-2.html" class="article-date">
+    <time datetime="2017-06-21T15:46:19.000Z" itemprop="datePublished">2017-06-21</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Velocity/">Velocity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模板引擎/">模板引擎</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Velocity模板引擎如何使用，语法是怎样的？本博客将会在变量的赋值，引用以及注释等三个方面来谈一谈Velocity的语法。但是在开始语法之前，我们快速地搞一个Hello World出来试下水。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">#set( $name = "Velocity" )</span><br><span class="line">Hello $name World!</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到这段代码经过模板引擎渲染以后会输出以下文字：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">Hello Velocity World!</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>展示出来就是一个HTML页面，上面写着<code>Hello Velocity World!</code>。观察上面这个例子不难发现，<code>Hello $name World!</code>被替换为了<code>Hello Velocity World!</code>，原因是<code>$name</code>变量被<code>#set($name = &quot;Velocity&quot;)</code>语句赋值为了<code>Velocity</code>，因此就直接等值替换了。</p>
+<p><code>小建议</code>：为了使你的VTL代码可读性更高，我们建议你的赋值语句最好独占一行，剩下的语句就另起一行。</p>
+<h2 id="语法元素Elements"><a href="#语法元素Elements" class="headerlink" title="语法元素Elements"></a>语法元素Elements</h2><p>和其他的语言一样，Velocity一样也有一些语法元素，比如<code>语句和命令</code>，<code>引用</code>以及<code>注释</code>。本节主要介绍这三个方面。</p>
+<h3 id="语句和命令"><a href="#语句和命令" class="headerlink" title="语句和命令"></a>语句和命令</h3><p>先说一下语句和命令的区别，Linux命令我们都知道一些，比如<code>rm</code>，<code>ls</code>以及<code>ps</code>等等，这一些都是命令，<strong>shell编程中它们只是语句中的一步分，后面还会带很多参数</strong>。Velocity中的命令一样，也是语句的一部分，下面我们就分析一下一个VTL是怎么组成的？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#set($a = 10)           ## Velocity单行语句</span><br><span class="line">^\_/\_______/</span><br><span class="line">| |     |</span><br><span class="line">| |     +---------- 圆括号中的表达式</span><br><span class="line">| |</span><br><span class="line">| +---------------- Velocity命令</span><br><span class="line">|</span><br><span class="line">+------------------ Velocity语句的开始标志</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+------------------ Velocity语句的开始标志</span><br><span class="line">|</span><br><span class="line">|   +-------------- Velocity命令</span><br><span class="line">|   |</span><br><span class="line">|   |          +--- 圆括号中的表达式</span><br><span class="line">| __|__  ______|______</span><br><span class="line">v/     \/             \</span><br><span class="line">#foreach($i in [0..10])   ## Velocity多行语句</span><br><span class="line">    Counter is $i           ## 语句体</span><br><span class="line">#end                      ## Velocity语句的结束标志</span><br></pre></td></tr></table></figure>
+<p><strong>单行语句例子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#set($name = &quot;Banana&quot;)</span><br><span class="line">#include(&quot;Apple.vm&quot;)</span><br><span class="line">#parse(&quot;Apple.vm&quot;)</span><br><span class="line">#stop</span><br></pre></td></tr></table></figure>
+<p><strong>多行语句例子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#foreach($i in [1..20])</span><br><span class="line">    The num is $i</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">#literal</span><br><span class="line">    This is a literal block of sample text</span><br><span class="line">#end</span><br><span class="line"></span><br><span class="line">#if($fruit == &quot;banana&quot;)</span><br><span class="line">    This is a banana.</span><br><span class="line">#else</span><br><span class="line">    This is not a banana.</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p><code>注意</code>：这里<code>#end</code>命令其实也可以和前面的语句放在同一行，但是呢，我们依然称这些语句为<strong>多行语句</strong>。</p>
+<h3 id="引用references"><a href="#引用references" class="headerlink" title="引用references"></a>引用references</h3><p>这个很有趣，因为我们都知道，在Java中我们使用标识标识符去操作很多事情，然后最后给其指定一个值，根据这个值，这些操作最后会有一个结果。我们将这个标识符称为一个<strong>引用</strong>（引用都是通过一个<code>$</code>符号引导的）。尤其是在Velocity做模板开发Java Web程序的时候，Web页面的设计者只需要关心页面是如何组织的，并不关心后台的数据如何执行，并且是如何传过来的，他们只需要<strong>假想</strong>这个模块已经有值了，然后根据这个<strong>假想</strong>去设计相关的功能，这样就将工作和后端的工程师隔离了，大大提高了工作效率。我们来看一看下面的例子有哪些引用？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 简单引用</span><br><span class="line">The total amout is $total.</span><br><span class="line"></span><br><span class="line">## 属性引用</span><br><span class="line">You currently have $cart.items Items in your Shopping cart.</span><br><span class="line"></span><br><span class="line">## 方法引用</span><br><span class="line">We offer you a discount of $cart.calculateDiscount() for your purchase.</span><br><span class="line"></span><br><span class="line">## 在Velocity中直接创建一个全新的引用</span><br><span class="line">#set($linesPerPage = 20)</span><br></pre></td></tr></table></figure>
+<p><code>注意</code>：有一种情况需要小心，那就是标识符的区分度问题，比如下面这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#set($we = &quot;Alibaba&quot;)</span><br><span class="line">This is a $weday.</span><br></pre></td></tr></table></figure>
+<p>大家可能会觉得结果是<code>This is a Alibabaday.</code>实际情况呢？<code>This is a $weday.</code>，怎么回事？不应该是<code>This is a Alibabaday.</code>吗？原因是<code>$we</code>和<code>$weday</code>都被当成一个独立的标识符了，所以，这个时候需要区分开，加上花括号即可解决这个问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#set($we = &quot;Alibaba&quot;)</span><br><span class="line">This is a $&#123;we&#125;day.</span><br></pre></td></tr></table></figure>
+<p>结果就是：<code>This is a Alibabaday.</code></p>
+<h3 id="注释comments"><a href="#注释comments" class="headerlink" title="注释comments"></a>注释comments</h3><p> Velocity的注释和Java的注释差不多，也分为单行注释和多行注释。单行注释一般是以两个<code>#</code>号开始的，为什么不是一个<code>#</code>号？因为一个<code>#</code>号表示一个Velocity命令啊！多行注释就是采用<code>#</code>号和<code>*</code>号结合的方式来使用的，用法和Java里面的非常相似！下面就简单地说说单行注释和多行注释。</p>
+<p><strong>单行注释的例子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 这是单行注释哟.</span><br><span class="line">This is visible in the output ## 这也是单行注释哟.</span><br></pre></td></tr></table></figure>
+<p><strong>多行注释的例子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这是多行注释块外面的文本，是可见的。</span><br><span class="line"></span><br><span class="line">#*</span><br><span class="line">  我们在多行注释，放我出去！！！为什么我不可见！！！</span><br><span class="line">*#</span><br><span class="line"></span><br><span class="line">上面👆多行注释里面的文本一点都不蛋定，看我，在注释快外面，是可见的，哈哈😆！</span><br></pre></td></tr></table></figure>
+<p>还有一种方式使用多行注释，就是像Java代码一样标准化的代码块，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#**</span><br><span class="line">This is a VTL comment block and</span><br><span class="line">may be used to store such information</span><br><span class="line">as the document author and versioning</span><br><span class="line">information:</span><br><span class="line">@author qinjiangbo@github.io</span><br><span class="line">@version 1.0.0</span><br><span class="line">*#</span><br></pre></td></tr></table></figure>
+<h3 id="转义符escape"><a href="#转义符escape" class="headerlink" title="转义符escape"></a>转义符escape</h3><p>在Velocity里面，转义符的规则和Java里面其实是差不多的，下面结合几个具体的例子来说说。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\	表示一个反斜杠</span><br><span class="line">\\	表示一个反斜杠</span><br><span class="line">\#	（没有命令跟着时）表示一个\#</span><br><span class="line">\$	（没有引用跟着时）表示一个\$</span><br><span class="line">\#end	表示#end</span><br><span class="line">\#set ($name = &quot;Alibaba&quot;)	表示#set ($name = &quot;Alibaba&quot;)</span><br><span class="line">\$alibaba	表示$alibaba</span><br></pre></td></tr></table></figure>
+<h2 id="引用References"><a href="#引用References" class="headerlink" title="引用References"></a>引用References</h2><p>开始讲一个大的方向就是引用，我们知道，正是有了引用，编程才开始变得灵活多变。在VTL里面，有三种类型的引用，分别是<code>变量</code>，<code>属性</code>和<code>方法</code>。它们是连接你的Java应用和模板的胶水，只有通过它们，我们的后台逻辑才和模板联系起来，才能构成一个完整的业务。</p>
+<h3 id="标识符identifiers"><a href="#标识符identifiers" class="headerlink" title="标识符identifiers"></a>标识符identifiers</h3><p>Velocity的标识符很有意思，就是只能使用字母开头的短语作为标识符的表示形式，另外命名还有以下几点要求（主要是三种类型的字符构成）：</p>
+<ul>
+<li>字母（a-z, A-Z）</li>
+<li>数字（0-9）</li>
+<li>横线（-）或者下划线（_）</li>
+</ul>
+<p>Velocity的标识符命名和Java一样，也是大小写敏感的，这一点非常重要！！！</p>
+<h3 id="变量variables"><a href="#变量variables" class="headerlink" title="变量variables"></a>变量variables</h3><p>变量是最简单的引用类型，因为每一个引用同样也是一个变量。每一个变量代表了一个Java对象。下面来看一下有效的变量命名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$foo</span><br><span class="line">$bar</span><br><span class="line">$foo-bar</span><br><span class="line">$foo_bar</span><br><span class="line">$fooBar1</span><br></pre></td></tr></table></figure>
+<p>说一下一个叫<code>上下文</code>的东西，在Velocity里面，上下文通常用于存放变量和引用的映射关系。这就是为什么我们能从Java代码中直接将值传递到Velocity模板引擎中。当然啦，我们也可以直接通过Velocity命令将变量放入<code>上下文</code>中。比如下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#set ($love = &quot;Alibaba&quot;)</span><br><span class="line">My love is $love. ## My love is Alibaba.</span><br></pre></td></tr></table></figure>
+<p>整个上下文中就包含了<code>$love</code>这个变量，因此我们可以在模板的任何地方使用它，直接等只替换就OK了。</p>
+<h3 id="属性properties"><a href="#属性properties" class="headerlink" title="属性properties"></a>属性properties</h3><p>Velocity允许你通过很简单的方式去访问一个对象的属性，一般来说，我们是通过<code>.</code>号来访问一个Velocity对象的属性的。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$customer.address</span><br><span class="line">$purchase.total</span><br><span class="line">$cart.customerDiscount</span><br></pre></td></tr></table></figure>
+<p>一个属性（property）名字并不仅仅是代表这个对象的一个域（field），它还可以表示这个对象的方法。我们以第2个对象为例：<code>$purchase.total</code>有以下一些含义：</p>
+<ul>
+<li>当这个对象有<code>gettotal()</code>这个方法的时候，就会调用这个方法；</li>
+<li>如果这个对象是一个Java Bean对象，那么就会调用这个对象的getter方法<code>getTotal()</code>；</li>
+<li>如果这个对象包含get方法，就会调用这个<code>get()</code>方法，只不过total作为参数传递进去；</li>
+<li>如果这个对象包含<code>isTotal()</code>方法，调用这个方法；</li>
+</ul>
+<p>好，知道了上述的规则以后，我们总结一下Velocity对象查找属性的规则：</p>
+<p><strong>小写开头的属性</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gettotal()</span><br><span class="line">getTotal()</span><br><span class="line">get(&quot;total&quot;)</span><br><span class="line">isTotal()</span><br></pre></td></tr></table></figure>
+<p><strong>大写开头的属性</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getTotal()</span><br><span class="line">gettotal()</span><br><span class="line">get(&quot;total&quot;)</span><br><span class="line">isTotal()</span><br></pre></td></tr></table></figure>
+<p>可以看到，大写和小写前两个顺序是完全不一样的，因此，在编写代码的时候命名格式且其要规范统一，否则会碰到这种特别头疼的问题。</p>
+<h3 id="方法methods"><a href="#方法methods" class="headerlink" title="方法methods"></a>方法methods</h3><p>Velocity对象的方法的调用其实非常简单，如果你知道Java方法调用的话（你一定知道，因为这是Java模板引擎），Velocity对象的方法调用和Java的方式一样。直接上例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$cart.calculateTotal()</span><br><span class="line">$customer.updatePurchases($cart)</span><br><span class="line">$shop.checkInventory()</span><br><span class="line">$cart.addTaxes(8, 16)</span><br><span class="line"></span><br><span class="line"># Property access</span><br><span class="line">$page.setTitle( &quot;My Home Page&quot; )</span><br><span class="line">$customer.getAddress()</span><br><span class="line">$purchase.getTotal()</span><br></pre></td></tr></table></figure>
+<p>属性和方法的主要不同点在于你可以给方法指定一组参数列表。因为方法是可以传递参数的，而属性没法传递。</p>
+<h3 id="引用references-1"><a href="#引用references-1" class="headerlink" title="引用references"></a>引用references</h3><p>在使用模板引擎的时候，需要将模板的文本和引擎的引用区分开，前面讲过，一不小心很容易变量就混合在一起了，不是特别好区分。通常我们建议使用花括号<code>{</code>和<code>}</code>跟在<code>$</code>符号后面来包含这个引用，用于区分一个引用和普通模板文本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$&#123;fruit&#125;</span><br><span class="line">$&#123;customer.address&#125;</span><br><span class="line">$&#123;purchase.getTotal()&#125;</span><br></pre></td></tr></table></figure>
+<p>以第一行为例，如果你要点一杯果汁，你可能这么声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I want a cup of $fruitJuice.</span><br></pre></td></tr></table></figure>
+<p>结果你啥也没得到，更别说果汁了，如果你改变一下会更好：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I want a cup of $&#123;fruit&#125;Juice.</span><br></pre></td></tr></table></figure>
+<p>因为引用是<code>${fruit}</code>而不是<code>${fruitjuice}</code>，这个很重要。另外需要注意的一个地方是引用的表达上面，尤其是在Web页面模板上的时候。往往空指针的情况容易导致这个变量直接就输出在了屏幕上，我们可以换一种写法：</p>
+<p><strong>之前的写法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; name=&quot;email&quot; value=&quot;$email&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>如果<code>$email</code>为空怎么办？这个文本域就会显示<code>“$email”</code>这个字符串。是不是非常不友好，我们期望的是如果<code>$email</code>为空，直接不要显示任何东西。可以在<code>$</code>符号和变量之间加上一个<code>!</code>号，就像这样：</p>
+<p><strong>现在的写法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; name=&quot;email&quot; value=&quot;$!email&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>更规范的写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; name=&quot;email&quot; value=&quot;$!&#123;email&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本博客主要是讲述了Velocity模板引擎中的引用部分以及它相应的使用注意事项。Velocity中的对象引用很大程度上和Java中的是一样的，大家注意其中的几点不同就行啦。下一章主要是介绍VTL中的命令这一块。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/velocity-programming-guide-2.html" data-id="cjjisw3y101376lkosi45sgez" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/velocity-programming-guide-2.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/velocity-programming-guide-2.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/add-changyan-comments-to-hexo-blog.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Hexo博客添加畅言评论框
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/velocity-programming-guide-1.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Velocity编程指南（一）</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

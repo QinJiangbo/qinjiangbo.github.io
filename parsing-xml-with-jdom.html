@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Jdom解析XML | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Jdom,XML" />
+    
+    <meta name="description" content="XML是一种广为使用的可扩展标记语言，java中解析xml的方式有很多，最常用的像jdom、dom4j、sax等等。前两天刚好有个程序需要解析xml，就学了下jdom，写了个小例子，这里做个学习笔记。  要使用jdom解析xml文件，需要下载jdom的包，我使用的是jdom-1.1。解压之后，将lib文件夹下的.jar文件以及build文件夹下的jdom.jar拷贝到工程文件夹下，然后就可以使用">
+<meta name="keywords" content="Jdom,XML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jdom解析XML">
+<meta property="og:url" content="http://qinjiangbo.com/parsing-xml-with-jdom.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="XML是一种广为使用的可扩展标记语言，java中解析xml的方式有很多，最常用的像jdom、dom4j、sax等等。前两天刚好有个程序需要解析xml，就学了下jdom，写了个小例子，这里做个学习笔记。  要使用jdom解析xml文件，需要下载jdom的包，我使用的是jdom-1.1。解压之后，将lib文件夹下的.jar文件以及build文件夹下的jdom.jar拷贝到工程文件夹下，然后就可以使用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/xml-thumbnail.jpg">
+<meta property="og:updated_time" content="2016-10-19T15:53:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jdom解析XML">
+<meta name="twitter:description" content="XML是一种广为使用的可扩展标记语言，java中解析xml的方式有很多，最常用的像jdom、dom4j、sax等等。前两天刚好有个程序需要解析xml，就学了下jdom，写了个小例子，这里做个学习笔记。  要使用jdom解析xml文件，需要下载jdom的包，我使用的是jdom-1.1。解压之后，将lib文件夹下的.jar文件以及build文件夹下的jdom.jar拷贝到工程文件夹下，然后就可以使用">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/xml-thumbnail.jpg">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-parsing-xml-with-jdom" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Jdom解析XML
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/parsing-xml-with-jdom.html" class="article-date">
+    <time datetime="2016-04-17T14:29:42.000Z" itemprop="datePublished">2016-04-17</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jdom/">Jdom</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XML/">XML</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/xml-thumbnail.jpg" alt=""></p>
+<p>XML是一种广为使用的可扩展标记语言，java中解析xml的方式有很多，最常用的像jdom、dom4j、sax等等。前两天刚好有个程序需要解析xml，就学了下jdom，写了个小例子，这里做个学习笔记。</p>
+<p> 要使用jdom解析xml文件，需要下载jdom的包，我使用的是jdom-1.1。解压之后，将lib文件夹下的.jar文件以及build文件夹下的jdom.jar拷贝到工程文件夹下，然后就可以使用jdom操作xml文件了。</p>
+<h3 id="一、读取xml文件"><a href="#一、读取xml文件" class="headerlink" title="一、读取xml文件"></a>一、读取xml文件</h3><p>假设有这样一个xml文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;  </span><br><span class="line"><span class="tag">&lt;<span class="name">sys-config</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbc-info</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">driver-class-name</span>&gt;</span>oracle.jdbc.driver.OracleDriver<span class="tag">&lt;/<span class="name">driver-class-name</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>jdbc:oracle:thin:@localhost:1521:database<span class="tag">&lt;/<span class="name">url</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">user-name</span>&gt;</span>why<span class="tag">&lt;/<span class="name">user-name</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>why<span class="tag">&lt;/<span class="name">password</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">jdbc-info</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">provinces-info</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">province</span> <span class="attr">id</span>=<span class="string">"hlj"</span> <span class="attr">name</span>=<span class="string">"黑龙江"</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">city</span> <span class="attr">id</span>=<span class="string">"harb"</span>&gt;</span>哈尔滨<span class="tag">&lt;/<span class="name">city</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">city</span> <span class="attr">id</span>=<span class="string">"nj"</span>&gt;</span>嫩江<span class="tag">&lt;/<span class="name">city</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">province</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">province</span> <span class="attr">id</span>=<span class="string">"jl"</span> <span class="attr">name</span>=<span class="string">"吉林"</span>&gt;</span><span class="tag">&lt;/<span class="name">province</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">provinces-info</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">sys-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>首先，用 org.jdom.input.SAXBuilder 这个类取得要操作的xml文件，会返回一个 org.jdom.Document 对象，这里需要做一下异常处理。然后，取得这个xml文件的根节点，org.jdom.Element 代表xml文件中的一个节点，取得跟节点后，便可以读取xml文件中的信息。利用 org.jdom.xpath.XPath 可以取得xml中的任意制定的节点中的信息。</p>
+<p>例如，要取得上面文件中的 <jdbc-info> 下的 <driver-class-name> 中的内容，先取得这个节点Element driverClassNameElement = (Element)XPath.selectSingleNode(rootEle, “//sys-config/jdbc-info/driver-class-name”)，注意，根节点前要使用两个 “/“ ，然后，用 driverClassNameElement.getText() 便可以取得这个节点下的信息。</driver-class-name></jdbc-info></p>
+<p>如果一个节点下有多个名称相同的子节点，可以用XPath.selectNodes()方法取得多个子节点的List，遍历这个List就可以操作各个子节点的内容了。</p>
+<p>下面是我写的读取上面xml文件的例子，比起文字描述更直观一些吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.why.jdom;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> java.io.IOException;  </span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;  </span><br><span class="line"><span class="keyword">import</span> java.util.List;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder;  </span><br><span class="line"><span class="keyword">import</span> org.jdom.xpath.XPath;  </span><br><span class="line"><span class="keyword">import</span> org.jdom.Document;  </span><br><span class="line"><span class="keyword">import</span> org.jdom.Element;  </span><br><span class="line"><span class="keyword">import</span> org.jdom.JDOMException;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadXML</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">        SAXBuilder sax = <span class="keyword">new</span> SAXBuilder();  </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            Document doc = sax.build(<span class="string">"src/config.xml"</span>);  </span><br><span class="line">            Element rootEle = doc.getRootElement();  </span><br><span class="line">            Element driverClassNameElement = (Element)XPath.selectSingleNode(rootEle, <span class="string">"//sys-config/jdbc-info/driver-class-name"</span>);  </span><br><span class="line">            String driverClassName = driverClassNameElement.getText();  </span><br><span class="line">            System.out.println(<span class="string">"driverClassName = "</span> + driverClassName);  </span><br><span class="line">              </span><br><span class="line">            List provinceList = XPath.selectNodes(rootEle, <span class="string">"//sys-config/provinces-info/province"</span>);  </span><br><span class="line">            <span class="keyword">for</span>(Iterator it = provinceList.iterator();it.hasNext();)&#123;  </span><br><span class="line">                Element provinceEle = (Element)it.next();  </span><br><span class="line">                String proId = provinceEle.getAttributeValue(<span class="string">"id"</span>);  </span><br><span class="line">                String proName = provinceEle.getAttributeValue(<span class="string">"name"</span>);  </span><br><span class="line">  </span><br><span class="line">                System.out.println(<span class="string">"provinceId = "</span> + proId + <span class="string">"   provinceName = "</span> + proName);  </span><br><span class="line">                  </span><br><span class="line">                List cityEleList = (List)provinceEle.getChildren(<span class="string">"city"</span>);  </span><br><span class="line">                  </span><br><span class="line">                <span class="keyword">for</span>(Iterator cityIt = cityEleList.iterator();cityIt.hasNext();)&#123;  </span><br><span class="line">                    Element cityEle = (Element)cityIt.next();  </span><br><span class="line">                    String cityId = cityEle.getAttributeValue(<span class="string">"id"</span>);  </span><br><span class="line">                    String cityName = cityEle.getText();  </span><br><span class="line">  </span><br><span class="line">                    System.out.println(<span class="string">"    cityId = "</span> + cityId + <span class="string">"   cityName = "</span> + cityName);  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (JDOMException e) &#123;  </span><br><span class="line">            <span class="comment">// TODO 自动生成 catch 块  </span></span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;  </span><br><span class="line">            <span class="comment">// TODO 自动生成 catch 块  </span></span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二、写xml文件"><a href="#二、写xml文件" class="headerlink" title="二、写xml文件"></a>二、写xml文件</h3><p> 写xml文件与读取xml文件的操作类似，利用 org.jdom.output.XMLOutputter 就可以将处理好的xml输出到文件了。可以设置文件的编码方式，不过一般使用UTF-8就可以了。代码如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">package</span> com.why.jdom;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;  </span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;  </span><br><span class="line"><span class="keyword">import</span> java.io.IOException;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> org.jdom.Document;  </span><br><span class="line"><span class="keyword">import</span> org.jdom.Element;  </span><br><span class="line"><span class="keyword">import</span> org.jdom.output.XMLOutputter;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WriteXML</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">          </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">// TODO 自动生成方法存根  </span></span><br><span class="line">        Element rootEle = <span class="keyword">new</span> Element(<span class="string">"sys-config"</span>);  </span><br><span class="line">        Element provincesEle = <span class="keyword">new</span> Element(<span class="string">"provinces-info"</span>);  </span><br><span class="line">          </span><br><span class="line">        Element provinceEle = <span class="keyword">new</span> Element(<span class="string">"province"</span>);  </span><br><span class="line">        provinceEle.setAttribute(<span class="string">"id"</span>,<span class="string">"hlj"</span>);  </span><br><span class="line">        provinceEle.setAttribute(<span class="string">"name"</span>,<span class="string">"黑龙江省"</span>);  </span><br><span class="line">          </span><br><span class="line">        Element cityEle1 = <span class="keyword">new</span> Element(<span class="string">"city"</span>);  </span><br><span class="line">        cityEle1.setAttribute(<span class="string">"id"</span>,<span class="string">"harb"</span>);  </span><br><span class="line">        cityEle1.addContent(<span class="string">"哈尔滨"</span>);  </span><br><span class="line">          </span><br><span class="line">        Element cityEle2 = <span class="keyword">new</span> Element(<span class="string">"city"</span>);  </span><br><span class="line">        cityEle2.setAttribute(<span class="string">"id"</span>,<span class="string">"nj"</span>);  </span><br><span class="line">        cityEle2.addContent(<span class="string">"嫩江"</span>);  </span><br><span class="line">          </span><br><span class="line">          </span><br><span class="line">        provinceEle.addContent(cityEle1);  </span><br><span class="line">        provinceEle.addContent(cityEle2);  </span><br><span class="line">        provincesEle.addContent(provinceEle);  </span><br><span class="line">        rootEle.addContent(provincesEle);  </span><br><span class="line">          </span><br><span class="line">        Document doc = <span class="keyword">new</span> Document(rootEle);  </span><br><span class="line">          </span><br><span class="line">        XMLOutputter out = <span class="keyword">new</span> XMLOutputter();  </span><br><span class="line">          </span><br><span class="line">          </span><br><span class="line"><span class="comment">//      out.setFormat(Format.getCompactFormat().setEncoding("GBK"));//设置文件编码，默认为UTF-8  </span></span><br><span class="line">        String xmlStr = out.outputString(doc);  </span><br><span class="line">        System.out.println(xmlStr);  </span><br><span class="line">          </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            out.output(doc, <span class="keyword">new</span> FileOutputStream(<span class="string">"c:/test.xml"</span>));  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;  </span><br><span class="line">            <span class="comment">// TODO 自动生成 catch 块  </span></span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;  </span><br><span class="line">            <span class="comment">// TODO 自动生成 catch 块  </span></span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/parsing-xml-with-jdom.html" data-id="cjjisw3pi009r6lkopyjqppwe" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/parsing-xml-with-jdom.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/parsing-xml-with-jdom.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/useful-web-services.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            各种实用的WebService
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/hash-map-vs-tree-map-vs-hash-table-vs-linked-hash-map.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">HashMap vs. TreeMap vs. HashTable vs. LinkedHashMap</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

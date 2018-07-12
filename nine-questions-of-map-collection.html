@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>（译）Java Map集合九问 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JDK8,集合框架" />
+    
+    <meta name="description" content="一般来说，Map就是一个包含一个或多个键值对（Key-Value Pair）的数据结构，而且每一个键（Key）不允许重复出现。本文总结了Java Map九个最常见的问题。为了通用性考虑，我在每一个例子中都使用了泛型。在例子中你可以认为K和V这两个参数都是默认实现了Comparable接口的。 1. 将Map转化为List在Java中，Map接口提供了三种集合视图：key Set, value Se">
+<meta name="keywords" content="JDK8,集合框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（译）Java Map集合九问">
+<meta property="og:url" content="http://qinjiangbo.com/nine-questions-of-map-collection.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="一般来说，Map就是一个包含一个或多个键值对（Key-Value Pair）的数据结构，而且每一个键（Key）不允许重复出现。本文总结了Java Map九个最常见的问题。为了通用性考虑，我在每一个例子中都使用了泛型。在例子中你可以认为K和V这两个参数都是默认实现了Comparable接口的。 1. 将Map转化为List在Java中，Map接口提供了三种集合视图：key Set, value Se">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-2-thumbnail.png">
+<meta property="og:updated_time" content="2017-01-14T07:17:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（译）Java Map集合九问">
+<meta name="twitter:description" content="一般来说，Map就是一个包含一个或多个键值对（Key-Value Pair）的数据结构，而且每一个键（Key）不允许重复出现。本文总结了Java Map九个最常见的问题。为了通用性考虑，我在每一个例子中都使用了泛型。在例子中你可以认为K和V这两个参数都是默认实现了Comparable接口的。 1. 将Map转化为List在Java中，Map接口提供了三种集合视图：key Set, value Se">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-2-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-nine-questions-of-map-collection" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        （译）Java Map集合九问
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/nine-questions-of-map-collection.html" class="article-date">
+    <time datetime="2017-01-13T02:33:23.000Z" itemprop="datePublished">2017-01-13</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK8/">JDK8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合框架/">集合框架</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>一般来说，Map就是一个包含一个或多个键值对（Key-Value Pair）的数据结构，而且每一个键（Key）不允许重复出现。本文总结了Java Map九个最常见的问题。为了通用性考虑，我在每一个例子中都使用了泛型。在例子中你可以认为K和V这两个参数都是默认实现了Comparable接口的。</p>
+<h2 id="1-将Map转化为List"><a href="#1-将Map转化为List" class="headerlink" title="1. 将Map转化为List"></a>1. 将Map转化为List</h2><p>在Java中，Map接口提供了三种集合视图：key Set, value Set以及key-Value Set。通过List的构造函数或者是<code>addAll()</code>方法都可以将他们转化为List列表。下面的一段代码就是展示如何使用ArrayList的构造函数将Map转化为List。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// key list</span></span><br><span class="line">List keyList = <span class="keyword">new</span> ArrayList(map.keySet());</span><br><span class="line"><span class="comment">// value list</span></span><br><span class="line">List valueList = <span class="keyword">new</span> ArrayList(map.values());</span><br><span class="line"><span class="comment">// key-value list</span></span><br><span class="line">List entryList = <span class="keyword">new</span> ArrayList(map.entrySet());</span><br></pre></td></tr></table></figure>
+<h2 id="2-迭代一个Map"><a href="#2-迭代一个Map" class="headerlink" title="2. 迭代一个Map"></a>2. 迭代一个Map</h2><p>通过遍历每一个键值对（Key-Value Pair）来遍历一个Map是Map集合遍历中最基础的操作了。在Java中，这样的键值对（Key-Value Pair）都存储在一个叫<code>Map.Entry</code>的数据结构中。<code>Map.entrySet()</code>方法返回一个键值对集合（Key-Value Set），因此，最有效的遍历Map集合中每个Entry的方式就是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Entry entry: map.entrySet()) &#123;</span><br><span class="line">  <span class="comment">// get key</span></span><br><span class="line">  K key = entry.getKey();</span><br><span class="line">  <span class="comment">// get value</span></span><br><span class="line">  V value = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以使用迭代器，尤其是在JDK1.5以前的版本中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Iterator itr = map.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span>(itr.hasNext()) &#123;</span><br><span class="line">  Entry entry = itr.next();</span><br><span class="line">  <span class="comment">// get key</span></span><br><span class="line">  K key = entry.getKey();</span><br><span class="line">  <span class="comment">// get value</span></span><br><span class="line">  V value = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-根据Key来排序一个Map"><a href="#3-根据Key来排序一个Map" class="headerlink" title="3. 根据Key来排序一个Map"></a>3. 根据Key来排序一个Map</h2><p>根据键（Keys）来排序一个Map是另一个比较基础的操作。一种可行的操作就是将<code>Map.Entry</code>放入一个列表（List），然后通过比较器（Comparator）来排序这个列表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List list = <span class="keyword">new</span> ArrayList(map.entrySet());</span><br><span class="line">Collections.sort(list, <span class="keyword">new</span> Comparator() &#123;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Entry e1, Entry e2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> e1.getKey().compareTo(e2.getKey());</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>注意：</code>上述代码也可以使用Lambda表达式代替。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List list = <span class="keyword">new</span> ArrayList(map.entrySet());</span><br><span class="line">Collections.sort(list, (e1,e2)-&gt;e1.getKey().compareTo(e2.getKey()));</span><br></pre></td></tr></table></figure>
+<p>另一种方式就是使用<code>SortedMap</code>，它提供了一个基于键的排序机制。因此所有的键（Keys）必须实现<code>Comparable</code>接口或者是能被比较器（Comparator）接受。</p>
+<p><code>SortedMap</code>的另一种实现是<code>TreeMap</code>。它的构造函数能接受一个比较器（Comparator）。下面就展示了如何将一个普通的Map转化为一个排序的Map。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SortedMap sortedMap = <span class="keyword">new</span> TreeMap(<span class="keyword">new</span> Comparator() &#123;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(K k1, K k2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> k1.compareTo(k2);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;);</span><br><span class="line">sortedMap.putAll(map);</span><br></pre></td></tr></table></figure>
+<h2 id="4-根据Value来排序一个Map"><a href="#4-根据Value来排序一个Map" class="headerlink" title="4. 根据Value来排序一个Map"></a>4. 根据Value来排序一个Map</h2><p>把Map放入一个List或者是排序同样也都适用于基于值（Value）这种情况。但是这一次需要比较的是<code>Entry.getValue()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List list = <span class="keyword">new</span> ArrayList(map.entrySet());</span><br><span class="line">Collections.sort(list, <span class="keyword">new</span> Comparator() &#123;</span><br><span class="line"> </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Entry e1, Entry e2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> e1.getValue().compareTo(e2.getValue());</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们仍然可以使用一个SortedMap来解决这个问题，但是仅适用于所有的值都是唯一的情况。基于这样一个情况，你可以将键值对（Key-Value Pair）转化为值键对（Value-Key Pair）。这个解决方法有很大的限制性，所以不推荐大家使用。</p>
+<h2 id="5-初始化一个不可变Map"><a href="#5-初始化一个不可变Map" class="headerlink" title="5. 初始化一个不可变Map"></a>5. 初始化一个不可变Map</h2><p>当你需要使一个Map集合不可变时，一个最佳实践就是将这个Map放入一个不可变的Map中。这种防御性编程技术将会帮助你创建一个不仅使用安全而且也线程安全的Map集合。</p>
+<p>为了初始化一个不可变Map集合，我们可以使用一个静态初始化块（如下）。这个方法的问题就是，尽管Map已经被声明为了<code>static final</code>，我们仍然可以在它初始化完毕后修改它的内容。比如<code>Test.map.put(3, &quot;three&quot;);</code>。所以，这个并不是正真的不可变。通过静态初始化块去创建一个不可变的Map集合，我们需要额外的匿名类并且在初始化完毕的最后一步把它拷贝到一个不可修改的Map中。然后，当我们调用刚刚的那段代码时就会抛出<code>UnsupportedOperationException</code>的异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map map;</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    map = <span class="keyword">new</span> HashMap();</span><br><span class="line">    map.put(<span class="number">1</span>, <span class="string">"one"</span>);</span><br><span class="line">    map.put(<span class="number">2</span>, <span class="string">"two"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map map;</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    Map aMap = <span class="keyword">new</span> HashMap();</span><br><span class="line">    aMap.put(<span class="number">1</span>, <span class="string">"one"</span>);</span><br><span class="line">    aMap.put(<span class="number">2</span>, <span class="string">"two"</span>);</span><br><span class="line">    map = Collections.unmodifiableMap(aMap);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Guava类库里面同样也支持不可变Map集合的多种初始化方式。更多关于Guava的教程请查看本博客的<a href="http://t.cn/RMNYOyC" target="_blank" rel="noopener">Guava优美代码系列</a>。</p>
+<h2 id="6-HashMap，TreeMap以及HashTable之间的区别"><a href="#6-HashMap，TreeMap以及HashTable之间的区别" class="headerlink" title="6. HashMap，TreeMap以及HashTable之间的区别"></a>6. HashMap，TreeMap以及HashTable之间的区别</h2><p>在Java中，Map接口的实现类主要有三个：<code>HashMap</code>，<code>TreeMap</code>和<code>HashTable</code>。它们最主要的不同主要包括以下三点：</p>
+<ol>
+<li><strong>迭代的顺序。HashMap</strong>和<strong>HashTable</strong>不保证Map的迭代顺序。确切地说，它们不保证这个迭代的顺序一直保持为恒定。但是<strong>TreeMap</strong>将会根据键（Keys）或者比较器（Comparator）的自然排序来迭代整个Map。</li>
+<li><strong>Key-Value键值对限制。HashMap</strong>允许出现空键（null key）和空值（null values）。（空键只允许出现一次，因为我们知道，Map的键不能出现重复。）<strong>HashTable</strong>不允许出现空键（null key）和空值（null values）。如果<strong>TreeMap</strong>使用自然排序或者它的比较器（Comparator）不允许空值的话，添加空值或者空键将会抛出异常。</li>
+<li><strong>同步（Synchronized）。</strong>仅<strong>HashTable</strong>是同步的，其他的两个不是。所以说，如果一个线程安全的实现在项目中并不是那么需要，推荐大家使用<strong>HashMap</strong>而不是<strong>HashTable</strong>。</li>
+</ol>
+<p>更完整的比较如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HashMap</th>
+<th>Hashtable</th>
+<th>TreeMap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iteration order</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>null key-value</td>
+<td>yes-yes</td>
+<td>no-no</td>
+<td>no-yes</td>
+</tr>
+<tr>
+<td>synchronized</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>time performance</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>implementation</td>
+<td>buckets</td>
+<td>buckets</td>
+<td>red-black tree</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-双向Map"><a href="#7-双向Map" class="headerlink" title="7. 双向Map"></a>7. 双向Map</h2><p>有时候我们需要一组键值对（Key-Value Pair Set），意味着这个Map的值和键一样都是不能出现重复的。也就是一对一映射（One-to-One Map）。这个限制可以让我们创建出一个双向Map。所以我们也可以根据值（Value）来查找键（Key）。这样的数据结构被称为双向Map（bidirectional map），不幸的是JDK并不支持这个结构。</p>
+<p>在Apache Commons和Guava中这个数据结构都有实现，分别叫做BidiMap和BiMap。但是都强制键和值之间的映射关系为1:1。</p>
+<h2 id="8-Map的浅拷贝"><a href="#8-Map的浅拷贝" class="headerlink" title="8. Map的浅拷贝"></a>8. Map的浅拷贝</h2><p>在Java中Map的大多数实现，都提供了一种能拷贝其他Map的构造函数。但是这个拷贝的过程并<strong>不是同步的（Synchronized）。</strong>意味着一旦有某个线程拷贝了一个Map，另外的一个县城可能会对它进行修改。所以，为了避免不同步的拷贝，大家都应该使用<code>Collections.sysnchronizeMap()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map copiedMap = Collections.synchronizedMap(map);</span><br></pre></td></tr></table></figure>
+<p>另一个有趣的浅拷贝就是使用<code>clone()</code>方法。<strong>然而这个方法连Java集合框架的设计者Josh Bloch自己都不推荐使用。</strong>在一次关于“构造函数拷贝VS克隆”的对话中他说道：</p>
+<blockquote>
+<p>我经常在一个具体的类中提供公开的克隆方法<code>clone()</code>因为大家期待它。…但是很惭愧这样Cloneable就被打破了，但是它的确是发生了。…Cloneable是一个弱点，我希望大家看到它的局限性。</p>
+</blockquote>
+<p>基于这个原因，我都不会告诉你如何利用<code>Clone()</code>方法去拷贝一个Map。</p>
+<h2 id="9-创建一个空Map"><a href="#9-创建一个空Map" class="headerlink" title="9. 创建一个空Map"></a>9. 创建一个空Map</h2><p>如果一个Map是不可变得，使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map = Collections.emptyMap();</span><br></pre></td></tr></table></figure>
+<p>否则，利用任何一种实现都OK，比如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map = <span class="keyword">new</span> HashMap();</span><br></pre></td></tr></table></figure>
+<p><strong>完毕！</strong></p>
+<p><code>译文原文地址：</code><a href="http://www.programcreek.com/2013/09/top-9-questions-for-java-map/" target="_blank" rel="noopener">http://www.programcreek.com/2013/09/top-9-questions-for-java-map/</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/nine-questions-of-map-collection.html" data-id="cjjisw3xi01296lkoeow6bpl2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/nine-questions-of-map-collection.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/nine-questions-of-map-collection.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/effective-counters-in-java.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            （译）Java高效的计数器
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/from-2016-to-2017.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">回首2016，展望2017</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

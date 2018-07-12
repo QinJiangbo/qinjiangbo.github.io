@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>细说Java8之新增API下 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java8" />
+    
+    <meta name="description" content="Streams流这里不得不说一下Java8中新出来的一个神器java.util.Stream。那么java.util.Stream是什么呢？我们说java.util.Stream表示一个可以对其中的元素进行一项或多项操作的序列。具体是什么呢？我们先说说这些操作可以是什么？这些操作可以是直接取得结果的，也可以只作为某一个中间过程。比如说针对list或者是set，这些Stream操作可以每次只对其中一">
+<meta name="keywords" content="Java8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="细说Java8之新增API下">
+<meta property="og:url" content="http://qinjiangbo.com/java8-new-interfaces-2.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="Streams流这里不得不说一下Java8中新出来的一个神器java.util.Stream。那么java.util.Stream是什么呢？我们说java.util.Stream表示一个可以对其中的元素进行一项或多项操作的序列。具体是什么呢？我们先说说这些操作可以是什么？这些操作可以是直接取得结果的，也可以只作为某一个中间过程。比如说针对list或者是set，这些Stream操作可以每次只对其中一">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-thumbnail.png">
+<meta property="og:updated_time" content="2017-09-02T15:07:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="细说Java8之新增API下">
+<meta name="twitter:description" content="Streams流这里不得不说一下Java8中新出来的一个神器java.util.Stream。那么java.util.Stream是什么呢？我们说java.util.Stream表示一个可以对其中的元素进行一项或多项操作的序列。具体是什么呢？我们先说说这些操作可以是什么？这些操作可以是直接取得结果的，也可以只作为某一个中间过程。比如说针对list或者是set，这些Stream操作可以每次只对其中一">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-java8-new-interfaces-2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        细说Java8之新增API下
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/java8-new-interfaces-2.html" class="article-date">
+    <time datetime="2017-03-30T16:19:19.000Z" itemprop="datePublished">2017-03-31</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java8/">Java8</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="Streams流"><a href="#Streams流" class="headerlink" title="Streams流"></a>Streams流</h2><p>这里不得不说一下Java8中新出来的一个神器<code>java.util.Stream</code>。那么<code>java.util.Stream</code>是什么呢？我们说<code>java.util.Stream</code>表示一个可以对其中的元素进行一项或多项操作的序列。具体是什么呢？我们先说说这些操作可以是什么？这些操作可以是直接取得结果的，也可以只作为某一个中间过程。比如说针对<code>list</code>或者是<code>set</code>，这些<code>Stream</code>操作可以每次只对其中一个或者两个元素进行操作，作为中间过程保存；也可以针对全部的元素进行相关的操作。<code>Stream</code>操作可以串行执行也可以并行执行。</p>
+<h3 id="串行执行流"><a href="#串行执行流" class="headerlink" title="串行执行流"></a>串行执行流</h3><p>我们先看看串行执行的流操作是什么？首先创建一个<code>数据源</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类似Guava中快速构造一个集合</span></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">addElements</span><span class="params">(T... elements)</span> </span>&#123;</span><br><span class="line">    List&lt;T&gt; collections = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">    <span class="keyword">for</span> (T t: elements) &#123;</span><br><span class="line">        collections.add(t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> collections;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造数据源集合</span></span><br><span class="line">List&lt;String&gt; strings = addElements(<span class="string">"hello"</span>, <span class="string">"wuhan"</span>, <span class="string">"university"</span>);</span><br></pre></td></tr></table></figure>
+<p>因为Java8中集合类型都被扩展了，所以我们可以直接通过<code>strings.stream()</code>来获取这个顺序执行的流。</p>
+<h4 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h4><p>我们想只打印<code>srtrings</code>中包括字符<code>h</code>的字符串，所以，我们可以这样做：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">strings.stream()</span><br><span class="line">    .filter((o) -&gt; o.contains(<span class="string">"h"</span>))</span><br><span class="line">    .forEach(System.out::println);</span><br><span class="line"></span><br><span class="line"><span class="comment">// hello</span></span><br><span class="line"><span class="comment">// wuhan</span></span><br></pre></td></tr></table></figure>
+<h4 id="Sorted"><a href="#Sorted" class="headerlink" title="Sorted"></a>Sorted</h4><p>如果需要对它排序再输出，可以这么做：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">strings.stream()</span><br><span class="line">    .sorted()</span><br><span class="line">    .forEach(System.out::println);</span><br><span class="line"></span><br><span class="line"><span class="comment">// hello</span></span><br><span class="line"><span class="comment">// university</span></span><br><span class="line"><span class="comment">// wuhan</span></span><br></pre></td></tr></table></figure>
+<p>不要以为<code>strings</code>这个列表本身的顺序发生了变化？其实并没有，<code>streams.sorted()</code>方法仅仅是针对这个列表新建了一个视图（View）从而来表示这个排序后的列表。</p>
+<h4 id="Match"><a href="#Match" class="headerlink" title="Match"></a>Match</h4><p>这个实际上就是来自于Guava中的Matcher类，主要是起一个判断作用，就是判断这个集合整体或者部分有什么性质。举下面这个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> flag = strings.stream()</span><br><span class="line">        .anyMatch((s) -&gt; s.contains(<span class="string">"v"</span>)); <span class="comment">// true</span></span><br><span class="line">System.out.println(flag);</span><br><span class="line"></span><br><span class="line">flag = strings.stream()</span><br><span class="line">        .allMatch((s) -&gt; s.length() &gt; <span class="number">4</span>); <span class="comment">// true</span></span><br><span class="line">System.out.println(flag);</span><br><span class="line"></span><br><span class="line">flag = strings.stream()</span><br><span class="line">        .noneMatch((s) -&gt; s.contentEquals(<span class="string">"world"</span>)); <span class="comment">// true</span></span><br><span class="line">System.out.println(flag);</span><br></pre></td></tr></table></figure>
+<p>这里需要给大家简单解释一下，<code>anyMatch</code>方法表示集合中的任意元素只要有一个满足该条件就行；而<code>allMatch</code>表示集合中的全部的元素全都得满足这个条件；<code>noneMatch</code>表示集合中的全部元素必须都不满足这个条件才行。目前Java8提供了这三种判断，想了解更多的判断类型，请大家去看看我的Guava系列博客。</p>
+<h4 id="Count"><a href="#Count" class="headerlink" title="Count"></a>Count</h4><p>我们需要统计一个集合中满足条件的元素个数的时候可以使用这个方法来完成对应的操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> count = strings.stream()</span><br><span class="line">        .filter((s) -&gt; s.contains(<span class="string">"v"</span>))</span><br><span class="line">        .count(); <span class="comment">// 1</span></span><br><span class="line">System.out.println(count);</span><br></pre></td></tr></table></figure>
+<p>可以看到我们非常方便地统计出了集合中包含字符<code>v</code>的元素的个数。</p>
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><p>映射使我们前面谈到的针对中间过程的操作，我们来看看它到底能做啥吧？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">strings.stream()</span><br><span class="line">        .map((s) -&gt; s.toUpperCase())</span><br><span class="line">        .forEach(System.out::println);</span><br><span class="line"></span><br><span class="line"><span class="comment">// HELLO</span></span><br><span class="line"><span class="comment">// WUHAN</span></span><br><span class="line"><span class="comment">// UNIVERSITY</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到<code>map</code>是针对每一个元素进行相关的操作，上面我们以<strong>字符串的大写操作</strong>将列表中的元素全部变成了大写状态。大家也可以根据自己的情况编写对应的方法。</p>
+<h4 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h4><p>看完<code>Map</code>我们来聊聊<code>Reduce</code>操作，在Java8中，<code>Reduce</code>操作表示对集合中的连续两个元素进行操作，然后迭代，直到完成对所有元素的操作。最典型的例子就是进行集合中元素的求和：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; ints = addElements(<span class="number">1</span>, <span class="number">4</span>, <span class="number">54</span>, <span class="number">34</span>, <span class="number">23</span>, <span class="number">12</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> sum = ints.stream()</span><br><span class="line">        .reduce((a, b) -&gt; a + b)</span><br><span class="line">        .get();</span><br><span class="line">System.out.println(sum); <span class="comment">// 131</span></span><br></pre></td></tr></table></figure>
+<h3 id="并行执行流"><a href="#并行执行流" class="headerlink" title="并行执行流"></a>并行执行流</h3><p>说完了串行执行流，我们来说一说并行执行流是一种什么样的情况？我们知道，现在的电脑配置越来越高，CPU核心数也越来越多，那么如何有效地利用CPU的资源呢？这是一个很重要的方面，那就是采用并行的方式来进行编程。当然了，并行执行是否一定比串行执行快呢？这个不一定，大伙儿一定要根据自己的实际问题采取实际的措施解决，这里只是给大家介绍并行执行流如何使用，以及有哪些特点。</p>
+<p>为了方便和串行执行流比较，我们先创建一个大没有重复元素的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; uuids = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++) &#123;</span><br><span class="line">    uuids.add(UUID.randomUUID().toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先使用串行执行的方式对它们进行排序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">uuids.stream().sorted().count(); <span class="comment">// 这里不加count()算不出消耗时间，很奇怪</span></span><br><span class="line"><span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">System.out.println((end - start) + <span class="string">"ms"</span>); <span class="comment">// 841ms</span></span><br></pre></td></tr></table></figure>
+<p>再使用并行执行的方式对它们进行排序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">start = System.currentTimeMillis();</span><br><span class="line">uuids.parallelStream().sorted().count();</span><br><span class="line">end = System.currentTimeMillis();</span><br><span class="line">System.out.println((end - start) + <span class="string">"ms"</span>); <span class="comment">// 502ms</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到，并行的方式大概比串行的方式快了40%左右，这个性能的提升还是比较明显的。关于其它的比如说<code>allMatch</code>，<code>anyMatch</code>等等这些方法和那个串行执行流很像，这里就不多说了。</p>
+<h3 id="Map-1"><a href="#Map-1" class="headerlink" title="Map"></a>Map</h3><p>我们之前说过<code>Map</code>是不支持流操作的，但是不代表它不支持函数式编程操作，我们这里举几个例子说明一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    map.putIfAbsent(i, i);</span><br><span class="line">&#125;</span><br><span class="line">map.forEach((i, s) -&gt; System.out.println(s));</span><br><span class="line"></span><br><span class="line">map.compute(<span class="number">2</span>, (i, s) -&gt; s + <span class="number">1</span>);</span><br><span class="line">System.out.println(map.get(<span class="number">2</span>)); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>我们在<code>Map</code>中最常见的一个操作就是修改某个元素的<code>value</code>值，上面的例子中我们使用<code>map.compute()</code>方法就可以实现相关的功能。并且和这个方法相似的还有两个方法：<code>map.computeIfPresent()</code>以及<code>map.computeIfAbsent()</code>方法。方法的名字已经说明它的作用了，相信也不用我说了。</p>
+<p>还有一个方法是合并的功能，这里也说一下，不过我平时不怎么用到这个方法，但是直觉上感觉这个很重要：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// map.get(2) ==&gt; 3</span></span><br><span class="line">map.merge(<span class="number">2</span>, <span class="number">3</span>, (value, newValue) -&gt; value + newValue);</span><br><span class="line">System.out.println(map.get(<span class="number">2</span>)); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// map.get(6) ==&gt; null</span></span><br><span class="line">map.merge(<span class="number">6</span>, <span class="number">6</span>, (value, newValue) -&gt; value + newValue);</span><br><span class="line">System.out.println(map.get(<span class="number">6</span>)); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+<p>上面的例子表明，如果<code>map</code>中如果没有某一项<code>entry</code>的话，调用<code>merge</code>方法就只会向其中添加一个新的元素，如果存在<code>entry</code>的话，<code>merge</code>方法就会在原有的基础上添加这个新的值。</p>
+<h3 id="Date-API"><a href="#Date-API" class="headerlink" title="Date API"></a>Date API</h3><p>Date API也是Java8中的一个新的亮点，为什么我们需要使用一个新的Date API？不知道大家有没有和我一样的感受，在IDE敲击Date的时候很容易选错为<code>java.sql.Date</code>而不是<code>java.util.Date</code>对吧？这两个不同的包下面为什么要搞出一样的名字？还有格式化时间的时候需要使用到<code>java.text.DateFormat</code>类。这都不算啥，我们如果想要简单的对日期进行加减，我的天，还需要转化来转化去才能成为我们需要的日期时间。后来我们不得不借助于<code>Joda Time</code>这第三方包的帮助，为啥会这样呢？因为这个API设计的时候我估计是给机器看的，而不是给人看的！所以，这次Java8中带来的改变我觉得很欣慰。下面我们来看一下这个时间日期API是怎么玩的？</p>
+<h4 id="LocaleDate"><a href="#LocaleDate" class="headerlink" title="LocaleDate"></a>LocaleDate</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">LocalDate localDate = LocalDate.now();</span><br><span class="line">System.out.println(localDate.toString()); <span class="comment">// 2017-03-31</span></span><br><span class="line"></span><br><span class="line">localDate = LocalDate.of(<span class="number">2018</span>, Month.JULY, <span class="number">11</span>);</span><br><span class="line">System.out.println(localDate.toString()); <span class="comment">// 2018-07-11</span></span><br><span class="line"></span><br><span class="line">localDate = LocalDate.now(ZoneId.of(<span class="string">"Asia/Shanghai"</span>));</span><br><span class="line">System.out.println(localDate.toString()); <span class="comment">// 2017-03-31</span></span><br><span class="line"></span><br><span class="line">localDate = LocalDate.ofEpochDay(<span class="number">365</span>);</span><br><span class="line">System.out.println(localDate.toString()); <span class="comment">// 1971-01-01</span></span><br><span class="line"></span><br><span class="line">localDate = LocalDate.of(<span class="number">2013</span>, Month.JANUARY, <span class="number">2</span>).plusDays(<span class="number">1000</span>);</span><br><span class="line">System.out.println(localDate.toString()); <span class="comment">// 2015-09-29</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// how many days we've been together?</span></span><br><span class="line">LocalDate from = LocalDate.of(<span class="number">2013</span>, Month.JANUARY, <span class="number">2</span>);</span><br><span class="line">LocalDate to = LocalDate.now();</span><br><span class="line">Period days = Period.between(from, to);</span><br><span class="line">System.out.println(days); <span class="comment">// 29???</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// another way</span></span><br><span class="line">System.out.println(to.toEpochDay() - from.toEpochDay()); <span class="comment">// 1549</span></span><br></pre></td></tr></table></figure>
+<p>我们可以利用Java8的LocalDate做很多日期相关的操作，比如<code>计算任意两个日期之间的天数差值</code>，<code>查看某个时区的日期</code>以及<code>查看多少天以后是一个不错的纪念日</code>等等这样的功能。</p>
+<h4 id="Instant"><a href="#Instant" class="headerlink" title="Instant"></a>Instant</h4><p>这个咋一看不知道它是干嘛的，其实嘛！就是时间戳！用于产生机器可读的时间。将日期时间以Unix格式保存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Instant timestamp = Instant.now();</span><br><span class="line">System.out.println(timestamp); <span class="comment">// 2017-03-31T06:45:13.459Z</span></span><br><span class="line">System.out.println(timestamp.getEpochSecond()); <span class="comment">// 1490942821</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用作Timestamp类构造参数</span></span><br><span class="line">Timestamp.from(timestamp).getTime(); <span class="comment">// 1490942821289</span></span><br></pre></td></tr></table></figure>
+<h4 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h4><p>说到时间日期，一定要提一提格式化，前一会吐槽了Java8以前的格式化，现在来看一看Java8是如何改进的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime dateTime = LocalDateTime.parse(<span class="string">"2017-01-09 22:23:30"</span>,</span><br><span class="line">        DateTimeFormatter.ofPattern(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>));</span><br><span class="line">System.out.println(dateTime); <span class="comment">// 2017-01-09T22:23:30</span></span><br><span class="line"></span><br><span class="line">dateTime = LocalDateTime.parse(<span class="string">"Nov 24, 2017 22:10"</span>,</span><br><span class="line">        DateTimeFormatter.ofPattern(<span class="string">"MMM d, uuuu HH:mm"</span>));</span><br><span class="line">System.out.println(dateTime); <span class="comment">// 2017-11-24T22:10</span></span><br></pre></td></tr></table></figure>
+<p>不得不说它这个<code>DateTimeFormatter</code>非常强大，什么格式都可以转，而且可以随意自定义格式，这个为我们程序开发提供了巨大的便利。</p>
+<p>下面是一张表，大家可以对照这张表编写对应的格式<code>Pattern</code>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Symbol</th>
+<th>Meaning</th>
+<th>Presentation</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">G</td>
+<td>era</td>
+<td>text</td>
+<td>AD; Anno Domini; A</td>
+</tr>
+<tr>
+<td style="text-align:center">u</td>
+<td>year</td>
+<td>year</td>
+<td>2004; 04</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td>year-of-era</td>
+<td>year</td>
+<td>2004; 04</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td>day-of-year</td>
+<td>number</td>
+<td>189</td>
+</tr>
+<tr>
+<td style="text-align:center">M/L</td>
+<td>month-of-year</td>
+<td>number/text</td>
+<td>7; 07; Jul; July; J</td>
+</tr>
+<tr>
+<td style="text-align:center">d</td>
+<td>day-of-month</td>
+<td>number</td>
+<td>10</td>
+</tr>
+<tr>
+<td style="text-align:center">Q/q</td>
+<td>quarter-of-year</td>
+<td>number/text</td>
+<td>3; 03; Q3; 3rd quarter</td>
+</tr>
+<tr>
+<td style="text-align:center">Y</td>
+<td>week-based-year</td>
+<td>year</td>
+<td>1996; 96</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td>week-of-week-based-year</td>
+<td>number</td>
+<td>27</td>
+</tr>
+<tr>
+<td style="text-align:center">W</td>
+<td>week-of-month</td>
+<td>number</td>
+<td>4</td>
+</tr>
+<tr>
+<td style="text-align:center">E</td>
+<td>day-of-week</td>
+<td>text</td>
+<td>Tue; Tuesday; T</td>
+</tr>
+<tr>
+<td style="text-align:center">e/c</td>
+<td>localized day-of-week</td>
+<td>number/text</td>
+<td>2; 02; Tue; Tuesday; T</td>
+</tr>
+<tr>
+<td style="text-align:center">F</td>
+<td>week-of-month</td>
+<td>number</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td>am-pm-of-day</td>
+<td>text</td>
+<td>PM</td>
+</tr>
+<tr>
+<td style="text-align:center">h</td>
+<td>clock-hour-of-am-pm (1-12)</td>
+<td>number</td>
+<td>12</td>
+</tr>
+<tr>
+<td style="text-align:center">K</td>
+<td>hour-of-am-pm (0-11)</td>
+<td>number</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:center">k</td>
+<td>clock-hour-of-am-pm (1-24)</td>
+<td>number</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:center">H</td>
+<td>hour-of-day (0-23)</td>
+<td>number</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:center">m</td>
+<td>minute-of-hour</td>
+<td>number</td>
+<td>30</td>
+</tr>
+<tr>
+<td style="text-align:center">s</td>
+<td>second-of-minute</td>
+<td>number</td>
+<td>55</td>
+</tr>
+<tr>
+<td style="text-align:center">S</td>
+<td>fraction-of-second</td>
+<td>fraction</td>
+<td>978</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td>milli-of-day</td>
+<td>number</td>
+<td>1234</td>
+</tr>
+<tr>
+<td style="text-align:center">n</td>
+<td>nano-of-second</td>
+<td>number</td>
+<td>987654321</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td>nano-of-day</td>
+<td>number</td>
+<td>1234000000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这就是Java8中的Stream流，Map以及新增的Date API相关的内容啦。暂时先介绍这么多，后面我们再针对具体的内容慢慢聊。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/java8-new-interfaces-2.html" data-id="cjjisw3wy011h6lko09wy7u9m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/java8-new-interfaces-2.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/java8-new-interfaces-2.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/design-pattern-adapter.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            设计模式学习之适配器模式
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/java8-new-interfaces-1.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">细说Java8之新增API上</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

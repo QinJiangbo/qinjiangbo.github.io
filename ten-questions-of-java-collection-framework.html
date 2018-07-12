@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>（译）Java集合框架十问 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JDK8,集合框架" />
+    
+    <meta name="description" content="下面这些问题是Stackoverflow上面关于Java集合框架提问最多和讨论最多的问题。在你开始看这些问题之前，你最好先看看这些类层级图，以确保你知道它们的关系。 1. 什么时候最好使用LinkedList而不是ArrayList？从某种意义上来说，ArrayList就是数组。它的元素能够直接通过下标访问。但是如果这个数组快占满了，一个新的大的数组需要被分配出来，然后将原来的元素全部拷贝到新的数">
+<meta name="keywords" content="JDK8,集合框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（译）Java集合框架十问">
+<meta property="og:url" content="http://qinjiangbo.com/ten-questions-of-java-collection-framework.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="下面这些问题是Stackoverflow上面关于Java集合框架提问最多和讨论最多的问题。在你开始看这些问题之前，你最好先看看这些类层级图，以确保你知道它们的关系。 1. 什么时候最好使用LinkedList而不是ArrayList？从某种意义上来说，ArrayList就是数组。它的元素能够直接通过下标访问。但是如果这个数组快占满了，一个新的大的数组需要被分配出来，然后将原来的元素全部拷贝到新的数">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-2-thumbnail.png">
+<meta property="og:updated_time" content="2017-01-14T07:18:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（译）Java集合框架十问">
+<meta name="twitter:description" content="下面这些问题是Stackoverflow上面关于Java集合框架提问最多和讨论最多的问题。在你开始看这些问题之前，你最好先看看这些类层级图，以确保你知道它们的关系。 1. 什么时候最好使用LinkedList而不是ArrayList？从某种意义上来说，ArrayList就是数组。它的元素能够直接通过下标访问。但是如果这个数组快占满了，一个新的大的数组需要被分配出来，然后将原来的元素全部拷贝到新的数">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/java8-2-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-ten-questions-of-java-collection-framework" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        （译）Java集合框架十问
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/ten-questions-of-java-collection-framework.html" class="article-date">
+    <time datetime="2016-12-25T12:42:11.000Z" itemprop="datePublished">2016-12-25</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK8/">JDK8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合框架/">集合框架</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>下面这些问题是Stackoverflow上面关于Java集合框架提问最多和讨论最多的问题。在你开始看这些问题之前，你最好先看看这些类层级图，以确保你知道它们的关系。</p>
+<h2 id="1-什么时候最好使用LinkedList而不是ArrayList？"><a href="#1-什么时候最好使用LinkedList而不是ArrayList？" class="headerlink" title="1. 什么时候最好使用LinkedList而不是ArrayList？"></a>1. 什么时候最好使用LinkedList而不是ArrayList？</h2><p>从某种意义上来说，ArrayList就是数组。它的元素能够直接通过下标访问。但是如果这个数组快占满了，一个新的大的数组需要被分配出来，然后将原来的元素全部拷贝到新的数组里面去，这需要$O(n)$时间。同样的，添加或者移除某个元素需要将数组中剩下的元素移动。这恐怕是Arraylist最大的一个劣势了。</p>
+<p>LinkedList是一条双向链接表。因此，当需要访问链表中间的某个元素时，它不得不从链表起始位置开始查找。另外，添加或者删除链表中的某个元素会更快，因为它只局部改变链表。</p>
+<p>总结一下，最坏情况复杂度的比较如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Arraylist</th>
+<th>LinkedList</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>get(index)</td>
+<td>$O(1)$</td>
+<td>$O(n)$</td>
+</tr>
+<tr>
+<td>add(E)</td>
+<td>$O(n)$</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td>add(E, index)</td>
+<td>$O(n)$</td>
+<td>$O(n)$</td>
+</tr>
+<tr>
+<td>remove(index)</td>
+<td>$O(n)$</td>
+<td>$O(n)$</td>
+</tr>
+<tr>
+<td>Iterator.remove()</td>
+<td>$O(n)$</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td>Iterator.add(E)</td>
+<td>$O(n)$</td>
+<td>$O(1)$</td>
+</tr>
+</tbody>
+</table>
+<p>除了运行时间以外，内存占用也是一个需要考虑的问题，尤其是针对大链表。在LinkedList中，每一个结点都需要至少两个额外的指针来链接前一个和后一个结点；而在ArrayList中，只需要一个元素的数组即可。</p>
+<h2 id="2-在迭代一个集合框架的时候删除元素"><a href="#2-在迭代一个集合框架的时候删除元素" class="headerlink" title="2. 在迭代一个集合框架的时候删除元素"></a>2. 在迭代一个集合框架的时候删除元素</h2><p>在迭代集合框架的时候删除其中的一个元素，<strong>只有一种正确的做法</strong>，就是使用<code>Iterator.remove()</code>方法，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Integer&gt; itr = list.iterator();</span><br><span class="line"><span class="keyword">while</span>(itr.hasNext()) &#123;</span><br><span class="line">   <span class="comment">// do something</span></span><br><span class="line">   itr.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最常见的错误就是:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Integer i: list) &#123;</span><br><span class="line">  list.remove(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>知道会报什么错误吗？会报<code>ConcurrentModificationException</code>这样一个异常。这是因为在<code>foreach</code>循环语句中产生了一个迭代器，这个迭代器来遍历这个链表，而与此同时，这个链表又被另一个<code>Iterator.remove()</code>改变了。在Java中，一个线程在遍历一个链表的同时不允许另一个线程对其进行修改操作。</p>
+<h2 id="3-怎样把链表转化为int数组？"><a href="#3-怎样把链表转化为int数组？" class="headerlink" title="3. 怎样把链表转化为int数组？"></a>3. 怎样把链表转化为int数组？</h2><p>最简单的方法莫过于使用<code>Apache Commons Lang</code>库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array = ArrayUtils.toPrimitive(list.toArray(<span class="keyword">new</span> Integer[<span class="number">0</span>]));</span><br></pre></td></tr></table></figure>
+<p>在JDK中，没有捷径。你不能使用<code>List.toArray()</code>，因为那样会把链表转换为int的包装类数组<code>Integer[]</code>。正确的方式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[list.size()];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">  array[i] = list.get(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-怎样把int数组转化为链表？"><a href="#4-怎样把int数组转化为链表？" class="headerlink" title="4. 怎样把int数组转化为链表？"></a>4. 怎样把int数组转化为链表？</h2><p>同上，最简单的方法还是使用<code>Apache Commons Lang</code>库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List list = Arrays.asList(ArrayUtils.toObject(array));</span><br></pre></td></tr></table></figure>
+<p>在JDK中，也没有捷径可走。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i: array) &#123;</span><br><span class="line">  list.add(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-筛选一个集合框架元素的最好方式是什么？"><a href="#5-筛选一个集合框架元素的最好方式是什么？" class="headerlink" title="5. 筛选一个集合框架元素的最好方式是什么？"></a>5. 筛选一个集合框架元素的最好方式是什么？</h2><p>同样的，你也可以使用第三方的包，比如Guava或者Apache Commons Lang。这两个包都有<code>filter()</code>方法（Guava里面的Collections2和Apache里面的CollectionUtils）。这个<code>filter()</code>方法将会返回指定预言（Predicate）下的元素。</p>
+<p>在JDK中，这些事情会变得更加困难。但是Java 8为我们带来了好消息，那就是Java里面添加了预言（Predicate）的支持。但是现在你可能得使用迭代器（Iterator）来遍历整个集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Integer&gt; itr = list.iterator();</span><br><span class="line"><span class="keyword">while</span>(itr.hasNext()) &#123;</span><br><span class="line">   <span class="keyword">int</span> i = itr.next();</span><br><span class="line">   <span class="keyword">if</span> (i &gt; <span class="number">5</span>) &#123; <span class="comment">// filter all ints bigger than 5</span></span><br><span class="line">      itr.remove();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，你也可以模仿Guava和Apache Commons Lang中的实现方式，引用一个新的接口Predicate，这也是大多数高级程序员的做法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T o)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">filter</span><span class="params">(Collection&lt;T&gt; collection, Predicate&lt;T&gt; predicate)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((collection != <span class="keyword">null</span>) &amp;&amp; (predicate != <span class="keyword">null</span>)) &#123;</span><br><span class="line">       Iterator&lt;T&gt; itr = collection.iterator();</span><br><span class="line">          <span class="keyword">while</span>(itr.hasNext()) &#123;</span><br><span class="line">            T obj = itr.next();</span><br><span class="line">            <span class="keyword">if</span> (!predicate.test(obj)) &#123;</span><br><span class="line">               itr.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面的代码就简单了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">filter(list, <span class="keyword">new</span> Predicate&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Integer i)</span> </span>&#123; </span><br><span class="line">       <span class="keyword">return</span> i &lt;= <span class="number">5</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>其实这个方法还可以直接使用lambda表达式代替。具体是什么自己实践吧！哈哈！</p>
+<h2 id="6-将链表（List）转为集合（Set）的最简单方式是什么？"><a href="#6-将链表（List）转为集合（Set）的最简单方式是什么？" class="headerlink" title="6. 将链表（List）转为集合（Set）的最简单方式是什么？"></a>6. 将链表（List）转为集合（Set）的最简单方式是什么？</h2><p>有两种方式来实现这个过程。第一种方式就是把一个链表直接塞到一个集合里去。这个时候重复主要是根据<code>hashCode()</code>来判断啦。在大多数情况这么做是可行的，但是你需要指明它们比较的方式。所以，推荐使用第二种方式，就是可以自己指定这个比较方式。</p>
+<p>第一种方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;(list);</span><br></pre></td></tr></table></figure>
+<p>第二种方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Integer&gt; set = <span class="keyword">new</span> TreeSet&lt;Integer&gt;(aComparator);</span><br><span class="line">set.addAll(list);</span><br></pre></td></tr></table></figure>
+<h2 id="7-怎样从ArrayList中移除重复元素？"><a href="#7-怎样从ArrayList中移除重复元素？" class="headerlink" title="7. 怎样从ArrayList中移除重复元素？"></a>7. 怎样从ArrayList中移除重复元素？</h2><p>这个问题和上面的一问很相似。但是如果你不关心ArrayList中的元素顺序的话，上面的方式是可以的。然后再将集合中的元素放回列表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ArrayList list = ... <span class="comment">// initial a list with duplicate elements</span></span><br><span class="line">Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;(list);</span><br><span class="line">list.clear();</span><br><span class="line">list.addAll(set);</span><br></pre></td></tr></table></figure>
+<p>如果你关心顺序的话，你可以把ArrayList中的元素放入LinkedHashSet中，然后执行上述过程。</p>
+<h2 id="8-集合排序"><a href="#8-集合排序" class="headerlink" title="8. 集合排序"></a>8. 集合排序</h2><p>在Java中维护一个排好序的集合有很多种方式。都是基于自然排序的方式或者是指定一个排序器。对于自然排序，你也需要在被排序的元素中实现Comparable接口。</p>
+<ol>
+<li><code>Collections.sort()</code>能够排序一个列表。这种排序是稳定的，而且复杂度为$O(nlog(n))$。</li>
+<li>PriorityQueue提供了一种排好序的队列。PriorityQueue和<code>Collections.sort()</code>不同的地方在于PriorityQueue无论什么时候都维护着一个有序队列，每次你只能获得队首元素。你不能像<code>PriorityQueue.get(4)</code>这样随机访问里面的元素。</li>
+<li>如果集合中没有重复的元素，可以考虑使用TreeSet，和PriorityQueue一样，它也是每时每刻维护着一个有序的集合。你能得到最大值和最小值，但是你无法随机访问里面的元素。</li>
+</ol>
+<p>简单来说，<code>Collections.sort()</code>就只是排序列表一次。而PriorityQueue和TreeSet一直都在排序这个集合，但是代价是不能随机访问里面的元素。</p>
+<h2 id="9-Collections-emptyList-vs-new-instance"><a href="#9-Collections-emptyList-vs-new-instance" class="headerlink" title="9. Collections.emptyList() vs new instance"></a>9. Collections.emptyList() vs new instance</h2><p>这个问题同样适用于<code>emptyMap()</code>和<code>emptySet()</code>。</p>
+<p>两个方法都返回一个空的列表。但是<code>Collections.emptyList()</code>返回一个不可变的列表。这意味着你不能添加元素到这个空列表。准确地来说，每次调用这个<code>Collections.emptyList()</code>都会复用这个空列表。这里用到的是单例模式的思想。</p>
+<h2 id="10-Collections-copy"><a href="#10-Collections-copy" class="headerlink" title="10. Collections.copy"></a>10. Collections.copy</h2><p>有两种方式可以复制一个列表到另一个列表。一种是利用ArrayList构造函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; dstList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(srcList);</span><br></pre></td></tr></table></figure>
+<p>另一种是利用这个<code>Collecitons.copy()</code>方法，注意我们在分配一个目标列表的空间时，至少得和源列表的大小相同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; dstList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(srcList.size());</span><br><span class="line">Collections.copy(dstList, srcList);</span><br></pre></td></tr></table></figure>
+<p>两种复制都是<strong>浅拷贝</strong>，但是这两种方式有什么不一样呢？</p>
+<p>首先，<code>Collections.copy()</code>方法不会重新分配目标列表的空间大小，即使目标列表的空间很小不足以装下所有的源列表元素。相反，它会抛出<code>IndexOutOfBoundsException</code>异常。有人会问这样做到底有什么好处呢？一种可能的原因就是它保证了程序在运行这个方法的时候时间是线性的。</p>
+<p>其次，<code>Collecitons.copy()</code>方法仅接收List列表作为源列表和目标列表的类型。</p>
+<p><code>译文原文地址：</code><a href="http://www.programcreek.com/2013/09/top-10-questions-for-java-collections/" target="_blank" rel="noopener">http://www.programcreek.com/2013/09/top-10-questions-for-java-collections/</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/ten-questions-of-java-collection-framework.html" data-id="cjjisw3xt012t6lko3gznv8it" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/ten-questions-of-java-collection-framework.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/ten-questions-of-java-collection-framework.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/java-collection-framework-classes-and-interfaces.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            （译）Java集合框架类和接口层级图
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/array-list-vs-linked-list-vs-vector.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">（译）ArrayList vs. LinkedList vs. Vector</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

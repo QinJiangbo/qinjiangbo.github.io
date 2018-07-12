@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>MyBatis实战-8-代码生成工具MBG | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="MyBatis,实战" />
+    
+    <meta name="description" content="MyBatis代码生成工具MyBatis GeneratorMyBatis Generator简介MyBatis Generator (MBG) 是一个Mybatis的代码生成器 MyBatis 和 iBATIS. 它可以生成Mybatis各个版本的代码，和iBATIS 2.2.0版本以后的代码。 它可以内省数据库的表（或多个表）然后生成可以用来访问（多个）表的基础对象。 这样和数据库表进行交互时">
+<meta name="keywords" content="MyBatis,实战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis实战-8-代码生成工具MBG">
+<meta property="og:url" content="http://qinjiangbo.com/mybatis-practice-mbg-8.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="MyBatis代码生成工具MyBatis GeneratorMyBatis Generator简介MyBatis Generator (MBG) 是一个Mybatis的代码生成器 MyBatis 和 iBATIS. 它可以生成Mybatis各个版本的代码，和iBATIS 2.2.0版本以后的代码。 它可以内省数据库的表（或多个表）然后生成可以用来访问（多个）表的基础对象。 这样和数据库表进行交互时">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/mybatis-plus-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-02T09:00:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis实战-8-代码生成工具MBG">
+<meta name="twitter:description" content="MyBatis代码生成工具MyBatis GeneratorMyBatis Generator简介MyBatis Generator (MBG) 是一个Mybatis的代码生成器 MyBatis 和 iBATIS. 它可以生成Mybatis各个版本的代码，和iBATIS 2.2.0版本以后的代码。 它可以内省数据库的表（或多个表）然后生成可以用来访问（多个）表的基础对象。 这样和数据库表进行交互时">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/mybatis-plus-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-mybatis-practice-mbg-8" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        MyBatis实战-8-代码生成工具MBG
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/mybatis-practice-mbg-8.html" class="article-date">
+    <time datetime="2016-10-01T13:35:55.000Z" itemprop="datePublished">2016-10-01</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/">MyBatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实战/">实战</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="MyBatis代码生成工具MyBatis-Generator"><a href="#MyBatis代码生成工具MyBatis-Generator" class="headerlink" title="MyBatis代码生成工具MyBatis Generator"></a>MyBatis代码生成工具MyBatis Generator</h2><h3 id="MyBatis-Generator简介"><a href="#MyBatis-Generator简介" class="headerlink" title="MyBatis Generator简介"></a>MyBatis Generator简介</h3><p>MyBatis Generator (MBG) 是一个Mybatis的代码生成器 MyBatis 和 iBATIS. 它可以生成Mybatis各个版本的代码，和iBATIS 2.2.0版本以后的代码。 它可以内省数据库的表（或多个表）然后生成可以用来访问（多个）表的基础对象。 这样和数据库表进行交互时不需要创建对象和配置文件。 MBG的解决了对数据库操作有最大影响的一些简单的CRUD（插入，查询，更新，删除）操作。 你仍然需要对联合查询和存储过程手写SQL和对象。</p>
+<h3 id="MBG生成对象说明"><a href="#MBG生成对象说明" class="headerlink" title="MBG生成对象说明"></a>MBG生成对象说明</h3><p>MyBatis Generator 会生成:</p>
+<p>匹配表结构的Java POJO，可能包括:</p>
+<ul>
+<li>一个和表主键匹配的类(如果存在主键[注:只有联合主键会有])</li>
+<li>一个包含了非主键字段的类(BLOB字段除外[注:单字段做主键时这里会包含])</li>
+<li>一个包含了BLOB字段的类 (如果表包含了BLOB字段)</li>
+<li>一个允许动态查询、更新和删除的类[注:指的是Example查询]</li>
+</ul>
+<p>这些类之间会有适当的继承关系。 请注意可以配置生成器来生成不同类型的 POJO 的层次结构。 例如，如果你愿意你可能会选择针对每个表生成一个单独的实体对象。</p>
+<h3 id="MBG映射文件说明"><a href="#MBG映射文件说明" class="headerlink" title="MBG映射文件说明"></a>MBG映射文件说明</h3><p>MyBatis/iBATIS 兼容 SQL 映射 XML 文件。MBG 在配置中为每个表简单的 CRUD 操作生成 SQL。 生成的 SQL 语句包括：</p>
+<ul>
+<li>insert (插入)</li>
+<li>update by primary key (根据主键更新记录)</li>
+<li>update by example (根据条件更新记录)</li>
+<li>delete by primary key (根据主键删除记录)</li>
+<li>delete by example (根据条件删除记录)</li>
+<li>select by primary key (根据主键查询记录)</li>
+<li>select by example (根据条件查询记录集)</li>
+<li>count by example (根据条件查询记录总数)</li>
+</ul>
+<p>根据表的结构，生成的这些语句会有不同的变化（例如，如果表中没有主键，那么 MBG 将不会生成update by primary key方法）。</p>
+<h3 id="项目依赖管理"><a href="#项目依赖管理" class="headerlink" title="项目依赖管理"></a>项目依赖管理</h3><p>当前MySQL的JDBC连接的jar包已经出到了6.0.3版本，但很遗憾的是，这个版本还存在很多问题，比如jdbc连接的方式的改变，原来的声明需要做大量的修改，此外，最新版的mybatis-generator-core也无法正常的工作，因为生成的映射文件不包含primary key选项，估计是最新的MySQL连接包作了限制。现在当前环境建议大家还是使用5.x版本比较靠谱。以下是相关依赖：</p>
+<ul>
+<li>dom4j-1.6.1.jar</li>
+<li>hamcrest-core-1.3.jar</li>
+<li>junit-4.12.jar</li>
+<li>mybatis-3.4.1.jar</li>
+<li>mybatis-generator-core-1.3.5.jar</li>
+<li>mysql-connector-java-5.1.39.jar</li>
+</ul>
+<p>Maven地址（关于Maven相关的教程后续会陆续推出，这里提供给使用Maven的读者）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>dom4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dom4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hamcrest<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hamcrest-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.generator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.39<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="（一）生成模板映射XML文件"><a href="#（一）生成模板映射XML文件" class="headerlink" title="（一）生成模板映射XML文件"></a>（一）生成模板映射XML文件</h3><p>CreateGenConfigXML.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.gen.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.DocumentHelper;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Element;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.dom.DOMDocumentType;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.OutputFormat;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.XMLWriter;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.tree.DefaultDocumentType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/26/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateGenConfigXML</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获得数据库连接</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">            Connection connection =</span><br><span class="line">                    DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/mybatis"</span>,</span><br><span class="line">                            <span class="string">"Richard"</span>, <span class="string">"123456"</span>);</span><br><span class="line">            <span class="keyword">return</span> connection;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取全部的表名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">getTableNames</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        List&lt;String&gt; names = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        Connection connection = getConnection();</span><br><span class="line">        DatabaseMetaData databaseMetaData = connection.getMetaData();</span><br><span class="line">        String[] types = &#123;<span class="string">"TABLE"</span>&#125;;</span><br><span class="line">        ResultSet resultSet = databaseMetaData.getTables(<span class="keyword">null</span>, <span class="keyword">null</span>, <span class="string">"%"</span>, types);</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">            String name = (String) resultSet.getObject(<span class="string">"TABLE_NAME"</span>);</span><br><span class="line">            <span class="keyword">if</span> (name.contains(<span class="string">"（"</span>) || name.contains(<span class="string">"）"</span>)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            names.add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        connection.close();</span><br><span class="line">        <span class="keyword">return</span> names;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成DOM文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Document <span class="title">createDom</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        Document doc = DocumentHelper.createDocument();</span><br><span class="line">        <span class="comment">//创建DOCTYPE申明</span></span><br><span class="line">        doc.setDocType(<span class="keyword">new</span> DOMDocumentType(<span class="string">"generatorConfiguration"</span>,</span><br><span class="line">                <span class="string">"-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span>,</span><br><span class="line">                <span class="string">"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建根结点</span></span><br><span class="line">        Element root = doc.addElement(<span class="string">"generatorConfiguration"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建上下文结点</span></span><br><span class="line">        Element context = root.addElement(<span class="string">"context"</span>);</span><br><span class="line">        context.addAttribute(<span class="string">"id"</span>, <span class="string">"MBG"</span>);</span><br><span class="line">        context.addAttribute(<span class="string">"targetRuntime"</span>, <span class="string">"Mybatis3"</span>);</span><br><span class="line">        context.addAttribute(<span class="string">"defaultModelType"</span>, <span class="string">"conditional"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建插件结点(这里默认每个类序列化)</span></span><br><span class="line">        Element plugin = context.addElement(<span class="string">"plugin"</span>);</span><br><span class="line">        plugin.addAttribute(<span class="string">"type"</span>, <span class="string">"org.mybatis.generator.plugins.SerializablePlugin"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建注释结点,判断是否生成注释</span></span><br><span class="line">        Element commentGenerator = context.addElement(<span class="string">"commentGenerator"</span>);</span><br><span class="line">        Element property = commentGenerator.addElement(<span class="string">"property"</span>);</span><br><span class="line">        property.addAttribute(<span class="string">"name"</span>, <span class="string">"suppressAllComments"</span>);</span><br><span class="line">        property.addAttribute(<span class="string">"value"</span>, <span class="string">"false"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建jdbc连接结点</span></span><br><span class="line">        Element jdbcConnection = context.addElement(<span class="string">"jdbcConnection"</span>);</span><br><span class="line">        jdbcConnection.addAttribute(<span class="string">"driverClass"</span>, <span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        jdbcConnection.addAttribute(<span class="string">"connectionURL"</span>, <span class="string">"jdbc:mysql://localhost:3306/mybatis"</span>);</span><br><span class="line">        jdbcConnection.addAttribute(<span class="string">"userId"</span>, <span class="string">"Richard"</span>);</span><br><span class="line">        jdbcConnection.addAttribute(<span class="string">"password"</span>, <span class="string">"123456"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建java类型处理类结点</span></span><br><span class="line">        Element javaTypeResolver = context.addElement(<span class="string">"javaTypeResolver"</span>);</span><br><span class="line">        Element property2 = javaTypeResolver.addElement(<span class="string">"property"</span>);</span><br><span class="line">        property2.addAttribute(<span class="string">"name"</span>, <span class="string">"forceBigDecimals"</span>);</span><br><span class="line">        property2.addAttribute(<span class="string">"value"</span>, <span class="string">"false"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建java模型结点</span></span><br><span class="line">        Element javaModelGenerator = context.addElement(<span class="string">"javaModelGenerator"</span>);</span><br><span class="line">        javaModelGenerator.addAttribute(<span class="string">"targetPackage"</span>, <span class="string">"com.qinjiangbo.gen.model"</span>);</span><br><span class="line">        javaModelGenerator.addAttribute(<span class="string">"targetProject"</span>, <span class="string">"src"</span>);</span><br><span class="line">        Element property3 = javaModelGenerator.addElement(<span class="string">"property"</span>);</span><br><span class="line">        property3.addAttribute(<span class="string">"name"</span>, <span class="string">"enableSubPackages"</span>);</span><br><span class="line">        property3.addAttribute(<span class="string">"value"</span>, <span class="string">"true"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建sql映射文件结点</span></span><br><span class="line">        Element sqlMapGenerator = context.addElement(<span class="string">"sqlMapGenerator"</span>);</span><br><span class="line">        sqlMapGenerator.addAttribute(<span class="string">"targetPackage"</span>, <span class="string">"com.qinjiangbo.gen.mapper"</span>);</span><br><span class="line">        sqlMapGenerator.addAttribute(<span class="string">"targetProject"</span>, <span class="string">"src"</span>);</span><br><span class="line">        Element property4 = sqlMapGenerator.addElement(<span class="string">"property"</span>);</span><br><span class="line">        property4.addAttribute(<span class="string">"name"</span>, <span class="string">"enableSubPackages"</span>);</span><br><span class="line">        property4.addAttribute(<span class="string">"value"</span>, <span class="string">"true"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建java客户端结点,这里声明了dao层的位置</span></span><br><span class="line">        Element javaClientGenerator = context.addElement(<span class="string">"javaClientGenerator"</span>);</span><br><span class="line">        javaClientGenerator.addAttribute(<span class="string">"type"</span>, <span class="string">"XMLMAPPER"</span>);</span><br><span class="line">        javaClientGenerator.addAttribute(<span class="string">"targetPackage"</span>, <span class="string">"com.qinjiangbo.gen.mapper"</span>);</span><br><span class="line">        javaClientGenerator.addAttribute(<span class="string">"targetProject"</span>, <span class="string">"src"</span>);</span><br><span class="line">        Element property5 = javaClientGenerator.addElement(<span class="string">"property"</span>);</span><br><span class="line">        property5.addAttribute(<span class="string">"name"</span>, <span class="string">"enableSubPackages"</span>);</span><br><span class="line">        property5.addAttribute(<span class="string">"value"</span>, <span class="string">"true"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建表(table)结点</span></span><br><span class="line">        List&lt;String&gt; names = getTableNames();</span><br><span class="line">        <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">            String[] words = name.split(<span class="string">"_"</span>);</span><br><span class="line">            String entityName = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">                word = word.substring(<span class="number">0</span>, <span class="number">1</span>).toUpperCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">if</span> (entityName == <span class="keyword">null</span> || entityName.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">                    entityName = word;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    entityName = entityName + word;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            Element tableNode = context.addElement(<span class="string">"table"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"tableName"</span>, name);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"domainObjectName"</span>, entityName);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableCountByExample"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableUpdateByExample"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableDeleteByExample"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableSelectByExample"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"selectByExampleQueryId"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableDeleteByPrimaryKey"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableSelectByPrimaryKey"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableUpdateByPrimaryKey"</span>, <span class="string">"true"</span>);</span><br><span class="line">            tableNode.addAttribute(<span class="string">"enableInsert"</span>, <span class="string">"true"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> doc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 写入到XML文件中</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeXML</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        XMLWriter xmlWriter = <span class="keyword">null</span>;</span><br><span class="line">        String userDir = System.getProperty(<span class="string">"user.dir"</span>);</span><br><span class="line">        String fileName = userDir + <span class="string">"/src/com/qinjiangbo/gen/util/generatorConfiguration.xml"</span>;</span><br><span class="line">        OutputFormat format = OutputFormat.createPrettyPrint();</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(fileName));</span><br><span class="line">        format.setEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line">        xmlWriter = <span class="keyword">new</span> XMLWriter(fos, format);</span><br><span class="line">        xmlWriter.write(createDom());</span><br><span class="line">        xmlWriter.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        writeXML();</span><br><span class="line">        System.out.println(<span class="string">"Completed!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="（二）生成的GeneratorConfiguration-xml文件"><a href="#（二）生成的GeneratorConfiguration-xml文件" class="headerlink" title="（二）生成的GeneratorConfiguration.xml文件"></a>（二）生成的GeneratorConfiguration.xml文件</h3><p>由前一步生成的GeneratorConfiguration.xml文件如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">"MBG"</span> <span class="attr">targetRuntime</span>=<span class="string">"Mybatis3"</span> <span class="attr">defaultModelType</span>=<span class="string">"conditional"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">type</span>=<span class="string">"org.mybatis.generator.plugins.SerializablePlugin"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suppressAllComments"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">"com.mysql.jdbc.Driver"</span> <span class="attr">connectionURL</span>=<span class="string">"jdbc:mysql://localhost:3306/mybatis"</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">userId</span>=<span class="string">"Richard"</span> <span class="attr">password</span>=<span class="string">"123456"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaTypeResolver</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"forceBigDecimals"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">javaTypeResolver</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">"com.qinjiangbo.gen.model"</span> <span class="attr">targetProject</span>=<span class="string">"src"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">javaModelGenerator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">"com.qinjiangbo.gen.mapper"</span> <span class="attr">targetProject</span>=<span class="string">"src"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">sqlMapGenerator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">"XMLMAPPER"</span> <span class="attr">targetPackage</span>=<span class="string">"com.qinjiangbo.gen.mapper"</span> <span class="attr">targetProject</span>=<span class="string">"src"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">javaClientGenerator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"class"</span> <span class="attr">domainObjectName</span>=<span class="string">"Class"</span> <span class="attr">enableCountByExample</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByExample</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByExample</span>=<span class="string">"true"</span> <span class="attr">enableSelectByExample</span>=<span class="string">"true"</span> <span class="attr">selectByExampleQueryId</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableSelectByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByPrimaryKey</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableInsert</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"orders"</span> <span class="attr">domainObjectName</span>=<span class="string">"Orders"</span> <span class="attr">enableCountByExample</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByExample</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByExample</span>=<span class="string">"true"</span> <span class="attr">enableSelectByExample</span>=<span class="string">"true"</span> <span class="attr">selectByExampleQueryId</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableSelectByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByPrimaryKey</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableInsert</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"student"</span> <span class="attr">domainObjectName</span>=<span class="string">"Student"</span> <span class="attr">enableCountByExample</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByExample</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByExample</span>=<span class="string">"true"</span> <span class="attr">enableSelectByExample</span>=<span class="string">"true"</span> <span class="attr">selectByExampleQueryId</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableSelectByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByPrimaryKey</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableInsert</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"teacher"</span> <span class="attr">domainObjectName</span>=<span class="string">"Teacher"</span> <span class="attr">enableCountByExample</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByExample</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByExample</span>=<span class="string">"true"</span> <span class="attr">enableSelectByExample</span>=<span class="string">"true"</span> <span class="attr">selectByExampleQueryId</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableSelectByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByPrimaryKey</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableInsert</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"users"</span> <span class="attr">domainObjectName</span>=<span class="string">"Users"</span> <span class="attr">enableCountByExample</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByExample</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByExample</span>=<span class="string">"true"</span> <span class="attr">enableSelectByExample</span>=<span class="string">"true"</span> <span class="attr">selectByExampleQueryId</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableDeleteByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableSelectByPrimaryKey</span>=<span class="string">"true"</span> <span class="attr">enableUpdateByPrimaryKey</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">enableInsert</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>关于这个文件的具体说明请移步MyBatis-Generator的<a href="http://www.mybatis.org/generator/configreference/xmlconfig.html" target="_blank" rel="noopener">官方说明</a>，这里读者可以通过阅读XML获得相关属性的含义和作用。</p>
+<h3 id="（三）生成DAO层的SQL映射文件"><a href="#（三）生成DAO层的SQL映射文件" class="headerlink" title="（三）生成DAO层的SQL映射文件"></a>（三）生成DAO层的SQL映射文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.gen.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.api.MyBatisGenerator;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.config.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.config.xml.ConfigurationParser;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.generator.internal.DefaultShellCallback;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/26/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Generator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        List&lt;String&gt; warnings = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        <span class="keyword">boolean</span> overwrite = <span class="keyword">true</span>;</span><br><span class="line">        String userDir = System.getProperty(<span class="string">"user.dir"</span>);</span><br><span class="line">        File configFile = <span class="keyword">new</span> File(userDir + <span class="string">"/src/com/qinjiangbo/gen/util/generatorConfiguration.xml"</span>);</span><br><span class="line">        ConfigurationParser cp = <span class="keyword">new</span> ConfigurationParser(warnings);</span><br><span class="line">        Configuration config = cp.parseConfiguration(configFile);</span><br><span class="line">        DefaultShellCallback callback = <span class="keyword">new</span> DefaultShellCallback(overwrite);</span><br><span class="line">        MyBatisGenerator myBatisGenerator = <span class="keyword">new</span> MyBatisGenerator(config, callback, warnings);</span><br><span class="line">        myBatisGenerator.generate(<span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">"Completed!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>针对上面这个文件需要说明的是需要指明配置文件的所在位置，然后回调函数设置为空，表示不做任何操作。就是静态地生成这些DAO层的SQL映射文件即可。</p>
+<h3 id="项目结构图"><a href="#项目结构图" class="headerlink" title="项目结构图"></a>项目结构图</h3><p>项目的结构会发生很大的变化，新生成的SQL映射文件包括Java文件和XML文件都在同一个包，在企业开发中通常这两个也是一直被放在一个包，便于管理，然后模型Model放在另一个包。结构图如下：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/MyBatis-8-1.png" alt="项目结构图"></p>
+<p>上面util包是前面生成映射文件所需要的工具包。读者可以根据自身的实际情况更改所在包。</p>
+<h3 id="项目测试"><a href="#项目测试" class="headerlink" title="项目测试"></a>项目测试</h3><p>下面选择两个映射文件中的随机两个方法进行抽样测试（这个完全是为了节省版面，正规的还是需要做路径覆盖测试的，请读者自行在下面测试）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.qinjiangbo.gen.mapper.StudentMapper;</span><br><span class="line"><span class="keyword">import</span> com.qinjiangbo.gen.mapper.TeacherMapper;</span><br><span class="line"><span class="keyword">import</span> com.qinjiangbo.gen.model.Student;</span><br><span class="line"><span class="keyword">import</span> com.qinjiangbo.gen.model.StudentExample;</span><br><span class="line"><span class="keyword">import</span> com.qinjiangbo.gen.model.Teacher;</span><br><span class="line"><span class="keyword">import</span> com.qinjiangbo.gen.model.TeacherExample;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSession;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.junit.After;</span><br><span class="line"><span class="keyword">import</span> org.junit.Before;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 27/09/2016</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBatisTest7</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SqlSession sqlSession = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String config = <span class="string">"com/qinjiangbo/conf/configure.xml"</span>;</span><br><span class="line">        InputStream inputStream = MyBatisTest2.class.getClassLoader().getResourceAsStream(config);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">        sqlSession = sqlSessionFactory.openSession();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindTeachers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        TeacherMapper mapper = sqlSession.getMapper(TeacherMapper.class);</span><br><span class="line">        TeacherExample example = <span class="keyword">new</span> TeacherExample();</span><br><span class="line">        example.createCriteria().andTGenderIsNotNull();</span><br><span class="line">        List&lt;Teacher&gt; teacherList = mapper.selectByExample(example);</span><br><span class="line">        <span class="keyword">for</span> (Teacher teacher : teacherList) &#123;</span><br><span class="line">            System.out.println(teacher.gettName() + <span class="string">" "</span> + teacher.gettGender());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindStudents</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);</span><br><span class="line">        StudentExample example = <span class="keyword">new</span> StudentExample();</span><br><span class="line">        example.createCriteria().andCIdEqualTo(<span class="number">3</span>);</span><br><span class="line">        List&lt;Student&gt; studentList = mapper.selectByExample(example);</span><br><span class="line">        <span class="keyword">for</span> (Student student : studentList) &#123;</span><br><span class="line">            System.out.println(student.getsName() + <span class="string">" "</span> + student.getsAge());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">commit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        sqlSession.commit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h4><p>testFindTeachers():</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/MyBatis-8-2.png" alt="测试结果"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Loris Male</span><br><span class="line">Lily Female</span><br><span class="line">QinJiangbo Female</span><br><span class="line">Sony Male</span><br><span class="line">Sarah Female</span><br><span class="line">Toffy Male</span><br><span class="line">Jeserf Male</span><br></pre></td></tr></table></figure>
+<p>testFindStudents():</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/MyBatis-8-3.png" alt="测试结果"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QinJiangbo 21</span><br><span class="line">YuYing 21</span><br></pre></td></tr></table></figure>
+<p>以上测试全部通过！</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/mybatis-practice-mbg-8.html" data-id="cjjisw3z3016a6lkoodcgsdbn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/mybatis-practice-mbg-8.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/mybatis-practice-mbg-8.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/machine-learning-videoes.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            [转]机器学习相关视频
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/mybatis-practice-dynamic-xml-sql-7.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">MyBatis实战-7-XML标签动态 SQL</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

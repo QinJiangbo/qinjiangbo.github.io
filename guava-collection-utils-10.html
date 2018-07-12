@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Guava优美代码-10-CollectionUtils | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Guava,Collection Utils" />
+    
+    <meta name="description" content="集合工具类 Collection Utils ClassGuava的魅力在处理集合的方面可以说是展现的淋漓尽致，相比JDK的实现，使用Guava可以使我们的代码变得更加“优美”，尤其是在集合接口的声明或者是创建上面。下面我们通过一些简单的例子来领略一下Guava的魅力！ 静态工厂方法在JDK 7之前，构造新的泛型集合时要讨厌地重复声明泛型： 1List&amp;lt;TypeThatsTooLongFor">
+<meta name="keywords" content="Guava,Collection Utils">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guava优美代码-10-CollectionUtils">
+<meta property="og:url" content="http://qinjiangbo.com/guava-collection-utils-10.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="集合工具类 Collection Utils ClassGuava的魅力在处理集合的方面可以说是展现的淋漓尽致，相比JDK的实现，使用Guava可以使我们的代码变得更加“优美”，尤其是在集合接口的声明或者是创建上面。下面我们通过一些简单的例子来领略一下Guava的魅力！ 静态工厂方法在JDK 7之前，构造新的泛型集合时要讨厌地重复声明泛型： 1List&amp;lt;TypeThatsTooLongFor">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
+<meta property="og:updated_time" content="2018-04-02T09:02:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guava优美代码-10-CollectionUtils">
+<meta name="twitter:description" content="集合工具类 Collection Utils ClassGuava的魅力在处理集合的方面可以说是展现的淋漓尽致，相比JDK的实现，使用Guava可以使我们的代码变得更加“优美”，尤其是在集合接口的声明或者是创建上面。下面我们通过一些简单的例子来领略一下Guava的魅力！ 静态工厂方法在JDK 7之前，构造新的泛型集合时要讨厌地重复声明泛型： 1List&amp;lt;TypeThatsTooLongFor">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-guava-collection-utils-10" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Guava优美代码-10-CollectionUtils
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/guava-collection-utils-10.html" class="article-date">
+    <time datetime="2016-10-29T14:08:52.000Z" itemprop="datePublished">2016-10-29</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Collection-Utils/">Collection Utils</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Guava/">Guava</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="集合工具类-Collection-Utils-Class"><a href="#集合工具类-Collection-Utils-Class" class="headerlink" title="集合工具类 Collection Utils Class"></a>集合工具类 Collection Utils Class</h2><p>Guava的魅力在处理集合的方面可以说是展现的淋漓尽致，相比JDK的实现，使用Guava可以使我们的代码变得更加“优美”，尤其是在集合接口的声明或者是创建上面。下面我们通过一些简单的例子来领略一下Guava的魅力！</p>
+<h2 id="静态工厂方法"><a href="#静态工厂方法" class="headerlink" title="静态工厂方法"></a>静态工厂方法</h2><p>在JDK 7之前，构造新的泛型集合时要讨厌地重复声明泛型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;TypeThatsTooLongForItsOwnGood&gt; list = <span class="keyword">new</span> ArrayList&lt;TypeThatsTooLongForItsOwnGood&gt;();</span><br></pre></td></tr></table></figure>
+<p>我想我们都认为这很讨厌。因此Guava提供了能够推断泛型的静态工厂方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;TypeThatsTooLongForItsOwnGood&gt; list = Lists.newArrayList();</span><br><span class="line">Map&lt;KeyType, LongishValueType&gt; map = Maps.newLinkedHashMap();</span><br></pre></td></tr></table></figure>
+<p>可以肯定的是，JDK7版本的钻石操作符(<code>&lt;&gt;</code>)没有这样的麻烦：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;TypeThatsTooLongForItsOwnGood&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<p>但Guava的静态工厂方法远不止这么简单。使用工厂方法模式，我们可以方便地在初始化时就指定起始的元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Type&gt; copySet = Sets.newHashSet(elements);</span><br><span class="line">List&lt;String&gt; theseElements = Lists.newArrayList(<span class="string">"alpha"</span>, <span class="string">"beta"</span>, <span class="string">"gamma"</span>);</span><br></pre></td></tr></table></figure>
+<p>另外，通过为工厂方法命名，我们可以提高集合初始化大小的可读性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Type&gt; exactly100 = Lists.newArrayListWithCapacity(<span class="number">100</span>);</span><br><span class="line">List&lt;Type&gt; approx100 = Lists.newArrayListWithExpectedSize(<span class="number">100</span>);</span><br><span class="line">Set&lt;Type&gt; approx100Set = Sets.newHashSetWithExpectedSize(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="JDK-vs-Guava对照表"><a href="#JDK-vs-Guava对照表" class="headerlink" title="JDK vs Guava对照表"></a>JDK vs Guava对照表</h2><table>
+<thead>
+<tr>
+<th>集合接口</th>
+<th style="text-align:center">属于JDK还是Guava</th>
+<th style="text-align:center">对应的Guava工具类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collection</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Collections2</td>
+</tr>
+<tr>
+<td>List</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Lists</td>
+</tr>
+<tr>
+<td>Set</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Sets</td>
+</tr>
+<tr>
+<td>SortedSet</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Sets</td>
+</tr>
+<tr>
+<td>Map</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Maps</td>
+</tr>
+<tr>
+<td>SortedMap</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Maps</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td style="text-align:center">JDK</td>
+<td style="text-align:center">Queues</td>
+</tr>
+<tr>
+<td>Multiset</td>
+<td style="text-align:center">Guava</td>
+<td style="text-align:center">Multisets</td>
+</tr>
+<tr>
+<td>Multimap</td>
+<td style="text-align:center">Guava</td>
+<td style="text-align:center">Multimaps</td>
+</tr>
+<tr>
+<td>BiMap</td>
+<td style="text-align:center">Guava</td>
+<td style="text-align:center">Maps</td>
+</tr>
+<tr>
+<td>Table</td>
+<td style="text-align:center">Guava</td>
+<td style="text-align:center">Tables</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Maps-使用案例"><a href="#Maps-使用案例" class="headerlink" title="Maps 使用案例"></a>Maps 使用案例</h2><p><code>Maps</code>类有很多非常有用的方法，比如我们前面提到的静态工厂方法，还有一些是直接对某个具体的<code>Map</code>集合对象的操作，都封装在了这个<code>Maps</code>类中，对一个<code>Map</code>集合的操作我们几乎可以全部依赖于这个<code>Maps</code>，当然，JDK提供也非常优秀！下面来看一下Guava中<code>Maps</code>类的具体使用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMaps</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建Map -&gt; 方法1</span></span><br><span class="line">    ImmutableMap&lt;String, Integer&gt; left = ImmutableMap</span><br><span class="line">            .of(<span class="string">"Richard"</span>, <span class="number">88</span>, <span class="string">"Amy"</span>, <span class="number">90</span>, <span class="string">"Sarah"</span>, <span class="number">87</span>, <span class="string">"Lily"</span>, <span class="number">89</span>);</span><br><span class="line">    ImmutableMap&lt;String, Integer&gt; right = ImmutableMap</span><br><span class="line">            .of(<span class="string">"Tom"</span>, <span class="number">78</span>, <span class="string">"Amy"</span>, <span class="number">89</span>, <span class="string">"Richard"</span>, <span class="number">88</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建Map -&gt; 方法2</span></span><br><span class="line">    List&lt;String&gt; strings = Lists.newArrayList(<span class="string">"Helloo"</span>, <span class="string">"World"</span>, <span class="string">"Beautiful"</span>, <span class="string">"good"</span>);</span><br><span class="line">    ImmutableMap&lt;Integer, String&gt; stringsByIndex = Maps.uniqueIndex(strings,</span><br><span class="line">            string -&gt; string.length());</span><br><span class="line">    System.out.println(stringsByIndex); <span class="comment">// &#123;6=Helloo, 5=World, 9=Beautiful, 4=good&#125;</span></span><br><span class="line"></span><br><span class="line">    MapDifference&lt;String, Integer&gt; diff = Maps.difference(left, right);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取相同的Entry键值都相同</span></span><br><span class="line">    System.out.println(diff.entriesInCommon()); <span class="comment">// &#123;Richard=88&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取键相同值不同的元素</span></span><br><span class="line">    System.out.println(diff.entriesDiffering()); <span class="comment">// &#123;Amy=(90, 89)&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取左边有右边没有的元素</span></span><br><span class="line">    System.out.println(diff.entriesOnlyOnLeft()); <span class="comment">// &#123;Sarah=87, Lily=89&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取右边有左边没有的元素</span></span><br><span class="line">    System.out.println(diff.entriesOnlyOnRight()); <span class="comment">// &#123;Tom=78&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到<code>Maps</code>类对集合的创建，对一个或多个集合之间的比较等操作都有非常“高效，流畅”的方法！后面还有很多方法，大家可以自己多举几个例子去熟悉这个类的语法。</p>
+<h2 id="Sets-使用案例"><a href="#Sets-使用案例" class="headerlink" title="Sets 使用案例"></a>Sets 使用案例</h2><p>集合<code>Set</code>对我们来说使用的非常多，通常是在需要集合中所有的元素不能重复的情况下使用。为了让我们更好地使用<code>Set</code>类，Guava为我们又提供了<code>Sets</code>工具类，我们可以通过<code>Sets</code>工具类对任意一个Set集合进行相关的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSets</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Set&lt;String&gt; set1 = Sets.newHashSet(<span class="string">"One"</span>, <span class="string">"Two"</span>, <span class="string">"Three"</span>, <span class="string">"Four"</span>);</span><br><span class="line">    Set&lt;String&gt; set2 = Sets.newHashSet(<span class="string">"Two"</span>, <span class="string">"Four"</span>, <span class="string">"Five"</span>, <span class="string">"Six"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取交集</span></span><br><span class="line">    Sets.SetView setView = Sets.intersection(set1, set2);</span><br><span class="line">    System.out.println(setView.size()); <span class="comment">// 2</span></span><br><span class="line">    System.out.println(setView.toString()); <span class="comment">// [Two, Four]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取并集</span></span><br><span class="line">    setView = Sets.union(set1, set2);</span><br><span class="line">    System.out.println(setView.size()); <span class="comment">// 6</span></span><br><span class="line">    System.out.println(setView.toString()); <span class="comment">// [Two, Three, One, Four, Five, Six]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取差集</span></span><br><span class="line">    setView = Sets.difference(set1, set2);</span><br><span class="line">    System.out.println(setView.size()); <span class="comment">// 2</span></span><br><span class="line">    System.out.println(setView.toString()); <span class="comment">// [Three, One]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取笛卡尔积</span></span><br><span class="line">    Set&lt;List&lt;String&gt;&gt; product = Sets.cartesianProduct(set1, set2);</span><br><span class="line">    System.out.println(product); <span class="comment">// [[Two, Five], [Two, Six], [Two, Two], [Two, Four], [Three, Five], [Three, Six], [Three, Two], [Three, Four], [One, Five], [One, Six], [One, Two], [One, Four], [Four, Five], [Four, Six], [Four, Two], [Four, Four]]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 集合所有子集</span></span><br><span class="line">    Set&lt;Set&lt;String&gt;&gt; sets = Sets.powerSet(set1);</span><br><span class="line">    System.out.println(sets); <span class="comment">// powerSet(&#123;Two=0, Three=1, One=2, Four=3&#125;)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上只是<code>Sets</code>集合的部分用法，是最常见最常用的一些用法，大家可以自己再去尝试其它的一些用法。</p>
+<h2 id="Lists-使用案例"><a href="#Lists-使用案例" class="headerlink" title="Lists 使用案例"></a>Lists 使用案例</h2><p><code>List</code>可以说是我们在Java编程几乎最最拿手，最最“喜欢”的数据结构，因为它灵活，使用简单，尤其是<code>ArrayList</code>和<code>LinkedList</code>使用的最多，于是乎，Guava为我们锦上添花，提供了操作<code>List</code>集合的工具类<code>Lists</code>类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLists</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创造集合类--&gt;直接newArrayList就行了</span></span><br><span class="line">    List&lt;String&gt; names = Lists.newArrayList(<span class="string">"Richard"</span>, <span class="string">"Amy"</span>, <span class="string">"Lily"</span>, <span class="string">"Sarah"</span>);</span><br><span class="line">    List&lt;Integer&gt; numbers = Lists.newArrayList(<span class="number">11</span>, <span class="number">78</span>, <span class="number">89</span>, <span class="number">45</span>, <span class="number">30</span>);</span><br><span class="line">    System.out.println(names); <span class="comment">// [Richard, Amy, Lily, Sarah]</span></span><br><span class="line">    System.out.println(numbers); <span class="comment">// [11, 78, 89, 45, 30]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 操作集合类--&gt;反转</span></span><br><span class="line">    List&lt;String&gt; reverseNames = Lists.reverse(names);</span><br><span class="line">    List&lt;Integer&gt; reverseNumbers = Lists.reverse(numbers);</span><br><span class="line">    System.out.println(reverseNames); <span class="comment">// [Sarah, Lily, Amy, Richard]</span></span><br><span class="line">    System.out.println(reverseNumbers); <span class="comment">// [30, 45, 89, 78, 11]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分割集合类</span></span><br><span class="line">    List&lt;List&lt;String&gt;&gt; nameParts = Lists.partition(names, <span class="number">2</span>);</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; numberParts = Lists.partition(numbers, <span class="number">2</span>);</span><br><span class="line">    System.out.println(nameParts); <span class="comment">// [[Richard, Amy], [Lily, Sarah]]</span></span><br><span class="line">    System.out.println(numberParts); <span class="comment">// [[11, 78], [89, 45], [30]]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于<code>Lists</code>集合的使用还有很多，这里列举了最常用的用法，结果通过注释给出来了。</p>
+<h2 id="Iterables-使用案例"><a href="#Iterables-使用案例" class="headerlink" title="Iterables 使用案例"></a>Iterables 使用案例</h2><p><code>Iterable</code>还有<code>Iterator</code>在刚学Java的时候一直是我傻傻分不清的两个东西，<code>Iterable</code>是啥？<code>Iterator</code>又是啥？蒙圈了！后来随着不断的系统训练，已经很明晰了，<code>Iterable</code>是<code>java.lang</code>包下的一个接口，而<code>Iterator</code>是<code>java.util</code>包下面的一个具体实现类。好了，我们都知道，JDK的集合框架类由于采用了<code>迭代器模式</code>，所以都实现<code>Iterable</code>接口，而Guava正好利用这个为我们提供了一个通用的集合工具类<code>Iterables</code>。通过这个类我们可以对任何类型的集合类进行一些相关的操作，非常方便！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testIterables</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;Integer&gt; ints1 = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>);</span><br><span class="line">    List&lt;Integer&gt; ints2 = Lists.newArrayList(<span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 融合两个列表</span></span><br><span class="line">    Iterable&lt;Integer&gt; iterable = Iterables.concat(ints1, ints2);</span><br><span class="line">    Iterator iterator = iterable.iterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        System.out.print(iterator.next() + <span class="string">","</span>);</span><br><span class="line">    &#125; <span class="comment">// 1,2,1,4,6,9,3,7,4,6,2,1,</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取列表中第一个和最后一个元素</span></span><br><span class="line">    <span class="keyword">int</span> last = Iterables.getLast(ints1);</span><br><span class="line">    System.out.println(last); <span class="comment">// 9</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> first = Iterables.getFirst(ints1, <span class="number">10000</span>);</span><br><span class="line">    System.out.println(first); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 出现频率统计</span></span><br><span class="line">    <span class="keyword">int</span> count = Iterables.frequency(ints1, <span class="number">1</span>);</span><br><span class="line">    System.out.println(count); <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是Guava中关于集合框架的一些操作工具类的使用情况，Guava的集合框架工具类现在正在进一步完善，我们可以持续保持关注，使用这些框架真的能改善我们代码的可读性和易用性。Guava完全符合《高效Java》中的软件工程的代码规范，对我来讲，Guava就是一件难得的艺术品，好好研究，大有裨益！</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/guava-collection-utils-10.html" data-id="cjjisw3wg010j6lkokqruu0mw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/guava-collection-utils-10.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/guava-collection-utils-10.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/vim-header-settings.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            VIM文件头设置
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/talk-of-folks.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">聊一聊民谣</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

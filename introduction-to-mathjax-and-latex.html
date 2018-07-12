@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Mathjax与LaTex公式简介 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="LaTEX,Hexo-Math" />
+    
+    <meta name="description" content="MathJax简介MathJax是一款运行在浏览器中的开源的数学符号渲染引擎，使用MathJax可以方便的在浏览器中显示数学公式，不需要使用图片。目前，MathJax可以解析Latex、MathML和ASCIIMathML的标记语言。 MathJax项目于2009年开始，发起人有American Mathematical Society, Design Science等，还有众多的支持者，个人感觉">
+<meta name="keywords" content="MathJax,Hexo博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mathjax与LaTex公式简介">
+<meta property="og:url" content="http://qinjiangbo.com/introduction-to-mathjax-and-latex.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="MathJax简介MathJax是一款运行在浏览器中的开源的数学符号渲染引擎，使用MathJax可以方便的在浏览器中显示数学公式，不需要使用图片。目前，MathJax可以解析Latex、MathML和ASCIIMathML的标记语言。 MathJax项目于2009年开始，发起人有American Mathematical Society, Design Science等，还有众多的支持者，个人感觉">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/latex-thumbnail.jpg">
+<meta property="og:updated_time" content="2017-06-29T15:36:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mathjax与LaTex公式简介">
+<meta name="twitter:description" content="MathJax简介MathJax是一款运行在浏览器中的开源的数学符号渲染引擎，使用MathJax可以方便的在浏览器中显示数学公式，不需要使用图片。目前，MathJax可以解析Latex、MathML和ASCIIMathML的标记语言。 MathJax项目于2009年开始，发起人有American Mathematical Society, Design Science等，还有众多的支持者，个人感觉">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/latex-thumbnail.jpg">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/经验感悟/">经验感悟</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-introduction-to-mathjax-and-latex" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Mathjax与LaTex公式简介
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/introduction-to-mathjax-and-latex.html" class="article-date">
+    <time datetime="2016-08-14T14:40:59.000Z" itemprop="datePublished">2016-08-14</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo-Math/">Hexo-Math</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LaTEX/">LaTEX</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="MathJax简介"><a href="#MathJax简介" class="headerlink" title="MathJax简介"></a>MathJax简介</h2><p><a href="http://www.mathjax.org/" target="_blank" rel="noopener">MathJax</a>是一款运行在浏览器中的开源的数学符号渲染引擎，使用MathJax可以方便的在浏览器中显示数学公式，不需要使用图片。目前，MathJax可以解析Latex、MathML和ASCIIMathML的标记语言。 MathJax项目于2009年开始，发起人有American Mathematical Society, Design Science等，还有众多的支持者，个人感觉MathJax会成为今后数学符号渲染引擎中的主流，也许现在已经是了。 本文接下来会讲述MathJax的基础用法，但不涉及MathJax的安装及配置。此外，推荐使用<a href="https://stackedit.io/" target="_blank" rel="noopener">StackEdit</a>学习MathJax的语法，它支持Markdown和MathJax，本文使用此编辑器撰写。</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="公式标记与查看公式"><a href="#公式标记与查看公式" class="headerlink" title="公式标记与查看公式"></a>公式标记与查看公式</h3><p>使用MathJax时，需要用一些适当的标记告诉MathJax某段文本是公式代码。此外，MathJax中的公式排版有两种方式，inline和displayed。inline表示公式嵌入到文本段中，displayed表示公式独自成为一个段落。例如，$f(x)=3\times x$这是一个inline公式，而下面<br>$$f(x)=3\times x$$<br>是一个displayed公式。</p>
+<p>在MathJax中，默认的displayed公式分隔符有<code>$$...$$</code> 和<code>\[…\]</code>,而默认的inline公式分隔符为 <code>(…)</code> ,当然这些都是可以自定义的，具体配置请参考文档。下文中，使用<code>$$…$$</code>作为displayed分隔符，<code>$…$</code>作为inline分隔符。</p>
+<p>此外，可以在渲染完成的公式上方右键点击，唤出右键菜单。在菜单中提供了查看公式代码、设置显示效果和渲染模式的选项。</p>
+<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><p>请参见下表：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>大写</th>
+<th>Tex</th>
+<th>小写</th>
+<th>Tex</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alpha</td>
+<td>$A$</td>
+<td>A</td>
+<td>$\alpha$</td>
+<td>\alpha</td>
+</tr>
+<tr>
+<td>beta</td>
+<td>$B$</td>
+<td>B</td>
+<td>$\beta$</td>
+<td>\beta</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td>$\Gamma$</td>
+<td>\Gamma</td>
+<td>$\gamma$</td>
+<td>\gamma</td>
+</tr>
+<tr>
+<td>delta</td>
+<td>$\Delta$</td>
+<td>\Delta</td>
+<td>$\delta$</td>
+<td>\delta</td>
+</tr>
+<tr>
+<td>epsilon</td>
+<td>$E$</td>
+<td>E</td>
+<td>$\epsilon$</td>
+<td>\epsilon</td>
+</tr>
+<tr>
+<td>zeta</td>
+<td>$Z$</td>
+<td>Z</td>
+<td>$\zeta$</td>
+<td>\zeta</td>
+</tr>
+<tr>
+<td>eta</td>
+<td>$H$</td>
+<td>H</td>
+<td>$\eta$</td>
+<td>\eta</td>
+</tr>
+<tr>
+<td>theta</td>
+<td>$\Theta$</td>
+<td>\Theta</td>
+<td>$\theta$</td>
+<td>\theta</td>
+</tr>
+<tr>
+<td>iota</td>
+<td>$I$</td>
+<td>I</td>
+<td>$\iota$</td>
+<td>\iota</td>
+</tr>
+<tr>
+<td>kappa</td>
+<td>$K$</td>
+<td>K</td>
+<td>$\kappa$</td>
+<td>\kappa</td>
+</tr>
+<tr>
+<td>lambda</td>
+<td>$\Lambda$</td>
+<td>\Lambda</td>
+<td>$\lambda$</td>
+<td>\lambda</td>
+</tr>
+<tr>
+<td>mu</td>
+<td>$M$</td>
+<td>M</td>
+<td>$\mu$</td>
+<td>\mu</td>
+</tr>
+<tr>
+<td>nu</td>
+<td>$N$</td>
+<td>N</td>
+<td>$\nu$</td>
+<td>\nu</td>
+</tr>
+<tr>
+<td>xi</td>
+<td>$\Xi$</td>
+<td>\Xi</td>
+<td>$\xi$</td>
+<td>\xi</td>
+</tr>
+<tr>
+<td>omicron</td>
+<td>$O$</td>
+<td>O</td>
+<td>$\omicron$</td>
+<td>\omicron</td>
+</tr>
+<tr>
+<td>pi</td>
+<td>$\Pi$</td>
+<td>\Pi</td>
+<td>$\pi$</td>
+<td>\pi</td>
+</tr>
+<tr>
+<td>rho</td>
+<td>$P$</td>
+<td>P</td>
+<td>$\rho$</td>
+<td>\rho</td>
+</tr>
+<tr>
+<td>sigma</td>
+<td>$\Sigma$</td>
+<td>\Sigma</td>
+<td>$\sigma$</td>
+<td>\sigma</td>
+</tr>
+<tr>
+<td>tau</td>
+<td>$T$</td>
+<td>T</td>
+<td>$\tau$</td>
+<td>\tau</td>
+</tr>
+<tr>
+<td>upsilon</td>
+<td>$\Upsilon$</td>
+<td>\Upsilon</td>
+<td>$\upsilon$</td>
+<td>\upsilon</td>
+</tr>
+<tr>
+<td>phi</td>
+<td>$\Phi$</td>
+<td>\Phi</td>
+<td>$\phi$</td>
+<td>\phi</td>
+</tr>
+<tr>
+<td>chi</td>
+<td>$X$</td>
+<td>X</td>
+<td>$\chi$</td>
+<td>\chi</td>
+</tr>
+<tr>
+<td>psi</td>
+<td>$\Psi$</td>
+<td>\Psi</td>
+<td>ψ</td>
+<td>\psi</td>
+</tr>
+<tr>
+<td>omega</td>
+<td>$\Omega$</td>
+<td>\Omega</td>
+<td>$\omega$</td>
+<td>\omega</td>
+</tr>
+</tbody>
+</table>
+<h3 id="上标与下标"><a href="#上标与下标" class="headerlink" title="上标与下标"></a>上标与下标</h3><p>上标和下标分别使用\^与_，例如<code>x_i^2</code>：$x_i^2$。默认情况下，上下标符号仅仅对下一个组起作用。一个组即单个字符或者使用<code>{..}</code>包裹起来的内容。也就是说，如果使用10^10，会得到$10^10$，而10^{10}才是$10^{10}$。同时，大括号还能消除二义性，如x^5^6将得到一个错误，必须使用大括号来界定^的结合性，如<code>{x^5}^6</code>：${x^5}^6$ 或者 <code>x^{5^6}</code>：$x^{5^6}$。</p>
+<h3 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h3><ol>
+<li>小括号与方括号：使用原始的( )，[ ]即可，如<code>(2+3)[4+4]</code>：(2+3)[4+4]</li>
+<li>大括号：时由于大括号{}被用来分组，因此需要使用\{和\}表示大括号，也可以使用\lbrace 和\rbrace来表示。如<code>\{a*b\}:a∗b，\lbrace a*b \rbrace</code>：${a∗b}, \lbrace a*b \rbrace$。</li>
+<li>尖括号：使用<code>\langle</code> 和 <code>\rangle</code>表示左尖括号和右尖括号。如<code>\langle x \rangle</code>：$\langle x \rangle$。</li>
+<li>上取整：使用<code>\lceil</code> 和 <code>\rceil</code> 表示。 如，<code>\lceil x \rceil</code>：$\lceil x \rceil$。</li>
+<li>下取整：使用<code>\lfloor</code> 和 <code>\rfloor</code> 表示。如，<code>\lfloor x \rfloor</code>：$\lfloor x \rfloor$。</li>
+<li>不可见括号：使用.表示。</li>
+</ol>
+<p>需要注意的是，原始符号并不会随着公式大小缩放。如，<code>(\frac12)</code>：$\frac 1 2)$。可以使用<code>\left(…\right)</code>来自适应的调整括号大小。如下，</p>
+<p>$${\sum_{i=0}^ni^2=\frac {(n^2+n)(2n+1)}{6}} \tag {1.1}$$<br>$$\left{\sum_{i=0}^ni^2=\frac {(n^2+n)(2n+1)}{6}\right} \tag {1.2}$$</p>
+<p>可以看到，公式1.2中的括号是经过缩放的。</p>
+<h3 id="求和与积分"><a href="#求和与积分" class="headerlink" title="求和与积分"></a>求和与积分</h3><ul>
+<li><code>\sum</code>用来表示求和符号，其下标表示求和下限，上标表示上限。如，<code>\sum_1^n</code>：$\sum_1^n$。</li>
+<li><code>\int</code>用来表示积分符号，同样地，其上下标表示积分的上下限。如，<code>\int_1^\infty</code>：$\int_1^\infty$。</li>
+<li>与此类似的符号还有，<code>\prod</code>：$\prod$，<code>\bigcup</code>:$\bigcup$，<code>\bigcap</code>：$\bigcap$，<code>\iint</code>：$\iint$。</li>
+</ul>
+<h3 id="分式与根式"><a href="#分式与根式" class="headerlink" title="分式与根式"></a>分式与根式</h3><p>分式的表示。第一种，使用<code>\frac a b</code>，<code>\frac</code>作用于其后的两个组a，b，结果为$\frac a b$。如果你的分子或分母不是单个字符，请使用<code>{..}</code>来分组。第二种，使用<code>\over</code>来分隔一个组的前后两部分，如<code>{a+1\over b+1}</code>：${a+1\over b+1}$。</p>
+<p>根式使用<code>\sqrt</code>来表示。如，<code>\sqrt[4]{\frac xy}</code> ：$\sqrt[4]{\frac {x}{y}}$</p>
+<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><ol>
+<li>使用<code>\mathbb</code>或<code>\Bbb</code>显示黑板粗体字，此字体经常用来表示代表实数、整数、有理数、复数的大写字母。如，$\mathbb{CHNQRZ}$。</li>
+<li>使用<code>\mathbf</code>显示黑体字，如，$\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ，abcdefghijklmnopqrstuvwxyz}$。</li>
+<li>使用<code>\mathtt</code>显示打印机字体，如，$\mathtt{𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉，𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣}$。</li>
+<li>使用<code>\mathrm</code>显示罗马字体，如，$\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ，abcdefghijklmnopqrstuvwxyz}$。</li>
+<li>使用<code>\mathscr</code>显示手写体，如，$\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$。</li>
+<li>使用<code>\mathfrak</code>显示Fraktur字母（一种德国字体），如$\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ，abcdefghijklmnopqrstuvwxyz}$。</li>
+</ol>
+<h3 id="特殊函数与符号"><a href="#特殊函数与符号" class="headerlink" title="特殊函数与符号"></a>特殊函数与符号</h3><ol>
+<li>常见的三角函数，求极限符号可直接使用+缩写即可。如$sin x$, $arctan x$, $lim_{1\to\infty}$。</li>
+<li>比较运算符：<code>\lt \gt \le \ge \neq</code> ： $\lt \gt \le \ge \neq$。可以在这些运算符前面加上<code>\not</code>，如<code>\not\lt</code>：$\not\lt$。</li>
+<li><code>\times \div \pm \mp</code>表示：$\times \div \pm \mp$，<code>\cdot</code>表示居中的点，<code>x \cdot y</code> : $x \cdot y$。</li>
+<li>集合关系与运算：<code>\cup \cap \setminus \subset \subseteq \subsetneq \supset \in \notin \emptyset \varnothing</code> ：$\cup \cap \setminus \subset \subseteq \subsetneq \supset \in \notin \emptyset \varnothing$.</li>
+<li>表示排列使用<code>{n+1 \choose 2k}</code> 或 <code>\binom{n+1}{2k}</code>，${n+1 \choose 2k}$。</li>
+<li>箭头：<code>\to \rightarrow \leftarrow \Rightarrow \Leftarrow \mapsto</code> : $\to \rightarrow \leftarrow \Rightarrow \Leftarrow \mapsto$。</li>
+<li>逻辑运算符：<code>\land \lor \lnot \forall \exists \top \bot \vdash \vDash</code> ： $\land \lor \lnot \forall \exists \top \bot \vdash \vDash$。</li>
+<li><code>\star \ast \oplus \circ \bullet</code> ： $\star \ast \oplus \circ \bullet$。</li>
+<li><code>\approx \sim \cong \equiv \prec</code> ： $\approx \sim \cong \equiv \prec$。</li>
+<li><code>\infty \aleph_0</code> $\infty \aleph_0$ <code>\nabla \partial</code> $\nabla \partial$ <code>\Im \Re</code> $\Im \Re$。</li>
+<li>模运算 <code>\pmode</code>, 如，<code>a\equiv b\pmod n</code>：$a\equiv b\pmod n$。</li>
+<li><code>\ldots与\cdots</code>，其区别是dots的位置不同，ldots位置稍低，cdots位置居中。$a_1+a_2+\cdots+a_n，a_1,a_2,\ldots,a_n$。</li>
+<li>一些希腊字母具有变体形式，如 <code>\epsilon \varepsilon</code> : $\epsilon \varepsilon$, <code>\phi \varphi</code> $\phi \varphi$。</li>
+</ol>
+<h3 id="空间"><a href="#空间" class="headerlink" title="空间"></a>空间</h3><p>通常MathJax通过内部策略自己管理公式内部的空间，因此a…b与a…….b（.表示空格）都会显示为ab。可以通过在ab间加入<code>\,</code>增加些许间隙，<code>\;</code>增加较宽的间隙，<code>\quad</code> 与 <code>\qquad</code> 会增加更大的间隙，如，$a\qquad b$。</p>
+<h3 id="顶部符号"><a href="#顶部符号" class="headerlink" title="顶部符号"></a>顶部符号</h3><p>对于单字符，<code>\hat x</code>：$\hat x$，多字符可以使用<code>\widehat {xy}</code>,$\widehat {xy}$.类似的还有<code>\hat,\overline,\vec,\overrightarrow, \dot \ddot</code> : $\hat {x} \quad \widehat {xy}\quad \overline {xyz} \quad \vec {abc} \quad \overrightarrow {xxx} \quad \dot{h} \quad \ddot{x}$。</p>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p>基础部分就是这些。需要注意的是一些MathJax使用的特殊字符，可以使用\转义为原来的含义。如<code>\$</code>表示<code>‘$‘</code>，<code>\_</code>表示下划线。</p>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p>使用<code>$$\begin{array}{列样式}…\end{array}$$</code>这样的形式来创建表格，列样式可以是clr表示居中，左，右对齐，还可以使用|表示一条竖线。表格中 各行使用\分隔，各列使用&amp;分隔。使用\hline在本行前加入一条直线。 例如</p>
+<pre><code>$$
+\begin{array}{c|lcr}
+n &amp; \text{Left} &amp; \text{Center} &amp; \text{Right} \\
+\hline
+1 &amp; 0.24 &amp; 1 &amp; 125 \\
+2 &amp; -1 &amp; 189 &amp; -8 \\
+3 &amp; -20 &amp; 2000 &amp; 1+10i \\
+\end{array}
+$$
+</code></pre><p>$$<br>\begin{array}{c|lcr}<br>n &amp; \text{Left} &amp; \text{Center} &amp; \text{Right} \<br>\hline<br>1 &amp; 0.24 &amp; 1 &amp; 124 \<br>2 &amp; -11 &amp; 189 &amp; 90 \<br>3 &amp; -20 &amp; 789 &amp; 1+10i \<br>\end{array}<br>$$</p>
+<h3 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h3><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>使用<code>$$\begin{matrix}…\end{matrix}$$</code>这样的形式来表示矩阵，在<code>\begin</code>与<code>\end</code>之间加入矩阵中的元素即可。矩阵的行之间使用<code>\\</code>分隔，列之间使用&amp;分隔。</p>
+<p>例如</p>
+<pre><code>$$
+        \begin{matrix}
+        1 &amp; x &amp; x^2 \\
+        1 &amp; y &amp; y^2 \\
+        1 &amp; z &amp; z^2 \\
+        \end{matrix}
+$$
+</code></pre><p>结果：<br>$$<br>\begin{matrix}<br>1 &amp; x &amp; x^2 \<br>1 &amp; y &amp; y^2 \<br>1 &amp; z &amp; z^2 \<br>\end{matrix}<br>$$</p>
+<h3 id="加括号"><a href="#加括号" class="headerlink" title="加括号"></a>加括号</h3><p>如果要对矩阵加括号，可以像上文中提到的一样，使用<code>\left</code>与<code>\right</code>配合表示括号符号。也可以使用特殊的matrix。即替换<code>\begin{matrix}…\end{matrix}</code>中的matrix为pmatrix，bmatrix，Bmatrix，vmatrix,Vmatrix.<br>$$<br>\begin{pmatrix}<br>1 &amp; x &amp; x^2 \<br>1 &amp; y &amp; y^2 \<br>1 &amp; z &amp; z^2 \<br>\end{pmatrix}<br>\tag {pmatrix}<br>$$</p>
+<p>$$<br>\begin{bmatrix}<br>1 &amp; x &amp; x^2 \<br>1 &amp; y &amp; y^2 \<br>1 &amp; z &amp; z^2 \<br>\end{bmatrix}<br>\tag {bmatrix}<br>$$</p>
+<p>$$<br>\begin{Bmatrix}<br>1 &amp; x &amp; x^2 \<br>1 &amp; y &amp; y^2 \<br>1 &amp; z &amp; z^2 \<br>\end{Bmatrix}<br>\tag {Bmatrix}<br>$$</p>
+<p>$$<br>\begin{vmatrix}<br>1 &amp; x &amp; x^2 \<br>1 &amp; y &amp; y^2 \<br>1 &amp; z &amp; z^2 \<br>\end{vmatrix}<br>\tag {vmatrix}<br>$$</p>
+<p>$$<br>\begin{Vmatrix}<br>1 &amp; x &amp; x^2 \<br>1 &amp; y &amp; y^2 \<br>1 &amp; z &amp; z^2 \<br>\end{Vmatrix}<br>\tag {Vmatrix}<br>$$</p>
+<h3 id="省略元素"><a href="#省略元素" class="headerlink" title="省略元素"></a>省略元素</h3><p>可以使用<code>\cdots</code> $\cdots$ <code>\ddots</code> $\ddots$ <code>\vdots</code> $\vdots$来省略矩阵中的元素，如：</p>
+<p>$$<br>\begin{pmatrix}<br>1 &amp; a_1 &amp; a_1^2 &amp; a_1^3 &amp; \cdots &amp; a_1^n \<br>2 &amp; a_2 &amp; a_2^2 &amp; a_2^3 &amp; \cdots &amp; a_2^n \<br>3 &amp; a_3 &amp; a_3^2 &amp; a_3^3 &amp; \cdots &amp; a_3^n \<br>4 &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>4 &amp; a_4 &amp; a_4^2 &amp; a_4^3 &amp; \cdots &amp; a_4^n \<br>\end{pmatrix}<br>\tag {demo}<br>$$</p>
+<h3 id="增广矩阵"><a href="#增广矩阵" class="headerlink" title="增广矩阵"></a>增广矩阵</h3><p>增广矩阵需要使用前面的array来实现，如</p>
+<pre><code>$$ \left[
+      \begin{array}{cc|c}
+        1&amp;2&amp;3\\
+        4&amp;5&amp;6
+      \end{array}
+    \right]
+$$
+</code></pre><p>结果：<br>$$<br>\left[<br>\begin{array}{cc|c}<br>1&amp;2&amp;3 \<br>4&amp;5&amp;6 \<br>\end{array}<br>\right]<br>$$</p>
+<h3 id="对齐的公式"><a href="#对齐的公式" class="headerlink" title="对齐的公式"></a>对齐的公式</h3><p>有时候可能需要一系列的公式中等号对齐，如：</p>
+<pre><code>$$
+\begin{align}
+\sqrt{37} &amp; = \sqrt{\frac{73^2-1}{12^2}} \\
+ &amp; = \sqrt{\frac{73^2}{12^2}\cdot\frac{73^2-1}{73^2}} \\ 
+ &amp; = \sqrt{\frac{73^2}{12^2}}\sqrt{\frac{73^2-1}{73^2}} \\
+ &amp; = \frac{73}{12}\sqrt{1 - \frac{1}{73^2}} \\ 
+ &amp; \approx \frac{73}{12}\left(1 - \frac{1}{2\cdot73^2}\right)
+\end{align}
+$$
+</code></pre><p>$$<br>\begin{align}<br>\sqrt{37} &amp; = \sqrt{\frac{73^2-1}{12^2}} \\<br> &amp; = \sqrt{\frac{73^2}{12^2}\cdot\frac{73^2-1}{73^2}} \\<br> &amp; = \sqrt{\frac{73^2}{12^2}}\sqrt{\frac{73^2-1}{73^2}} \\<br> &amp; = \frac{73}{12}\sqrt{1 - \frac{1}{73^2}} \\<br> &amp; \approx \frac{73}{12}\left(1 - \frac{1}{2\cdot73^2}\right)<br>\end{align}<br>$$<br>这需要使用形如<code>\begin{align}…\end{align}</code>的格式，其中需要使用&amp;来指示需要对齐的位置。请使用右键查看上述公式的代码。</p>
+<h3 id="分类表达式"><a href="#分类表达式" class="headerlink" title="分类表达式"></a>分类表达式</h3><p>定义函数的时候经常需要分情况给出表达式，可使用<code>\begin{cases}…\end{cases}</code>。其中，使用\来分类，使用&amp;指示需要对齐的位置。如：</p>
+<pre><code>$$
+f(n) =
+\begin{cases}
+n/2,  &amp; \text{if $n$ is even} \\
+3n+1, &amp; \text{if $n$ is odd}  \\
+\end{cases}
+$$
+</code></pre><p>$$<br>f(n) =<br>\begin{cases}<br>n/2,  &amp; \text{if n is even} \\<br>3n+1, &amp; \text{if n is odd}<br>\end{cases}<br>$$</p>
+<p>上述公式的括号也可以移动到右侧，不过需要使用array来实现，如下：</p>
+<pre><code>$$
+\left.
+\begin{array}{l}
+\text{if $n$ is even:}&amp;n/2\\
+\text{if $n$ is odd:}&amp;3n+1
+\end{array}
+\right\}
+=f(n)
+$$
+</code></pre><p>$$<br>\left.<br>\begin{array}{l}<br>\text{if n is even:}&amp;n/2\<br>\text{if n is odd:}&amp;3n+1<br>\end{array}<br>\right}<br>=f(n)<br>$$</p>
+<p>最后，如果想分类之间的垂直间隔变大，可以使用<code>\[2ex]</code>代替<code>\</code>来分隔不同的情况。(3ex,4ex也可以用，1ex相当于原始距离）。</p>
+<h3 id="数学符号查询"><a href="#数学符号查询" class="headerlink" title="数学符号查询"></a>数学符号查询</h3><p>一般而言，从一个巨大的符号表中查询所需要的特定符号是一件令人沮丧的事情。在此向大家介绍一个$\TeX$手写符号识别系统，如下图：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/latex-format.png" alt=""><br>尽情享用吧~ <a href="http://detexify.kirelabs.org/classify.html" target="_blank" rel="noopener">Detexify²</a>。</p>
+<h3 id="空间问题"><a href="#空间问题" class="headerlink" title="空间问题"></a>空间问题</h3><p>在使用Latex公式时，有一些不会影响公式正确性，但却会使其看上去很槽糕的问题。</p>
+<h3 id="不要在指数或者积分中使用-frac"><a href="#不要在指数或者积分中使用-frac" class="headerlink" title="不要在指数或者积分中使用 \frac"></a>不要在指数或者积分中使用 \frac</h3><p>在指数或者积分表达式中使用<code>\frac</code>会使表达式看起来不清晰，因此在专业的数学排版中很少被使用。应该使用一个水平的/来代替，效果如下：<br>$$<br>\begin{array}{cc}<br>\mathrm{Bad} &amp; \mathrm{Better} \<br>\hline \<br>e^{i\frac{\pi}2} \quad e^{\frac{i\pi}2}&amp; e^{i\pi/2} \<br>\int_{-\frac\pi2}^\frac\pi2 \sin x\,dx &amp; \int_{-\pi/2}^{\pi/2}\sin x\,dx \<br>\end{array}<br>$$</p>
+<h3 id="使用-mid-代替-作为分隔符"><a href="#使用-mid-代替-作为分隔符" class="headerlink" title="使用 \mid 代替 | 作为分隔符"></a>使用 \mid 代替 | 作为分隔符</h3><p>符号|作为分隔符时有排版空间大小的问题，应该使用<code>\mid</code>代替。效果如下：<br>$$<br>\begin{array}{cc}<br>\mathrm{Bad} &amp; \mathrm{Better} \<br>\hline \<br>{x|x^2\in\Bbb Z} &amp; {x\mid x^2\in\Bbb Z} \<br>\end{array}<br>$$</p>
+<h3 id="多重积分"><a href="#多重积分" class="headerlink" title="多重积分"></a>多重积分</h3><p>对于多重积分，不要使用<code>\int\int</code>此类的表达，应该使用<code>\iint \iiint</code>等特殊形式。效果如下：<br>$$<br>\begin{array}{cc}<br>\mathrm{Bad} &amp; \mathrm{Better} \<br>\hline \<br>\int\int_S f(x)\,dy\,dx &amp; \iint_S f(x)\,dy\,dx \<br>\int\int\int_V f(x)\,dz\,dy\,dx &amp; \iiint_V f(x)\,dz\,dy\,dx<br>\end{array}<br>$$<br>此外，在微分前应该使用<code>\,</code>来增加些许空间，否则$\TeX$会将微分紧凑地排列在一起。如下：<br>$$<br>\begin{array}{cc}<br>\mathrm{Bad} &amp; \mathrm{Better} \<br>\hline \<br>\iiint_V f(x)dz dy dx &amp; \iiint_V f(x)\,dz\,dy\,dx<br>\end{array}<br>$$</p>
+<h3 id="连分数"><a href="#连分数" class="headerlink" title="连分数"></a>连分数</h3><p>书写连分数表达式时，请使用<code>\cfrac</code>代替<code>\frac</code>或者<code>\over</code>两者效果对比如下：<br>$$<br>x = a_0 + \cfrac{1^2}{a_1<br>+\, \cfrac{2^2}{a_2<br>+\, \cfrac{3^2}{a_3 + \cfrac{4^4}{a_4 + \cdots}}}} \tag{\cfrac}<br>$$</p>
+<p>$$<br>x = a_0 + \frac{1^2}{a_1<br>+\, \frac{2^2}{a_2<br>+\, \frac{3^2}{a_3 + \frac{4^4}{a_4 + \cdots}}}} \tag{\frac}<br>$$</p>
+<h3 id="方程组"><a href="#方程组" class="headerlink" title="方程组"></a>方程组</h3><p>使用<code>\begin{array} … \end{array}</code>与<code>\left{…\right.</code>配合，表示方程组，如：<br>$$<br>\left{<br>\begin{array}{c}<br>a_1x+b_1y+c_1z=d_1 \\<br>a_2x+b_2y+c_2z=d_2 \\<br>a_3x+b_3y+c_3z=d_3<br>\end{array}<br>\right.<br>$$</p>
+<p>同时，还可以使用<code>\begin{cases}…\end{cases}</code>表达同样的方程组，如：<br>$$<br>\begin{cases}<br>a_1x+b_1y+c_1z=d_1 \\<br>a_2x+b_2y+c_2z=d_2 \\<br>a_3x+b_3y+c_3z=d_3<br>\end{cases}<br>$$</p>
+<p>对齐方程组中的 = 号，可以使用 <code>\being{aligned} .. \end{aligned}</code>，如：<br>$$<br>\left{<br>\begin{aligned}<br>a_1x+b_1y+c_1z &amp;=d_1+e_1 \\<br>a_2x+b_2y&amp;=d_2 \\<br>a_3x+b_3y+c_3z &amp;=d_3<br>\end{aligned}<br>\right.<br>$$</p>
+<p>如果要对齐 = 号 和项，可以使用<code>\being{array}{列样式} .. \end{array}</code>，如：<br>$$<br>\left{<br>\begin{array}{ll}<br>a_1x+b_1y+c_1z &amp;=d_1+e_1 \\<br>a_2x+b_2y &amp;=d_2 \\<br>a_3x+b_3y+c_3z &amp;=d_3<br>\end{array}<br>\right.<br>$$</p>
+<h3 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h3><p>命名颜色是浏览器相关的，如果浏览器没有定义相关的颜色名称，则相关文本将被渲染为黑色。以下颜色是HTML4与CSS2标准中定义的一些颜色，其应该被大多数浏览器定义了。<br>$$<br>\begin{array}{|rc|}<br>\hline<br>\verb+\color{black}{text}+ &amp; \color{black}{text} \<br>\verb+\color{gray}{text}+ &amp; \color{gray}{text} \<br>\verb+\color{silver}{text}+ &amp; \color{silver}{text} \<br>\verb+\color{white}{text}+ &amp; \color{white}{text} \<br>\hline<br>\verb+\color{maroon}{text}+ &amp; \color{maroon}{text} \<br>\verb+\color{red}{text}+ &amp; \color{red}{text} \<br>\verb+\color{yellow}{text}+ &amp; \color{yellow}{text} \<br>\verb+\color{lime}{text}+ &amp; \color{lime}{text} \<br>\verb+\color{olive}{text}+ &amp; \color{olive}{text} \<br>\verb+\color{green}{text}+ &amp; \color{green}{text} \<br>\verb+\color{teal}{text}+ &amp; \color{teal}{text} \<br>\verb+\color{aqua}{text}+ &amp; \color{aqua}{text} \<br>\verb+\color{blue}{text}+ &amp; \color{blue}{text} \<br>\verb+\color{navy}{text}+ &amp; \color{navy}{text} \<br>\verb+\color{purple}{text}+ &amp; \color{purple}{text} \<br>\verb+\color{fuchsia}{text}+ &amp; \color{magenta}{text} \<br>\hline<br>\end{array}<br>$$</p>
+<p><a href="http://www.w3schools.com/html/html_colors.asp" target="_blank" rel="noopener">HTML色彩快速参考手册</a></p>
+<h3 id="公式标记与引用"><a href="#公式标记与引用" class="headerlink" title="公式标记与引用"></a>公式标记与引用</h3><p>使用<code>\tag{yourtag}</code>来标记公式，如果想在之后引用该公式，则还需要加上<code>\label{yourlabel}</code>在<code>\tag</code>之后，如：<br>$$ a := x^2-y^3 \tag{*}\label{*} $$<br>为了引用公式，可以使用<code>\eqref{rlabel}</code>，如：<br>$$a+y^3 \stackrel{\eqref{*}}= x^2$$</p>
+<p>可以看到，通过超链接可以跳转到被引用公式位置。</p>
+<blockquote>
+<p>Written with Macdown.</p>
+</blockquote>
+<h3 id="本文转载自-http-mlworks-cn-posts-introduction-to-mathjax-and-latex-expression"><a href="#本文转载自-http-mlworks-cn-posts-introduction-to-mathjax-and-latex-expression" class="headerlink" title="本文转载自 http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/"></a>本文转载自 <a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="noopener">http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/</a></h3>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/introduction-to-mathjax-and-latex.html" data-id="cjjisw3z201696lkorbe5dkjs" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/introduction-to-mathjax-and-latex.html"></div>
+        </div>
+        
+    <div id="SOHUCS" sid="http://qinjiangbo.com/introduction-to-mathjax-and-latex.html"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/word-to-pdf-without-open-office.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+             Word转PDF[不采用OpenOffice]
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/solution-to-coexistance-of-markerjs-and-mathjax.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Hexo中Marked.js与MathJax共存问题</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/talk-something-about-myself-before-registering.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/stars-thumbnail.jpeg)" alt="入职前夕谈点自己的体会" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/talk-something-about-myself-before-registering.html" class="title">入职前夕谈点自己的体会</a></p>
+                            <p class="item-date"><time datetime="2018-06-26T01:01:14.000Z" itemprop="datePublished">2018-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/introduction-to-web-spiders.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png)" alt="网络爬虫原理简析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/introduction-to-web-spiders.html" class="title">网络爬虫原理简析</a></p>
+                            <p class="item-date"><time datetime="2018-05-15T08:59:17.000Z" itemprop="datePublished">2018-05-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/solutions-to-problem-of-object-to-json-in-python.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png)" alt="Python中对象转JSON问题" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Python/">Python</a></p>
+                            <p class="item-title"><a href="/solutions-to-problem-of-object-to-json-in-python.html" class="title">Python中对象转JSON问题</a></p>
+                            <p class="item-date"><time datetime="2018-05-14T05:36:32.000Z" itemprop="datePublished">2018-05-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/monitor-linux-process-liveness-status.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux监控进程存活状态" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/monitor-linux-process-liveness-status.html" class="title">Linux监控进程存活状态</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:52:59.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/understanding-of-variables-in-shell-scripts.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/linux-logo.jpg)" alt="Linux系统Shell脚本变量理解" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a></p>
+                            <p class="item-title"><a href="/understanding-of-variables-in-shell-scripts.html" class="title">Linux系统Shell脚本变量理解</a></p>
+                            <p class="item-date"><time datetime="2018-05-13T08:40:01.000Z" itemprop="datePublished">2018-05-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">99</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">79</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">48</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">29</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">7</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function() {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function(d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function() {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+    </script>
+
+
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
