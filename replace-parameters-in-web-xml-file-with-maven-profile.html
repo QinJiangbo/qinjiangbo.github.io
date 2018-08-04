@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="Maven,Profile,Web.xml" />
     
-    <meta name="description" content="使用Maven Profile动态替换web.xml参数最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下： 12345678910111213141516171819202122&amp;lt;!-- abtest 配置 --&amp;gt;&amp;lt;filter&amp;gt;    &amp;lt;filter-name&amp;gt;AbtestFilter&amp;lt;/filter-name&amp;gt;    &amp;l">
+    <meta name="description" content="最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下： 12345678910111213141516171819202122&amp;lt;!-- abtest 配置 --&amp;gt;&amp;lt;filter&amp;gt;    &amp;lt;filter-name&amp;gt;AbtestFilter&amp;lt;/filter-name&amp;gt;    &amp;lt;filter-class&amp;gt;com.******">
 <meta name="keywords" content="Maven,Profile,Web.xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Maven Profile动态替换web.xml参数">
 <meta property="og:url" content="http://qinjiangbo.com/replace-parameters-in-web-xml-file-with-maven-profile.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="使用Maven Profile动态替换web.xml参数最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下： 12345678910111213141516171819202122&amp;lt;!-- abtest 配置 --&amp;gt;&amp;lt;filter&amp;gt;    &amp;lt;filter-name&amp;gt;AbtestFilter&amp;lt;/filter-name&amp;gt;    &amp;l">
+<meta property="og:description" content="最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下： 12345678910111213141516171819202122&amp;lt;!-- abtest 配置 --&amp;gt;&amp;lt;filter&amp;gt;    &amp;lt;filter-name&amp;gt;AbtestFilter&amp;lt;/filter-name&amp;gt;    &amp;lt;filter-class&amp;gt;com.******">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/maven-thumbnail.png">
-<meta property="og:updated_time" content="2018-08-04T09:08:36.000Z">
+<meta property="og:updated_time" content="2018-08-04T10:25:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Maven Profile动态替换web.xml参数">
-<meta name="twitter:description" content="使用Maven Profile动态替换web.xml参数最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下： 12345678910111213141516171819202122&amp;lt;!-- abtest 配置 --&amp;gt;&amp;lt;filter&amp;gt;    &amp;lt;filter-name&amp;gt;AbtestFilter&amp;lt;/filter-name&amp;gt;    &amp;l">
+<meta name="twitter:description" content="最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下： 12345678910111213141516171819202122&amp;lt;!-- abtest 配置 --&amp;gt;&amp;lt;filter&amp;gt;    &amp;lt;filter-name&amp;gt;AbtestFilter&amp;lt;/filter-name&amp;gt;    &amp;lt;filter-class&amp;gt;com.******">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/maven-thumbnail.png">
     
 
@@ -178,7 +178,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <h1 id="使用Maven-Profile动态替换web-xml参数"><a href="#使用Maven-Profile动态替换web-xml参数" class="headerlink" title="使用Maven Profile动态替换web.xml参数"></a>使用Maven Profile动态替换web.xml参数</h1><p>最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下：</p>
+            <p>最近项目中需要引入一个叫做ABTest工具。看了一下官方给出的文档，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- abtest 配置 --&gt;</span><br><span class="line">&lt;filter&gt;</span><br><span class="line">    &lt;filter-name&gt;AbtestFilter&lt;/filter-name&gt;</span><br><span class="line">    &lt;filter-<span class="class"><span class="keyword">class</span>&gt;<span class="title">com</span>.******************.*********.<span class="title">web</span>.<span class="title">DefaultTestFilter</span>&lt;/<span class="title">filter</span>-<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">init</span>-<span class="title">param</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">param</span>-<span class="title">name</span>&gt;<span class="title">env</span>&lt;/<span class="title">param</span>-<span class="title">name</span>&gt;</span></span><br><span class="line">        &lt;param-value&gt;$&#123;env&#125;&lt;/param-value&gt;</span><br><span class="line">    &lt;/init-param&gt;</span><br><span class="line">    &lt;init-param&gt;</span><br><span class="line">        &lt;param-name&gt;appName&lt;/param-name&gt;</span><br><span class="line">        &lt;param-value&gt;demo&lt;/param-value&gt;</span><br><span class="line">    &lt;/init-param&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">    &lt;filter-name&gt;AbtestFilter&lt;/filter-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;*.htm&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">    &lt;filter-name&gt;AbtestFilter&lt;/filter-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;<span class="comment">/*&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- abtest 配置结束 --&gt;</span></span><br></pre></td></tr></table></figure>
 <p>可以看到其中<code>${env}</code>的变量值是需要进行动态替换的。一开始我觉得可以使用<code>maven-war-plugin</code>来完成这个配置，BUT NOT WORK FOR ME！绕了好久的弯，终于看到了项目中进行<code>config.properties</code>替换使用的一个插件<code>maven-antrun-plugin</code>，BINGO，替换成功！</p>
 <p>先进行一下说明，项目中并没有使用antx来进行配置，因此适用于antx的方案不一定适合本项目，所以一开始就没有往antx的方向考虑。</p>
@@ -209,7 +209,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/replace-parameters-in-web-xml-file-with-maven-profile.html" data-id="cjkf9tdws00b3yskosxuuw79p" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/replace-parameters-in-web-xml-file-with-maven-profile.html" data-id="cjkf9vcjm00b3cfkolpxw9quz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
