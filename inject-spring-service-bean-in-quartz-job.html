@@ -197,7 +197,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/inject-spring-service-bean-in-quartz-job.html" data-id="cjkgiv2ei006f619k4uzm0lms" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/inject-spring-service-bean-in-quartz-job.html" data-id="cjkgj9a51006bn19kw92e8sxf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -268,8 +268,7 @@ var _hmt = _hmt || [];
         <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/inject-spring-service-bean-in-quartz-job.html"></div>
         </div>
         
-    <div id="SOHUCS" sid="http://qinjiangbo.com/inject-spring-service-bean-in-quartz-job.html"></div>
-
+        <div id="SOHUCS" sid="http://qinjiangbo.com/inject-spring-service-bean-in-quartz-job.html"></div>
 
     
     </section>
@@ -552,14 +551,14 @@ var _hmt = _hmt || [];
     
     <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
     <script type="text/javascript">
-        (function() {
+        (function () {
             var appid = 'cyt0xMpao';
             var conf = '49e8e331acbd57a201788b61958e0e26';
             var width = window.innerWidth || document.documentElement.clientWidth;
             if (width < 960) {
                 window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
             } else {
-                var loadJs = function(d, a) {
+                var loadJs = function (d, a) {
                     var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
                     var b = document.createElement("script");
                     b.setAttribute("type", "text/javascript");
@@ -567,7 +566,7 @@ var _hmt = _hmt || [];
                     b.setAttribute("src", d);
                     if (typeof a === "function") {
                         if (window.attachEvent) {
-                            b.onreadystatechange = function() {
+                            b.onreadystatechange = function () {
                                 var e = b.readyState;
                                 if (e === "loaded" || e === "complete") {
                                     b.onreadystatechange = null;
@@ -580,7 +579,7 @@ var _hmt = _hmt || [];
                     }
                     c.appendChild(b)
                 };
-                loadJs("https://changyan.sohu.com/upload/changyan.js", function() {
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
                     window.changyan.api.config({
                         appid: appid,
                         conf: conf
@@ -588,9 +587,24 @@ var _hmt = _hmt || [];
                 });
             }
         })();
+
+        function loadCssCode(code) {
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.rel = 'stylesheet';
+            //for Chrome Firefox Opera Safari
+            style.appendChild(document.createTextNode(code));
+            //for IE
+            //style.styleSheet.cssText = code;
+            var head = document.getElementsByTagName('head')[0];
+            head.appendChild(style);
+        }
+        var dsq = null;
+        //去除畅言广告
+        dsq = setInterval('if(document.getElementById("feedAv")){document.getElementById("feedAv").id="feedAvi";window.clearInterval(dsq);}', 1000);
+        loadCssCode('#feedAvi{position: absolute !important;z-index: -9999;top: -1000px;}');
     </script>
-
-
+    
 
 
 
