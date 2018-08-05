@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="Guava,区间" />
     
-    <meta name="description" content="Guava区间Range区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对a&amp;lt;=b&amp;lt;=c, range.contains(a)且range.contains(c)意味着range.contains(b)。 Range的表示形式   区间 数学表达式     (a..b) {a &amp;lt; x &amp;lt; b}   [a..b] {a &amp;lt;=">
+    <meta name="description" content="Guava区间Range区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对a&amp;lt;=b&amp;lt;=c, range.contains(a)且range.contains(c)意味着range.contains(b)。 Range的表示形式    区间 数学表达式     (a..b) {a &amp;lt; x &amp;lt; b}   [a..b] {a &amp;lt;">
 <meta name="keywords" content="Guava,区间">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Guava优美代码-16-区间">
 <meta property="og:url" content="http://qinjiangbo.com/guava-range-16.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="Guava区间Range区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对a&amp;lt;=b&amp;lt;=c, range.contains(a)且range.contains(c)意味着range.contains(b)。 Range的表示形式   区间 数学表达式     (a..b) {a &amp;lt; x &amp;lt; b}   [a..b] {a &amp;lt;=">
+<meta property="og:description" content="Guava区间Range区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对a&amp;lt;=b&amp;lt;=c, range.contains(a)且range.contains(c)意味着range.contains(b)。 Range的表示形式    区间 数学表达式     (a..b) {a &amp;lt; x &amp;lt; b}   [a..b] {a &amp;lt;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
 <meta property="og:updated_time" content="2018-04-02T09:03:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Guava优美代码-16-区间">
-<meta name="twitter:description" content="Guava区间Range区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对a&amp;lt;=b&amp;lt;=c, range.contains(a)且range.contains(c)意味着range.contains(b)。 Range的表示形式   区间 数学表达式     (a..b) {a &amp;lt; x &amp;lt; b}   [a..b] {a &amp;lt;=">
+<meta name="twitter:description" content="Guava区间Range区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对a&amp;lt;=b&amp;lt;=c, range.contains(a)且range.contains(c)意味着range.contains(b)。 Range的表示形式    区间 数学表达式     (a..b) {a &amp;lt; x &amp;lt; b}   [a..b] {a &amp;lt;">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
     
 
@@ -179,7 +179,8 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="Guava区间Range"><a href="#Guava区间Range" class="headerlink" title="Guava区间Range"></a>Guava区间Range</h2><p>区间，有时也称为范围，是特定域中的凸性（非正式说法为连续的或不中断的）部分。在形式上，凸性表示对<code>a&lt;=b&lt;=c</code>, <code>range.contains(a)</code>且<code>range.contains(c)</code>意味着<code>range.contains(b)</code>。</p>
-<h2 id="Range的表示形式"><a href="#Range的表示形式" class="headerlink" title="Range的表示形式"></a>Range的表示形式</h2><table>
+<h2 id="Range的表示形式"><a href="#Range的表示形式" class="headerlink" title="Range的表示形式"></a>Range的表示形式</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th style="text-align:left">区间</th>
@@ -225,8 +226,10 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p>上面的a、b称为端点 。为了提高一致性，Guava中的Range要求上端点不能小于下端点。上下端点有可能是相等的，但要求区间是闭区间或半开半闭区间（至少有一个端点是包含在区间中的）。</p>
-<h2 id="区间构建"><a href="#区间构建" class="headerlink" title="区间构建"></a>区间构建</h2><table>
+<h2 id="区间构建"><a href="#区间构建" class="headerlink" title="区间构建"></a>区间构建</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th style="text-align:left">区间</th>
@@ -272,6 +275,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Range使用实例"><a href="#Range使用实例" class="headerlink" title="Range使用实例"></a>Range使用实例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.*;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Date: 9/19/16</span></span><br><span class="line"><span class="comment"> * Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RangesTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCheckThatElementIsInRange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Range&lt;Integer&gt; range = Range.closed(<span class="number">2</span>, <span class="number">20</span>); <span class="comment">// [2, 20]</span></span><br><span class="line">        Range&lt;Integer&gt; rangeWithRightOpen = Range.closedOpen(<span class="number">2</span>, <span class="number">20</span>); <span class="comment">// [2, 20)</span></span><br><span class="line">        System.out.println(range.contains(<span class="number">20</span>)); <span class="comment">// true</span></span><br><span class="line">        System.out.println(rangeWithRightOpen.contains(<span class="number">20</span>)); <span class="comment">// false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCheckThatRangeIsEnclosedInOtherRange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Range&lt;Long&gt; range = Range.openClosed(<span class="number">2L</span>, <span class="number">20L</span>); <span class="comment">// (2, 20]</span></span><br><span class="line">        Range&lt;Long&gt; smallerRange = Range.closed(<span class="number">1L</span>, <span class="number">15L</span>); <span class="comment">// [1, 15]</span></span><br><span class="line">        System.out.println(range.encloses(smallerRange)); <span class="comment">// false</span></span><br><span class="line">        Range newRange = range.span(smallerRange);</span><br><span class="line">        System.out.println(newRange); <span class="comment">// [1..20]</span></span><br><span class="line">        Range newRange2 = range.intersection(smallerRange);</span><br><span class="line">        System.out.println(newRange2); <span class="comment">// (2..15]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCheckThatAllElementIsInRange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Range&lt;Integer&gt; range = Range.closed(<span class="number">2</span>, <span class="number">20</span>);</span><br><span class="line">        System.out.println(range.containsAll(Lists.newArrayList(<span class="number">10</span>, <span class="number">20</span>, <span class="number">18</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">19</span>)));</span><br><span class="line">    &#125; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGenerateSetOfElementInRange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Range&lt;Integer&gt; range = Range.open(<span class="number">2</span>, <span class="number">20</span>);</span><br><span class="line">        Range&lt;Integer&gt; integers = range.canonical(DiscreteDomain.integers());</span><br><span class="line">        System.out.println(integers); <span class="comment">// [3..20)</span></span><br><span class="line">        System.out.println(integers.contains(<span class="number">6</span>)); <span class="comment">// true</span></span><br><span class="line">        System.out.println(integers.contains(<span class="number">7</span>)); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateRangeForGivenNumbers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; numbers = Lists.newArrayList(<span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">9</span>);</span><br><span class="line">        Range&lt;Integer&gt; range = Range.encloseAll(numbers);</span><br><span class="line">        System.out.println(range.lowerEndpoint() == <span class="number">3</span>); <span class="comment">// true</span></span><br><span class="line">        System.out.println(range.upperEndpoint() == <span class="number">9</span>); <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRangeMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        RangeMap&lt;Integer, String&gt; rangeMap = TreeRangeMap.create();</span><br><span class="line">        rangeMap.put(Range.closed(<span class="number">1</span>, <span class="number">19</span>), <span class="string">"foo"</span>);</span><br><span class="line">        System.out.println(<span class="string">"rangeMap: "</span> + rangeMap); <span class="comment">// rangeMap: [[1‥19]=foo]</span></span><br><span class="line">        rangeMap.put(Range.open(<span class="number">3</span>, <span class="number">6</span>), <span class="string">"bar"</span>);</span><br><span class="line">        System.out.println(<span class="string">"rangeMap: "</span> + rangeMap); <span class="comment">// rangeMap: [[1‥3]=foo, (3‥6)=bar, [6‥19]=foo]</span></span><br><span class="line">        rangeMap.put(Range.open(<span class="number">10</span>, <span class="number">20</span>), <span class="string">"foo"</span>);</span><br><span class="line">        System.out.println(<span class="string">"rangeMap: "</span> + rangeMap); <span class="comment">// rangeMap: [[1‥3]=foo, (3‥6)=bar, [6‥10]=foo, (10‥20)=foo]</span></span><br><span class="line">        rangeMap.remove(Range.closed(<span class="number">5</span>, <span class="number">11</span>));</span><br><span class="line">        System.out.println(<span class="string">"rangeMap: "</span> + rangeMap); <span class="comment">// rangeMap: [[1‥3]=foo, (3‥5)=bar, (11‥20)=foo]</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRangeSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        RangeSet&lt;Integer&gt; rangeSet = TreeRangeSet.create();</span><br><span class="line">        rangeSet.add(Range.closed(<span class="number">1</span>, <span class="number">10</span>));</span><br><span class="line">        System.out.println(<span class="string">"rangeSet: "</span> + rangeSet); <span class="comment">// rangeSet: [[1‥10]]</span></span><br><span class="line">        rangeSet.add(Range.closedOpen(<span class="number">11</span>, <span class="number">15</span>));</span><br><span class="line">        System.out.println(<span class="string">"rangeSet: "</span> + rangeSet); <span class="comment">// rangeSet: [[1‥10], [11‥15)]</span></span><br><span class="line">        rangeSet.add(Range.open(<span class="number">15</span>, <span class="number">20</span>));</span><br><span class="line">        System.out.println(<span class="string">"rangeSet: "</span> + rangeSet); <span class="comment">// rangeSet: [[1‥10], [11‥15), (15‥20)]</span></span><br><span class="line">        rangeSet.add(Range.closedOpen(<span class="number">20</span>, <span class="number">25</span>));</span><br><span class="line">        System.out.println(<span class="string">"rangeSet: "</span> + rangeSet); <span class="comment">// rangeSet: [[1‥10], [11‥15), (15‥25)]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>说明一下，上面的代码主要测试了区间的<code>contains</code>包含方法，<code>span</code>取并集方法，<code>intersection</code>取交集方法，<code>lowerEndpoint</code>和<code>upperEndpoint</code>取端点方法等方法。我们可以很方便的利用区间完成元素集合的创建和筛选。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>区间一般在开发中使用的不多，但是既然Guava为我们提供了如此好的方法，我们有必要好好了解和使用它。因为一旦我们的项目需要使用相关的操作时，Range区间能为我们提供最高效的解决方案。</p>
@@ -282,7 +286,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-range-16.html" data-id="cjkgk3l6v004yqr9klrx9hw6k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-range-16.html" data-id="cjkglrhlg004y9r9kyqg90zw0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -707,7 +711,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -725,5 +744,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

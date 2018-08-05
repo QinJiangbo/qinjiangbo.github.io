@@ -189,7 +189,8 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Type&gt; copySet = Sets.newHashSet(elements);</span><br><span class="line">List&lt;String&gt; theseElements = Lists.newArrayList(<span class="string">"alpha"</span>, <span class="string">"beta"</span>, <span class="string">"gamma"</span>);</span><br></pre></td></tr></table></figure>
 <p>另外，通过为工厂方法命名，我们可以提高集合初始化大小的可读性：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Type&gt; exactly100 = Lists.newArrayListWithCapacity(<span class="number">100</span>);</span><br><span class="line">List&lt;Type&gt; approx100 = Lists.newArrayListWithExpectedSize(<span class="number">100</span>);</span><br><span class="line">Set&lt;Type&gt; approx100Set = Sets.newHashSetWithExpectedSize(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="JDK-vs-Guava对照表"><a href="#JDK-vs-Guava对照表" class="headerlink" title="JDK vs Guava对照表"></a>JDK vs Guava对照表</h2><table>
+<h2 id="JDK-vs-Guava对照表"><a href="#JDK-vs-Guava对照表" class="headerlink" title="JDK vs Guava对照表"></a>JDK vs Guava对照表</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>集合接口</th>
@@ -255,6 +256,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Maps-使用案例"><a href="#Maps-使用案例" class="headerlink" title="Maps 使用案例"></a>Maps 使用案例</h2><p><code>Maps</code>类有很多非常有用的方法，比如我们前面提到的静态工厂方法，还有一些是直接对某个具体的<code>Map</code>集合对象的操作，都封装在了这个<code>Maps</code>类中，对一个<code>Map</code>集合的操作我们几乎可以全部依赖于这个<code>Maps</code>，当然，JDK提供也非常优秀！下面来看一下Guava中<code>Maps</code>类的具体使用方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMaps</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建Map -&gt; 方法1</span></span><br><span class="line">    ImmutableMap&lt;String, Integer&gt; left = ImmutableMap</span><br><span class="line">            .of(<span class="string">"Richard"</span>, <span class="number">88</span>, <span class="string">"Amy"</span>, <span class="number">90</span>, <span class="string">"Sarah"</span>, <span class="number">87</span>, <span class="string">"Lily"</span>, <span class="number">89</span>);</span><br><span class="line">    ImmutableMap&lt;String, Integer&gt; right = ImmutableMap</span><br><span class="line">            .of(<span class="string">"Tom"</span>, <span class="number">78</span>, <span class="string">"Amy"</span>, <span class="number">89</span>, <span class="string">"Richard"</span>, <span class="number">88</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建Map -&gt; 方法2</span></span><br><span class="line">    List&lt;String&gt; strings = Lists.newArrayList(<span class="string">"Helloo"</span>, <span class="string">"World"</span>, <span class="string">"Beautiful"</span>, <span class="string">"good"</span>);</span><br><span class="line">    ImmutableMap&lt;Integer, String&gt; stringsByIndex = Maps.uniqueIndex(strings,</span><br><span class="line">            string -&gt; string.length());</span><br><span class="line">    System.out.println(stringsByIndex); <span class="comment">// &#123;6=Helloo, 5=World, 9=Beautiful, 4=good&#125;</span></span><br><span class="line"></span><br><span class="line">    MapDifference&lt;String, Integer&gt; diff = Maps.difference(left, right);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取相同的Entry键值都相同</span></span><br><span class="line">    System.out.println(diff.entriesInCommon()); <span class="comment">// &#123;Richard=88&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取键相同值不同的元素</span></span><br><span class="line">    System.out.println(diff.entriesDiffering()); <span class="comment">// &#123;Amy=(90, 89)&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取左边有右边没有的元素</span></span><br><span class="line">    System.out.println(diff.entriesOnlyOnLeft()); <span class="comment">// &#123;Sarah=87, Lily=89&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取右边有左边没有的元素</span></span><br><span class="line">    System.out.println(diff.entriesOnlyOnRight()); <span class="comment">// &#123;Tom=78&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们可以看到<code>Maps</code>类对集合的创建，对一个或多个集合之间的比较等操作都有非常“高效，流畅”的方法！后面还有很多方法，大家可以自己多举几个例子去熟悉这个类的语法。</p>
@@ -274,7 +276,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-collection-utils-10.html" data-id="cjkgk3lgs0117qr9k70x8u8ti" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-collection-utils-10.html" data-id="cjkglrhv901179r9kqw1v7yve" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -699,7 +701,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -717,5 +734,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

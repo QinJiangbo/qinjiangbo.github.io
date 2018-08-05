@@ -184,7 +184,8 @@ var _hmt = _hmt || [];
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/java-collection-hierachy.png" alt=""></p>
 <h2 id="3-Map映射的类层级图"><a href="#3-Map映射的类层级图" class="headerlink" title="3. Map映射的类层级图"></a>3. Map映射的类层级图</h2><p>这是Map映射的类层级图。</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/MapClassHierarchy.png" alt=""></p>
-<h2 id="4-各个类汇总"><a href="#4-各个类汇总" class="headerlink" title="4. 各个类汇总"></a>4. 各个类汇总</h2><table>
+<h2 id="4-各个类汇总"><a href="#4-各个类汇总" class="headerlink" title="4. 各个类汇总"></a>4. 各个类汇总</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>Interfaces</th>
@@ -230,6 +231,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="5-代码示例"><a href="#5-代码示例" class="headerlink" title="5. 代码示例"></a>5. 代码示例</h2><p>下面这段代码阐释了不同的集合类型。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; a1 = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">a1.add(<span class="string">"Program"</span>);</span><br><span class="line">a1.add(<span class="string">"Creek"</span>);</span><br><span class="line">a1.add(<span class="string">"Java"</span>);</span><br><span class="line">a1.add(<span class="string">"Java"</span>);</span><br><span class="line">System.out.println(<span class="string">"ArrayList Elements"</span>);</span><br><span class="line">System.out.print(<span class="string">"\t"</span> + a1 + <span class="string">"\n"</span>);</span><br><span class="line"> </span><br><span class="line">List&lt;String&gt; l1 = <span class="keyword">new</span> LinkedList&lt;String&gt;();</span><br><span class="line">l1.add(<span class="string">"Program"</span>);</span><br><span class="line">l1.add(<span class="string">"Creek"</span>);</span><br><span class="line">l1.add(<span class="string">"Java"</span>);</span><br><span class="line">l1.add(<span class="string">"Java"</span>);</span><br><span class="line">System.out.println(<span class="string">"LinkedList Elements"</span>);</span><br><span class="line">System.out.print(<span class="string">"\t"</span> + l1 + <span class="string">"\n"</span>);</span><br><span class="line"> </span><br><span class="line">Set&lt;String&gt; s1 = <span class="keyword">new</span> HashSet&lt;String&gt;(); <span class="comment">// or new TreeSet() will order the elements;</span></span><br><span class="line">s1.add(<span class="string">"Program"</span>);</span><br><span class="line">s1.add(<span class="string">"Creek"</span>);</span><br><span class="line">s1.add(<span class="string">"Java"</span>);</span><br><span class="line">s1.add(<span class="string">"Java"</span>);</span><br><span class="line">s1.add(<span class="string">"tutorial"</span>);</span><br><span class="line">System.out.println(<span class="string">"Set Elements"</span>);</span><br><span class="line">System.out.print(<span class="string">"\t"</span> + s1 + <span class="string">"\n"</span>);</span><br><span class="line"> </span><br><span class="line">Map&lt;String, String&gt; m1 = <span class="keyword">new</span> HashMap&lt;String, String&gt;(); <span class="comment">// or new TreeMap() will order based on keys</span></span><br><span class="line">m1.put(<span class="string">"Windows"</span>, <span class="string">"2000"</span>);</span><br><span class="line">m1.put(<span class="string">"Windows"</span>, <span class="string">"XP"</span>);</span><br><span class="line">m1.put(<span class="string">"Language"</span>, <span class="string">"Java"</span>);</span><br><span class="line">m1.put(<span class="string">"Website"</span>, <span class="string">"programcreek.com"</span>);</span><br><span class="line">System.out.println(<span class="string">"Map Elements"</span>);</span><br><span class="line">System.out.print(<span class="string">"\t"</span> + m1);</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
@@ -242,7 +244,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/java-collection-framework-classes-and-interfaces.html" data-id="cjkgk3l7i006nqr9kpzzbi4di" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/java-collection-framework-classes-and-interfaces.html" data-id="cjkglrhm4006n9r9kgk5ey9xb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -667,7 +669,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -685,5 +702,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

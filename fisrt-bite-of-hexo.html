@@ -222,6 +222,7 @@ var _hmt = _hmt || [];
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
 </code></pre><p>效果如下:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -248,10 +249,11 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="显示链接中带括号的图片"><a href="#显示链接中带括号的图片" class="headerlink" title="显示链接中带括号的图片"></a>显示链接中带括号的图片</h2><pre><code>![][1]
 [1]: http://latex.codecogs.com/gif.latex?\prod%20\(n_{i}\)+1
 </code></pre><p>效果如下:</p>
-<p>![][1]<br>[1]: <a href="http://latex.codecogs.com/gif.latex?\prod%20\(n_{i}\)+1" target="_blank" rel="noopener">http://latex.codecogs.com/gif.latex?\prod%20\(n_{i}\)+1</a></p>
+<p><img src="http://latex.codecogs.com/gif.latex?\prod%20\(n_{i}\)+1" alt=""></p>
 <h2 id="插入代码"><a href="#插入代码" class="headerlink" title="插入代码"></a>插入代码</h2><p>如果你是一名程序员，可以使用如下方法插入代码块.</p>
 <pre><code>` ` ` java
 public void sayHello() {
@@ -263,15 +265,14 @@ public void sayHello() {
 <h2 id="插入数学公式"><a href="#插入数学公式" class="headerlink" title="插入数学公式"></a>插入数学公式</h2><p>对于需要写公式的数学生来说，Markdown是不二选择！</p>
 <pre><code>$$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$
 </code></pre><p>效果如下:</p>
-<p>$$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$</p>
-
+<script type="math/tex; mode=display">x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}</script>
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://qinjiangbo.com/fisrt-bite-of-hexo.html" data-id="cjkgk3l5r002kqr9k9nejjs9g" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/fisrt-bite-of-hexo.html" data-id="cjkglrhkc002k9r9kob8mivhq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -696,7 +697,22 @@ public void sayHello() {
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -714,5 +730,6 @@ public void sayHello() {
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

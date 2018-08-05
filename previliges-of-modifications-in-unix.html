@@ -193,10 +193,10 @@ var _hmt = _hmt || [];
 </ul>
 <p>其中：rwx也可以用数字来代替</p>
 <ul>
-<li>r ————4</li>
-<li>w ———–2</li>
-<li>x ————1</li>
-<li>- ————0</li>
+<li>r ——————4</li>
+<li>w —————-2</li>
+<li>x ——————1</li>
+<li>- ——————0</li>
 </ul>
 <p>动作：</p>
 <ul>
@@ -206,11 +206,11 @@ var _hmt = _hmt || [];
 </ul>
 <h2 id="常见修改权限命令"><a href="#常见修改权限命令" class="headerlink" title="常见修改权限命令"></a>常见修改权限命令</h2><p>当大家都明白了上面的东西之后，那么我们常见的以下的一些权限就很容易都明白了：</p>
 <ul>
-<li>-rw——- (600) 只有所有者才有读和写的权限</li>
-<li>-rw-r–r– (644) 只有所有者才有读和写的权限，组群和其他人只有读的权限</li>
-<li>-rwx—— (700) 只有所有者才有读，写，执行的权限</li>
+<li>-rw———- (600) 只有所有者才有读和写的权限</li>
+<li>-rw-r—r— (644) 只有所有者才有读和写的权限，组群和其他人只有读的权限</li>
+<li>-rwx——— (700) 只有所有者才有读，写，执行的权限</li>
 <li>-rwxr-xr-x (755) 只有所有者才有读，写，执行的权限，组群和其他人只有读和执行的权限</li>
-<li>-rwx–x–x (711) 只有所有者才有读，写，执行的权限，组群和其他人只有执行的权限</li>
+<li>-rwx—x—x (711) 只有所有者才有读，写，执行的权限，组群和其他人只有执行的权限</li>
 <li>-rw-rw-rw- (666) 每个人都有读写的权限</li>
 <li>-rwxrwxrwx (777) 每个人都有读写和执行的权限</li>
 </ul>
@@ -221,7 +221,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/previliges-of-modifications-in-unix.html" data-id="cjkgk3l8z00a0qr9kyjuru6pq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/previliges-of-modifications-in-unix.html" data-id="cjkglrhnn00a09r9kg24i6z7u" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -646,7 +646,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -664,5 +679,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

@@ -179,7 +179,7 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="本文背景"><a href="#本文背景" class="headerlink" title="本文背景"></a>本文背景</h2><p>昨天夜里本来想写一篇设计模式的博文，先去查看了一下博客，忽然发现博客系统的css和js样式全部失效了。通过默认的访问方式全部都没有用，整个博客的用户体验非常差。然后我就开始找原因，因为采用的是阿里云CDN加速的，又是在深夜，我在想是不是阿里云官方在升级CDN系统导致我的全站样式文件全部失效，后来发现过了俩小时还不行，那就不是阿里云的问题了。然后一直找到3点钟还没有头绪，就睡了一觉，睡的时候还在想如何加载这个css和js的问题。</p>
-<p>到了今天早上终于有头绪了，因为发现默认<code>访问路径是当前路径加上当前系统根路径</code>。那既然我的默认的访问方式不支持，那为什么不把相对路径改为绝对路径，这个时候我又想起了远方的朋友–七牛云！</p>
+<p>到了今天早上终于有头绪了，因为发现默认<code>访问路径是当前路径加上当前系统根路径</code>。那既然我的默认的访问方式不支持，那为什么不把相对路径改为绝对路径，这个时候我又想起了远方的朋友—七牛云！</p>
 <h2 id="问题详述"><a href="#问题详述" class="headerlink" title="问题详述"></a>问题详述</h2><p>首先说一下我的博客系统，采用<strong>hexo 3.0+版本</strong>，主题采用的是<strong>PPOffice的Hueman</strong>。因为接下来的变化和修改都是基于这个主题来的，但是大家也不要担心，其实别的主题结构也一样，对照着改就行了。我们可以看到执行<code>hexo g</code>命令以后根路径下面会生成<code>public</code>文件夹，这个文件夹里面有我们需要的样式文件，是从<code>hueman</code>主题文件夹下的<code>source</code>文件夹拷贝过来的。</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir01.png" alt=""></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们下面的任务就是将上图中的<code>css，js和vendor</code>三个文件夹全部上传至七牛云，怎么做呢？七牛云为我们提供了了官方的sdk支持，这下就方便多了。先贴一下脚本代码：</p>
@@ -190,7 +190,7 @@ var _hmt = _hmt || [];
 </ul>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir02.png" alt=""></p>
 <ul>
-<li>其次进入你的控制台，到个人面板里面找到密钥管理–&gt;访问密钥(AK)和授权密钥(SK)。复制</li>
+<li>其次进入你的控制台，到个人面板里面找到密钥管理—&gt;访问密钥(AK)和授权密钥(SK)。复制</li>
 </ul>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir03.png" alt=""></p>
 <ul>
@@ -214,7 +214,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/speed-hexo-blog-with-qiniu-cloud.html" data-id="cjkgk3la500clqr9khizb07x9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/speed-hexo-blog-with-qiniu-cloud.html" data-id="cjkglrhor00cl9r9kcabd5v1l" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -639,7 +639,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -657,5 +672,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

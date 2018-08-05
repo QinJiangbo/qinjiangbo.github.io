@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="子模,Submodual" />
     
-    <meta name="description" content="子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质$$f:2^\Omega \to \mathbb R \tag {1}$$即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。  对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对">
+    <meta name="description" content="子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质 f:2^\Omega \to \mathbb R \tag {1}即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。  对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对任何一">
 <meta name="keywords" content="子模态,社交网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="（转）Submodual">
 <meta property="og:url" content="http://qinjiangbo.com/submodual-problem.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质$$f:2^\Omega \to \mathbb R \tag {1}$$即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。  对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对">
+<meta property="og:description" content="子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质 f:2^\Omega \to \mathbb R \tag {1}即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。  对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对任何一">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/submodual-thumbnail.jpg">
 <meta property="og:updated_time" content="2017-04-02T12:57:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="（转）Submodual">
-<meta name="twitter:description" content="子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质$$f:2^\Omega \to \mathbb R \tag {1}$$即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。  对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对">
+<meta name="twitter:description" content="子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质 f:2^\Omega \to \mathbb R \tag {1}即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。  对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对任何一">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/submodual-thumbnail.jpg">
     
 
@@ -178,15 +178,46 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="子模态定义"><a href="#子模态定义" class="headerlink" title="子模态定义"></a>子模态定义</h2><p>子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质<br>$$f:2^\Omega \to \mathbb R \tag {1}$$<br>即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。</p>
+            <h2 id="子模态定义"><a href="#子模态定义" class="headerlink" title="子模态定义"></a>子模态定义</h2><p>子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质</p>
+<script type="math/tex; mode=display">f:2^\Omega \to \mathbb R \tag {1}</script><p>即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。</p>
 <ul>
-<li>对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对任何一个$X, Y\in\Omega$，下面的式子一定成立。<br>$$f(X\cup x)−f(X)\geq f(Y\cup x)−f(Y)$$</li>
-<li>对于任何一个$X,Y\subset\Omega$，下面的式子一定成立。<br>$$f(X)+f(Y)\geq f(X\cup Y)+f(X\cap Y)$$</li>
-<li>对于任何一个$X\subset\Omega$及$x_1,x_2\in\Omega$，下面的式子一定成立<br>$$f(X\cup x_1)+f(X\cup x_2)\geq f(X\cup x_1,x_2)+f(X)$$</li>
+<li>对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对任何一个$X, Y\in\Omega$，下面的式子一定成立。<script type="math/tex; mode=display">f(X\cup x)−f(X)\geq f(Y\cup x)−f(Y)</script></li>
+<li>对于任何一个$X,Y\subset\Omega$，下面的式子一定成立。<script type="math/tex; mode=display">f(X)+f(Y)\geq f(X\cup Y)+f(X\cap Y)</script></li>
+<li>对于任何一个$X\subset\Omega$及$x_1,x_2\in\Omega$，下面的式子一定成立<script type="math/tex; mode=display">f(X\cup x_1)+f(X\cup x_2)\geq f(X\cup x_1,x_2)+f(X)</script></li>
 </ul>
 <p>读者可以很轻松的验证这几个条件是等价的，这里就不去证明了。</p>
-<p>根据这些条件，我们可以得出下面这个结论。设$f_1(x),f_2(x),⋯,f_k(x)$都是有子模态性质的函数，$c_1,c_2,⋯,c_k$是非负实数，则下面这个函数<br>$$F(x) = \sum_{i=1}^k c_if_i(x) \tag {2}$$<br>仍然是子模态的。即多个子模态函数的非负线性组合仍然是子模态函数。这个推论可以很简单的验证出来，这里也就懒得做证明的。</p>
-<h2 id="子模态与贪心方法"><a href="#子模态与贪心方法" class="headerlink" title="子模态与贪心方法"></a>子模态与贪心方法</h2><p>接下来的问题就是，子模态这个函数性质有什么用。简单来说子模态这个函数性质在组合优化中很有用。特别是针对保持$\mid x \mid$的大小固定，然后去求$f(x)$的最大值这种问题。 这个子模态性质可以保证我们在贪心求解这个问题得到的解不会差，事实上贪心解$f(x)$的值不会小于$(1−1/e)∗OPT$，其中$OPT$为最优解。在该问题的贪心求解过程中，我们是从$0$开始构建目标集合$x$的。每一步我们将一个新的元素加入到$x$中，迭代$k$步。我们以$X_i$来代表迭代$i$次之后的$x$集合，初始$x_0 = \phi$。我们对下一个要加入的节点$u$的选取的贪心规则为<br>$$u=argmax_u f(X_{i−1}\cup u) \tag {3}$$<br>现在我们要证明在此贪心规则下<br>$$f(x)\geq(1−\frac{1}{e})*OPT \tag {4}$$<br>为此，我们先证明一个引理<br>$$f(A\cup B)−f(A)\leq\sum_{j=1}^k[f(A\cup b_j)−f(A)] \tag {5}$$<br>其中$B=b_1,⋯,b_k$.此时我们定义$B_i=b_1,⋯,b_i$，则<br>$$<br>\begin {aligned}<br>f(A\cup B)−f(A) &amp;= \sum_{i=1}^k[f(A\cup B_i)−f(A\cup B_{i−1})] \\<br>&amp;=\sum_{i=1}^k[f(A\cup B_{i−1}\cup b_i)−f(A\cup B_{i−1})] \\<br>&amp;≤\sum_{j=1}^k[f(A\cup b_j)−f(A)]<br>\end {aligned}<br>\tag {6}<br>$$<br>设最优解为$T=t_1,⋯,t_k,\delta_i=f(X_i)−f(X_{i−1})$,根据上面这个不等式我们可以推出<br>$$<br>\begin {aligned}<br>f(T) &amp;≤ f(X_i\cup T) \\<br>&amp;=f(X_i\cup T)−f(X_i)+f(X_i) \\<br>&amp;≤\sum_{j=1}^k[f(X_i\cup t_j)−f(X_i)]+f(X_i) \\<br>&amp;≤\sum_{j=1}^k[\delta_{i+1}]+f(X_i) \\<br>&amp;=f(X_i)+k\delta_{i+1}<br>\end {aligned}<br>\tag {7}<br>$$<br>综上我们可以得出这个结论<br>$$\delta_{i+1}≥\frac{1}{k}[f(T)−f(X_i)] \tag {8}$$<br>所以<br>$$<br>\begin {aligned}<br>f(X_{i+1})&amp;=f(X_i)+\delta_{i+1} \\<br>&amp;≥f(X_i)+\frac{1}{k}[f(T)−f(X_i)] \\<br>&amp;=(1−\frac{1}{k})f(X_i)+\frac{1}{k}f(T)<br>\end {aligned}<br>\tag {9}<br>$$<br>通过上面的递推式，我们可以给出$f(X_i)$<br>$$f(X_i)≥[1−(1−\frac{1}{k})^i]f(T) \tag {10}$$<br>这个是简单的递推数列求通项，这里也就懒得证明了。所以<br>$$f(X_k)≥[1−(1−\frac{1}{k})^k]f(T)≥[1−\frac{1}{e}]f(T) \tag {11}$$<br>这就是贪心大法好的证明。</p>
+<p>根据这些条件，我们可以得出下面这个结论。设$f_1(x),f_2(x),⋯,f_k(x)$都是有子模态性质的函数，$c_1,c_2,⋯,c_k$是非负实数，则下面这个函数</p>
+<script type="math/tex; mode=display">F(x) = \sum_{i=1}^k c_if_i(x) \tag {2}</script><p>仍然是子模态的。即多个子模态函数的非负线性组合仍然是子模态函数。这个推论可以很简单的验证出来，这里也就懒得做证明的。</p>
+<h2 id="子模态与贪心方法"><a href="#子模态与贪心方法" class="headerlink" title="子模态与贪心方法"></a>子模态与贪心方法</h2><p>接下来的问题就是，子模态这个函数性质有什么用。简单来说子模态这个函数性质在组合优化中很有用。特别是针对保持$\mid x \mid$的大小固定，然后去求$f(x)$的最大值这种问题。 这个子模态性质可以保证我们在贪心求解这个问题得到的解不会差，事实上贪心解$f(x)$的值不会小于$(1−1/e)∗OPT$，其中$OPT$为最优解。在该问题的贪心求解过程中，我们是从$0$开始构建目标集合$x$的。每一步我们将一个新的元素加入到$x$中，迭代$k$步。我们以$X_i$来代表迭代$i$次之后的$x$集合，初始$x_0 = \phi$。我们对下一个要加入的节点$u$的选取的贪心规则为</p>
+<script type="math/tex; mode=display">u=argmax_u f(X_{i−1}\cup u) \tag {3}</script><p>现在我们要证明在此贪心规则下</p>
+<script type="math/tex; mode=display">f(x)\geq(1−\frac{1}{e})*OPT \tag {4}</script><p>为此，我们先证明一个引理</p>
+<script type="math/tex; mode=display">f(A\cup B)−f(A)\leq\sum_{j=1}^k[f(A\cup b_j)−f(A)] \tag {5}</script><p>其中$B=b_1,⋯,b_k$.此时我们定义$B_i=b_1,⋯,b_i$，则</p>
+<script type="math/tex; mode=display">
+\begin {aligned} 
+f(A\cup B)−f(A) &= \sum_{i=1}^k[f(A\cup B_i)−f(A\cup B_{i−1})] \\\
+&=\sum_{i=1}^k[f(A\cup B_{i−1}\cup b_i)−f(A\cup B_{i−1})] \\\
+&≤\sum_{j=1}^k[f(A\cup b_j)−f(A)]
+\end {aligned} 
+\tag {6}</script><p>设最优解为$T=t_1,⋯,t_k,\delta_i=f(X_i)−f(X_{i−1})$,根据上面这个不等式我们可以推出</p>
+<script type="math/tex; mode=display">
+\begin {aligned}
+f(T) &≤ f(X_i\cup T) \\\
+&=f(X_i\cup T)−f(X_i)+f(X_i) \\\
+&≤\sum_{j=1}^k[f(X_i\cup t_j)−f(X_i)]+f(X_i) \\\
+&≤\sum_{j=1}^k[\delta_{i+1}]+f(X_i) \\\
+&=f(X_i)+k\delta_{i+1}
+\end {aligned}
+\tag {7}</script><p>综上我们可以得出这个结论</p>
+<script type="math/tex; mode=display">\delta_{i+1}≥\frac{1}{k}[f(T)−f(X_i)] \tag {8}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin {aligned}
+f(X_{i+1})&=f(X_i)+\delta_{i+1} \\\
+&≥f(X_i)+\frac{1}{k}[f(T)−f(X_i)] \\\
+&=(1−\frac{1}{k})f(X_i)+\frac{1}{k}f(T)
+\end {aligned}
+\tag {9}</script><p>通过上面的递推式，我们可以给出$f(X_i)$</p>
+<script type="math/tex; mode=display">f(X_i)≥[1−(1−\frac{1}{k})^i]f(T) \tag {10}</script><p>这个是简单的递推数列求通项，这里也就懒得证明了。所以</p>
+<script type="math/tex; mode=display">f(X_k)≥[1−(1−\frac{1}{k})^k]f(T)≥[1−\frac{1}{e}]f(T) \tag {11}</script><p>这就是贪心大法好的证明。</p>
 <h4 id="本文参考链接-http-spiritsaway-info-algorithm-submodual-html"><a href="#本文参考链接-http-spiritsaway-info-algorithm-submodual-html" class="headerlink" title="本文参考链接: http://spiritsaway.info/algorithm/submodual.html"></a>本文参考链接: <a href="http://spiritsaway.info/algorithm/submodual.html" target="_blank" rel="noopener">http://spiritsaway.info/algorithm/submodual.html</a></h4>
         </div>
         <footer class="article-footer">
@@ -194,7 +225,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/submodual-problem.html" data-id="cjkgk3lab00cxqr9kgwao0677" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/submodual-problem.html" data-id="cjkglrhox00cx9r9khr01ldo3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -619,7 +650,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -637,5 +683,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

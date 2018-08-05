@@ -185,6 +185,7 @@ var _hmt = _hmt || [];
 <p>其实截止到写这篇文章的时候，我都没有完全做到能在学习的时候不拿起手机偷瞄一眼。但是现在相比过去已经很少了，正常学习工作的时候几乎不怎么会拿起手机，Give me five！相信不仅仅是对我，工作学习时减少看手机对大家也是一个应该努力调整的习惯和追求的目标。</p>
 <p>在对的时间做最正确的事情才能将时间的效益最大化。这里我和朋友聊天的时候谈到过一个“有效时间”的概念。不管你一天在实验室待多久，真正有效的时间是多少？算了一下，平均是8.5/12，也就是说中间有将近1/3的时间是一些杂碎的时间，比如中午出去吃饭，晚上出去吃饭，还有休息的时间，都算在里面将近3个半小时。也就是说有效时间只有不到8个半小时，在这8个半小时里面，你能产生的最大效益就是你今天在实验室里面学习的收获。刚性时间没法控制，弹性时间须要争取。</p>
 <h2 id="计划永远赶不上变化"><a href="#计划永远赶不上变化" class="headerlink" title="计划永远赶不上变化"></a>计划永远赶不上变化</h2><p>关于制定计划，我三年前还会相信这个说法，但是现在我觉得不靠谱。我并不是反对制定计划，有计划当然是好事，工作学习有目标，能有的放矢。但是制定计划需要到什么程度很重要。我的想法是不要定死计划，也就是刚性计划。我说说我本科大二时候的一个计划表：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -195,23 +196,23 @@ var _hmt = _hmt || [];
 <tbody>
 <tr>
 <td>CNN Student News</td>
-<td>07:45—08:25</td>
+<td>07:45—-08:25</td>
 </tr>
 <tr>
 <td>Breakfast</td>
-<td>08:30—09:00</td>
+<td>08:30—-09:00</td>
 </tr>
 <tr>
 <td>线性代数</td>
-<td>09:10—10:30</td>
+<td>09:10—-10:30</td>
 </tr>
 <tr>
 <td>C#程序设计</td>
-<td>10:50—11:30</td>
+<td>10:50—-11:30</td>
 </tr>
 <tr>
 <td>Lunch</td>
-<td>11:40—12:00</td>
+<td>11:40—-12:00</td>
 </tr>
 <tr>
 <td>….</td>
@@ -219,6 +220,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p>结果可想而知，详细到这个程度的计划表让我在制定计划表后面的一个月累的半死，实在是难以坚持下去，放弃了。这让我的自信心备受打击，因为好好计划的事情愣是没完成。可能你会觉得这样有点SB，没错，没踩过坑就不会知道坑有多深。</p>
 <p>千万不要将计划详细到这个地步，没必要！因为说实话，你也难坚持下去。我现在的做法是，<strong>不做计划，让它留在心中</strong>，换句话说就是计划周期要稍微有一定时间跨度，一般我是以一个月为一个周期。发现这个周期反正是挺合适我的，每个人的情况不一样，你需要根据自己的实际情况来定一个自己的周期。但周期千万不要太短！我就是一个先例，我就是一个先例，我就是一个先例，重要的话已经说了三遍！</p>
 <h2 id="碎片化时间很宝贵"><a href="#碎片化时间很宝贵" class="headerlink" title="碎片化时间很宝贵"></a>碎片化时间很宝贵</h2><p>这里说的碎片化时间实际上并不是我们指我们在公司工作的时间，或者说我们在实验室，自习室科研学习的时间。而是一些<strong>“需要打发的”</strong>时间。啥意思？举个简单的例子，你从公司出来，要做地铁或者公交回家（开车的土豪除外），一般在路上也得有15分钟或者半个小时吧，这个时候就可以看一些自己以前一直想看但一直没时间看的视频或者书籍。别看十五分钟或者半个小时很短，如果每一天都坚持做到这样，效果是显然的。</p>
@@ -234,7 +236,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/talk-of-effective-time-management.html" data-id="cjkgk3lah00dfqr9kpoov0biq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/talk-of-effective-time-management.html" data-id="cjkglrhp400df9r9kolag013k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -659,7 +661,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -677,5 +694,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

@@ -182,9 +182,32 @@ var _hmt = _hmt || [];
 <p>这里就不具体展开啦，因为我也才刚开始学习，所以就从<code>查准率</code>、<code>查全率</code>与<code>F1</code>来说吧。错误率和精度虽常用，但是并不能满足所有的任务需求。</p>
 <h2 id="查准率、查全率"><a href="#查准率、查全率" class="headerlink" title="查准率、查全率"></a>查准率、查全率</h2><p>从《机器学习》一书中引用的西瓜例子来说，假定瓜农拉来一车西瓜，我们用训练好的模型对这些西瓜进行判别和预测，显然，我们使用错误率衡量的只是有多少比例的西瓜被判定错误。但是如果我们关心是“挑出的西瓜有多少比例是好瓜”，或者“所有的好瓜中有多少比例被挑选了出来”，这个时候<code>错误率</code>就不够用了，需要使用其它的性能度量来衡量了。</p>
 <p>再比如在信息检索中，我们经常会关心“检索出来的信息中有多少条是用户感兴趣的”，“用户感兴趣的信息中有多少被挑选了出来”。<code>查准率(precision)</code>和<code>查全率(recall)</code>更适合用于此类需求的性能度量。</p>
-<p>对于二分类问题，可以将样本根据器真实类别与学习器预测的类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）以及假反例（false negative）四种情形。令TP、FP、TN、FN分别表示其对应的样例数，则显然有TP+FP+TN+FN=样例总数。分类结果的“混淆矩阵”如下：<br>$$<br>\begin{array}{c|c|c}<br>\hline<br> &amp; 正例(预测) &amp; 反例(预测) \<br>\hline<br>正例(实际) &amp; TP &amp; FN \<br>\hline<br>反例(实际) &amp; FP &amp; TN \<br>\hline<br>\end{array}<br>$$<br>那么我们可能得出<code>查准率P</code>和<code>查全率R</code>的定义分别为：<br>$$<br>\begin{equation}<br>P = \frac{TP}{TP+FP}, \<br>R = \frac{TP}{TP+FN}.<br>\end{equation}<br>$$<br><code>查全率</code>和<code>查准率</code>是一对矛盾的度量。一般来说，<code>查准率</code>高时，<code>查全率</code>往往偏低，<code>查全率</code>偏高是，<code>查准率</code>往往偏低。</p>
-<h2 id="什么是F1呢？"><a href="#什么是F1呢？" class="headerlink" title="什么是F1呢？"></a>什么是F1呢？</h2><p>我们从前一节知道<code>查全率</code>和<code>查准率</code>是一对相互矛盾的度量。因此，衡量一个学习器的时候，我们没法非常客观地描述它的性能好坏，它可能分类很准确，但是可能不全面。因此这里引入一个新的度量—F1。<br>$$<br>F_1 = \frac{2\times P\times R}{P+R} = \frac{2 \times TP}{样例总数+TP-TN}.<br>$$<br>说白了写成这个<br>$$<br>\frac{1}{F_1} = \frac{1}{2} \cdot \left(\frac{1}{P} + \frac{1}{R}\right).<br>$$<br>其实$F_1$就是基于<code>查准率</code>和<code>查全率</code>的一个调和平均数。这里引申一下，$F_\beta$是加权调和平均数<br>$$<br>\frac{1}{F_\beta} = \frac{1}{1+\beta^2} \cdot \left(\frac{1}{P} + \frac{\beta^2}{R}\right).<br>$$<br>其中$\beta&gt;0$度量了<code>查全率</code>和<code>查准率</code>的相对重要性。</p>
-<p>其实，在一些应用中，对查准率和查全率的重视程度有所不同，例如在用户商品推荐系统中，我们为了尽可能的打扰用户，更希望推荐内容确实用户感兴趣的，这个时候查准率更重要；而在逃犯信息检索系统中，更希望尽可能减少漏掉逃犯的情况，因此查全率更重要。而$F_1$的一般形式$F_\beta$，更能让我们表达出对查全率和查准率的不同偏好，它的定义为：<br>$$<br>F_\beta=\frac{(1+\beta^2)\times P\times R}{(\beta^2\times P)+R}.<br>$$<br>如果$\beta=1$时退化为标准的$F_1$；$\beta&gt;1$时查全率有更大的影响；$\beta&lt;1$时查准率有更大的影响。</p>
+<p>对于二分类问题，可以将样本根据器真实类别与学习器预测的类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）以及假反例（false negative）四种情形。令TP、FP、TN、FN分别表示其对应的样例数，则显然有TP+FP+TN+FN=样例总数。分类结果的“混淆矩阵”如下：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c|c|c}
+\hline
+ & 正例(预测) & 反例(预测) \\
+\hline
+正例(实际) & TP & FN \\
+\hline
+反例(实际) & FP & TN \\
+\hline
+\end{array}</script><p>那么我们可能得出<code>查准率P</code>和<code>查全率R</code>的定义分别为：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+P = \frac{TP}{TP+FP}, \\
+R = \frac{TP}{TP+FN}.
+\end{equation}</script><p><code>查全率</code>和<code>查准率</code>是一对矛盾的度量。一般来说，<code>查准率</code>高时，<code>查全率</code>往往偏低，<code>查全率</code>偏高是，<code>查准率</code>往往偏低。</p>
+<h2 id="什么是F1呢？"><a href="#什么是F1呢？" class="headerlink" title="什么是F1呢？"></a>什么是F1呢？</h2><p>我们从前一节知道<code>查全率</code>和<code>查准率</code>是一对相互矛盾的度量。因此，衡量一个学习器的时候，我们没法非常客观地描述它的性能好坏，它可能分类很准确，但是可能不全面。因此这里引入一个新的度量—-F1。</p>
+<script type="math/tex; mode=display">
+F_1 = \frac{2\times P\times R}{P+R} = \frac{2 \times TP}{样例总数+TP-TN}.</script><p>说白了写成这个</p>
+<script type="math/tex; mode=display">
+\frac{1}{F_1} = \frac{1}{2} \cdot \left(\frac{1}{P} + \frac{1}{R}\right).</script><p>其实$F_1$就是基于<code>查准率</code>和<code>查全率</code>的一个调和平均数。这里引申一下，$F_\beta$是加权调和平均数</p>
+<script type="math/tex; mode=display">
+\frac{1}{F_\beta} = \frac{1}{1+\beta^2} \cdot \left(\frac{1}{P} + \frac{\beta^2}{R}\right).</script><p>其中$\beta&gt;0$度量了<code>查全率</code>和<code>查准率</code>的相对重要性。</p>
+<p>其实，在一些应用中，对查准率和查全率的重视程度有所不同，例如在用户商品推荐系统中，我们为了尽可能的打扰用户，更希望推荐内容确实用户感兴趣的，这个时候查准率更重要；而在逃犯信息检索系统中，更希望尽可能减少漏掉逃犯的情况，因此查全率更重要。而$F_1$的一般形式$F_\beta$，更能让我们表达出对查全率和查准率的不同偏好，它的定义为：</p>
+<script type="math/tex; mode=display">
+F_\beta=\frac{(1+\beta^2)\times P\times R}{(\beta^2\times P)+R}.</script><p>如果$\beta=1$时退化为标准的$F_1$；$\beta&gt;1$时查全率有更大的影响；$\beta&lt;1$时查准率有更大的影响。</p>
 <h2 id="Weka性能评估"><a href="#Weka性能评估" class="headerlink" title="Weka性能评估"></a>Weka性能评估</h2><p>以上一节决策树代码为例，我们使用如下代码进行Weka中J48决策树模型性能评价：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Instances instances = loadDataSet(TRAINING_DATASET_FILENAME);</span><br><span class="line">Classifier j48 = generateClassifier();</span><br><span class="line"><span class="comment">// 使用同一个数据集进行交叉验证</span></span><br><span class="line">Evaluation evaluation = <span class="keyword">new</span> Evaluation(instances);</span><br><span class="line">evaluation.crossValidateModel(j48, instances, <span class="number">10</span>, <span class="keyword">new</span> Random(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 打印算法的汇总信息 */</span></span><br><span class="line">System.out.println(<span class="string">"** Decision Tress Evaluation with Datasets **"</span>);</span><br><span class="line">System.out.println(evaluation.toSummaryString());</span><br><span class="line">System.out.print(<span class="string">" the expression for the input data as per algorithm is "</span>);</span><br><span class="line">System.out.println(j48);</span><br><span class="line">System.out.println(evaluation.toMatrixString());</span><br><span class="line">System.out.println(evaluation.toClassDetailsString());</span><br></pre></td></tr></table></figure>
 <p>输出的结果如下：</p>
@@ -198,7 +221,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/weka-machine-learning-practice-performance-evaluation.html" data-id="cjkgk3lbj00fyqr9ktt6hln2s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/weka-machine-learning-practice-performance-evaluation.html" data-id="cjkglrhq400fy9r9kemsvyeif" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -623,7 +646,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -641,5 +679,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

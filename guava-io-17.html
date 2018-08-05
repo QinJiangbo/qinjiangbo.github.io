@@ -186,6 +186,7 @@ var _hmt = _hmt || [];
 <h3 id="3-更新文件最后修改时间"><a href="#3-更新文件最后修改时间" class="headerlink" title="(3) 更新文件最后修改时间"></a>(3) 更新文件最后修改时间</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> String FILE_DIR = <span class="string">"/Users/Richard/Documents/R/"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTouch</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String fileName = <span class="string">"data.txt"</span>;</span><br><span class="line">    File file = <span class="keyword">new</span> File(FILE_DIR + fileName);</span><br><span class="line">    System.out.println(<span class="keyword">new</span> Date(file.lastModified()));</span><br><span class="line">    <span class="comment">// Sun Nov 06 21:49:19 CST 2016</span></span><br><span class="line">    Files.touch(file);</span><br><span class="line">    System.out.println(<span class="keyword">new</span> Date(file.lastModified()));</span><br><span class="line">    <span class="comment">// Sun Nov 06 22:14:26 CST 2016</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个我必须得单独拿出来介绍，因为博主发现这个方法名字取得太好啦，哈哈！和Linux中的<code>touch</code>命令一样，而且功能一样，都是更改文件的最后修改时间，如果文件不存在，就新建一个文件，真的是不得不佩服Guava的开发人员代码功底！代码可读性非常好！</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Guava中文件操作有很多，除了上面的读写修改之外，还有以下的操作，读者朋友们感兴趣的可以自己看一下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -216,6 +217,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p>文件操作值得花时间好好看一下！^_^！</p>
 
         </div>
@@ -224,7 +226,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-io-17.html" data-id="cjkgk3l6c0041qr9kckiuz4nq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-io-17.html" data-id="cjkglrhl100419r9k7ectyr4o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -649,7 +651,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -667,5 +684,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

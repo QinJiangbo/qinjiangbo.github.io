@@ -182,6 +182,7 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">top - 16:20:24 up 11 days, 11 min,  2 users,  load average: 0.00, 0.16, 0.60</span><br><span class="line">Tasks: 101 total,   1 running,  99 sleeping,   0 stopped,   1 zombie</span><br><span class="line">%Cpu(s):  0.7 us,  0.3 sy,  0.0 ni, 98.8 id,  0.2 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  3881688 total,   102556 free,  3322056 used,  457076 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.   334948 avail Mem </span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND              </span><br><span class="line"> 1324 rabbitmq  20   0 1146304  44220   1092 S   0.7  1.1   0:18.66 beam.smp             </span><br><span class="line"> 7733 conflue+  20   0 4009488 1.490g  40692 S   0.3 40.2   2:39.05 java                 </span><br><span class="line"> 8069 conflue+  20   0 3704192 566552  16588 S   0.3 14.6   0:23.80 java                 </span><br><span class="line">21814 redis     20   0  151104  11028    208 S   0.3  0.3   0:46.42 redis-server         </span><br><span class="line">21892 root      20   0  136668  10980    980 S   0.3  0.3  10:22.68 AliYunDun            </span><br><span class="line">    1 root      20   0  190716   2380   1156 S   0.0  0.1   0:06.98 systemd              </span><br><span class="line">    2 root      20   0       0      0      0 S   0.0  0.0   0:00.04 kthreadd</span><br></pre></td></tr></table></figure>
 <p>我觉得这部分空间还是可以利用一下的，首先来看看这部分空间主要的作用。</p>
 <h2 id="buff-cache是什么"><a href="#buff-cache是什么" class="headerlink" title="buff/cache是什么"></a>buff/cache是什么</h2><p>cache只是用来缓存文件的，经常读写的文件会被缓存到cache中，可以增加读写效率，该功能是Linux系统内核提供的。也就是说为了避免频繁地发生IO请求，可以先将一部分数据写入到buffer/cache中然后再批量地持久化到本地的磁盘上。那么buffer和cache有什么区别呢？首先从字面上来说，一个是缓冲（buffer），另一个是缓存（cache），作用区别应该比较明显了。下面是一个对照表：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -200,6 +201,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="内存释放脚本"><a href="#内存释放脚本" class="headerlink" title="内存释放脚本"></a>内存释放脚本</h2><p>释放这部分内存的方式Linux内核团队也给出了说明，主要分为三条命令。</p>
 <ul>
 <li>echo 1 &gt; /proc/sys/vm/drop_caches //To free pagecache.</li>
@@ -218,7 +220,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/release-buff-cache-memory-in-linux-system.html" data-id="cjkgk3l9e00awqr9kwzkyl4yn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/release-buff-cache-memory-in-linux-system.html" data-id="cjkglrhnz00aw9r9k41bvab2r" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -643,7 +645,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -661,5 +678,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

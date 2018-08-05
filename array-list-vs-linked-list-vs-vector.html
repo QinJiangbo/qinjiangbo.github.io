@@ -190,6 +190,7 @@ var _hmt = _hmt || [];
 <p>正如上面的实例所体现的，其实他们的用法都差不多，主要的不同在于<strong>它们实现的机制不同而且它们执行相同操作的复杂度不同</strong>。</p>
 <h2 id="5-Vector"><a href="#5-Vector" class="headerlink" title="5. Vector"></a>5. Vector</h2><p><strong>Vector几乎和ArrayList一样，它们俩之间的不同就是Vector是同步的</strong>。因为这一点，它比ArrayList稍微耗性能一点。通常，除非你的代码明确指定要使用同步的代码，否则一般我不建议你使用Vector，使用ArrayList是一个比Vector更好的选择。</p>
 <h2 id="6-ArrayList-vs-LinkedList性能对比"><a href="#6-ArrayList-vs-LinkedList性能对比" class="headerlink" title="6. ArrayList vs. LinkedList性能对比"></a>6. ArrayList vs. LinkedList性能对比</h2><p>时间复杂度对比：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -216,6 +217,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p>* 表中<code>add()</code>指代<code>add(E e)</code>，<code>remove()</code>指代<code>remove(int index)</code></p>
 <ul>
 <li>ArrayList在add/remove的随机索引访问上的复杂度为$O(n)$，而在链表的末尾进行的操作复杂度为$O(1)$。</li>
@@ -238,7 +240,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/array-list-vs-linked-list-vs-vector.html" data-id="cjkgk3l4s000jqr9ki0cmqan3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/array-list-vs-linked-list-vs-vector.html" data-id="cjkglrhje000j9r9kkkw2r20e" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -663,7 +665,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -681,5 +698,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

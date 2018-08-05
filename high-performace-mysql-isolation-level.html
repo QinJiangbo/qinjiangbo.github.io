@@ -193,7 +193,8 @@ var _hmt = _hmt || [];
 <li><strong>REPEATABLE READ（可重复度）</strong>这个隔离级别是相对前一个而言的，该级别保证了同一个事务中的同一个操作多次执行的结果是相同的。这个隔离级别是MySQL的默认隔离级别。但是理论上这个隔离级别还是不能阻止幻读（PHANTOM READ），所谓幻读，<strong>就是某个事务在读取某一范围的数据时，另一个事务在一段数据中添加了一些新的数据，当前事务读出了一些原本没有的数据，就是幻读！</strong>MySQL中InnoDB通过MVVC（多版本并发控制）解决了幻读的问题。</li>
 <li><strong>SERIALIZABLE（序列化）</strong>这个是最高的隔离级别，这个很暴力的就是直接在表的每一行加上一个锁。这样能保证每一条数据的更新都是原子性的。但是带来的问题是数据库的性能大大降低。一般不建议使用这个隔离级别，太耗性能了！</li>
 </ul>
-<h2 id="SQL四种隔离级别对比"><a href="#SQL四种隔离级别对比" class="headerlink" title="SQL四种隔离级别对比"></a>SQL四种隔离级别对比</h2><table>
+<h2 id="SQL四种隔离级别对比"><a href="#SQL四种隔离级别对比" class="headerlink" title="SQL四种隔离级别对比"></a>SQL四种隔离级别对比</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>隔离级别</th>
@@ -234,6 +235,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 
         </div>
         <footer class="article-footer">
@@ -241,7 +243,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/high-performace-mysql-isolation-level.html" data-id="cjkgk3l72005fqr9ktqr8gyrh" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/high-performace-mysql-isolation-level.html" data-id="cjkglrhln005i9r9kkhfg0cs6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -666,7 +668,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -684,5 +701,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

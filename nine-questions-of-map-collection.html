@@ -206,6 +206,7 @@ var _hmt = _hmt || [];
 <li><strong>同步（Synchronized）。</strong>仅<strong>HashTable</strong>是同步的，其他的两个不是。所以说，如果一个线程安全的实现在项目中并不是那么需要，推荐大家使用<strong>HashMap</strong>而不是<strong>HashTable</strong>。</li>
 </ol>
 <p>更完整的比较如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -248,6 +249,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="7-双向Map"><a href="#7-双向Map" class="headerlink" title="7. 双向Map"></a>7. 双向Map</h2><p>有时候我们需要一组键值对（Key-Value Pair Set），意味着这个Map的值和键一样都是不能出现重复的。也就是一对一映射（One-to-One Map）。这个限制可以让我们创建出一个双向Map。所以我们也可以根据值（Value）来查找键（Key）。这样的数据结构被称为双向Map（bidirectional map），不幸的是JDK并不支持这个结构。</p>
 <p>在Apache Commons和Guava中这个数据结构都有实现，分别叫做BidiMap和BiMap。但是都强制键和值之间的映射关系为1:1。</p>
 <h2 id="8-Map的浅拷贝"><a href="#8-Map的浅拷贝" class="headerlink" title="8. Map的浅拷贝"></a>8. Map的浅拷贝</h2><p>在Java中Map的大多数实现，都提供了一种能拷贝其他Map的构造函数。但是这个拷贝的过程并<strong>不是同步的（Synchronized）。</strong>意味着一旦有某个线程拷贝了一个Map，另外的一个县城可能会对它进行修改。所以，为了避免不同步的拷贝，大家都应该使用<code>Collections.sysnchronizeMap()</code>。</p>
@@ -270,7 +272,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/nine-questions-of-map-collection.html" data-id="cjkgk3lhx012xqr9kocv766om" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/nine-questions-of-map-collection.html" data-id="cjkglrhwe012x9r9k819ms9pr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -695,7 +697,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -713,5 +730,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

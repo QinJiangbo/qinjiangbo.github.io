@@ -182,8 +182,6 @@ var _hmt = _hmt || [];
 <h2 id="最新资讯"><a href="#最新资讯" class="headerlink" title="最新资讯"></a>最新资讯</h2><p>从JVisualVM的官方网站可以看出，这个项目已经迁移到了Github平台上。官网英文如下：</p>
 <blockquote>
 <p>VisualVM comes in two distributions: VisualVM at GitHub and Java VisualVM as a JDK tool. VisualVM at GitHub is a bleeding-edge distribution with the latest features. To get a stable tool, use the Java VisualVM available in your Oracle JDK 8.</p>
-</blockquote>
-<blockquote>
 <p>NEW: Starting from Oracle JDK 9, Java VisualVM has moved to the GraalVM, an innovative, high-performance polyglot VM developed at Oracle Labs. See the Graal VisualVM page for details.</p>
 </blockquote>
 <p>意思很简单，就是VisualVM现在有两个分发渠道了，分别是Github和JDK内置工具。但是最新的消息显示，从Oracle JDK 9开始，Java VisualVM已经转移到了GraalVM，这是一个创新的，高性能的多语言VM性能监控器。</p>
@@ -200,7 +198,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/jvisualvm-tool-was-removed-from-jdk9.html" data-id="cjkgk3l7p0070qr9kiya902uv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/jvisualvm-tool-was-removed-from-jdk9.html" data-id="cjkglrhma00709r9kioqy8xra" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -625,7 +623,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -643,5 +656,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

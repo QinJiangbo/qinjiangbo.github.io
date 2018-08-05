@@ -182,6 +182,7 @@ var _hmt = _hmt || [];
 <h2 id="1-什么时候最好使用LinkedList而不是ArrayList？"><a href="#1-什么时候最好使用LinkedList而不是ArrayList？" class="headerlink" title="1. 什么时候最好使用LinkedList而不是ArrayList？"></a>1. 什么时候最好使用LinkedList而不是ArrayList？</h2><p>从某种意义上来说，ArrayList就是数组。它的元素能够直接通过下标访问。但是如果这个数组快占满了，一个新的大的数组需要被分配出来，然后将原来的元素全部拷贝到新的数组里面去，这需要$O(n)$时间。同样的，添加或者移除某个元素需要将数组中剩下的元素移动。这恐怕是Arraylist最大的一个劣势了。</p>
 <p>LinkedList是一条双向链接表。因此，当需要访问链表中间的某个元素时，它不得不从链表起始位置开始查找。另外，添加或者删除链表中的某个元素会更快，因为它只局部改变链表。</p>
 <p>总结一下，最坏情况复杂度的比较如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -223,6 +224,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p>除了运行时间以外，内存占用也是一个需要考虑的问题，尤其是针对大链表。在LinkedList中，每一个结点都需要至少两个额外的指针来链接前一个和后一个结点；而在ArrayList中，只需要一个元素的数组即可。</p>
 <h2 id="2-在迭代一个集合框架的时候删除元素"><a href="#2-在迭代一个集合框架的时候删除元素" class="headerlink" title="2. 在迭代一个集合框架的时候删除元素"></a>2. 在迭代一个集合框架的时候删除元素</h2><p>在迭代集合框架的时候删除其中的一个元素，<strong>只有一种正确的做法</strong>，就是使用<code>Iterator.remove()</code>方法，例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Integer&gt; itr = list.iterator();</span><br><span class="line"><span class="keyword">while</span>(itr.hasNext()) &#123;</span><br><span class="line">   <span class="comment">// do something</span></span><br><span class="line">   itr.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -277,7 +279,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/ten-questions-of-java-collection-framework.html" data-id="cjkgk3li9013hqr9k8mqmowqo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/ten-questions-of-java-collection-framework.html" data-id="cjkglrhwq013h9r9kmg5gvz1c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -702,7 +704,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -720,5 +737,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

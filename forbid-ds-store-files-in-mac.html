@@ -182,7 +182,7 @@ var _hmt = _hmt || [];
 <h3 id="1-禁止这个文件生成的方法："><a href="#1-禁止这个文件生成的方法：" class="headerlink" title="1.禁止这个文件生成的方法："></a>1.禁止这个文件生成的方法：</h3><p>打开   “终端” （finder －应用程序－实用工具－终端）  输入下面的命令 并 按下 enter 键 运行 ！然后必须注销Mac并重新登陆系统才能生效！！</p>
 <pre><code>defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 </code></pre><h3 id="2-如果您后悔了觉得-怪怪的-或者-只是暂时-使用-，可以使用下面的方法恢复回来-！"><a href="#2-如果您后悔了觉得-怪怪的-或者-只是暂时-使用-，可以使用下面的方法恢复回来-！" class="headerlink" title="2.如果您后悔了觉得 怪怪的 或者 只是暂时 使用 ，可以使用下面的方法恢复回来 ！"></a>2.如果您后悔了觉得 怪怪的 或者 只是暂时 使用 ，可以使用下面的方法恢复回来 ！</h3><p>打开   “终端” （finder －应用程序－实用工具－终端）  输入下面的命令 并 按下 enter 键 运行 ！然后必须注销Mac并重新登陆系统才能生效！！</p>
-<pre><code>defaults delete com.apple.desktopservices DSDontWriteNetworkStores
+<pre><code> defaults delete com.apple.desktopservices DSDontWriteNetworkStores
 </code></pre><p>转载自<a href="http://www.macappbox.com/showinfo-35-373-0.html" target="_blank" rel="noopener">http://www.macappbox.com/showinfo-35-373-0.html</a></p>
 
         </div>
@@ -191,7 +191,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/forbid-ds-store-files-in-mac.html" data-id="cjkgk3l5u002pqr9kigcl80al" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/forbid-ds-store-files-in-mac.html" data-id="cjkglrhkf002p9r9kl2j4hmhk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -616,7 +616,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -634,5 +649,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

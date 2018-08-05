@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="Highlight.js,Jquery" />
     
-    <meta name="description" content="支持语言的名称和别名    名称 别名     1C 1c   ABNF abnf   Access logs    accesslog   Ada ada   ARM assembler    armasm, arm   AVR assembler    avrasm   ActionScript actionscript, as   Apache apache, apacheconf   A">
+    <meta name="description" content="支持语言的名称和别名     名称 别名     1C 1c   ABNF abnf   Access logs    accesslog   Ada ada   ARM assembler    armasm, arm   AVR assembler    avrasm   ActionScript actionscript, as   Apache apache, apacheconf">
 <meta name="keywords" content="Highlight.js,Jquery">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Highlight.js支持的语言列表">
 <meta property="og:url" content="http://qinjiangbo.com/language-list-supported-by-highlightjs.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="支持语言的名称和别名    名称 别名     1C 1c   ABNF abnf   Access logs    accesslog   Ada ada   ARM assembler    armasm, arm   AVR assembler    avrasm   ActionScript actionscript, as   Apache apache, apacheconf   A">
+<meta property="og:description" content="支持语言的名称和别名     名称 别名     1C 1c   ABNF abnf   Access logs    accesslog   Ada ada   ARM assembler    armasm, arm   AVR assembler    avrasm   ActionScript actionscript, as   Apache apache, apacheconf">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/highlightjs-thumbnail.png">
 <meta property="og:updated_time" content="2016-10-28T16:14:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Highlight.js支持的语言列表">
-<meta name="twitter:description" content="支持语言的名称和别名    名称 别名     1C 1c   ABNF abnf   Access logs    accesslog   Ada ada   ARM assembler    armasm, arm   AVR assembler    avrasm   ActionScript actionscript, as   Apache apache, apacheconf   A">
+<meta name="twitter:description" content="支持语言的名称和别名     名称 别名     1C 1c   ABNF abnf   Access logs    accesslog   Ada ada   ARM assembler    armasm, arm   AVR assembler    avrasm   ActionScript actionscript, as   Apache apache, apacheconf">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/highlightjs-thumbnail.png">
     
 
@@ -180,6 +180,7 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <p><img src="https://obrxbqjbi.qnssl.com/blog/image/highlightjs-thumbnail.png" alt=""></p>
 <p>支持语言的名称和别名</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -786,6 +787,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 
         </div>
         <footer class="article-footer">
@@ -793,7 +795,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/language-list-supported-by-highlightjs.html" data-id="cjkgk3l7r0075qr9kcrhwc20o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/language-list-supported-by-highlightjs.html" data-id="cjkglrhmc00759r9kvyvq5chq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -1218,7 +1220,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1236,5 +1253,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

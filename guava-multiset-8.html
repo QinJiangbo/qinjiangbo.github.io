@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="Guava,MultiSet" />
     
-    <meta name="description" content="多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—MultiSet。 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。 J">
+    <meta name="description" content="多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—-MultiSet。 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。">
 <meta name="keywords" content="Guava,MultiSet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Guava优美代码-8-MultiSet">
 <meta property="og:url" content="http://qinjiangbo.com/guava-multiset-8.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—MultiSet。 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。 J">
+<meta property="og:description" content="多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—-MultiSet。 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
 <meta property="og:updated_time" content="2018-04-02T09:02:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Guava优美代码-8-MultiSet">
-<meta name="twitter:description" content="多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—MultiSet。 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。 J">
+<meta name="twitter:description" content="多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—-MultiSet。 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
     
 
@@ -178,11 +178,12 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="多值集合MultiSet"><a href="#多值集合MultiSet" class="headerlink" title="多值集合MultiSet"></a>多值集合MultiSet</h2><p>使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—MultiSet。</p>
+            <h2 id="多值集合MultiSet"><a href="#多值集合MultiSet" class="headerlink" title="多值集合MultiSet"></a>多值集合MultiSet</h2><p>使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—-MultiSet。</p>
 <h2 id="实现一个Word-Count程序"><a href="#实现一个Word-Count程序" class="headerlink" title="实现一个Word Count程序"></a>实现一个Word Count程序</h2><p>我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。</p>
 <h3 id="JDK实现"><a href="#JDK实现" class="headerlink" title="JDK实现"></a>JDK实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJDK_WordCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String string = <span class="string">"I have a dream ! I dream one day I can go everywhere I wish !"</span>;</span><br><span class="line">    String[] words = string.split(<span class="string">" "</span>);</span><br><span class="line">    Map&lt;String, Integer&gt; countMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">        Integer count = countMap.get(word);</span><br><span class="line">        <span class="keyword">if</span> (count == <span class="keyword">null</span>) &#123;</span><br><span class="line">            countMap.put(word, <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            countMap.put(word, count + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = countMap.entrySet();</span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;String, Integer&gt; entry : entrySet) &#123;</span><br><span class="line">        System.out.println(entry.getKey() + <span class="string">":"</span> + entry.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Guava实现"><a href="#Guava实现" class="headerlink" title="Guava实现"></a>Guava实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGuava_WordCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String string = <span class="string">"I have a dream ! I dream one day I can go everywhere I wish !"</span>;</span><br><span class="line">    String[] words = string.split(<span class="string">" "</span>);</span><br><span class="line">    List&lt;String&gt; wordList = Arrays.asList(words);</span><br><span class="line">    Multiset&lt;String&gt; multiset = HashMultiset.create();</span><br><span class="line">    multiset.addAll(wordList);</span><br><span class="line">    <span class="keyword">for</span> (String word : multiset.elementSet()) &#123; <span class="comment">// 返回不重复元素集合</span></span><br><span class="line">        System.out.println(word + <span class="string">":"</span> + multiset.count(word));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="MultiSet使用语法"><a href="#MultiSet使用语法" class="headerlink" title="MultiSet使用语法"></a>MultiSet使用语法</h2><table>
+<h2 id="MultiSet使用语法"><a href="#MultiSet使用语法" class="headerlink" title="MultiSet使用语法"></a>MultiSet使用语法</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法名称</th>
@@ -216,7 +217,7 @@ var _hmt = _hmt || [];
 </tr>
 <tr>
 <td>entrySet()</td>
-<td>类似与Map.entrySet 返回Set&lt;Multiset.Entry&gt;。包含的Entry支持使用getElement()和getCount()</td>
+<td>类似与Map.entrySet 返回Set<multiset.entry>。包含的Entry支持使用getElement()和getCount()</multiset.entry></td>
 </tr>
 <tr>
 <td>setCount(E element ,int count)</td>
@@ -236,10 +237,11 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="MultiSet使用示例"><a href="#MultiSet使用示例" class="headerlink" title="MultiSet使用示例"></a>MultiSet使用示例</h2><h3 id="同一集合添加元素两次"><a href="#同一集合添加元素两次" class="headerlink" title="同一集合添加元素两次"></a>同一集合添加元素两次</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAddElementsTwoTimes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multiset&lt;String&gt; multiset = HashMultiset.create();</span><br><span class="line">    multiset.add(<span class="string">"one"</span>);</span><br><span class="line">    multiset.add(<span class="string">"one"</span>);</span><br><span class="line">    System.out.println(multiset.count(<span class="string">"one"</span>)); <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="自定义删除添加修改元素数量"><a href="#自定义删除添加修改元素数量" class="headerlink" title="自定义删除添加修改元素数量"></a>自定义删除添加修改元素数量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUserCustomAddRemoveAndSetCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multiset&lt;String&gt; multiset = HashMultiset.create();</span><br><span class="line">    multiset.add(<span class="string">"ball"</span>);</span><br><span class="line">    multiset.add(<span class="string">"ball"</span>, <span class="number">10</span>);</span><br><span class="line">    System.out.println(multiset.count(<span class="string">"ball"</span>)); <span class="comment">// 11</span></span><br><span class="line"></span><br><span class="line">    multiset.remove(<span class="string">"ball"</span>, <span class="number">5</span>);</span><br><span class="line">    System.out.println(multiset.count(<span class="string">"ball"</span>)); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    multiset.setCount(<span class="string">"ball"</span>, <span class="number">8</span>);</span><br><span class="line">    System.out.println(multiset.count(<span class="string">"ball"</span>)); <span class="comment">// 8</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="保留集合中被选中的元素（其余废弃）"><a href="#保留集合中被选中的元素（其余废弃）" class="headerlink" title="保留集合中被选中的元素（其余废弃）"></a>保留集合中被选中的元素（其余废弃）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRetainOnlySelectedKeys</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multiset&lt;String&gt; multiset = HashMultiset.create();</span><br><span class="line">    multiset.add(<span class="string">"ball"</span>);</span><br><span class="line">    multiset.add(<span class="string">"ball"</span>);</span><br><span class="line">    multiset.add(<span class="string">"cow"</span>);</span><br><span class="line">    multiset.setCount(<span class="string">"twelve"</span>, <span class="number">12</span>);</span><br><span class="line"></span><br><span class="line">    multiset.retainAll(Arrays.asList(<span class="string">"ball"</span>, <span class="string">"horse"</span>));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"cow "</span> + multiset.count(<span class="string">"cow"</span>)); <span class="comment">// cow 0</span></span><br><span class="line">    System.out.println(<span class="string">"ball "</span> + multiset.count(<span class="string">"ball"</span>)); <span class="comment">// ball 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>需要注意的是Multiset不是一个Map&lt;E,Integer&gt;,尽管Multiset提供一部分类似的功能实现。其它值得关注的差别有:</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>需要注意的是Multiset不是一个Map<e,integer>,尽管Multiset提供一部分类似的功能实现。其它值得关注的差别有:</e,integer></p>
 <ul>
 <li>Multiset中的元素的重复个数只会是正数，且最大不会超过Integer.MAX_VALUE。设定计数为0的元素将不会出现multiset中，也不会出现elementSet()和entrySet()的返回结果中。</li>
 <li>multiset.iterator() 会循环迭代每一个出现的元素，迭代的次数与multiset.size()相同。</li>
@@ -253,7 +255,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-multiset-8.html" data-id="cjkgk3l6g004bqr9kun4k61jn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-multiset-8.html" data-id="cjkglrhl4004b9r9k5bsijzt1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -678,7 +680,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -696,5 +713,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

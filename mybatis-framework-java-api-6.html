@@ -304,6 +304,7 @@ var _hmt = _hmt || [];
 <p>因为最初设计时,MyBatis 是一个 XML 驱动的框架。配置信息是基于 XML 的,而且 映射语句也是定义在 XML 中的。而到了 MyBatis 3,有新的可用的选择了。MyBatis 3 构建 在基于全面而且强大的 Java 配置 API 之上。这个配置 API 是基于 XML 的 MyBatis 配置的 基础,也是新的基于注解配置的基础。注解提供了一种简单的方式来实现简单映射语句,而 不会引入大量的开销。</p>
 <p><code>注意</code> 不幸的是,Java 注解限制了它们的表现和灵活。尽管很多时间都花调查,设计和 实验上,最强大的 MyBatis 映射不能用注解来构建,那并不可笑。C#属性(做示例)就没 有这些限制,因此 <a href="http://mybatis.net/" target="_blank" rel="noopener">MyBatis.NET</a> 将会比 XML 有更丰富的选择。也就是说,基于 Java 注解 的配置离不开它的特性。</p>
 <p>注解有下面这些:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -335,7 +336,7 @@ var _hmt = _hmt || [];
 <tr>
 <td style="text-align:left"><code>@Arg</code></td>
 <td style="text-align:left">方法</td>
-<td style="text-align:left"><ul><li> &lt;arg&gt;</li> <li> &lt;idArg&gt;</li></ul></td>
+<td style="text-align:left"><ul><li> &lt;arg></li> <li> &lt;idArg></li></ul></td>
 <td style="text-align:left">单独的构造方法参数 , 是<code>ConstructorArgs</code>集合的一部分。属性: <code>id</code>,<code>column</code>,<code>javaType,typeHandler</code>。 id 属性是布尔值, 来标识用于比较的属 性,和<idarg>XML 元素相似。</idarg></td>
 </tr>
 <tr>
@@ -359,7 +360,7 @@ var _hmt = _hmt || [];
 <tr>
 <td style="text-align:left"><code>@Result</code></td>
 <td style="text-align:left">方法</td>
-<td style="text-align:left"><ul><li> &lt;result&gt;</li> <li> &lt;id&gt;</li></ul></td>
+<td style="text-align:left"><ul><li> &lt;result></li> <li> &lt;id></li></ul></td>
 <td style="text-align:left">在列和属性或字段之间的单独结果映 射。属 性:id,column, property, javaType ,jdbcType ,type Handler, one,many。id 属性是一个布尔值,表 示了应该被用于比较(和在 XML 映射 中的<id>相似)的属性。one 属性是单 独 的 联 系, 和 <association> 相 似 , 而 many 属 性 是 对 集 合 而 言 的 , 和 <collection>相似。 它们这样命名是为了 避免名称冲突。</collection></association></id></td>
 </tr>
 <tr>
@@ -387,15 +388,15 @@ var _hmt = _hmt || [];
 <td style="text-align:left">这个注解提供访问交换和配置选项的 宽广范围, 它们通常在映射语句上作为 属性出现。 而不是将每条语句注解变复 杂,Options 注解提供连贯清晰的方式 来访问它们。属性:useCache=true , flushCache=false , resultSetType=FORWARD_ONLY , statementType=PREPARED , fetchSize=-1 , , timeout=-1 useGeneratedKeys=false , keyProperty=”id”。 理解 Java 注解是很 重要的,因为没有办法来指定“null” 作为值。因此,一旦你使用了 Options 注解,语句就受所有默认值的支配。要 注意什么样的默认值来避免不期望的 行为。</td>
 </tr>
 <tr>
-<td style="text-align:left"><ul><li>  <code>@Insert</code> </li> <li> <code>@Update</code> </li><li> <code>@Delete</code> </li> <li> <code>@Select</code> </li></ul></td>
+<td style="text-align:left"><ul><li>  `@Insert` </li> <li> `@Update` </li><li> `@Delete` </li> <li> `@Select` </li></ul></td>
 <td style="text-align:left">方法</td>
-<td style="text-align:left"><ul><li>  &lt;insert&gt; </li> <li>&lt;update&gt; </li><li> &lt;delete&gt; </li> <li> &lt;select&gt; </li></ul></td>
+<td style="text-align:left"><ul><li>  &lt;insert> </li> <li>&lt;update> </li><li> &lt;delete> </li> <li> &lt;select> </li></ul></td>
 <td style="text-align:left">这些注解中的每一个代表了执行的真 实 SQL。 它们每一个都使用字符串数组 (或单独的字符串)。如果传递的是字 符串数组, 它们由每个分隔它们的单独 空间串联起来。这就当用 Java 代码构 建 SQL 时避免了“丢失空间”的问题。 然而,如果你喜欢,也欢迎你串联单独 的字符串。属性:value,这是字符串 数组用来组成单独的 SQL 语句。</td>
 </tr>
 <tr>
-<td style="text-align:left"><ul><li>  <code>@InsertProvider</code> </li> <li> <code>@UpdateProvider</code> </li><li><code>@DeleteProvider</code></li> <li> <code>@SelectProvider</code></li></ul></td>
+<td style="text-align:left"><ul><li>  `@InsertProvider` </li> <li> `@UpdateProvider` </li><li>`@DeleteProvider`</li> <li> `@SelectProvider`</li></ul></td>
 <td style="text-align:left">方法</td>
-<td style="text-align:left"><ul><li>  &lt;insert&gt; </li> <li>&lt;update&gt; </li><li> &lt;delete&gt; </li> <li> &lt;select&gt; </li></ul></td>
+<td style="text-align:left"><ul><li>  &lt;insert> </li> <li>&lt;update> </li><li> &lt;delete> </li> <li> &lt;select> </li></ul></td>
 <td style="text-align:left">这些可选的 SQL 注解允许你指定一个 类名和一个方法在执行时来返回运行 允许创建动态 的 SQL。 基于执行的映射语句, MyBatis 会实例化这个类,然后执行由 provider 指定的方法. 这个方法可以选择性的接 受参数对象作为它的唯一参数, 但是必 须只指定该参数或者没有参数。属性: type,method。type 属性是类的完全限 定名。method 是该类中的那个方法名。 注意: 这节之后是对 SelectBuilder 类的 讨论,它可以帮助你以干净,容于阅读 的方式来构建动态 SQL。</td>
 </tr>
 <tr>
@@ -424,6 +425,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>映射申明样例</strong></p>
 <p>这个例子展示了如何使用 @SelectKey 注解来在插入前读取数据库序列的值：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert</span>(<span class="string">"insert into table3 (id, name) values(#&#123;nameId&#125;, #&#123;name&#125;)"</span>)</span><br><span class="line"><span class="meta">@SelectKey</span>(statement=<span class="string">"call next value for TestSequence"</span>, keyProperty=<span class="string">"nameId"</span>, before=<span class="keyword">true</span>, resultType=<span class="keyword">int</span>.class)</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertTable3</span><span class="params">(Name name)</span></span>;</span><br></pre></td></tr></table></figure>
@@ -435,7 +437,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/mybatis-framework-java-api-6.html" data-id="cjkgk3lk9017jqr9k6yh15725" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/mybatis-framework-java-api-6.html" data-id="cjkglrhyg017j9r9kp7qigf7i" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -860,7 +862,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -878,5 +895,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

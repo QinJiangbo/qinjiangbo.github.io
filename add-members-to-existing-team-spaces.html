@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
 <li>在最后一个成员的图片后面点击一下，将光标移动到这里</li>
 <li>然后在表格的菜单编辑栏寻找并点击<code>此后插入列</code></li>
 <li>在新的列中任意地方进行点击，将光标移动进来</li>
-<li>按住Ctl+Shift+A或者是选择菜单栏中的<code>插入更多内容</code>–&gt;<code>其它宏</code>，并且查找Profile Picture。</li>
+<li>按住Ctl+Shift+A或者是选择菜单栏中的<code>插入更多内容</code>—&gt;<code>其它宏</code>，并且查找Profile Picture。</li>
 <li>选择“Profile picture”</li>
 <li>在<code>User*</code>这个框中输入你想要添加的成员名称，然后点击<code>插入</code>，这样你的团队成员的头像信息就被插入到文中了</li>
 <li>然后使用Ctl+K来添加链接，或者是直接在菜单栏点击<code>插入链接</code>的图标，然后搜索这个团队成员的名字，链接的话设置为Web链接，文字内容就是这个团队成员的名字，链接内容设置为<code>mailto:</code>加上这个团队成员的邮箱</li>
@@ -199,7 +199,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/add-members-to-existing-team-spaces.html" data-id="cjkgk3l4f0006qr9ki874i60m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/add-members-to-existing-team-spaces.html" data-id="cjkglrhj300069r9kcq8rnm1h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -624,7 +624,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -642,5 +657,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

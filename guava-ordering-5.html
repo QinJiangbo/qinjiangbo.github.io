@@ -181,7 +181,8 @@ var _hmt = _hmt || [];
             <h2 id="优雅的Guava排序器"><a href="#优雅的Guava排序器" class="headerlink" title="优雅的Guava排序器"></a>优雅的Guava排序器</h2><p>在开发中经常会对一些数据进行排序或者搜索操作，以前基本上都是先实现Comparator比较器，然后根据这个比较器去比较具体对象之间的顺序。这个过程一直都为开发者所诟病，现在Guava为我们带来了全新的一种比较的方式，那就是Ordering排序器！</p>
 <p>排序器[Ordering]是Guava链式风格比较器[Comparator]的实现，它可以用来为构建复杂的比较器，以完成集合排序的功能。</p>
 <p>从实现上说，Ordering实例就是一个特殊的Comparator实例。Ordering把很多基于Comparator的静态方法（如Collections.max）包装为自己的实例方法（非静态方法），并且提供了链式调用方法，来定制和增强现有的比较器。</p>
-<h2 id="Ordering使用语法"><a href="#Ordering使用语法" class="headerlink" title="Ordering使用语法"></a>Ordering使用语法</h2><h3 id="创建方法：常见的排序器可以由下面的静态方法创建"><a href="#创建方法：常见的排序器可以由下面的静态方法创建" class="headerlink" title="创建方法：常见的排序器可以由下面的静态方法创建"></a><strong>创建方法</strong>：常见的排序器可以由下面的静态方法创建</h3><table>
+<h2 id="Ordering使用语法"><a href="#Ordering使用语法" class="headerlink" title="Ordering使用语法"></a>Ordering使用语法</h2><h3 id="创建方法：常见的排序器可以由下面的静态方法创建"><a href="#创建方法：常见的排序器可以由下面的静态方法创建" class="headerlink" title="创建方法：常见的排序器可以由下面的静态方法创建"></a><strong>创建方法</strong>：常见的排序器可以由下面的静态方法创建</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法</th>
@@ -207,7 +208,9 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h3 id="链式调用方法：通过链式调用，可以由给定的排序器衍生出其它排序器"><a href="#链式调用方法：通过链式调用，可以由给定的排序器衍生出其它排序器" class="headerlink" title="链式调用方法：通过链式调用，可以由给定的排序器衍生出其它排序器"></a><strong>链式调用方法</strong>：通过链式调用，可以由给定的排序器衍生出其它排序器</h3><table>
+</div>
+<h3 id="链式调用方法：通过链式调用，可以由给定的排序器衍生出其它排序器"><a href="#链式调用方法：通过链式调用，可以由给定的排序器衍生出其它排序器" class="headerlink" title="链式调用方法：通过链式调用，可以由给定的排序器衍生出其它排序器"></a><strong>链式调用方法</strong>：通过链式调用，可以由给定的排序器衍生出其它排序器</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法</th>
@@ -241,7 +244,9 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h3 id="常规使用方法：下面是一些常规的使用方法"><a href="#常规使用方法：下面是一些常规的使用方法" class="headerlink" title="常规使用方法：下面是一些常规的使用方法"></a><strong>常规使用方法</strong>：下面是一些常规的使用方法</h3><table>
+</div>
+<h3 id="常规使用方法：下面是一些常规的使用方法"><a href="#常规使用方法：下面是一些常规的使用方法" class="headerlink" title="常规使用方法：下面是一些常规的使用方法"></a><strong>常规使用方法</strong>：下面是一些常规的使用方法</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法</th>
@@ -282,6 +287,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Ordering具体用例"><a href="#Ordering具体用例" class="headerlink" title="Ordering具体用例"></a>Ordering具体用例</h2><h3 id="Natural-Ordering"><a href="#Natural-Ordering" class="headerlink" title="Natural Ordering"></a>Natural Ordering</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testNaturalOrdering</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Ordering ordering = Ordering.natural(); <span class="comment">//自然顺序排序</span></span><br><span class="line">        <span class="keyword">int</span> result1 = ordering.compare(<span class="string">"cd"</span>, <span class="string">"ys"</span>);</span><br><span class="line">        System.out.println(result1); <span class="comment">// -22, 字符串首字母字典相对顺序</span></span><br><span class="line">        <span class="keyword">int</span> result2 = ordering.compare(<span class="number">11</span>, <span class="number">2</span>);</span><br><span class="line">        System.out.println(result2); <span class="comment">// 1</span></span><br><span class="line"><span class="comment">//      int result3 = ordering.compare(1, "hello");</span></span><br><span class="line"><span class="comment">//      System.out.println(result3); // class cast exception</span></span><br><span class="line">        <span class="keyword">int</span> result4 = ordering.compare(<span class="string">'d'</span>, <span class="string">'a'</span>);</span><br><span class="line">        System.out.println(result4); <span class="comment">// 3, 字符在字典中的相对顺序</span></span><br><span class="line">        <span class="keyword">int</span> result5 = ordering.compare(<span class="number">1.5</span>, <span class="number">6.8</span>);</span><br><span class="line">        System.out.println(result5); <span class="comment">// -1</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h3 id="ToString-Ordering"><a href="#ToString-Ordering" class="headerlink" title="ToString Ordering"></a>ToString Ordering</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testToStringOrdering</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Ordering ordering = Ordering.usingToString();</span><br><span class="line">    <span class="keyword">int</span> result = ordering.compare(<span class="number">578</span>, <span class="string">"hello world"</span>);</span><br><span class="line">    System.out.println(result);<span class="comment">// 将所有比较元素转化为字符串再比较</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Comparator-Ordering"><a href="#Comparator-Ordering" class="headerlink" title="Comparator Ordering"></a>Comparator Ordering</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFromComparatorOrdering</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Comparator&lt;Worker&gt; comparator = (o1, o2) -&gt; o1.age - o2.age;</span><br><span class="line">    Ordering ordering = Ordering.from(comparator);</span><br><span class="line">    <span class="keyword">int</span> result = ordering.compare(<span class="keyword">new</span> Worker(<span class="string">"Zhangsan"</span>, <span class="number">23</span>), <span class="keyword">new</span> Worker(<span class="string">"Lisi"</span>, <span class="number">26</span>));</span><br><span class="line">    System.out.println(result); <span class="comment">// -3,比较两人的年龄之差</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -294,7 +300,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-ordering-5.html" data-id="cjkgk3l6m004oqr9ksznsyhez" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-ordering-5.html" data-id="cjkglrhlc004k9r9kfexuaiqy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -719,7 +725,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -737,5 +758,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

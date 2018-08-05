@@ -200,7 +200,7 @@ var _hmt = _hmt || [];
     
 
         <p class="article-excerpt">
-            Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架–Function。
+            Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架—Function。
 Function和FunctionsFunction&lt;A, B&gt;，它声明了单个方法B apply(A 
         </p>
     </div>
@@ -502,9 +502,9 @@ Function和FunctionsFunction&lt;A, B&gt;，它声明了单个方法B apply(A
     
 
         <p class="article-excerpt">
-            多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—MultiSet。
+            多值集合MultiSet使用过JDK的同学都知道，在Java中集合Set是不允许重复的，也就是说在同一个集合中不允许出现两个相同的元素。但是如果我们需要计算一个集合中一个元素出现的次数，采用JDK的方式去完成的话会非常的麻烦，但是Guava为我们解决了这个问题—-MultiSet。
 实现一个Word Count程序我们需要统计一段文字中各个单词出现的次数，下面给出JDK和Guava两种实现方式。
-J
+
         </p>
     </div>
 </article>
@@ -1004,6 +1004,39 @@ J
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
 </body>
 </html>

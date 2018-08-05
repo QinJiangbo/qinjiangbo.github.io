@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
 <li>块注释，在一段代码前增加的注释。在‘#’后加一空格。段落之间以只有‘#’的行间隔。比如：</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Description : Module config.</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># Input : None</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Output : None</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
+<ol>
 <li>行注释，在一句代码后加注释。比如：<code>x = x + 1 # Increment x</code><br>但是这种方式尽量少使用。</li>
 <li>避免无谓的注释。</li>
 </ol>
@@ -241,7 +241,7 @@ var _hmt = _hmt || [];
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">value = collection[key]</span><br><span class="line"><span class="keyword">except</span> KeyError:</span><br><span class="line"><span class="keyword">return</span> key_not_found(key)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line"><span class="keyword">return</span> handle_value(value)</span><br></pre></td></tr></table></figure>
 <p>要优于</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line"><span class="comment"># Too broad!</span></span><br><span class="line"><span class="keyword">return</span> handle_value(collection[key])</span><br><span class="line"><span class="keyword">except</span> KeyError:</span><br><span class="line"><span class="comment"># Will also catch KeyError raised by handle_value()</span></span><br><span class="line"><span class="keyword">return</span> key_not_found(key)</span><br></pre></td></tr></table></figure>
-<ol start="6">
+<ol>
 <li><p>使用<code>startswith() and endswith()</code>代替切片进行序列前缀或后缀的检查。比如<code>Yes: if foo.startswith(‘bar’):</code>优于<code>No: if foo[:3] == ‘bar’:</code></p>
 </li>
 <li><p>使用isinstance()比较对象的类型。比如<br><code>Yes: if isinstance(obj, int):</code> 优于<code>No: if type(obj) is type(1):</code></p>
@@ -260,7 +260,7 @@ if not len(seq)</code></li>
 
 
 
-    <a data-url="http://qinjiangbo.com/pep8-coding-specifications-in-python.html" data-id="cjkgk3l8w009uqr9kgjzc2b9k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/pep8-coding-specifications-in-python.html" data-id="cjkglrhnj009u9r9kg77qhc8m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -685,7 +685,22 @@ if not len(seq)</code></li>
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -703,5 +718,6 @@ if not len(seq)</code></li>
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

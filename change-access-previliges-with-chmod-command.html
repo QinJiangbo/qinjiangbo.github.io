@@ -196,15 +196,15 @@ var _hmt = _hmt || [];
 <li>可写是是</li>
 <li>可执行</li>
 </ul>
-<p>那么，我们先根据上表得到权限串为：rw-rw-r–，那么转换成二进制数就是110 110 100，再每三位转换成为一个十进制数，就得到664，因此我们执行命令：</p>
+<p>那么，我们先根据上表得到权限串为：rw-rw-r—，那么转换成二进制数就是110 110 100，再每三位转换成为一个十进制数，就得到664，因此我们执行命令：</p>
 <p>[root@localhost ~]# chmod 664 a.txt</p>
 <p>按照上面的规则，rwx合起来就是4 2 1＝7，一个rwxrwxrwx权限全开放的文件，数值表示为777；而完全不开放权限的文件“－－－－－－－－－”其数字表示为000。下面举几个例子：</p>
 <ul>
-<li>-rwx——:等于数字表示700。</li>
-<li>-rwxr—r–:等于数字表示744。</li>
+<li>-rwx———:等于数字表示700。</li>
+<li>-rwxr—r—:等于数字表示744。</li>
 <li>-rw-rw-r-x:等于数字表示665。</li>
 <li>drwx—x—x:等于数字表示711。</li>
-<li>drwx——:等于数字表示700。</li>
+<li>drwx———:等于数字表示700。</li>
 </ul>
 <p>在文本模式下，可执行chmod命令去改变文件和目录的权限。我们先执行ls -l 看看目录内的情况：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ls -l</span></span><br><span class="line">总用量 368</span><br><span class="line">-rw-r--r-- 1 root root 12172 8月 15 23:18 conkyrc.sample</span><br><span class="line">drwxr-xr-x 2 root root 48 9月 4 16:32 Desktop</span><br><span class="line">-r--r--r-- 1 root root 331844 10月 22 21:08 libfreetype.so.6</span><br><span class="line">drwxr-xr-x 2 root root 48 8月 12 22:25 MyMusic</span><br><span class="line">-rwxr-xr-x 1 root root 9776 11月 5 08:08 net.eth0</span><br><span class="line">-rwxr-xr-x 1 root root 9776 11月 5 08:08 net.eth1</span><br><span class="line">-rwxr-xr-x 1 root root 512 11月 5 08:08 net.lo</span><br><span class="line">drwxr-xr-x 2 root root 48 9月 6 13:06 vmware</span><br></pre></td></tr></table></figure>
@@ -232,7 +232,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/change-access-previliges-with-chmod-command.html" data-id="cjkgk3l530016qr9kxg14cvs2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/change-access-previliges-with-chmod-command.html" data-id="cjkglrhjp00169r9k5cclmbny" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -657,7 +657,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -675,5 +690,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

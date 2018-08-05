@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <p><img src="https://obrxbqjbi.qnssl.com/blog/image/ubuntu-thumbnail.jpg" alt=""></p>
 <p>网上有很多方法，但是针对AMD显卡的方案不多，所以笔者今天想写一篇关于<strong>AMD显卡</strong>的教程。</p>
-<p>首先，进入这个网址下载一些东东：[<a href="http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64]" target="_blank" rel="noopener">http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64]</a> (<a href="http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64)，说明一下，这个网址是针对Ubuntu64位系统的，32位的用户请选择32位的文件下载。下哪些文件呢？" target="_blank" rel="noopener">http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64)，说明一下，这个网址是针对Ubuntu64位系统的，32位的用户请选择32位的文件下载。下哪些文件呢？</a></p>
+<p>首先，进入这个网址下载一些东东：[<a href="http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64" target="_blank" rel="noopener">http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64</a>] (<a href="http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64)，说明一下，这个网址是针对Ubuntu64位系统的，32位的用户请选择32位的文件下载。下哪些文件呢？" target="_blank" rel="noopener">http://support.amd.com/zh-cn/download/desktop?os=Ubuntu+x86+64)，说明一下，这个网址是针对Ubuntu64位系统的，32位的用户请选择32位的文件下载。下哪些文件呢？</a></p>
 <p>有三个：</p>
 <ol>
 <li><p>AMD Catalyst™ 14.12 Proprietary Ubuntu 14.04 x86_64 Video Driver for Graphics Accelerators 大概是52MB</p>
@@ -220,7 +220,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/solution-to-dual-display-with-amd-in-ubuntu14.html" data-id="cjkgk3l9y00c4qr9kfmnd9fjk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/solution-to-dual-display-with-amd-in-ubuntu14.html" data-id="cjkglrhok00c49r9km9jg8l1g" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -645,7 +645,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -663,5 +678,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

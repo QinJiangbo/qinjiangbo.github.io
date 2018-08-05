@@ -188,7 +188,7 @@ var _hmt = _hmt || [];
 <h2 id="配置Confluence"><a href="#配置Confluence" class="headerlink" title="配置Confluence"></a>配置Confluence</h2><p>很多人配置完了上述的系统以后就觉得可以访问了，但是一直会报一个警告就是</p>
 <pre><code>无法检测Base URL，是不是存在代理的配置问题
 </code></pre><p>英文版的是</p>
-<pre><code>can&apos;t check base url warning
+<pre><code>can&#39;t check base url warning
 </code></pre><p>这个问题的解决方案除了上述的<code>/stnchrony</code>配置外，还需要加入一个Tomcat的配置，就是要在<br><code>&lt;install-directory&gt;/conf/server.xml</code>这个文件里面添加proxyPort和proxyName的配置，如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8090"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">maxThreads</span>=<span class="string">"48"</span> <span class="attr">minSpareThreads</span>=<span class="string">"10"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">enableLookups</span>=<span class="string">"false"</span> <span class="attr">acceptCount</span>=<span class="string">"10"</span> <span class="attr">debug</span>=<span class="string">"0"</span> <span class="attr">URIEncoding</span>=<span class="string">"UTF-8"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11NioProtocol"</span> </span></span><br><span class="line"><span class="tag">     <span class="attr">proxyName</span>=<span class="string">"ourclass.com"</span> <span class="attr">proxyPort</span>=<span class="string">"443"</span> <span class="attr">scheme</span>=<span class="string">"https"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 <p>保存重新启动wiki系统就好了。</p>
@@ -200,7 +200,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/https-to-confluence-via-nginx-web-server.html" data-id="cjkgk3l7b0064qr9kb9314mkl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/https-to-confluence-via-nginx-web-server.html" data-id="cjkglrhlw00649r9k6ft4200a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -625,7 +625,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -643,5 +658,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

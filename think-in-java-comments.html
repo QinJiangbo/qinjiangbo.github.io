@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
 <p><code>补充说明</code>上面这个多行注释如何在IDE中快速使用呢？直接输入<code>/**</code>注意是两个<code>*</code>，然后回车，啪！就出来了。</p>
 <h3 id="单行注释"><a href="#单行注释" class="headerlink" title="单行注释"></a>单行注释</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The weather is so nice in Wuhan!</span></span><br></pre></td></tr></table></figure>
 <h2 id="注释文档"><a href="#注释文档" class="headerlink" title="注释文档"></a>注释文档</h2><p>代码注释文档是保证Java源码可读性以及可维护性非常重要的一点，不然的话，别人写的代码你还能读？因此，很多时候一个新的员工到一个公司就会吵着要重构老员工的代码。为什么？原因很简单，第一，老员工的代码没加注释，代码风格比较烂，因此可读性很差；第二，这个新员工为了想展示自己的水平；这个时候，公司其他的老将通常会会心一笑，发出了too young~的叹息。</p>
-<p>这里介绍一个工具—JAVADOC，即<strong>Java Document</strong>的简写。作为一款Java文档工具，它的作用是负责将Java的代码同注释文档链接起来，不然的话我们写代码的同时还要负责修改文档，太痛苦了。这个工具能帮助我们自动化地生成Java的注释文档，我们平时看到的HTML形式的JDK8文档指的就是这个。</p>
+<p>这里介绍一个工具—-JAVADOC，即<strong>Java Document</strong>的简写。作为一款Java文档工具，它的作用是负责将Java的代码同注释文档链接起来，不然的话我们写代码的同时还要负责修改文档，太痛苦了。这个工具能帮助我们自动化地生成Java的注释文档，我们平时看到的HTML形式的JDK8文档指的就是这个。</p>
 <p>需要说明的是，<strong>所有的javadoc命令都只能在</strong><code>/**</code><strong>注释块中出现，在单行注释或者</strong><code>/*</code><strong>这种形式的多行注释都不会生效！</strong></p>
 <p>有两种方式可以使用<code>javadoc</code>，一种是直接嵌入HTML页面，另一种是使用<code>独立文档标签</code>。这是个啥东西？就是一些以<strong>“@”</strong>字符开头的命令，且需要置于注释行的最前面。<code>行内文档标签</code>则可以出现在任何一个地方，也是以<strong>“@”</strong>字符开头的命令，不过他们需要使用花括号<strong>“{}”</strong>括起来。</p>
 <h3 id="嵌入式的HTML"><a href="#嵌入式的HTML" class="headerlink" title="嵌入式的HTML"></a>嵌入式的HTML</h3><p>嵌入式HTML的作用主要是为了对代码实现格式化。</p>
@@ -212,7 +212,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/think-in-java-comments.html" data-id="cjkgk3lan00dvqr9klltcm6xy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/think-in-java-comments.html" data-id="cjkglrhpb00dv9r9kjh6jo4eh" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -637,7 +637,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -655,5 +670,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

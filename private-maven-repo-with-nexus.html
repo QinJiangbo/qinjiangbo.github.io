@@ -187,14 +187,14 @@ var _hmt = _hmt || [];
 <h3 id="（3）添加自定义的用户名和密码"><a href="#（3）添加自定义的用户名和密码" class="headerlink" title="（3）添加自定义的用户名和密码"></a>（3）添加自定义的用户名和密码</h3><p>进入左侧菜单Security下的Users子菜单，添加一个用户，这个用户是你自己使用的，拥有超级权限。</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-03.png" alt=""><br>然后使用这个账号登录系统，并将默认的admin账号删除。同时将central移到ordered repositories。</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-04.png" alt=""></p>
-<h3 id="（4）Maven配置—settings文件设置"><a href="#（4）Maven配置—settings文件设置" class="headerlink" title="（4）Maven配置—settings文件设置"></a>（4）Maven配置—settings文件设置</h3><p>首先配置两个服务器server</p>
+<h3 id="（4）Maven配置—-settings文件设置"><a href="#（4）Maven配置—-settings文件设置" class="headerlink" title="（4）Maven配置—-settings文件设置"></a>（4）Maven配置—-settings文件设置</h3><p>首先配置两个服务器server</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-05.png" alt=""><br>其中用户名和密码就是前面说的自定义的用户名和密码，id可以随便填，但是后面在pom中会用到。</p>
-<h3 id="（5）Maven配置—mirrors镜像配置"><a href="#（5）Maven配置—mirrors镜像配置" class="headerlink" title="（5）Maven配置—mirrors镜像配置"></a>（5）Maven配置—mirrors镜像配置</h3><p>mirrors必须要配置，因为如果不配置的话maven很有可能会直接绕过私服去中心库下载，并且不会将jar包丢到私服，这样我们的私服就没起到作用。所以必须添加一个镜像管理，值得所有的下载都得通过镜像也就是我们的私服。</p>
+<h3 id="（5）Maven配置—-mirrors镜像配置"><a href="#（5）Maven配置—-mirrors镜像配置" class="headerlink" title="（5）Maven配置—-mirrors镜像配置"></a>（5）Maven配置—-mirrors镜像配置</h3><p>mirrors必须要配置，因为如果不配置的话maven很有可能会直接绕过私服去中心库下载，并且不会将jar包丢到私服，这样我们的私服就没起到作用。所以必须添加一个镜像管理，值得所有的下载都得通过镜像也就是我们的私服。</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-06.png" alt=""></p>
-<h3 id="（6）Maven配置—profiles配置"><a href="#（6）Maven配置—profiles配置" class="headerlink" title="（6）Maven配置—profiles配置"></a>（6）Maven配置—profiles配置</h3><p>定义jar库和plugin库的位置，同时还需要确定jdk版本，我的定义的是1.8</p>
+<h3 id="（6）Maven配置—-profiles配置"><a href="#（6）Maven配置—-profiles配置" class="headerlink" title="（6）Maven配置—-profiles配置"></a>（6）Maven配置—-profiles配置</h3><p>定义jar库和plugin库的位置，同时还需要确定jdk版本，我的定义的是1.8</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-07.png" alt=""><br><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-08.png" alt=""><br> 别忘了最后有一个激活的操作。</p>
-<h3 id="（7）Maven配置—pom配置"><a href="#（7）Maven配置—pom配置" class="headerlink" title="（7）Maven配置—pom配置"></a>（7）Maven配置—pom配置</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-09.png" alt=""><br>这个其实是Maven项目中用来向私服提交jar的一个配置，主要是在项目的deploy操作中起作用。</p>
-<h3 id="（8）Gradle配置—build-gradle配置"><a href="#（8）Gradle配置—build-gradle配置" class="headerlink" title="（8）Gradle配置—build.gradle配置"></a>（8）Gradle配置—build.gradle配置</h3><p>a）引入以下插件</p>
+<h3 id="（7）Maven配置—-pom配置"><a href="#（7）Maven配置—-pom配置" class="headerlink" title="（7）Maven配置—-pom配置"></a>（7）Maven配置—-pom配置</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-09.png" alt=""><br>这个其实是Maven项目中用来向私服提交jar的一个配置，主要是在项目的deploy操作中起作用。</p>
+<h3 id="（8）Gradle配置—-build-gradle配置"><a href="#（8）Gradle配置—-build-gradle配置" class="headerlink" title="（8）Gradle配置—-build.gradle配置"></a>（8）Gradle配置—-build.gradle配置</h3><p>a）引入以下插件</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-10.png" alt=""><br>b）定义任务和jar包版本属性<br>c）发布jar到私服上去</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-11.png" alt=""><br><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-12.png" alt=""><br>d）确定repository库位置</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-13.png" alt=""><br>e）执行gradle tasks查看可用的任务，并且执行gradle install uploadArchives任务将jar上传到私服，否则会报找不到mavenmeta.xml错误。</p>
@@ -205,7 +205,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/private-maven-repo-with-nexus.html" data-id="cjkgk3l9200a7qr9kzfhl6q59" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/private-maven-repo-with-nexus.html" data-id="cjkglrhnp00a79r9kf4yotee9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -630,7 +630,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -648,5 +663,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

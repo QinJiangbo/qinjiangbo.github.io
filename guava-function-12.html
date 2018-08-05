@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="Guava,Function" />
     
-    <meta name="description" content="Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架–Function。 Function和FunctionsFunction&amp;lt;A, B&amp;gt;，它声明了单个方法B apply(A">
+    <meta name="description" content="Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架—Function。 Function和FunctionsFunction&amp;lt;A, B&amp;gt;，它声明了单个方法B apply(A">
 <meta name="keywords" content="Guava,Function">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Guava优美代码-12-Function">
 <meta property="og:url" content="http://qinjiangbo.com/guava-function-12.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架–Function。 Function和FunctionsFunction&amp;lt;A, B&amp;gt;，它声明了单个方法B apply(A">
+<meta property="og:description" content="Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架—Function。 Function和FunctionsFunction&amp;lt;A, B&amp;gt;，它声明了单个方法B apply(A">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
 <meta property="og:updated_time" content="2018-04-02T09:02:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Guava优美代码-12-Function">
-<meta name="twitter:description" content="Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架–Function。 Function和FunctionsFunction&amp;lt;A, B&amp;gt;，它声明了单个方法B apply(A">
+<meta name="twitter:description" content="Guava函数式编程关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架—Function。 Function和FunctionsFunction&amp;lt;A, B&amp;gt;，它声明了单个方法B apply(A">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/Guava-thumbnail.png">
     
 
@@ -178,7 +178,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="Guava函数式编程"><a href="#Guava函数式编程" class="headerlink" title="Guava函数式编程"></a>Guava函数式编程</h2><p>关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架–Function。</p>
+            <h2 id="Guava函数式编程"><a href="#Guava函数式编程" class="headerlink" title="Guava函数式编程"></a>Guava函数式编程</h2><p>关于函数式编程，好像越来越多的编程语言都开始逐渐支持这个特性，最明显的就是python，javascript，还有Swift等等。Java终于在1.8中支持了函数式编程，但是在JDK1.8推出来以前，Guava就为我们提供了强大的函数式编程框架—Function。</p>
 <h2 id="Function和Functions"><a href="#Function和Functions" class="headerlink" title="Function和Functions"></a>Function和Functions</h2><p><code>Function&lt;A, B&gt;</code>，它声明了单个方法<code>B apply(A input)</code>。Function对象通常被预期为引用透明的并且引用透明性中的”相等”语义与<code>equals</code>一致，如<code>a.equals(b)</code>意味着<code>function.apply(a).equals(function.apply(b))</code>。</p>
 <p><code>Functions</code>类为操作Function提供了很多方便的方法，比如合并两个函数<code>compose</code>，以及操作集合框架<code>forMap</code>等等。</p>
 <h2 id="Function-使用案例"><a href="#Function-使用案例" class="headerlink" title="Function 使用案例"></a>Function 使用案例</h2><p>我们有一些<code>国家的首都</code>和<code>国家</code>的相关数据。如下：</p>
@@ -197,7 +197,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-function-12.html" data-id="cjkgk3l68003mqr9kyeqa80v8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-function-12.html" data-id="cjkglrhkw003m9r9krb68eu9f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -622,7 +622,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -640,5 +655,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

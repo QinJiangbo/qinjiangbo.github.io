@@ -204,7 +204,8 @@ var _hmt = _hmt || [];
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> `cat videoList.txt`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    you-get <span class="variable">$line</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <p>赋予<strong>downloader.sh</strong>可执行权限，再执行如下命令就可以下载啦。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chmod 755 downloader.sh</span><br><span class="line">$ sh downloader.sh</span><br></pre></td></tr></table></figure>
-<h2 id="You-Get支持哪些视频网站？"><a href="#You-Get支持哪些视频网站？" class="headerlink" title="You-Get支持哪些视频网站？"></a>You-Get支持哪些视频网站？</h2><table>
+<h2 id="You-Get支持哪些视频网站？"><a href="#You-Get支持哪些视频网站？" class="headerlink" title="You-Get支持哪些视频网站？"></a>You-Get支持哪些视频网站？</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th style="text-align:center">Site</th>
@@ -757,6 +758,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="另记"><a href="#另记" class="headerlink" title="另记"></a>另记</h2><p>本文知识做了一个简单的介绍，关于具体的介绍大家不妨访问<code>you-get</code>的官方网站。地址为<a href="https://you-get.org/" target="_blank" rel="noopener">https://you-get.org/</a>。有什么使用上的问题可以直接在Github的ISSUE里面直接提BUG。</p>
 
         </div>
@@ -765,7 +767,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/you-get-video-downloader.html" data-id="cjkgk3lin0143qr9kuspfxarx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/you-get-video-downloader.html" data-id="cjkglrhx301439r9ksf9tkc1i" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -1190,7 +1192,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1208,5 +1225,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

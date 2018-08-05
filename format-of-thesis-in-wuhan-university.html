@@ -181,7 +181,8 @@ var _hmt = _hmt || [];
             <p><img src="https://obrxbqjbi.qnssl.com/blog/image/Wuhan-University.jpg" alt=""></p>
 <h2 id="一、文字和字数"><a href="#一、文字和字数" class="headerlink" title="一、文字和字数"></a>一、文字和字数</h2><p>除有特殊要求的专业外，毕业论文一般用简化汉语文字撰写，毕业论文的字数人文社科类专业一般不应少于1万字，理工医类专业一般不应少于1.5万字。对于部分专业毕业设计成果由毕业设计图纸和毕业论文两部分组成者，其毕业论文字数原则上应不低于1万字。各专业可根据需要确定具体的文字和字数要求，并报教务部备案。</p>
 <h2 id="二、书写及装订"><a href="#二、书写及装订" class="headerlink" title="二、书写及装订"></a>二、书写及装订</h2><p>论文按照本规范的要求单面打印，论文裁切后规格为70g白色A4打印纸。一律左侧装订。封面为120g白色铜版纸。</p>
-<h2 id="三、字体和字号"><a href="#三、字体和字号" class="headerlink" title="三、字体和字号"></a>三、字体和字号</h2><table>
+<h2 id="三、字体和字号"><a href="#三、字体和字号" class="headerlink" title="三、字体和字号"></a>三、字体和字号</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>内容</th>
@@ -271,7 +272,9 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="四、封面"><a href="#四、封面" class="headerlink" title="四、封面"></a>四、封面</h2><p>论文具体排版规范见封面示例，字体与字号要求如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -318,7 +321,9 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h2 id="五、学术声明"><a href="#五、学术声明" class="headerlink" title="五、学术声明"></a>五、学术声明</h2><table>
+</div>
+<h2 id="五、学术声明"><a href="#五、学术声明" class="headerlink" title="五、学术声明"></a>五、学术声明</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>内容</th>
@@ -336,6 +341,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p>见学术声明示例。</p>
 <h2 id="六、页面设置"><a href="#六、页面设置" class="headerlink" title="六、页面设置"></a>六、页面设置</h2><p><strong>页边距标准：</strong>上边距为25mm，下边距为20mm，左边距为30mm，右边距为30mm。<br><br><strong>段前、段后及行间距：</strong>章标题的段前为0.8行，段后为0.5行；节标题段前为0.5行，段后0.5行；标题以外的文字行距为“固定值”23磅，字符间距为“标准”。</p>
 <h2 id="七、摘要"><a href="#七、摘要" class="headerlink" title="七、摘要"></a>七、摘要</h2><p>摘要正文下空一行顶格打印“关键词”款项，每个关键词之间用“；”分开，最后一个关键词不打标点符号，英文摘要应另起一页。具体示例见中、英文摘要示例。</p>
@@ -359,7 +365,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/format-of-thesis-in-wuhan-university.html" data-id="cjkgk3lgq0113qr9kgng3e2f1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/format-of-thesis-in-wuhan-university.html" data-id="cjkglrhv601139r9k9llshp92" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -784,7 +790,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -802,5 +823,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

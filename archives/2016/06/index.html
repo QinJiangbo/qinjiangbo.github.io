@@ -301,9 +301,10 @@ var _hmt = _hmt || [];
     
 
         <p class="article-excerpt">
-            子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质$$f:2^\Omega \to \mathbb R \tag {1}$$即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。
+            子模态定义子模态是集合函数的一种性质。一个集合函数$f(x)$的定义要满足下面这个性质
+f:2^\Omega \to \mathbb R \tag {1}即$f(x)$的定义域为集合$\Omega$的任何一个子集，值域为实数集。而这个集合函数如果要满足子模态性质的话，还需要满足下面三个等价条件中的任何一个。
 
-对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对
+对于任何一个$X,Y\subset\Omega$且$X\subset Y$，以及对任何一
         </p>
     </div>
 </article>
@@ -640,7 +641,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -658,5 +674,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

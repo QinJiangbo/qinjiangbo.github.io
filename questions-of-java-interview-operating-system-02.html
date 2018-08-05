@@ -260,6 +260,7 @@ table th:nth-of-type(3) {
 }
 </style>
 
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -301,6 +302,7 @@ table th:nth-of-type(3) {
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="30-什么是序列化？什么是串行化？"><a href="#30-什么是序列化？什么是串行化？" class="headerlink" title="30. 什么是序列化？什么是串行化？"></a>30. 什么是序列化？什么是串行化？</h3><p>把对象转换为字节序列的过程称为对象的序列化。把字节序列恢复为对象的过程称为对象的反序列化。</p>
 <p>序列化就是一种用来处理对象流的机制，所谓对象流也就是将对象的内容进行流化。可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决在对对象流进行读写操作时所引发的问题。</p>
 <p>对象的序列化主要有两种用途：</p>
@@ -331,7 +333,7 @@ table th:nth-of-type(3) {
 
 
 
-    <a data-url="http://qinjiangbo.com/questions-of-java-interview-operating-system-02.html" data-id="cjkgk3li6013aqr9kzxa9ps29" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/questions-of-java-interview-operating-system-02.html" data-id="cjkglrhwm013a9r9kk7ehhgud" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -756,7 +758,22 @@ table th:nth-of-type(3) {
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -774,5 +791,6 @@ table th:nth-of-type(3) {
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

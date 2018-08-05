@@ -200,7 +200,7 @@ var _hmt = _hmt || [];
 <p>上面的<code>192.168.31.145</code>是本机的ip地址。设置完毕以后重启容器：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker restart e21</span><br></pre></td></tr></table></figure>
 <p>OK！</p>
-<h2 id="运行应用"><a href="#运行应用" class="headerlink" title="运行应用"></a>运行应用</h2><p>我们打开地址<code>http://localhost</code>，80端口可以省略端口号的。可能一开始会出现502的画面，就像这样：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-502-page.png" alt=""><br>没关系，那是因为Gitlab的各项系统服务正在启动，过一会儿刷新就好啦。然后会要求设置新的密码，设置完成以后我们就进入了Gitlab的页面。<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-index-page.png" alt=""><br>创建一个项目<code>Hexo-Workflow</code>，如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-project-page.png" alt=""><br>其中我们可以看到<code>git clone</code>的地址是<a href="mailto:`git@192.168.31.145" target="_blank" rel="noopener">`git@192.168.31.145</a>:Richard/Hexo-Workflow.git`，在我们进行git clone之前，我们需要向Gitlab添加一下我们本机的SSH Key实现免登。具体页面如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-ssh-key.png" alt=""><br>好的，添加完成以后，我们就可以在本地把这项目拉取下来啦。</p>
+<h2 id="运行应用"><a href="#运行应用" class="headerlink" title="运行应用"></a>运行应用</h2><p>我们打开地址<code>http://localhost</code>，80端口可以省略端口号的。可能一开始会出现502的画面，就像这样：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-502-page.png" alt=""><br>没关系，那是因为Gitlab的各项系统服务正在启动，过一会儿刷新就好啦。然后会要求设置新的密码，设置完成以后我们就进入了Gitlab的页面。<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-index-page.png" alt=""><br>创建一个项目<code>Hexo-Workflow</code>，如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-project-page.png" alt=""><br>其中我们可以看到<code>git clone</code>的地址是<code>git@192.168.31.145:Richard/Hexo-Workflow.git</code>，在我们进行git clone之前，我们需要向Gitlab添加一下我们本机的SSH Key实现免登。具体页面如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-ssh-key.png" alt=""><br>好的，添加完成以后，我们就可以在本地把这项目拉取下来啦。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@192.168.31.145:Richard/Hexo-Workflow.git</span><br><span class="line">Cloning into <span class="string">'Hexo-Workflow'</span>...</span><br><span class="line">The authenticity of host <span class="string">'192.168.31.145 (192.168.31.145)'</span> can<span class="string">'t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:SYHTQxwLpe9OaeQW6f/QRhtQDnXl+zkaQVtZzeObjGQ.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added '</span>192.168.31.145<span class="string">' (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">remote: Counting objects: 13, done.</span></span><br><span class="line"><span class="string">remote: Total 13 (delta 0), reused 0 (delta 0)</span></span><br><span class="line"><span class="string">Receiving objects: 100% (13/13), 19.95 KiB | 6.65 MiB/s, done.</span></span><br><span class="line"><span class="string">Resolving deltas: 100% (2/2), done.</span></span><br></pre></td></tr></table></figure>
 <p>然后就和在Github提交代码等操作是一样。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Gitlab作为一种非常优秀的代码托管工具已经被广泛地应用到了各个大公司，一般是作为企业内部的代码托管工具。</p>
@@ -213,7 +213,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/build-gitlab-private-repository-with-docker.html" data-id="cjkgk3l4w000qqr9kvbjstddf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/build-gitlab-private-repository-with-docker.html" data-id="cjkglrhjh000q9r9k6cotibm4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -638,7 +638,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -656,5 +671,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

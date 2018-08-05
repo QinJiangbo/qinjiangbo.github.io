@@ -180,12 +180,13 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <h2 id="多值映射MultiMap"><a href="#多值映射MultiMap" class="headerlink" title="多值映射MultiMap"></a>多值映射MultiMap</h2><p>Map大概是我们在生产过程中使用最多的容器之一了。Map是一种典型的K-V（键-值）结构。即可以通过一个Key（键）查找到对应的V（值）。正是由于此，JDK规定了Map中不能有重复的键，因为重复会导致无法查询准确的值。但是我们也要注意到这么一个需求：经常地，我们会需要一个键对应多个值，如果用JDK表示，就是这种结构<code>Map&lt;String, List&lt;String&gt;&gt;</code>但是这种结构非常的麻烦而且相对来讲过于复杂。因此Guava为了解决这个问题为我们带来了多值映射<code>MultiMap</code>。</p>
 <p>可以用两种方式思考Multimap的概念：”键-单个值映射”的集合：<br><br><code>a -&gt; 1 a -&gt; 2 a -&gt;4 b -&gt; 3 c -&gt; 5</code><br><br>或者”键-值集合映射”的映射：<br><br><code>a -&gt; [1, 2, 4] b -&gt; 3 c -&gt; 5</code></p>
-<p>一般来说，Multimap接口应该用第一种方式看待，但asMap()视图返回Map&lt;K, Collection<v>&gt;，让你可以按另一种方式看待Multimap。重要的是，不会有任何键映射到空集合：<strong>一个键要么至少到一个值，要么根本就不在Multimap中</strong>。</v></p>
+<p>一般来说，Multimap接口应该用第一种方式看待，但asMap()视图返回Map<k, collection<v="">&gt;，让你可以按另一种方式看待Multimap。重要的是，不会有任何键映射到空集合：<strong>一个键要么至少到一个值，要么根本就不在Multimap中</strong>。</k,></p>
 <h2 id="MultiMap使用实例"><a href="#MultiMap使用实例" class="headerlink" title="MultiMap使用实例"></a>MultiMap使用实例</h2><h3 id="创建MultiMap并进行简单操作"><a href="#创建MultiMap并进行简单操作" class="headerlink" title="创建MultiMap并进行简单操作"></a>创建MultiMap并进行简单操作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHowMultiMapWorks</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multimap&lt;String, String&gt; multimap = HashMultimap.create();</span><br><span class="line">    multimap.put(<span class="string">"China"</span>, <span class="string">"Beijing"</span>);</span><br><span class="line">    multimap.put(<span class="string">"China"</span>, <span class="string">"Tianjing"</span>);</span><br><span class="line">    multimap.put(<span class="string">"China"</span>, <span class="string">"Wuhan"</span>);</span><br><span class="line"></span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Washington DC"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"LA"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Seattle"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Brooklyn"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"size: "</span> + multimap.size()); <span class="comment">// size: 7</span></span><br><span class="line">    System.out.println(<span class="string">"elements list: "</span> + multimap.get(<span class="string">"China"</span>)); <span class="comment">// elements list: [Beijing, Tianjing, Wuhan]</span></span><br><span class="line">    System.out.println(<span class="string">"keys length: "</span> + multimap.keys().size()); <span class="comment">// keys length: 7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="迭代输出整个MultiMap"><a href="#迭代输出整个MultiMap" class="headerlink" title="迭代输出整个MultiMap"></a>迭代输出整个MultiMap</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMultiMapAsMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multimap&lt;String, String&gt; multimap = HashMultimap.create();</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Washington DC"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"LA"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Seattle"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Brooklyn"</span>);</span><br><span class="line">    Map map = multimap.asMap();</span><br><span class="line">    <span class="comment">// map.put("US", "hello"); // java.lang.UnsupportedOperationException</span></span><br><span class="line">    Set&lt;Map.Entry&gt; entrySet = map.entrySet();</span><br><span class="line">    <span class="keyword">for</span> (Map.Entry entry : entrySet) &#123;</span><br><span class="line">        System.out.println(entry.getKey() + <span class="string">":"</span> + entry.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// US:[Washington DC, Brooklyn, Seattle, LA]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="返回所有MultiMap键值对"><a href="#返回所有MultiMap键值对" class="headerlink" title="返回所有MultiMap键值对"></a>返回所有MultiMap键值对</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMultiMapEntries</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multimap&lt;String, String&gt; multimap = HashMultimap.create();</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Washington DC"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"LA"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Seattle"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Brooklyn"</span>);</span><br><span class="line">    Collection collections = multimap.entries();</span><br><span class="line">    System.out.println(collections.toString());</span><br><span class="line">    <span class="comment">// 返回的是Multimap所有的键值对</span></span><br><span class="line">    <span class="comment">// [US=Washington DC, US=Brooklyn, US=Seattle, US=LA]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="获取某一个值"><a href="#获取某一个值" class="headerlink" title="获取某一个值"></a>获取某一个值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMultiMapGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Multimap&lt;String, String&gt; multimap = HashMultimap.create();</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Washington DC"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"LA"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Seattle"</span>);</span><br><span class="line">    multimap.put(<span class="string">"US"</span>, <span class="string">"Brooklyn"</span>);</span><br><span class="line">    Collection&lt;String&gt; collection = multimap.get(<span class="string">"US"</span>);</span><br><span class="line">    System.out.println(collection.toString());</span><br><span class="line">    <span class="comment">// [Washington DC, Brooklyn, Seattle, LA]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="MultiMap的各种实现"><a href="#MultiMap的各种实现" class="headerlink" title="MultiMap的各种实现"></a>MultiMap的各种实现</h2><p>MultiMap提供了多种实现，只要你需要使用到类似于<code>Map&lt;String, Collection&lt;String&gt;&gt;</code>结构的数据，都可以使用MultiMap:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -232,6 +233,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>尽管<code>Multimap</code>的实现用到了<code>Map</code>，但<code>Multimap&lt;K, V&gt;</code>不是<code>Map&lt;K, Collection&lt;V&gt;&gt;</code>。因为两者有明显区别：</p>
 <ul>
 <li><code>Multimap.get(key)</code>一定返回一个非null的集合。但这不表示<code>Multimap</code>使用了内存来关联这些键，相反，返回的集合只是个允许添加元素的视图。</li>
@@ -247,7 +249,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-multimap-9.html" data-id="cjkgk3l6f0048qr9kvsbhp6ui" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-multimap-9.html" data-id="cjkglrhl300489r9kcc7ugwvj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -672,7 +674,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -690,5 +707,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

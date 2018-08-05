@@ -179,7 +179,8 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="Guava基本类型"><a href="#Guava基本类型" class="headerlink" title="Guava基本类型"></a>Guava基本类型</h2><p>关于基本类型，我们在Java中有：<code>byte</code>、<code>short</code>、<code>int</code>、<code>long</code>、<code>float</code>、<code>double</code>、<code>char</code>和<code>boolean</code>。我们知道除了这些之外，还有关于这些基本类型的包装类：<code>Byte</code>、<code>Short</code>、<code>Integer</code>、<code>Long</code>、<code>Float</code>、<code>Double</code>、<code>Character</code>和<code>Boolean</code>。原因是这些基本类型没法当成对象或者泛型的参数使用。这意味着许多通用的方法都不支持它们。基于这个原因，Guava提供了若干通用工具，包括原生类型数组与集合API的交互，原生类型和字节数组的相互转换，以及对某些原生类型的无符号形式的支持。</p>
-<h2 id="Java基本类型与Guava对应工具类"><a href="#Java基本类型与Guava对应工具类" class="headerlink" title="Java基本类型与Guava对应工具类"></a>Java基本类型与Guava对应工具类</h2><table>
+<h2 id="Java基本类型与Guava对应工具类"><a href="#Java基本类型与Guava对应工具类" class="headerlink" title="Java基本类型与Guava对应工具类"></a>Java基本类型与Guava对应工具类</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>原生类型</th>
@@ -221,6 +222,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <p><code>Bytes</code>工具类没有定义任何区分有符号和无符号字节的方法，而是把它们都放到了<code>SignedBytes</code>和<code>UnsignedBytes</code>工具类中，因为字节类型的符号性比起其它类型要略微含糊一些。</p>
 <p><code>int</code>和<code>long</code>的无符号形式方法在<code>UnsignedInts</code>和<code>UnsignedLongs</code>类中，但由于这两个类型的大多数用法都是有符号的，<code>Ints</code>和<code>Longs</code>类按照有符号形式处理方法的输入参数。</p>
 <p>此外，Guava为<code>int</code>和<code>long</code>的无符号形式提供了包装类，即<code>UnsignedInteger</code>和<code>UnsignedLong</code>，以帮助你使用类型系统，以极小的性能消耗对有符号和无符号值进行强制转换。</p>
@@ -235,7 +237,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-primitive-15.html" data-id="cjkgk3l6u004vqr9kjuk4vpne" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-primitive-15.html" data-id="cjkglrhlg004v9r9k3cekq62o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -660,7 +662,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -678,5 +695,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

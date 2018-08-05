@@ -182,6 +182,7 @@ var _hmt = _hmt || [];
 <h2 id="部署项目介绍"><a href="#部署项目介绍" class="headerlink" title="部署项目介绍"></a>部署项目介绍</h2><p>以反爬虫项目为例，有两个子项目，分别是反爬虫系统和反爬虫后台管理系统，项目如下：</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/solutions-to-nginx-1.png" alt=""></p>
 <p>可以看到，这两个项目分别是acs和acsd，一旦Tomcat成功在本地启动，这两个项目对应的接口分别如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -200,6 +201,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Nginx配置文件"><a href="#Nginx配置文件" class="headerlink" title="Nginx配置文件"></a>Nginx配置文件</h2><p>使用Nginx部署的时候，写了两个子配置文件，acs_server.conf和acsd_server.conf，分别如下：<br>acs_server.conf</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># ACS系统配置</span><br><span class="line">server &#123;</span><br><span class="line">        listen        80;</span><br><span class="line">        listen        443;</span><br><span class="line"> </span><br><span class="line">        ssl        on;</span><br><span class="line">        ssl_certificate         /usr/local/etc/ssl/acs.qinjiangbo.com.pem;</span><br><span class="line">        ssl_certificate_key     /usr/local/etc/ssl/acs.qinjiangbo.com.key;</span><br><span class="line"> </span><br><span class="line">        server_name   acs.qinjiangbo.com.com;</span><br><span class="line">        access_log  logs/access.log  main;</span><br><span class="line"> </span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://127.0.0.1:8080/acs/;</span><br><span class="line">                proxy_set_header   Host    $host;</span><br><span class="line">                proxy_set_header   X-Real-IP   $remote_addr;</span><br><span class="line">                proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>acsd_server.conf</p>
@@ -219,7 +221,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/solutions-to-internal-redirection-of-nginx.html" data-id="cjkgk3la100caqr9k74o8x72x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/solutions-to-internal-redirection-of-nginx.html" data-id="cjkglrhom00ca9r9kw6e6o0vq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -644,7 +646,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -662,5 +679,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

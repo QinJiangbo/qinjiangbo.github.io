@@ -187,7 +187,8 @@ var _hmt = _hmt || [];
 <li><strong>一致性consistent</strong>：两个非空引用x和y，x.equals(y)的多次调用应该保持一致的结果，（前提条件是在多次比较之间没有修改x和y用于比较的相关信息）；</li>
 <li>对于所有非null的值x， x.equals(null)都要返回false。 (如果你要用null.equals(x)也可以，会报NullPointerException)。</li>
 </ol>
-<h2 id="Objects使用语法"><a href="#Objects使用语法" class="headerlink" title="Objects使用语法"></a>Objects使用语法</h2><table>
+<h2 id="Objects使用语法"><a href="#Objects使用语法" class="headerlink" title="Objects使用语法"></a>Objects使用语法</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法修饰符和类型</th>
@@ -221,6 +222,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Objects具体用例"><a href="#Objects具体用例" class="headerlink" title="Objects具体用例"></a>Objects具体用例</h2><p>下面是Objects源码片段中实现equals方法的片段：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CheckReturnValue</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">equal</span><span class="params">(@Nullable Object a, @Nullable Object b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a == b || (a != <span class="keyword">null</span> &amp;&amp; a.equals(b));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>说明Objects方法在调用的时候还是会使用方法体中的Object的equals方法。所以，用户在创建数据的同时，必须得重载equals。除非不需要比较两个模型。否则会得到一个错误的结果。</p>
@@ -239,7 +241,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-objects-4.html" data-id="cjkgk3l6i004fqr9kr89qexti" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-objects-4.html" data-id="cjkglrhl6004f9r9k08gczlml" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -664,7 +666,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -682,5 +699,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

@@ -188,7 +188,8 @@ var _hmt = _hmt || [];
 <li>有一个Object对象作为额外参数：抛出的异常使用Object.toString() 作为错误消息；</li>
 <li>有一个String对象作为额外参数，并且有一组任意数量的附加Object对象：这个变种处理异常消息的方式有点类似printf，但考虑GWT的兼容性和效率，只支持%s指示符。</li>
 </ul>
-<h2 id="Preconditions使用语法"><a href="#Preconditions使用语法" class="headerlink" title="Preconditions使用语法"></a>Preconditions使用语法</h2><table>
+<h2 id="Preconditions使用语法"><a href="#Preconditions使用语法" class="headerlink" title="Preconditions使用语法"></a>Preconditions使用语法</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法声明（不包括额外参数）</th>
@@ -230,6 +231,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PreConditionsTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPreConditionCheckState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Weather weather = Weather.SHINNY;</span><br><span class="line">        Preconditions.checkState(weather.equals(Weather.SHINNY), <span class="string">"Weather is not the best for a sunbath!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPreConditionCheckNotNull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; members = Lists.newArrayList();</span><br><span class="line">        Preconditions.checkNotNull(members, <span class="string">"members can not be null!"</span>);</span><br><span class="line">        Preconditions.checkArgument(members.size() == <span class="number">0</span>, <span class="string">"members can not be null!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>注意</code>在编码时，如果某个值有多重的前置条件，建议你把它们放到不同的行，这样有助于在调试时定位。关于前置条件更多的使用方式，读者朋友们可以根据接口文档去尝试不同的方法，活学活用！</p>
 
@@ -239,7 +241,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/guava-preconditions-3.html" data-id="cjkgk3l6l004kqr9k3smnufhq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/guava-preconditions-3.html" data-id="cjkglrhld004o9r9kmz23s5dv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -664,7 +666,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -682,5 +699,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>
