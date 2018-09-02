@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>AdNetwork与AdExchange区别 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="广告概念,Ad Network,Ad Exchange" />
+    
+    <meta name="description" content="首先，你对互联网广告的产业链要至少有一个基本的了解。什么是广告主(advertiser)，什么是媒体(publisher)，什么是广告商(agency)。广告主显然是指想为自己的品牌或者产品做广告的人，例如宝马、Intel、蒙牛……媒体则是提供广告位置的载体，例如电视台、网站、杂志、楼宇……广告商本质上其实就是中介，帮广告主找媒体广告位，帮媒体找广告主。 当然，这个产业链还有一个不能忽略的部分，那">
+<meta name="keywords" content="广告概念,Ad Network,Ad Exchange">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AdNetwork与AdExchange区别">
+<meta property="og:url" content="http://qinjiangbo.com/difference-between-AdNetwork-and-AdExchange.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="首先，你对互联网广告的产业链要至少有一个基本的了解。什么是广告主(advertiser)，什么是媒体(publisher)，什么是广告商(agency)。广告主显然是指想为自己的品牌或者产品做广告的人，例如宝马、Intel、蒙牛……媒体则是提供广告位置的载体，例如电视台、网站、杂志、楼宇……广告商本质上其实就是中介，帮广告主找媒体广告位，帮媒体找广告主。 当然，这个产业链还有一个不能忽略的部分，那">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/open-ads-logo.jpg">
+<meta property="og:updated_time" content="2018-09-02T13:32:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AdNetwork与AdExchange区别">
+<meta name="twitter:description" content="首先，你对互联网广告的产业链要至少有一个基本的了解。什么是广告主(advertiser)，什么是媒体(publisher)，什么是广告商(agency)。广告主显然是指想为自己的品牌或者产品做广告的人，例如宝马、Intel、蒙牛……媒体则是提供广告位置的载体，例如电视台、网站、杂志、楼宇……广告商本质上其实就是中介，帮广告主找媒体广告位，帮媒体找广告主。 当然，这个产业链还有一个不能忽略的部分，那">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/open-ads-logo.jpg">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/计算广告/">计算广告</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/music/">音乐清流</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/架构师/计算广告/">计算广告</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-difference-between-AdNetwork-and-AdExchange" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        AdNetwork与AdExchange区别
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/difference-between-AdNetwork-and-AdExchange.html" class="article-date">
+    <time datetime="2018-09-02T13:00:12.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ad-Exchange/">Ad Exchange</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ad-Network/">Ad Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/广告概念/">广告概念</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>首先，你对互联网广告的产业链要至少有一个基本的了解。什么是广告主(advertiser)，什么是媒体(publisher)，什么是广告商(agency)。广告主显然是指想为自己的品牌或者产品做广告的人，例如宝马、Intel、蒙牛……媒体则是提供广告位置的载体，例如电视台、网站、杂志、楼宇……广告商本质上其实就是中介，帮广告主找媒体广告位，帮媒体找广告主。</p>
+<p>当然，这个产业链还有一个不能忽略的部分，那就是“消费”广告的人，即受众(audience)。受众都是有特点的，被分成一类一类相近的人群(persona或segmentation)。20多岁，刚刚从大城市毕业的女大学生有很多相近之处，销售护肤产品的企业会把她们作为同一类人群，并且认为她们是自己的目标受众(target audience)，因为这一类人对美丽容貌的追求是显著的，且开始有消费能力。对企业而言，将广告传播到潜在的消费者那里去是最基本的目标。</p>
+<p><img src="https://pic2.zhimg.com/398d5ae0075e757c49d971c82545bf1d_b.jpg" alt=""></p>
+<p>这当然是简单到不能再简单的理解。不过，到了现实世界，事情变得复杂，为了把广告这个看似“简单”的事情做好，人们发现其实不是一个部门就能干好的。举个例子，广告做成什么样子会吸引人呢?这涉及到创意——图形及文案，复杂的还得有动画、有拍摄。世界上的媒体这么多，投放到哪些媒体上才能“打击”到目标受众呢?这又涉及到对营销推广渠道及受众的分析和选择。广告做出之后，目标受众的大多数人并不会立即购买，而是会去进一步了解企业生产的商品，这又需要有一个承载更多信息的平台接纳、满足他们的探索欲，并尽全力说服他们购买商品。企业还发现，为了影响到目标受众，真正要做的事情还不仅仅只是广告本身，广告不过是推广形式的一种，还有很多其他在不同环境下同样有效的方式，例如公共关系营销(PR)、病毒营销(社会化营销)等等，每一种也都需要特别专业的知识和经验。</p>
+<p>这样，整个营销推广世界一下子变得空前复杂起来，上面的每一个领域都有数量庞大的服务商提供专业的细分服务。而互联网的出现，则更加剧了这种复杂度。</p>
+<p>互联网的海量网站和信息是它的价值之源，但也为传播广告带来了空前麻烦。与在电视上投放广告不同，互联网上的用户更加碎片化(fragmented)，浏览网站或使用apps是十分碎片化的，浏览时间同样碎片化，要打击更多的目标受众，很多时候不得不跟数量极为庞大的网站或apps分别谈判。这实际上非常不现实，于是广告主倾向于购买大型网站上的广告位，而难以触及那些虽然流量不大，但质量不错的中小网站。</p>
+<p><img src="https://pic2.zhimg.com/2781c995a096239d71911c5c3f58e5f9_b.jpg" alt=""></p>
+<p>但是，凡是有供给(中小网站的广告位)有需求(广告主同样希望扩大广告的覆盖广度)就一定有市场。市场出现了，那些有广告位却“不受人待见”的中小网站们明白单打独斗是没有生意的，但联合起来则不同。多个中小网站作为一个整体共同面对广告主，不仅省了广告主跟各个网站分别谈判的麻烦，也为广告主增加了价值。这是一个顶不错的主意，不过，中小网站们(很多站长其实就是个人)怎样联合，谁来与广告主谈判，如何定价等等都是非常麻烦的——没人牵头的话，根本就不具备操作性嘛。不过，办法总比问题多，一种被称为Ad Network(广告网络)的事物应运而生，它既像是一个行业协会，又像是一个中小publishers(网站和apps其实都是publishers)的中介(agency)，它帮助建立publishers联合的标准和联合的方法，它代表这些publishers与广告主谈判，它同样与广告主谈价格，提供双方都能接受的定价。愿意进入Ad Network的publisher，签一个协议服从规则就好了，不愿意的，不勉强。如果广告主有广告需求，会发给Ad Network，然后Ad Network会把这个广告散布到各个适合发布这个广告的众多publishers上去。广告主付费之后，相当部分的费用被分配给publisher，Ad Network则自己留存一部分作为自己的“辛苦费”。在Ad Network内所做的广告，与在某一个大型网站上直接谈判而签订的广告合同不同，前者更适用于按照展示量(impression)或者点击量(click)来进行收费，即CPM或者CPC的收费方式，而后者在中国，则基本是按照时间(按天数即CPD)来收费的。Ad Network的出现广受欢迎，乃至于一些大型网站也会加入Ad Network，原因在于它们总有一些无法完全销售出去的边边角角的长尾广告位，现在终于有了变现的渠道了。Ad Network，最出名的就要算Google的AdSense了(虽然并不非常典型)，中国则有易传媒(AdChina)或是好耶(AllYes)。</p>
+<p>对于Ad Network，有一件事情是极为重要的，不仅仅它需要获得更多的publishers的认可和加入，同样还需要让广告主觉得在它的网络上所花的钱是值得的，而且，它自己还要能获利，这使如何进行广告的定价变得极度重要。本质上，Ad Network是一个计算精密的数学模型。但Ad Network再计算的再精密，publishers可能心里都会有微词，毕竟定价权不掌握在自己手中。而且随着一些牛X的Ad Network越来越大，publishers的话语权越来越小。本来Ad Network只是一个中介而已，结果中介控制了整个市场，占了更大头的好处，却没让publishers吃到大鱼大肉。另一方面，广告主则可能抱怨，Ad Network提供的广告位大多只是长尾流量，并不是那么好，自己花了钱，但是获得的流量却不精准，获得的audience不够target。</p>
+<p>不仅如此，市场上往往不止一个Ad Network，有的Ad Network有部分质量不错的publishers，却卖不出去，因为它手上的广告主跟这些publishers不够匹配，于是它把这些publishers的广告位又以更低的价格卖个另外一个Ad Network，而下一个Ad Network又可能把它们转卖给第三个Ad Network。这个市场开始变得乱哄哄，广告主和媒体(publishers)之间开始夹杂了数量太多的各种“中介”。广告主犯愁了，本来一个Ad<br>Network的世界其实挺简单，但现在遍地都是，良莠不齐，该选择哪一个?媒体们也犯愁了，不同Ad Network的价值各不一样，广告格式的规范也不一样，定价不同，背后的广告主质量也不同，又该如何取舍?既然有问题，那么就一定有解决问题的市场。又一个事物应运而生，它的名字是Ad Exchange，中文叫广告交换平台。好家伙，这个东西一出现，就让人们糊涂的颠三倒四。现在很多人其实并不懂得Ad Network和Ad Exchange的区别，但实际上它们是完全不同的东西。</p>
+<p><img src="https://pic2.zhimg.com/ad1247108f303b3c1ea43a16d25329d9_b.jpg" alt=""></p>
+<p>与Ad Network联合publishers不同，Ad Exchange不仅仅联合publishers，它同样把Ad Network联合起来，这些拥有广告位的，被统一用“供应方”(supply<br>side)一词来指代。Ad Exchange为这些供应方提供了一个用于展示自己的资产(即广告位)的界面，大家自己往上登就好了。广告主一看，这样挺好，以前要跟很多Ad Network打交道，现在只要跟一个Ad Exchange打交道就好了，而且需要什么位置，我自己可以选择。不过，除了广告主自己，广告主的广告业务代理人也是这个Ad Exchange的需求方，甚至，大家可能没有想到，Ad Network自己也同样可能是Ad Exchange的需求方。这不难理解，因为Ad Network为了丰富自己的“库存”(inventory，即广告位)，在自己不具备某一类publishers的时候，在Ad Exchange上购买一些也是完全有可能的。这些需求方，被统一用demand side一词来指代。Ad Exchange也为需求方提供了统一的界面，让它们能够查看其上的广告位情况，并且能够根据自己的需要任意选择这些广告位。</p>
+<p>不过，如果仅仅只是做这些事情，Ad Exchange的能量其实是非常有限的。Ad Exchange比Ad Network先进的地方在于它的定价机制。Ad Network上，对于供需双方而言，其实都没有对广告位的定价权，而是由Ad Network这个“中央政府”定价的“计划经济”;而Ad Exchange，则是一个真正意义上按照供需关系来运转的“市场经济”。什么意思呢?原来，Ad Exchange为每一个商品(商品这里暂时指广告位)提供了“价高者得”的机制。对于每一个广告位，如果同时有多个广告主想买，由Ad Network根据自己认为最合理的方式来分配归于哪个广告主，而在Ad Exchange上则是价高者得——为这个广告位出价最高的广告主获得了在这个广告位显示广告的机会。定价权现在转让给了供需双方，给了市场。</p>
+<p>你会发现，Ad Network更像是行业协会，而Ad Exchange则更像是Nasdaq，广告位就是股票，股民就是广告主。哪些广告位更有价值，就会被广告主追逐的更多，它的价格也就会更高，这跟股票的价格机制是极为相似的。</p>
+<p>世界上著名的Ad Exchange有Google收购DoubleClick之后最近弄出来的AdX;还有Yahoo收购的Right<br>Media，这也是老牌的Ad Exchange了;此外微软有AdECNNIC，OpenX也有自己的Ad<br>Exchange。</p>
+<p><img src="https://pic2.zhimg.com/fa76811385596b80e67b3a95fab19f01_b.jpg" alt=""></p>
+<p>随着技术的发展，Ad Exchange也变得越来越灵活，功能越来越强。过去，股票的交易不是实时的，因为受技术的限制，往往要T+1或者T+2什么的(就是推迟一天两天)才能完成交易，那个时候可能价格什么的又变了。但是，今天的股票交易，很多已经可以T+0。同样，Ad Exchange一开始应该也不是很实时的，但随着技术的基本，对于广告位的竞价，现在已经完全可以实时进行了。这种实时进行的广告位竞价，被称为Real Time Bidding，简称为RTB，即“实时竞价”。 实时竞价一般是按照CPM或者CPC出价的，关于这两个名词，我们后面会详细解释，这里简单说就是按照广告被展现在受众面前的次数出价，或是按照广告被点击的次数出价。如果我和你同时看好一个广告位，我愿意为它出价3美元每个点击，而你出价3.1美元每个点击，那么你就拥有了这个广告位。实时竞价的好处太大了，人们能够合理分配自己的预算，而且花了钱之后可以立即根据效果的好坏和竞争情况随时调整自己的出价，整个广告的选择和投放都变得很可控。</p>
+<p>这样看来Ad Exchange真的已经很完美了。但凡事都是两面的，好的一面必然会带来不好的一面。功能强大的Ad Exchange是一个专业的实时的股票交易所，不过，可不是每一个人都是专业的股票经纪人！</p>
+<p>更何况，Ad Exchange也不是就一个玩家，世界上有好几个Ad Exchange，中国也有几个。</p>
+<p>广告主现在又犯难了，Ad Exchange和RTB，看起来真是牛逼大发了，但是用起来不仅界面繁琐，而且如何出价可是一个巨大的学问，更何况还有多个Ad Exchange同时在世。更可怕的是，我该如何判断一个广告位背后是否有我需要的目标受众(target audience)呢？更可怕的是，各个Ad Exchange中的广告位储量那可是天文数字，我一个一个找，一个一个出价，累死不说，时间也全部耽误了。</p>
+<p>旧愁虽解，新愁却来。</p>
+<p>别慌，有问题就必然有解决问题的市场。一个叫做DSP(Demand Side Platform，即需求方平台)的事物又应运而生(互联网广告行业真是各种大小运啊)，它看起来就是帮助广告主们玩转Ad Exchange的中介(agency)，实际也差不多就是这样。DSP同时把主流的Ad Exchange的系统都与自己驳接，然后提供给广告主们一个统一的更加简单的操作界面(肯定比Ad Exchange提供的界面要简单些)，不过更重要的是，DSP把Ad<br>Exchange中的广告位的展示方式做了一个巨大的改变。在Ad Exchange中，广告位可就是广告位，但在DSP中，广告位这个概念被移除或是被淡化了，而target audience的概念则被提出来。</p>
+<p><img src="https://pic2.zhimg.com/fb68acc435c74c5c208f2da80d23fa2d_b.jpg" alt=""></p>
+<p>什么意思呢?原来，每一个广告位背后，都是一部分受众(audience)，广告主买广告位的目的，实际上就是看中了这个广告位背后的这群受众。既然广告主的目的明确，而又不能自己搞定这些受众对应的全部广告位，那我DSP来帮忙呗。怎么帮，很简单，你广告主在DSP的操作界面中，告诉我你需要哪些人群，愿意出多少钱获得这些人群，我来帮你在Ad Exchange中操作不就完了。因此，对于广告主而言，广告购买形式发生了翻天覆地的变化。过去，是购买广告位，现在有了Ad Exchange和DSP，是直接购买目标受众。</p>
+<p>于是，DSP就成了一边连接Ad Exchange，另外一边服务于广告主的中介，就好像一群炒股散户的代理人，帮他们打理手中的资金，利用自己的专业知识选择股票，让这些散户的获利最大化。中国的DSP厂商数量据说已经超过了50个，很多Ad Network转型也做DSP生意，比如前面讲到的易传媒、好耶，而其他的DSP也如雨后春笋，例如品友互动、Yoyi、MediaV、晶赞等等，国外还有Criteo，Turn等等等。这个市场很快极度繁忙繁荣。</p>
+<p>DSP绝对是一个技术活，而且必须要通过强大的受众数据和数学能力，帮助广告主实时决策，合理花钱，让广告主的广告花费用在刀刃上。要搞定这些，单靠人力可不行，而必须有受众的非常准确的兴趣信息数据，而且还必须依靠一套强大的算法来进行广告位的竞价，这种方法就是现在炙手可热的“程序化购买”的方法之一。也就是说，程序化购买依赖于两个重要事情：其一，需要受众数据，准确的，海量的;其二，强大的自动化算法，保证最合理的竞价。</p>
+<p>DSP自己有可能有受众数据，但有很多其实没有，或者有，也不够全面，不够准确。那怎么办呢?又一个市场上的专业提供者出现了，被称为DMP，即Data Management Platform，数据管理平台。数据管理平台，简单讲，它们手中握有受众数据，并且能够让DSP驳接到他们这里，利用它们所有的数据。</p>
+<p>所有有细分需求的地方，就立即有细分的供应。同样的原因，供应方(publishers和Ad Networks)也有了一个被称为SSP的东西帮助它们打点各个Ad Exchange的关系，并提供使用体验更一致更集成的广告位库存管理环境。SSP，即Supply Side Platform(供应方平台)的简称。但中国事实上几乎没有真正意义上的SSP，各家媒体实际上直接绕过了SSP跟Ad Exchange直接连接，原因较为复杂，这篇文章就暂时按下不表。上面基本上说明了现在的互联网广告的产业链的大概的样子。你会问，这个跟我做互联网营销推广的分析与优化有何关系呢?嗯，的确，给大家一个大图景的目的，是为了描绘这个图景中间更加细微的东西。例如，一个问题是，DMP如何拥有受众的数据，即它们如何可以知道某个广告位背后的受众究竟是什么样的人呢?</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/China-Programmatic-Ad-Tech_2018Q2_R-1.png" alt=""></p>
+<p>简单讲，DMP为了获取受众的数据，它必须至少做几件事情：其一，它需要为所有的受众每一个做一个标记，这个标记在目前的技术条件下，主要是通过一种叫做cookie的事物完成的。而在更新的技术条件下，可能又有能够比cookie更多(甚至更好)的东西。这些我们都在后面会讲到。其二，它还需要能够实现跨域追踪。什么是域?这是我们要在这一节就清楚了解的东西。</p>
+<p>搞清楚域，最好不要去翻互联网原理，那里的解释都有些不食人间烟火。简单讲，所谓的域，就是指一个网站的范围，通常一个网站只有一个一级域名(例如<a href="http://baidu.com就是一个一级域名，而http://music.baidu.com则是二级域名)，因此域和一级域名常常没有区别。跨域，就是多个网站，或者多个一级域名。跨域追踪，就是能够追踪同一个用户在多个网站(多个一级域名)上的行为。" target="_blank" rel="noopener">http://baidu.com就是一个一级域名，而http://music.baidu.com则是二级域名)，因此域和一级域名常常没有区别。跨域，就是多个网站，或者多个一级域名。跨域追踪，就是能够追踪同一个用户在多个网站(多个一级域名)上的行为。</a></p>
+<p>跨域又分为两类，一种叫做跨主域，即跨越了多个不同的一级域名;另外一种叫做跨子域，即跨越了多个不同的二级域名。举一个例子。加入一个组织声称它能够追踪同一个用户在<a href="http://baidu.com、http://sina.com.cn、http://chinawebanalytics.cn上的行为，那么它的这种追踪是跨主域的。而另一个组织，如果它声称能够追踪同一个用户在百度一下，你就知道" target="_blank" rel="noopener">http://baidu.com、http://sina.com.cn、http://chinawebanalytics.cn上的行为，那么它的这种追踪是跨主域的。而另一个组织，如果它声称能够追踪同一个用户在百度一下，你就知道</a>, music.baidu.com map.baidu.com等同一个一级域名之下的二级域名的行为，那么它的这种追踪是跨子域的。跨主域，大部分时候被我们简单称为跨域，而跨子域则没有简称，必须要声明是跨子域。</p>
+<p>跨域追踪又分为广义的跨域追踪和狭义的跨域追踪。如果是广义的，那么就是指，一个组织或者一种解决方案能够跨越不同所有人的网站追踪用户的行为。比如，它能够追踪同一个用户在搜狐上、新浪上及优酷网上的行为。这些网站显然不属于同一个组织或个人所有。而狭义的跨域追踪，则是指虽然网站的一级域名不同，但是却属于同一个组织或个人。这种情况下的追踪，只要网站所有人同意开放权限，那么执行起来比广义的跨域追踪就要容易多了。这样一个人在互联网上的兴趣就能够全面被了解，而如果不能实现跨域追踪，只能从一两个网站了解受众，那么能够判断的依据就会太片面了。今天，DMP可以称为最为复杂的互联网营销信息系统，但也是最颠覆一切的“爆炸物质”。</p>
+<p>讲到这里，大家应该明白了什么是广告主(advertiser)和媒体(media)，明白了什么是目标受众(target audience)。大家又明白了广告主和媒体中间原来有很多广告代理商(agency)，这些代理商还花样繁多，其中很重要的是广告网络(Ad Network)和广告交换平台(Ad Exchange)，另外还有附着于广告交换平台的DSP和SSP。你还知道了多种互联网广告的付费方式，包括按照日期付费(CPD)，按照广告展示付费(CPM)以及按照广告的点击付费(CPC)，最后还有一种高级方式，RTB的方式。之后，你了解到用来定位一个受众个体的解决方案是cookie，以及其他比cookie“更牛”的方式。再之后，你学到了域和子域，以及跨域和跨子域，我们的追踪要么是在一个域(或者子域)的范围之内的，要么就得跨到一个更大的范围内——跨子域追踪或者跨域追踪。这些东西，如此基本，又如此重要，它们都深刻影响着我们对于互联网营销分析与优化的技术和方法，以至于，我在本文浮光掠影了解了这些基本概念之后，还会在后面更多文章中更进一步学习它们。</p>
+<p><code>参考内容</code>：<a href="https://www.zhihu.com/question/19794762/answer/42158254" target="_blank" rel="noopener">https://www.zhihu.com/question/19794762/answer/42158254</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/difference-between-AdNetwork-and-AdExchange.html" data-id="cjlkwbhka017a65c9h4nczxqv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/difference-between-AdNetwork-and-AdExchange.html"></div>
+        </div>
+        
+        <div id="SOHUCS" sid="http://qinjiangbo.com/difference-between-AdNetwork-and-AdExchange.html"></div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/we-are-different-BaiA-951.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">百阿951，我们不一样！</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/difference-between-AdNetwork-and-AdExchange.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/open-ads-logo.jpg)" alt="AdNetwork与AdExchange区别" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/difference-between-AdNetwork-and-AdExchange.html" class="title">AdNetwork与AdExchange区别</a></p>
+                            <p class="item-date"><time datetime="2018-09-02T13:00:12.000Z" itemprop="datePublished">2018-09-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/we-are-different-BaiA-951.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/alibaba-group-logo.jpg)" alt="百阿951，我们不一样！" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/经验感悟/心灵港/">心灵港</a></p>
+                            <p class="item-title"><a href="/we-are-different-BaiA-951.html" class="title">百阿951，我们不一样！</a></p>
+                            <p class="item-date"><time datetime="2018-09-02T10:02:02.000Z" itemprop="datePublished">2018-09-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/how-to-support-mathjax-in-hexo-blogs.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/mathjax-thumbnail.png)" alt="[转]如何在Hexo中支持Mathjax" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a></p>
+                            <p class="item-title"><a href="/how-to-support-mathjax-in-hexo-blogs.html" class="title">[转]如何在Hexo中支持Mathjax</a></p>
+                            <p class="item-date"><time datetime="2018-08-05T08:48:28.000Z" itemprop="datePublished">2018-08-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/remove-changyan-ads-with-js.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/changyan.png)" alt="JS去掉畅言广告" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a></p>
+                            <p class="item-title"><a href="/remove-changyan-ads-with-js.html" class="title">JS去掉畅言广告</a></p>
+                            <p class="item-date"><time datetime="2018-08-05T07:42:20.000Z" itemprop="datePublished">2018-08-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/replace-parameters-in-web-xml-file-with-maven-profile.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/maven-thumbnail.png)" alt="Maven Profile动态替换web.xml参数" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Java/">Java</a></p>
+                            <p class="item-title"><a href="/replace-parameters-in-web-xml-file-with-maven-profile.html" class="title">Maven Profile动态替换web.xml参数</a></p>
+                            <p class="item-date"><time datetime="2018-08-04T08:52:47.000Z" itemprop="datePublished">2018-08-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">100</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">80</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">45</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/计算广告/">计算广告</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">52</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function () {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function (d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function () {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+
+        function loadCssCode(code) {
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.rel = 'stylesheet';
+            //for Chrome Firefox Opera Safari
+            style.appendChild(document.createTextNode(code));
+            //for IE
+            //style.styleSheet.cssText = code;
+            var head = document.getElementsByTagName('head')[0];
+            head.appendChild(style);
+        }
+        var dsq = null;
+        //去除畅言广告
+        dsq = setInterval('if(document.getElementById("feedAv")){document.getElementById("feedAv").id="feedAvi";window.clearInterval(dsq);}', 1000);
+        loadCssCode('#feedAvi{position: absolute !important;z-index: -9999;top: -1000px;}');
+    </script>
+    
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+</html>
