@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="广告概念" />
     
-    <meta name="description" content="计算广告基础。">
+    <meta name="description" content="可衡量的效果以及相应的计算优化是在线广告区别于线下广告的主要特点。 在大多数广告产品中，可以通过计算优化的主要是收入部分。而千次展示期望收入(expected Cost Per Mille，eCPM)正是计算广告中最为核心的量化指标之一。与广告的信息传达过程相关， eCPM又可以分解为点击率和点击价值的乘积，这两个指标是各种广告产品在计算过程中经常碰到的，也是产品运营需要深入理解和重点关注的。 广">
 <meta name="keywords" content="广告概念">
 <meta property="og:type" content="article">
 <meta property="og:title" content="02计算广告笔记-计算广告基础">
 <meta property="og:url" content="http://qinjiangbo.com/02-notes-of-computational-ads-fundmentals.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="计算广告基础。">
+<meta property="og:description" content="可衡量的效果以及相应的计算优化是在线广告区别于线下广告的主要特点。 在大多数广告产品中，可以通过计算优化的主要是收入部分。而千次展示期望收入(expected Cost Per Mille，eCPM)正是计算广告中最为核心的量化指标之一。与广告的信息传达过程相关， eCPM又可以分解为点击率和点击价值的乘积，这两个指标是各种广告产品在计算过程中经常碰到的，也是产品运营需要深入理解和重点关注的。 广">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
-<meta property="og:updated_time" content="2018-09-23T10:02:00.000Z">
+<meta property="og:updated_time" content="2018-09-24T08:15:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="02计算广告笔记-计算广告基础">
-<meta name="twitter:description" content="计算广告基础。">
+<meta name="twitter:description" content="可衡量的效果以及相应的计算优化是在线广告区别于线下广告的主要特点。 在大多数广告产品中，可以通过计算优化的主要是收入部分。而千次展示期望收入(expected Cost Per Mille，eCPM)正是计算广告中最为核心的量化指标之一。与广告的信息传达过程相关， eCPM又可以分解为点击率和点击价值的乘积，这两个指标是各种广告产品在计算过程中经常碰到的，也是产品运营需要深入理解和重点关注的。 广">
 <meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
     
 
@@ -174,7 +174,32 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p>计算广告基础。</p>
+            <p><strong>可衡量的效果以及相应的计算优化</strong>是在线广告区别于线下广告的主要特点。</p>
+<p>在大多数广告产品中，可以通过计算优化的主要是收入部分。而<strong>千次展示期望收入</strong>(expected Cost Per Mille，eCPM)正是计算广告中最为核心的量化指标之一。与广告的信息传达过程相关， <strong>eCPM又可以分解为点击率和点击价值的乘积</strong>，这两个指标是各种广告产品在计算过程中经常碰到的，也是产品运营需要深入理解和重点关注的。</p>
+<h2 id="广告有效性原理"><a href="#广告有效性原理" class="headerlink" title="广告有效性原理"></a>广告有效性原理</h2><p>图中所示这一有效性模型把广告的信息接收过程分为选择(selection)、解释 (interpretation)与态度(attitude)三个大阶段，或者进一步分解为曝光(exposure)、关注(attention)、理解(comprehension)、接受(acceptence)、保持(retention)与决策(decision) 6个子阶段。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-021.png" alt=""></p>
+<ul>
+<li><strong>曝光(exposure)阶段</strong>。这一阶段指的是广告物理上展现出来的过程，此阶段的有效程度往往与广告位的物理属性有关，并没有太多可以通过技术优化的空间。实际的广告实践中，曝光的有效性对最终结果的影响往往远远高于其他技术性因素，所以才会有传统广告中“位置为王”的说法。</li>
+<li><strong>关注(attention)阶段</strong>。这一阶段指的是受众从物理上接触到广告到意识上注意到它的过程。对广告而言，曝光并不一定意味着关注。首先，尽量不要打断用户的任务。其次，明确传达向用户推送此广告的原因，这一点是受众定向广告创意优化的重要方向。另外，内容符合用户的兴趣或需求，这是行为定向的原理基础。</li>
+<li><strong>理解(comprehension)阶段</strong>。用户关注到了广告的内容也并不意味着他一定能够理解广告传达的信息。首先，广告内容要在用户能理解的具体兴趣范围内， 这说明了真正精准的受众定向有多么必要。其次，要注意设定与关注程度相匹配的理解门槛。</li>
+<li><strong>接受(acceptance)阶段</strong>。受众理解了广告传达的信息，并不一定表示他认可这些信息。</li>
+<li><strong>保持(retention)阶段</strong>。对于不仅仅追求短期转化的广告商，当然希望广告传达的信息给用户留下长久的记忆，以影响他长时间的选择，因此品牌广告商在创意设计上花了大量的精力提高此阶段效果。</li>
+<li><strong>决策(decision)阶段</strong>。成功广告的最终作用是带来用户的转化行为，虽然这一阶段已经离开了广告的业务范围，但好的广告还是能够为转化率的提高做好铺垫。特别是对于电商或团购业务，在创意上强调哪些信息以打动那些价格敏感的消费者是有相当的学问的。</li>
+</ul>
+<h2 id="计算广告核心问题"><a href="#计算广告核心问题" class="headerlink" title="计算广告核心问题"></a>计算广告核心问题</h2><blockquote>
+<p>计算广告的核心问题，是为一系列用户与环境的组合找到最合适的广告投放策略以优化整体广告活动的利润。</p>
+</blockquote>
+<h3 id="广告收入的分解"><a href="#广告收入的分解" class="headerlink" title="广告收入的分解"></a>广告收入的分解</h3><ul>
+<li><strong>点击率(Click Through Rate, CTR)</strong>，广告点击与广告展现的比率；</li>
+<li><strong>转化率(Conversion Rate, CVR)</strong>，转化次数与到达次数的比例。</li>
+</ul>
+<h3 id="结算方式"><a href="#结算方式" class="headerlink" title="结算方式"></a>结算方式</h3><ul>
+<li><strong>CPM</strong>结算，即按照千次展示结算。这种方式是供给方与需求方约定好千次展示的计费标准，至于这些展示是否能够带来相应的收益，由需求方来估计和控制其中的风险。</li>
+<li><strong>CPC</strong>结算，即按点击结算。这种方式最早产生于搜索广告，并很快为大多数效果类广告产品所普遍采用。在这种方式结算方式下，点击率的估计是由交给供给方(或者中间市场)完成的。</li>
+<li><strong>CPS(cost per sale)/CPA(cost per action)/ROI</strong>结算，即按照销售订单数、转化行为数或投入产出比来结算。</li>
+<li><strong>CPT(cost per time)</strong>结算，这是针对大品牌广告主特定的广告活动，将某个广告位以独占式方式交给某广告主，并按独占的时间段收取费用的方式。</li>
+</ul>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-022.png" alt=""></p>
 
         </div>
         <footer class="article-footer">
@@ -182,7 +207,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/02-notes-of-computational-ads-fundmentals.html" data-id="cjmep1uq4000256jhtzkp157a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/02-notes-of-computational-ads-fundmentals.html" data-id="cjmg0p60i0001krjh79j3oxyk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -587,22 +612,7 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -620,6 +630,5 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
 </body>
 </html>
