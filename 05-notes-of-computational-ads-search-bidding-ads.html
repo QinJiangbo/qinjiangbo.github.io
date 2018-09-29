@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>05计算广告笔记-搜索与竞价广告 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="搜索广告,竞价广告" />
+    
+    <meta name="description" content="随着搜索业务变现的要求，以及精准受众定向技术的发展，在搜索广告和展示广告中都产生了竞价这种新的交易模式。对比前面的合约广告可知，竞价交易模式的本质是将量的约束从交易过程中去除，仅仅采用“价高者得”的简单决策方案来投放每一次广告。竞价顺应了定向广告向精细化发展的趋势要求，也为大量无法用合约售卖的剩余流量找到了可能的变现渠道，使得大量中小广告主参与在线广告的可能性和积极性大大增强，也使得在线广告的商业">
+<meta name="keywords" content="搜索广告,竞价广告">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05计算广告笔记-搜索与竞价广告">
+<meta property="og:url" content="http://qinjiangbo.com/05-notes-of-computational-ads-search-bidding-ads.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="随着搜索业务变现的要求，以及精准受众定向技术的发展，在搜索广告和展示广告中都产生了竞价这种新的交易模式。对比前面的合约广告可知，竞价交易模式的本质是将量的约束从交易过程中去除，仅仅采用“价高者得”的简单决策方案来投放每一次广告。竞价顺应了定向广告向精细化发展的趋势要求，也为大量无法用合约售卖的剩余流量找到了可能的变现渠道，使得大量中小广告主参与在线广告的可能性和积极性大大增强，也使得在线广告的商业">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
+<meta property="og:updated_time" content="2018-09-29T09:23:53.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="05计算广告笔记-搜索与竞价广告">
+<meta name="twitter:description" content="随着搜索业务变现的要求，以及精准受众定向技术的发展，在搜索广告和展示广告中都产生了竞价这种新的交易模式。对比前面的合约广告可知，竞价交易模式的本质是将量的约束从交易过程中去除，仅仅采用“价高者得”的简单决策方案来投放每一次广告。竞价顺应了定向广告向精细化发展的趋势要求，也为大量无法用合约售卖的剩余流量找到了可能的变现渠道，使得大量中小广告主参与在线广告的可能性和积极性大大增强，也使得在线广告的商业">
+<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+
+    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/计算广告/">计算广告</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/计算广告/">计算广告</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-05-notes-of-computational-ads-search-bidding-ads" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        05计算广告笔记-搜索与竞价广告
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="article-date">
+    <time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/搜索广告/">搜索广告</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/竞价广告/">竞价广告</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>随着搜索业务变现的要求，以及精准受众定向技术的发展，在搜索广告和展示广告中都产生了竞价这种新的交易模式。对比前面的合约广告可知，<strong>竞价交易模式的本质是将量的约束从交易过程中去除，仅仅采用“价高者得”的简单决策方案来投放每一次广告。</strong>竞价顺应了定向广告向精细化发展的趋势要求，<strong>也为大量无法用合约售卖的剩余流量找到了可能的变现渠道，使得大量中小广告主参与在线广告的可能性和积极性大大增强</strong>，也使得在线广告的商业环境与传统广告产生了本质区别。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-051.png" alt=""></p>
+<p>在竞价广告的交易逻辑下，展示广告领域也产生了广告网络这种批量采购各种媒体剩余流量，然后主要按照点击付费的方式售卖给广告主的产品形式。这种产品形态的产生对于提高整个展示广告市场的流动性发挥了很大作用。广告网络中竞价的<strong>标的物</strong>有两种：</p>
+<ul>
+<li>一是<strong>上下文页面中的关键词</strong>，这是直接从搜索广告衍生而来的；</li>
+<li>二是<strong>根据用户行为加工的兴趣标签</strong>，这是从展示广告的定向逻辑发展而来的。</li>
+</ul>
+<p>对应于竞价广告的产生，需求方的产品和技术也在发生变化。其中关键的变化有两点：一是由面向广告位采买变成面向人群的跨网络采买；二是帮助广告主在竞价环境中完成量的保证，这一点是竞价市场不再直接保证的。能达到这些需求方目的的产品我们叫作媒体采买平台。在媒体采买平台里，在量的约束下完成 ROI 的优化的问题依然存在，并且变得比在线分配问题更加困难，这也成为高端的采买平台提供的服务之一。当然，搜索广告的媒体采买和 ROI 优化同样十分重要，这项专门的服务称为搜索引擎营销(Search Engine Marketing，SEM)。</p>
+<h2 id="搜索广告"><a href="#搜索广告" class="headerlink" title="搜索广告"></a>搜索广告</h2><p>搜索广告是比较典型的竞价广告产品，其特点是广告主就某<strong>标的物(在这里是关键词)</strong>的广告展示机会展开拍卖式的竞争，并根据竞争结果依次占据该广告展示的若干位置。</p>
+<h3 id="搜索广告产品形态"><a href="#搜索广告产品形态" class="headerlink" title="搜索广告产品形态"></a>搜索广告产品形态</h3><p><strong>搜索广告是以上下文查询词为粒度进行受众定向，并按照竞价方式售卖和 CPC 结算的广告产品</strong>。通常，搜索广告展示在搜索结果页，下图所示。搜索广告创意的展示区域一般来说分为北(north)、东(east)、南(south)三个部分。北区和东区的所有位置构成同一次关键词拍卖的位置集合，<strong>竞价时位置的排序为{north 1 ，north 2 ，···，east 1 ，east 2 ，···}</strong>，这基本上是根据各个位置点击率的高低排列的。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-052.png" alt=""></p>
+<p>在互联网广告的整个产品谱系当中，搜索广告有着特殊重要的地位，具有以下鲜明的产品和技术特点。</p>
+<ul>
+<li>搜索广告的变现能力，即 eCPM 远远高于一般的展示广告，其市场重要程度也就得以彰显。而<strong>搜索广告高变现能力最关键的产品原因就是用户主动输入的查询直接反映了用户的意图</strong>。</li>
+<li>搜索广告的受众定向标签，即是上下文的搜索查询。由于搜索词非常强地表征着用户的意图，搜索广告可以进行非常精准的定向。</li>
+<li>搜索广告的展示形式<strong>与自然结果的展示形式非常接近</strong>，往往仅仅在底色和文字链接中有不太引人注目的提示。<strong>这样的产品设计使得它有原生广告的意味，也进一步提高了广告效果</strong>。</li>
+<li>从搜索广告发展起来的竞价交易模式已经逐渐发展成为互联网广告最主流的交易模式。这一模式从根本上改变了广告的运营方法，并为其效果的快速提高释放出巨大的生产力。</li>
+</ul>
+<h3 id="搜索广告产品新形式"><a href="#搜索广告产品新形式" class="headerlink" title="搜索广告产品新形式"></a>搜索广告产品新形式</h3><p>搜索广告的产品技术重点与前面介绍的合约广告差别很大，与竞价的展示广告网络也有一定的差别。从产品设计的角度看，搜索广告有以下三方面的探索趋势。</p>
+<ul>
+<li>丰富文字链创意的展示形式让其更富表现力以提高点击率。</li>
+<li>利用东区对相关性要求稍低的特点设计一些拓展广告产品。</li>
+<li>优化广告与自然结果的关系在保证相关性和广告效果的前提下提高收入。</li>
+</ul>
+<h3 id="搜索广告产品策略"><a href="#搜索广告产品策略" class="headerlink" title="搜索广告产品策略"></a>搜索广告产品策略</h3><p>除了产品形式上的创新，搜索广告的投放和优化策略也是产品的重要一环。搜索广告的整个决策过程可以分为<strong>查询扩展、检索、排序、放置、定价</strong>等几个阶段。查询扩展是搜索广告独有的策略，目的是给广告主自动地拓展相关的查询词，扩大采买流量；广告检索和将候选广告根据 eCPM 排序是广告系统较为通用的核心流程；而定价是竞价广告非常核心的策略。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-053.png" alt=""></p>
+<ul>
+<li><strong>查询扩展</strong>是搜索广告的一项关键策略。对广告主来说，从浩若烟海的关键词中找到符合自己需求的组合绝非易事。因此，搜索引擎会提供一些将广告中的关键词匹配到更多相关查询的服务。</li>
+<li>北区是黄金的广告展示位置，对于搜索广告的收入至关重要。一般来说，通用搜索引擎的广告收入中绝大部分都来自于北区，因此北区广告的平均条数与收入直接相关。确定一条广告能否进入北区要考虑两个关键因素：一是<strong>该广告相关性是否足够(确保用户体验)</strong>；二是<strong>该广告的 RPM 是否足够(高效地利用展示位置)</strong>。</li>
+</ul>
+<h2 id="位置拍卖与机制设计"><a href="#位置拍卖与机制设计" class="headerlink" title="位置拍卖与机制设计"></a>位置拍卖与机制设计</h2><p>以搜索广告为代表的竞价广告实际上是像拍卖那样销售广告展示机会。也就是说，系统根据广告主的出价以及由此计算出的 eCPM 决定谁可以得到某次展示的广告位。在竞价广告初始阶段，出价是广告主阶段性调整的；而到了广告实时交易阶段，广告主可以对每次展示实时调整出价。</p>
+<h3 id="定价问题"><a href="#定价问题" class="headerlink" title="定价问题"></a>定价问题</h3><p>在线广告竞价市场最常见的定价策略是 GSP 方案；另外有一种 VCG(Vickrey-Clarke-Groves) 定价策略，虽然理论上比 GSP 更合理，但是由于原理较复杂， 向广告主解释起来有难度，因此在实际系统中采用的并不多。</p>
+<ul>
+<li><strong>所谓第二高价，指的是在只有一个位置的拍卖中，向赢得该位置的广告主收取其下一位广告主的出价，这样的拍卖也叫作 Vickrey 拍卖</strong>。在搜索广告这种有多个位置的拍卖过程中，很容易直觉地将第二高价策略推广成下面的策略：对赢得每一个位置的广告主，都按照他下一位的广告位置出价来收取费用，这就是广义第二高价。</li>
+<li><strong>VCG 定价</strong>是 Vickrey、Clarke 和 Groves 在研究竞价系统均衡状态时得到的一 种理论上较为优越的定价策略。其基本思想是：<strong>对于赢得了某个位置的广告主，其所付出的成本应该等于他占据这个位置给其他市场参与者带来的价值损害</strong>。</li>
+</ul>
+<h3 id="市场保留价"><a href="#市场保留价" class="headerlink" title="市场保留价"></a>市场保留价</h3><p>为了控制广告的质量和保持一定的出售单价，<strong>竞价广告市场往往要设置一个赢得拍卖位置的最低价格，这一价格我们称为市场保留价(Market Reserve Price，MRP)</strong>，俗称“<strong>起价</strong>”或“<strong>底价</strong>”。广告主的出价只有在高于市场保留价时才能获得竞价机会，同时在赢得某个拍卖位置后，如果根据定价策略算出的付费低于市场保留价(以广义第二高价为例，很容易验证这种情况是可能发生的)，也需要调整到市场保留价的水平上。</p>
+<h2 id="广告网络"><a href="#广告网络" class="headerlink" title="广告网络"></a>广告网络</h2><p>竞价广告产品在搜索广告逐渐成熟的同时也在展示广告领域得到了广泛应用。<strong>对展示广告而言，合约式的售卖方式必然无法消耗所有的库存，实际销售中为了控制售卖比例以获得更高的品牌溢价空间，未通过合约售卖的广告流量很多。这部分流量我们称为剩余流量(remnant inventory)</strong>。竞价交易模式的产生为这部分流量提供了变现的机会，催生了广告网络这一产品。广告网络的产品功能是批量聚合各媒体的剩余流量，按照人群或上下文标签的流量切割方式售卖给广告主。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-054.png" alt=""></p>
+<p>根据人群划分模式的不同，广告网络产品其实有两个来源：一方面<strong>来源于搜索引擎发展出来的上下文广告产品</strong>，即根据页面中提取的关键词来投放广告；另一方面来源于<strong>展示广告的兴趣标签向精细化发展后</strong>。无论上下文还是兴趣，都可以看成是对受众的划分方式，因而它们都统一在广告网络这一产品中。</p>
+<p>竞价广告网络有下面几个关键的产品特点：</p>
+<ul>
+<li>竞价方式不向广告主做量的约定，而是根据变现能力，即 eCPM，来决定每次展示分配给哪个广告主。</li>
+<li>由于是按人群售卖，广告网络会极力淡化媒体和广告位的概念。由于淡化了媒体的概念，广告网络中很难拿到品牌溢价高的广告位，一般来说也不适合广告主的品牌类需求。</li>
+<li>从商业角度来看，广告网络的销售模式与合约的方式相比也有两点优势：首先是<strong>无需再满足广告主品牌独占的要求</strong>，这使得让国美和苏宁同时参与同一个人群的竞价、提高市场流动性成为可能，而在合约广告中，这一点是很难做到的；其次，由于广告网络根据实际消耗来结算，一般来说财务上采用广告主先充值的方式，这区别于合约广告投放结束后计算的方式，结果<strong>使得广告网络运营方的现金流状况大为改善</strong>。</li>
+</ul>
+<h3 id="CPC-结算的合理性"><a href="#CPC-结算的合理性" class="headerlink" title="CPC 结算的合理性"></a>CPC 结算的合理性</h3><p>首先，从需求方来看，既然是各种媒体的不同广告位聚合在一起售卖，广告主无法知道每个媒体上广告的具体位置。而位置对于广告的曝光效果影响巨大，因此实际上广告主根本无法评估每次展示的出价，而在点击上出价，这个问题就没那么严重了。</p>
+<p>另外从供给方来看，由于淡化了广告位的概念，并且聚合了多个媒体的流量，广告网络可以接触到同一个用户比较丰富的网络行为，并且知道每次展示所在的媒体与广告位位置，所以比广告主更容易估计点击率， 由广告网络负责估计点击率，需求方根据对点击价值的估计来出价，是最合理的市场分工。</p>
+<p>// 5.3.2 continue</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/05-notes-of-computational-ads-search-bidding-ads.html" data-id="cjmn8buus0123ohdqjht6ekvb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/05-notes-of-computational-ads-search-bidding-ads.html"></div>
+        </div>
+        
+        <div id="SOHUCS" sid="http://qinjiangbo.com/05-notes-of-computational-ads-search-bidding-ads.html"></div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/04-notes-of-computational-ads-contract-ads.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">04计算广告笔记-合约广告</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
+                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/04-notes-of-computational-ads-contract-ads.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="04计算广告笔记-合约广告" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/04-notes-of-computational-ads-contract-ads.html" class="title">04计算广告笔记-合约广告</a></p>
+                            <p class="item-date"><time datetime="2018-09-29T07:08:02.000Z" itemprop="datePublished">2018-09-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/03-notes-of-computational-ads-online-products.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="03计算广告笔记-在线广告产品" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/03-notes-of-computational-ads-online-products.html" class="title">03计算广告笔记-在线广告产品</a></p>
+                            <p class="item-date"><time datetime="2018-09-24T08:20:41.000Z" itemprop="datePublished">2018-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/02-notes-of-computational-ads-fundmentals.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="02计算广告笔记-计算广告基础" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/02-notes-of-computational-ads-fundmentals.html" class="title">02计算广告笔记-计算广告基础</a></p>
+                            <p class="item-date"><time datetime="2018-09-23T10:00:11.000Z" itemprop="datePublished">2018-09-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/01-notes-of-computational-ads-definitions.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="01计算广告笔记-在线广告综述" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/01-notes-of-computational-ads-definitions.html" class="title">01计算广告笔记-在线广告综述</a></p>
+                            <p class="item-date"><time datetime="2018-09-12T08:44:00.000Z" itemprop="datePublished">2018-09-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">100</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">80</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">52</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算广告/">计算广告</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function () {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function (d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function () {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+
+        function loadCssCode(code) {
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.rel = 'stylesheet';
+            //for Chrome Firefox Opera Safari
+            style.appendChild(document.createTextNode(code));
+            //for IE
+            //style.styleSheet.cssText = code;
+            var head = document.getElementsByTagName('head')[0];
+            head.appendChild(style);
+        }
+        var dsq = null;
+        //去除畅言广告
+        dsq = setInterval('if(document.getElementById("feedAv")){document.getElementById("feedAv").id="feedAvi";window.clearInterval(dsq);}', 1000);
+        loadCssCode('#feedAvi{position: absolute !important;z-index: -9999;top: -1000px;}');
+    </script>
+    
+
+
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+</html>
