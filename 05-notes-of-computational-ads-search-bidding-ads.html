@@ -18,7 +18,7 @@
 <meta property="og:description" content="随着搜索业务变现的要求，以及精准受众定向技术的发展，在搜索广告和展示广告中都产生了竞价这种新的交易模式。对比前面的合约广告可知，竞价交易模式的本质是将量的约束从交易过程中去除，仅仅采用“价高者得”的简单决策方案来投放每一次广告。竞价顺应了定向广告向精细化发展的趋势要求，也为大量无法用合约售卖的剩余流量找到了可能的变现渠道，使得大量中小广告主参与在线广告的可能性和积极性大大增强，也使得在线广告的商业">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
-<meta property="og:updated_time" content="2018-09-29T09:23:53.753Z">
+<meta property="og:updated_time" content="2018-10-05T04:27:52.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="05计算广告笔记-搜索与竞价广告">
 <meta name="twitter:description" content="随着搜索业务变现的要求，以及精准受众定向技术的发展，在搜索广告和展示广告中都产生了竞价这种新的交易模式。对比前面的合约广告可知，竞价交易模式的本质是将量的约束从交易过程中去除，仅仅采用“价高者得”的简单决策方案来投放每一次广告。竞价顺应了定向广告向精细化发展的趋势要求，也为大量无法用合约售卖的剩余流量找到了可能的变现渠道，使得大量中小广告主参与在线广告的可能性和积极性大大增强，也使得在线广告的商业">
@@ -222,7 +222,20 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="CPC-结算的合理性"><a href="#CPC-结算的合理性" class="headerlink" title="CPC 结算的合理性"></a>CPC 结算的合理性</h3><p>首先，从需求方来看，既然是各种媒体的不同广告位聚合在一起售卖，广告主无法知道每个媒体上广告的具体位置。而位置对于广告的曝光效果影响巨大，因此实际上广告主根本无法评估每次展示的出价，而在点击上出价，这个问题就没那么严重了。</p>
 <p>另外从供给方来看，由于淡化了广告位的概念，并且聚合了多个媒体的流量，广告网络可以接触到同一个用户比较丰富的网络行为，并且知道每次展示所在的媒体与广告位位置，所以比广告主更容易估计点击率， 由广告网络负责估计点击率，需求方根据对点击价值的估计来出价，是最合理的市场分工。</p>
-<p>// 5.3.2 continue</p>
+<h3 id="广告网络产品策略"><a href="#广告网络产品策略" class="headerlink" title="广告网络产品策略"></a>广告网络产品策略</h3><p>广告网络中的广告决策过程与搜索广告相比，整个流程要简单一些，如下图所示，分为<strong>检索</strong>、<strong>排序</strong>、<strong>定价</strong>等几个阶段。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-055.png" alt=""></p>
+<ul>
+<li><strong>广告检索。</strong>广告与搜索面对的文档其实不同，它往往是一个用布尔表达式表达的投放条件，而不是可以简单看成一个词的集合。搜索那样的面向词集合的检索方案对布尔表达式来说不是最有效的。搜索广告检索与搜索基本一致，用常规的<strong>倒排索引技术</strong>就可以解决。<strong>展示广告网络与搜索广告不同</strong>，由于用户意图不明确，我们往往要将更多的关键字、兴趣标签同时用于检索过程，而实践也证明，使用<strong>更多的标签对于提高效果是有直接帮助</strong>的。</li>
+<li><strong>广告排序。</strong>我们都知道，竞价广告中排序的准则是 eCPM，而在 CPC 结算的情形下，对 eCPM 的估计转化为对点击率的估计问题。与广告位较规整、点击率较高的搜索广告相比，<strong>广告网络中的 CTR 预测有两方面的困难</strong>。首先，<strong>点击数据更加稀疏</strong>，而且需要同时考虑上下文和用户量方面的信息，这使得各种新广告、新策略的冷启动问题非常突出。如何设计好一个合理可行的冷启动策略，对展示广告网络来说至关重要。其次，<strong>广告网络中由于广告位的差别巨大，点击率的变动范围很大</strong>，这使得稳健地估计点击率变得相对困难。我们在后面讨论点击率预估技术时将主要以展示广告的复杂情形为场景展开讨论，并将其与搜索广告的特例对比。</li>
+</ul>
+<h2 id="竞价广告需求方产品"><a href="#竞价广告需求方产品" class="headerlink" title="竞价广告需求方产品"></a>竞价广告需求方产品</h2><p>搜索广告和竞价广告网络虽然效果差别很大，但从产品本质上看，属于同一范畴。竞价广告市场的产生对需求方的技术也提出了新的要求：原来通过直接与媒体签订保量合约的采买方式变成通过竞价为广告主完成量与质需求的采买产品。具体地说，这样的产品需要具备一项基本功能，即按照广告主预算跨媒体一站式采买人群的功能。另外，还可以具备一项高级功能，即机器决策的 ROI 优化功能。</p>
+<p>这样的需求可以分解为两个基本问题：一是如何<strong>挑选合适的目标人群</strong>，二是如何<strong>对各个目标人群给出合适的出价</strong>。</p>
+<h3 id="搜索引擎营销-SEM"><a href="#搜索引擎营销-SEM" class="headerlink" title="搜索引擎营销(SEM)"></a>搜索引擎营销(SEM)</h3><p>搜索广告对应的需求方产品，即<strong>通过竞价采买搜索引擎关键词来做推广</strong>，这就是搜索引擎营销，即 SEM。上面说的两个基本问题在 SEM 中具体表现为<strong>关键词选择</strong>和<strong>出价</strong>。</p>
+<ul>
+<li><strong>关键词选择。</strong>搜索引擎进行查询扩展的目的是为了提高自己的营收；而需求方进行关键词选择的目的是为了提高广告主采买流量的 ROI。对于大量长尾的小型广告主，往往比较难于积累起足够的数据用于优化，因此这类 SEM 公司服务的对象主要是中型以上的广告主。</li>
+<li><strong>出价。</strong>传统的认识是广告主根据<strong>到达率</strong>、<strong>自己网站的转化率</strong>和<strong>客单价</strong>来估计点击价值，并以此<strong>点击价值</strong>为参考来出价。不过这忽略了一个问题，那就是各个关键词的转化率、客单价和市场竞争水平都有很大的区别，因此<strong>只有在不同关键词上做不同的出价才能更深入地优化整体采买的 ROI</strong>。</li>
+</ul>
+<h3 id="媒体购买平台"><a href="#媒体购买平台" class="headerlink" title="媒体购买平台"></a>媒体购买平台</h3><p>虽然概念类似，但是媒体采买平台的难点与 SEM 有所不同。媒体采买平台的技术挑战<strong>主要在于 ROI 的优化部分，要合理地选择需要的受众定向条件，并在每个人群上优化出价，以保证量的要求和优化收益是一个复杂的组合优化问题</strong>。</p>
 
         </div>
         <footer class="article-footer">
@@ -230,7 +243,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/05-notes-of-computational-ads-search-bidding-ads.html" data-id="cjmn8buus0123ohdqjht6ekvb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/05-notes-of-computational-ads-search-bidding-ads.html" data-id="cjmvieb42011ix6dqnqhhjg0p" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
