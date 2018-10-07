@@ -18,7 +18,7 @@
 <meta property="og:description" content="在线广告发展到竞价阶段，可以说基本的计算格局已经建立，大多数重要的产品和技术问题也都浮出水面并得到研究。然而，随着需求方优化效果的要求进一步加强，广告网络在产品形态上已经无法完全满足需要，而市场的发展方向是向需求方彻底开放。具体而言，除了允许广告主按照已经定义好的用户划分来购买，还要进一步提供广告主自行选择流量和在每次展示上独立出价的功能。这样的功能，必然要求询价、出价和竞价在展示时进行，这也就产">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
-<meta property="og:updated_time" content="2018-10-05T05:08:25.705Z">
+<meta property="og:updated_time" content="2018-10-07T14:33:02.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="06计算广告笔记-程序化交易广告">
 <meta name="twitter:description" content="在线广告发展到竞价阶段，可以说基本的计算格局已经建立，大多数重要的产品和技术问题也都浮出水面并得到研究。然而，随着需求方优化效果的要求进一步加强，广告网络在产品形态上已经无法完全满足需要，而市场的发展方向是向需求方彻底开放。具体而言，除了允许广告主按照已经定义好的用户划分来购买，还要进一步提供广告主自行选择流量和在每次展示上独立出价的功能。这样的功能，必然要求询价、出价和竞价在展示时进行，这也就产">
@@ -176,6 +176,121 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <p>在线广告发展到竞价阶段，可以说基本的计算格局已经建立，大多数重要的产品和技术问题也都浮出水面并得到研究。然而，随着需求方优化效果的要求进一步加强，广告网络在产品形态上已经无法完全满足需要，而市场的发展方向是向需求方彻底开放。具体而言，除了允许广告主按照已经定义好的用户划分来购买，还要进一步提供广告主自行选择流量和在每次展示上独立出价的功能。这样的功能，必然要求<strong>询价、出价</strong>和<strong>竞价</strong>在展示时进行，这也就产生了以实时竞价即 RTB 为核心的程序化交易市场。</p>
 <p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-061.png" alt=""></p>
+<p>RTB 的产生，使得广告市场向着透明的比价平台的方向发展，这样的平台就是广告交易平台，即 ADX， 其主要特征即是用 RTB 的方式实时得到广告候选，并按照其出价简单完成投放决策。与广告交易平台对应的采买方，我们称为需求方平台即 DSP。</p>
+<p>从需求方来看，定制化的用户划分能力使得广告主可以像优化自己的推荐系统那样优化广告购买，唯一的区别是这个推荐系统是放在站外的。出价需求的存在和广告主预算范围内的套利要求 DSP 具备点击率预测、点击价值估计、流量预测、站外推荐等多方面的运算能力。</p>
+<p>在需求方的利益得到了充分的保证以后，媒体的变现手段也发生了相应的变化。到现在为止，媒体至少有四种常用的广告变现选择：<strong>担保式投送的合约售卖方式</strong>、<strong>自营广告网络</strong>、<strong>托管给其他广告网络</strong>、<strong>通过 RTB 变现</strong>。如何动态地选择这四种模式中变现价值最高的那种，以最大化媒体收益，这是供给方面临的市场需求。在这样的需求驱动下，产生了供给方平台这样的完全优化媒体利益的产品。</p>
+<h2 id="实时竞价"><a href="#实时竞价" class="headerlink" title="实时竞价"></a>实时竞价</h2><p><strong>在广告网络中的投放：</strong>对于最常见的重定向标签， 采用<strong>由广告网络在广告主网站布设代码</strong>的方式也可以收集人群和投放广告；而对于一般的定制化标签，也可以采用<strong>由广告主上传用户 ID(cookie 或移动设备 ID)集合</strong>的方案， 由广告网络来决策和投放，如 Facebook 的广告网络就提供这样的功能。</p>
+<h3 id="广告网络中投放存在的问题"><a href="#广告网络中投放存在的问题" class="headerlink" title="广告网络中投放存在的问题"></a>广告网络中投放存在的问题</h3><ul>
+<li>定制化标签可能的选择是与广告主的量级成正比的，将这些标签集中地由广告平台加工使用，显然是一个低效的解决方案。</li>
+<li>除了定制化的人群库，需求方往往还对频次、时间、地域等诸多因素有综合决策的需求，而简单地上传用户 ID 集合显然无法达到这样的目的。</li>
+<li>简单的人群库交互无法做到精细的出价和预算控制。</li>
+</ul>
+<p>什么样的解决方案才能够规模化呢？其实很简单，<strong>只要把竞价过程开放，在广告展示时由需求方来判断是否需要并出价</strong>，就可以解决上面的问题，这样的思路就产生了实时竞价。</p>
+<blockquote>
+<p>用定制化标签指导广告投放是实时竞价的关键产品目标。</p>
+</blockquote>
+<h3 id="实时竞价流程"><a href="#实时竞价流程" class="headerlink" title="实时竞价流程"></a>实时竞价流程</h3><p>实时竞价的接口可以分成两个过程，即预先进行的将 ADX 与 DSP 的用户标识对应起来的 cookie 映射(cookie mapping)过程和线上广告请求时的竞价和投放过程，如图 6-2 所示。下面我们分别介绍这两个过程。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-062.png" alt=""></p>
+<h4 id="Cookie映射-Cookie-Mapping"><a href="#Cookie映射-Cookie-Mapping" class="headerlink" title="Cookie映射(Cookie Mapping)"></a>Cookie映射(Cookie Mapping)</h4><p>cookie 映射一般是由 DSP 在广告主网站上发起，这样做的原因是，一般情况下 DSP 负责的是加工广告主定制受众标签，因而不需要对所有用户都建立对应关系。具体步骤分为两步：</p>
+<ul>
+<li>1.1 从广告主网站向 DSP 服务器发起 cookie 映射请求。</li>
+<li>1.2 DSP 与 ADX 服务器之间通信完成 cookie 映射。</li>
+</ul>
+<h4 id="广告请求-Ads-Call"><a href="#广告请求-Ads-Call" class="headerlink" title="广告请求(Ads Call)"></a>广告请求(Ads Call)</h4><p>以 Web 投放环境为例，RTB 的广告请求可以分为以下三个步骤。</p>
+<ul>
+<li>2.1 用户浏览媒体网站。</li>
+<li>2.2 媒体网站通过 JavaScript 或 SDK 向 ADX 发起广告请求。</li>
+<li>2.3 ADX 向各 DSP 传送 URL 和本域名 cookie，发起询价请求。DSP 根据预先做好的 cookie 映射查出对应的已方 cookie， 决策是否参与竞价，如果参与，则返回自己的出价。<strong>在等待一个固定的时间片后</strong>，ADX 选出出价最高的 DSP 返回给媒体网站。</li>
+<li>2.4 媒体网站从胜出的 DSP 拿到广告创意并展示。</li>
+</ul>
+<p>其中步骤 2.2 和步骤 2.3 可以合并为一步，即 <strong>DSP 同时返回出价和广告创意地址， 由 ADX 返回给媒体</strong>。这样做的<strong>好处是减少了一次服务器往返，用户看到的广告延迟也会减少</strong>。<strong>缺点是 ADX 可以获得 DSP 某个广告商的相关受众，因而存在信息泄露风险</strong>，不太符合 ADX 中立市场的地位。</p>
+<h3 id="ADX带来的实际问题"><a href="#ADX带来的实际问题" class="headerlink" title="ADX带来的实际问题"></a>ADX带来的实际问题</h3><ul>
+<li><strong>每次展示都有 ADX 服务器与多个 DSP 服务器的参与，这使得服务器与带宽成本大大增加</strong>。读者可以简单计算下，假设每个广告请求包的大小是 1 KB， 每秒产生 5000 个广告请求， 在将每个广告请求都发给 10 个 DSP 的情形下， 需要的带宽就将达到 400Mbit/s，而这样的数字对于 ADX 来说只是一个不大的规模。</li>
+<li>在询价过程中， <strong>ADX 要等待一个约定好的时间片</strong>(一般情况下为 100 ms)， 这使得用户看到的广告延迟增加，对 CTR 有负面影响。</li>
+<li>原理上 DSP 可以以极低的出价参与竞价，这样虽不能获得流量，却<strong>可以低成本得到在媒体网站上的用户行为数据，这里存在着潜在的信息泄露风险</strong>。(现在其实很多ADX平台都会<strong>设置门槛，设置市场保留价</strong>，杜绝低价竞价)</li>
+</ul>
+<h2 id="其他程序化交易方式"><a href="#其他程序化交易方式" class="headerlink" title="其他程序化交易方式"></a>其他程序化交易方式</h2><p>在实时竞价产生以后，<strong>广告交易越来越多地依赖机器间在线的协商而非事先约定或人工操作完成</strong>，这样的交易方式称为程序化交易。程序化交易的核心目的是让需求方能够自由地选择流量和出价。</p>
+<ul>
+<li>优选</li>
+<li>私有市场</li>
+</ul>
+<h3 id="程序化相关交易方式-IAB版本"><a href="#程序化相关交易方式-IAB版本" class="headerlink" title="程序化相关交易方式(IAB版本)"></a>程序化相关交易方式(IAB版本)</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-063.png" alt=""></p>
+<h3 id="广告交易方式谱系"><a href="#广告交易方式谱系" class="headerlink" title="广告交易方式谱系"></a>广告交易方式谱系</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-064.png" alt=""></p>
+<h2 id="广告交易平台"><a href="#广告交易平台" class="headerlink" title="广告交易平台"></a>广告交易平台</h2><p>广告交易平台，即 ADX，是程序化交易时代的关键产品，它负责将媒体流量以拍卖的方式售卖给 DSP， 可以类比于证券市场中的交易所。</p>
+<p>ADX 的产品策略较为简单，由于所有的广告竞价都是实时进行，因此不需要保存广告库，因而也不需要广告检索流程，排序过程也非常简单。<strong>广告交易平台中需要注意的产品策略，主要是如何解决给多个 DSP 发广告请求带来的带宽和机器成本的上升</strong>。这一问题，我们称为<strong>询价优化(call out optimization)</strong>。</p>
+<p><strong>ADX 一般为 CPM 结算方式。</strong>这里的逻辑在于，<strong>实时竞价中广告决策是由 DSP 完成的</strong>，而且对每次展示都可以得到广告位信息。因此，<strong>虽然各个广告位的点击率差别很大，DSP 还是可以自行精细估计点击率，并实时计算出当前展示的合理 eCPM</strong>。 并且，由于第一方数据在程序化交易中的广泛使用，DSP 对于人群在特定广告上产生的效果往往能够估计得更加精细。因此， 按照 CPM 结算，将 eCPM 整体的估计都交给需求方是比较合适的市场分工。</p>
+<h2 id="需求方平台"><a href="#需求方平台" class="headerlink" title="需求方平台"></a>需求方平台</h2><p><strong>以 RTB 方式购买广告的产品形态就是需求方平台，即 DSP</strong>。这一产品的核心特征有两个：</p>
+<ul>
+<li>一个是 RTB 方式的流量购买；</li>
+<li>另一个是需要<strong>支持需求方定制化的用户划分</strong>。</li>
+</ul>
+<p>这两个核心特征其实是同一问题的两个方面：</p>
+<ul>
+<li>为了能够按需求方定制化的用户划分采买广告，需要市场开放竞价接口；</li>
+<li>而如果仅仅根据供给方定义的用户划分来采买，那么像广告网络那样的非实时竞价就够了。</li>
+</ul>
+<h3 id="定制化的用户划分"><a href="#定制化的用户划分" class="headerlink" title="定制化的用户划分"></a>定制化的用户划分</h3><p>从受众定向的角度看，那些形如 t(a, u) 的定向方式，即与广告主相关的定向方式，就是定制化用户划分。</p>
+<h3 id="出价策略"><a href="#出价策略" class="headerlink" title="出价策略"></a>出价策略</h3><p>在广告网络中，<strong>我们估计 eCPM 的目的是为了对广告排序</strong>，而绝对的 eCPM 值并不需要太精确。但是在 DSP 中，由于每次展示都要按 CPM 向 ADX 报价，因此准确地估计 eCPM 非常关键，这也成为 DSP 出价策略的基础。</p>
+<p>DSP 优化的出价策略可以定性地描述为：首先，<strong>通过历史的观察和预测得到市价的曲线</strong>；然后，<strong>将一天的预算分配到那些市价较低的流量上</strong>。当然，实际情况要更加复杂，因为 eCPM 也会随着时间而变化，例如游戏广告在休闲时间的 eCPM 显著高于上班时间。于是我们希望获得的并不是市价较低的流量，而是 eCPM 与市价的比例较大的流量。<strong>因此， DSP 的出价策略要基于两条曲线，即 eCPM 和市价随时间变化的曲线</strong>。</p>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><p>在不同的广告类型上，重定向主要有两种目的：</p>
+<ul>
+<li><strong>用于品牌广告。</strong>当用户已经选择过某品牌的服务或产品后，如果在比较高质量的媒体上看到该品牌的广告，他会进一步肯定自己决策的正确性，从而对该品牌的认知度也大大加强。这种用途下，<strong>应当以宣传品牌而不是具体产品为主要诉求</strong>。</li>
+<li><strong>用于效果广告。</strong>当用户曾经考虑过某种产品，但没有完成最终转化，通过在线广告将这个用户找回，点击率和转化率都会明显高于平均水平。如果用户已经选择了该产品，那么可以利用推荐技术为他推送相关的产品广告。</li>
+</ul>
+<h4 id="网站重定向"><a href="#网站重定向" class="headerlink" title="网站重定向"></a>网站重定向</h4><p>将在一段时间内到达过广告主网站的用户作为重定向集合。这样的重定向流量其 eCPM 一般来说要比无定向流量高出一个数量级，因此<strong>需要尽可能扩大投放量</strong>。在媒体上采买这种重定向流量时，能够得到的量有两个主要影响因素，</p>
+<ul>
+<li>一是广告主网站本身的独立访客量水平；</li>
+<li>二是这些访客与媒体的重合程度。</li>
+</ul>
+<p>前一个因 素没有办法通过广告手段扩大，而后一个因素则<strong>要求尽可能多地通过各种渠道采买重定向流量</strong>，显然 DSP 是合适的方式。</p>
+<h4 id="个性化重定向"><a href="#个性化重定向" class="headerlink" title="个性化重定向"></a>个性化重定向</h4><p>个性化重定向(personalized retargeting)是网站重定向的一种特例。<strong>对重定向流量进行深入加工，按照品类和购买阶段等因素进行创意上的深度个性化，就是个性化重定向</strong>。</p>
+<p>具体来说，个性化重定向可以在两个方面深入挖掘：</p>
+<ul>
+<li>一是对于处于不同购买阶段的用户，采用合适的创意推动他尽快完成转化行为，这里的购买阶段包括浏览、搜索、加入购物车等；</li>
+<li>二是对于已经有过一些购买记录的用户，使用推荐技术向其展示相关的商品以提升二次购买率。</li>
+</ul>
+<p>个性化重定向与传统的受众定向方式有较大的差别，其产品有以下三个关键点：</p>
+<ul>
+<li>动态创意。</li>
+<li>推荐引擎。</li>
+<li>广告主商品库存实时接口。</li>
+</ul>
+<h4 id="搜索重定向"><a href="#搜索重定向" class="headerlink" title="搜索重定向"></a>搜索重定向</h4><p>将搜索过与广告主直接相关的关键词的用户群作为重定向集合。<strong>这样的方式也可以获得很精准的用户群，其绝对量也要高于网站重定向</strong>，不过对于非主要搜索引擎提供商来说，依靠搜索重定向能覆盖的人群比例未必会高于网站重定向。</p>
+<p>给一次广告活动确定合适的搜索重定向词表， 一般来说有以下三种思路：</p>
+<ul>
+<li>人工根据经验确定词表。</li>
+<li>如果该广告主同时也在做 SEM，可以直接采用对应投放的关键词表。</li>
+<li>基于广告主流量统计的方法，即统计广告主网站流量中从搜索引擎来的流量，将其中频度较高的关键词作为搜索重定向词表。</li>
+</ul>
+<h3 id="新客推荐-look-alike"><a href="#新客推荐-look-alike" class="headerlink" title="新客推荐(look-alike)"></a>新客推荐(look-alike)</h3><p><strong>由广告主根据自己的第一方数据提供一部分种子用户，再由拥有更丰富数据的第二方数据的广告平台分析这些用户网络行为的特征，并根据这些特征找到具有相似特征的拓展人群</strong>。很显然，这也是一种定制化用户标签。这样的标签加工策略称为新客推荐，即 look-alike。</p>
+<h2 id="供给方平台"><a href="#供给方平台" class="headerlink" title="供给方平台"></a>供给方平台</h2><p>竞价时，从自运营广告主库中找出 eCPM 较高的，并估算可供调用的若干广告网络的 eCPM， 在这两者之间找到较高的广告候选，再以此作为 MRP，通过 RTB 接口向接入的各 DSP 实时询价。可以看出，在这样的逻辑中，广告请求是被分配到自运营广告库，还是其他广告网络，或者是 DSP， 是根据他们的收益在线动态决定的，这样的方案称为动态分配(dynamic allocation)。</p>
+<h3 id="供给方平台产品策略"><a href="#供给方平台产品策略" class="headerlink" title="供给方平台产品策略"></a>供给方平台产品策略</h3><p>动态分配决策过程示意如下图：</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-065.png" alt=""></p>
+<p>这一过程有如下五个步骤：</p>
+<ul>
+<li>从自有广告库中根据当前受众标签检索合适的广告候选，并估计每个广告候选的 eCPM。</li>
+<li>排序得到 eCPM 最高的广告候选以及相应的 eCPM 值 $r_{MAX}$。</li>
+<li>同样根据环境信息和受众标签估算出各个合作的广告网络大致的 eCPM。</li>
+<li>排序得到 eCPM 最高的广告网络以及相应的 eCPM 值$r_{MAX}^{‘}$。</li>
+<li>以$max(r_{MAX}, r_{MAX}^{‘})$为底价，通过 RTB 接口向各个合作的 DSP 查询更高变现价值的广告。</li>
+</ul>
+<p><strong>先进行本地广告检索和 eCPM 估计再进行 RTB 的好处是可以根据当前展示的情况动态调整 RTB 的底价，而当底价高到一定程度时，即可以略去 RTB 的过程，从而减轻服务器的负担。</strong></p>
+<h2 id="数据加工与交易"><a href="#数据加工与交易" class="headerlink" title="数据加工与交易"></a>数据加工与交易</h2><p>在精准广告中，可以把<strong>用户的行为类比于石油工业中的原材料</strong>，<strong>日志收集和清洗系统的作用就相当于油田的挖掘设备</strong>。而<strong>受众定向的平台就可以类比于炼油厂</strong>，它把原油，即清洗过的日志，加工成用户标签，而这些<strong>用户标签就像汽油一样，是可以被销售和使用</strong>。而传统广告中起关键作用的广告位在这里仅仅变成了加油站，负责完成产品消费的过程而已。</p>
+<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-066.png" alt=""></p>
+<h3 id="有价值的数据来源"><a href="#有价值的数据来源" class="headerlink" title="有价值的数据来源"></a>有价值的数据来源</h3><p>可以重点关注下面的几类：</p>
+<ul>
+<li><strong>用户标识。</strong>对广告而言，如何确定哪些行为来自于同一个用户是非常关键的问题。</li>
+<li><strong>用户行为。</strong>业界通常认为，转化(conversion)、预转化(pre-conversion)、搜索广告点击(sponsored search click) 、展示广告点击(ad click) 、搜索点击(search click) 、搜索(search)、分享(share)、页面浏览(page view)、广告浏览(ad view)等在线行为是可以被广泛采集并且对于受众定向或广告决策有明确作用。</li>
+<li><strong>人口属性。</strong>人口属性本身是常用的一种定向标签，因此其数据来源很重要。</li>
+<li><strong>地理位置。</strong>地理位置信息随着能获得的精度不同其用途也会有相当大的差异。</li>
+<li><strong>社交关系。</strong>社交网络上的关系反映了人与人之间的联系，也隐含了一种联系人之间“兴趣相似”的合理推测。</li>
+</ul>
+<h3 id="数据管理平台DMP"><a href="#数据管理平台DMP" class="headerlink" title="数据管理平台DMP"></a>数据管理平台DMP</h3><p>市场上也产生了专从事此业务的产品，称为数据管理平台即 DMP。DMP 有下面几个核心的产品功能：</p>
+<ul>
+<li>它可以为网站(可以是媒体也可以是广告主网站)提供受众定向功能，并将得到的用户标签应用于网站业务。在这一过程中，除了加工一些通用标签， DMP 还需要能够比较灵活地按照网站定义的用户标签来加工受众人群。</li>
+<li>如果媒体网站授权，DMP 可以提供接口对加工出来的用户标签进行变现，并与网站进行分成。</li>
+<li>广告主网站可以通过 DMP 与广告采买渠道进行更方便的数据对接。</li>
+</ul>
 
         </div>
         <footer class="article-footer">
@@ -183,7 +298,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/06-notes-of-computational-ads-programmed-exchange-ads.html" data-id="cjmvjug760006rmdqe3fctzn3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/06-notes-of-computational-ads-programmed-exchange-ads.html" data-id="cjmyyw7x5011jxidqvqvxwo8p" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -588,22 +703,7 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
 
-    </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -621,6 +721,5 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
 </body>
 </html>
