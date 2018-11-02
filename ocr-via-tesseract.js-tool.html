@@ -7,20 +7,21 @@
     <title>利用tesseract.js实现OCR | 秦江波的个人博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="" />
+        <meta name="keywords" content="OCR,Tesseract.js" />
     
-    <meta name="description" content="秦江波的个人博客">
+    <meta name="description" content="最近做了关于OCR的一个研究和学习，发现谷歌的OCR框架已经开始支持JavaScript了，叫做Tesseract.js，很是惊奇，于是乎决定好好体验一把。 安装Tesseract.js官方文档上说其实安装的过程非常简单，就是在你的JS中引入下面一段代码： 1&amp;lt;script src=&apos;https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist">
+<meta name="keywords" content="OCR,Tesseract.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用tesseract.js实现OCR">
 <meta property="og:url" content="http://qinjiangbo.com/ocr-via-tesseract.js-tool.html">
 <meta property="og:site_name" content="秦江波的个人博客">
-<meta property="og:description" content="秦江波的个人博客">
+<meta property="og:description" content="最近做了关于OCR的一个研究和学习，发现谷歌的OCR框架已经开始支持JavaScript了，叫做Tesseract.js，很是惊奇，于是乎决定好好体验一把。 安装Tesseract.js官方文档上说其实安装的过程非常简单，就是在你的JS中引入下面一段代码： 1&amp;lt;script src=&apos;https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://image.qinjiangbo.com/blog/image/tesseract-js.png">
-<meta property="og:updated_time" content="2018-11-02T12:20:11.537Z">
+<meta property="og:updated_time" content="2018-11-02T12:59:42.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用tesseract.js实现OCR">
-<meta name="twitter:description" content="秦江波的个人博客">
+<meta name="twitter:description" content="最近做了关于OCR的一个研究和学习，发现谷歌的OCR框架已经开始支持JavaScript了，叫做Tesseract.js，很是惊奇，于是乎决定好好体验一把。 安装Tesseract.js官方文档上说其实安装的过程非常简单，就是在你的JS中引入下面一段代码： 1&amp;lt;script src=&apos;https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist">
 <meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/tesseract-js.png">
     
 
@@ -145,7 +146,7 @@ var _hmt = _hmt || [];
                         <div class="main-body-header">
     <h1 class="header">
     
-    未分类
+    <a class="page-title-link" href="/categories/数据科学/">数据科学</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/数据科学/机器学习/">机器学习</a>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -168,17 +169,47 @@ var _hmt = _hmt || [];
     <time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time>
 </a>
                 
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OCR/">OCR</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tesseract-js/">Tesseract.js</a></li></ul>
+
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            
+            <p>最近做了关于OCR的一个研究和学习，发现谷歌的OCR框架已经开始支持JavaScript了，叫做Tesseract.js，很是惊奇，于是乎决定好好体验一把。</p>
+<h2 id="安装Tesseract-js"><a href="#安装Tesseract-js" class="headerlink" title="安装Tesseract.js"></a>安装Tesseract.js</h2><p>官方文档上说其实安装的过程非常简单，就是在你的JS中引入下面一段代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">'https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>一旦这个脚本被引入了，那么在你的页面上全局变量<code>Tesseract</code>就生效了。</p>
+<p>但是实际操作的时候，却远远不是引入一个js脚本就完事了。要踩的坑还不少，比如下面这段代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> defaultOptions = &#123;</span><br><span class="line">    <span class="comment">// workerPath: 'https://cdn.rawgit.com/naptha/tesseract.js/0.2.0/dist/worker.js',</span></span><br><span class="line">    corePath: <span class="string">'https://cdn.rawgit.com/naptha/tesseract.js-core/0.1.0/index.js'</span>,</span><br><span class="line">    langPath: <span class="string">'https://cdn.rawgit.com/naptha/tessdata/gh-pages/3.02/'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">"development"</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.debug(<span class="string">'Using Development Configuration'</span>);</span><br><span class="line">    defaultOptions.workerPath = location.protocol + <span class="string">'//'</span> + location.host + <span class="string">'/dist/worker.dev.js?nocache='</span> + <span class="built_in">Math</span>.random().toString(<span class="number">36</span>).slice(<span class="number">3</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> version = <span class="built_in">require</span>(<span class="string">'../../package.json'</span>).version;</span><br><span class="line">    defaultOptions.workerPath = <span class="string">'https://cdn.rawgit.com/naptha/tesseract.js/'</span> + version + <span class="string">'/dist/worker.js'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>里面涉及到的几个文件<code>worker.js</code>以及<code>index.js</code>一直因为网络原因或者是文件本身不存在导致读取一直失败。因此需要本地化，并且在初始化的时候指定为本地化的文件。</p>
+<h2 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h2><p>准备好几个文件，如下：</p>
+<ul>
+<li>index.js</li>
+<li>worker.js</li>
+<li>tesseract.js</li>
+<li>eng.traineddata.gz 【英语】</li>
+</ul>
+<p>建议放在同一个目录下，不放在同一个也行，不过要指定好配置的文件地址。我们的文件目录结构如下：</p>
+<ul>
+<li>1024recognition/tesseract/*.js</li>
+<li>1024recognition/image/</li>
+<li>1024recognition/demo.html</li>
+</ul>
+<p>在前端HTML页面中的配置如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.Tesseract = Tesseract.create(&#123;</span><br><span class="line">    workerPath: location.origin + <span class="string">'/1024recognition/tesseract/worker.js'</span>,</span><br><span class="line">    langPath: location.origin + <span class="string">'/1024recognition/tesseract/'</span>,</span><br><span class="line">    corePath: location.origin + <span class="string">'/1024recognition/tesseract/index.js'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Tesseract.recognize(<span class="string">"image/1024-4.jpeg"</span>, &#123;</span><br><span class="line">    classify_bln_numeric_mode: <span class="number">1</span>,</span><br><span class="line">    lang: <span class="string">'eng'</span></span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// $("#code").text(result.text);</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"result is: "</span> + result.text)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>这里要注意工程需要以Web服务方式打开，即以<a href="http://开头，而不是以file:///开头，否则会报错的。" target="_blank" rel="noopener">http://开头，而不是以file:///开头，否则会报错的。</a></strong></p>
+<h2 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h2><p>上面其实已经给出具体的示例了，这里说明一下的就是识别方法<code>Tesseract.recognize</code>的配置参数：</p>
+<ul>
+<li>第一个参数可以是<strong>本地的一个图片</strong>，也可以是<strong>网络上的一个图片地址</strong>，还可以是<strong>一个base64格式的二进制图片格式</strong>；</li>
+<li>第二个参数就是配置信息，包括识别的语种等等。这里<code>classify_bln_numeric_mode</code>表示<strong>假定图片中只有数字</strong>，大家可以根据自己需要去设置不同的值。</li>
+</ul>
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://qinjiangbo.com/ocr-via-tesseract.js-tool.html" data-id="cjnzzua8c00a7medq5dlyrz1c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/ocr-via-tesseract.js-tool.html" data-id="cjo010d9a00a32sdqr8hzlcy6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -351,7 +382,7 @@ var _hmt = _hmt || [];
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/数据科学/">数据科学</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/数据科学/机器学习/">机器学习</a></p>
                             <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
                             <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
                         </div>
@@ -446,7 +477,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">100</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">80</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">53</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算广告/">计算广告</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">100</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">80</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">53</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算广告/">计算广告</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
         </div>
     </div>
 
