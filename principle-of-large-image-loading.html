@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="前面一篇博客讲述的是图片的懒加载过程，即只有页面滑动到图片所在的位置时才会触发加载的操作。本文在此基础上进行了进一步的研究，即不管用户什么时候打开页面，所有的图片都加载了，而不是给用户显示一个Loading的图标，只不过我们的初始显示的图片是模糊的，后面再慢慢加载清晰，保证网页加载是流畅的。 有两张图片，都是樱花图，sakura.jpeg和sakura_min.jpeg两张。分别如下： 大小是6">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/big-image-loading.png">
-<meta property="og:updated_time" content="2018-04-03T06:21:32.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/big-image-loading.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网站大图片加载原理">
 <meta name="twitter:description" content="前面一篇博客讲述的是图片的懒加载过程，即只有页面滑动到图片所在的位置时才会触发加载的操作。本文在此基础上进行了进一步的研究，即不管用户什么时候打开页面，所有的图片都加载了，而不是给用户显示一个Loading的图标，只不过我们的初始显示的图片是模糊的，后面再慢慢加载清晰，保证网页加载是流畅的。 有两张图片，都是樱花图，sakura.jpeg和sakura_min.jpeg两张。分别如下： 大小是6">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/big-image-loading.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/big-image-loading.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,18 +174,18 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/big-image-loading.png" alt=""></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/big-image-loading.png" alt=""></p>
 <p>前面一篇博客讲述的是图片的懒加载过程，即只有页面滑动到图片所在的位置时才会触发加载的操作。本文在此基础上进行了进一步的研究，即不管用户什么时候打开页面，所有的图片都加载了，而不是给用户显示一个Loading的图标，只不过我们的初始显示的图片是模糊的，后面再慢慢加载清晰，保证网页加载是流畅的。</p>
 <p>有两张图片，都是樱花图，sakura.jpeg和sakura_min.jpeg两张。分别如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/sakura.jpeg" alt="sakura.jpeg"><br>大小是6.9M，分辨率是6000*4000</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/sakura_min.jpeg" alt="sakura_min.jpeg"><br>大小是34K，分辨率是1134*768</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/sakura.jpeg" alt="sakura.jpeg"><br>大小是6.9M，分辨率是6000*4000</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/sakura_min.jpeg" alt="sakura_min.jpeg"><br>大小是34K，分辨率是1134*768</p>
 <p>可以看到，压缩过的小图片使用了高斯模糊，而且非常小。在3G网络下，我们看两张图片的加载速度：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/loading-time-of-sakuras.png" alt="两张图片的加载速度对比"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/loading-time-of-sakuras.png" alt="两张图片的加载速度对比"></p>
 <p>非常直观地给我们显示出小图片加载的时间为950ms，而大图片的加载时间达到了38.89s。当然了，这只是3G网络下，4G网络下的速度可能会更快一些，但是这个区别还是非常明显的。</p>
 <p>我们给出测试页面的代码：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>大图片加载测试页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        img &#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://obrxbqjbi.qnssl.com/blog/image/sakura_min.jpeg"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">&lt;img src="https://obrxbqjbi.qnssl.com/blog/image/sakura.jpeg"/&gt;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">//一段正则，匹配所有_min的图片src属性</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> test = <span class="regexp">/_min/</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">//遍历所有的图片节点</span></span></span><br><span class="line"><span class="javascript">    $(<span class="string">"img"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params">index,obj</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(test.test($(<span class="keyword">this</span>).attr(<span class="string">"src"</span>)))&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> reSrc = $(<span class="keyword">this</span>).attr(<span class="string">"src"</span>).replace(test,<span class="string">""</span>);</span></span><br><span class="line"><span class="javascript">            $(<span class="keyword">this</span>).attr(<span class="string">"src"</span>,reSrc)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>大图片加载测试页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        img &#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://image.qinjiangbo.com/blog/image/sakura_min.jpeg"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">&lt;img src="https://image.qinjiangbo.com/blog/image/sakura.jpeg"/&gt;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">//一段正则，匹配所有_min的图片src属性</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> test = <span class="regexp">/_min/</span></span></span><br><span class="line"><span class="javascript">    <span class="comment">//遍历所有的图片节点</span></span></span><br><span class="line"><span class="javascript">    $(<span class="string">"img"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params">index,obj</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(test.test($(<span class="keyword">this</span>).attr(<span class="string">"src"</span>)))&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> reSrc = $(<span class="keyword">this</span>).attr(<span class="string">"src"</span>).replace(test,<span class="string">""</span>);</span></span><br><span class="line"><span class="javascript">            $(<span class="keyword">this</span>).attr(<span class="string">"src"</span>,reSrc)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/big-image-loading-animation.gif" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/big-image-loading-animation.gif" alt=""></p>
 <p>还有另外一种实现方式就是通过使用<code>data</code>属性，比如在<code>img</code>标签中添加一个<code>data-src</code>属性，直接通过这个替换即可，而不是通过特定的规则来约束整个文件的命名。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于网页大图片加载的研究有很多，通常是采用的懒加载方式，本文提供了另一种解决的思路，其实从技术实现上来说都差不多，只不过解决的角度不同。</p>
 
@@ -195,7 +195,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/principle-of-large-image-loading.html" data-id="cjnb4zwq000alg6dqi7lkhymz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/principle-of-large-image-loading.html" data-id="cjnzzo6j800at84dqoelvq57p" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -367,10 +367,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -390,7 +410,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -410,7 +430,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -430,7 +450,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -441,26 +461,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -597,20 +597,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -628,5 +643,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

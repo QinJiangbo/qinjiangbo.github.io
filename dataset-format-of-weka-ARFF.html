@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/weka-thumbnail.png">
-<meta property="og:updated_time" content="2017-11-28T09:19:42.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/weka-thumbnail.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weka数据集文件格式ARFF">
 <meta name="twitter:description" content="开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/weka-thumbnail.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/weka-thumbnail.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,10 +174,10 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/weka-thumbnail.png" alt=""></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/weka-thumbnail.png" alt=""></p>
 <p>开始机器学习相关的探索啦！作为一名Java程序员，想学习机器学习相关的技术，那么如何入手呢？有很多选择的，Java也是机器学习非常热门的语言之一，虽然Python是老大。博主决定从Weka入手，逐渐熟习机器学习常用的算法，然后再学习SparkMLLib等。我认为如果想在机器学习领域继续深挖，那么Python的学习是非常有必要的，因为现在很多非常前沿的机器学习相关技术都是先在Python的平台上发布出来，比如Tensorflow等。好啦，废话不多说了，开始进入Weka的学习，第一步就是搞清楚Weka是什么？Weka处理的数据集又是什么？</p>
 <h2 id="Weka是什么？"><a href="#Weka是什么？" class="headerlink" title="Weka是什么？"></a>Weka是什么？</h2><p>Weka是一种鸡，叫<code>新西兰秧鸡</code>。这种鸟类天生就不具备飞行的能力，而且只在新西兰被发现，所以叫<code>新西兰秧鸡</code>。另外，英文<code>Weka</code>这个名字的来源也是因为这种鸟的叫声就是这个样子的，weka…weka…weka…，这种鸟类长这个模样：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/weka-animal.png?imageView2/2/w/480/h/300/q/75|imageslim" alt="Weka"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/weka-animal.png?imageView2/2/w/480/h/300/q/75|imageslim" alt="Weka"></p>
 <p>好了，言归正传，本文所指的<code>Weka</code>其实是一种机器学习的工具包，里面有一系列用于数据挖掘任务的机器学习算法。这些算法可以被直接应用于数据集也可以从你的Java代码中进行调用。<code>Weka</code>包含了数据预处理、分类、回归、聚类、关联规则和可视化的一系列工具。而且也非常适合开发出新的机器学习模式。 <a href="https://www.cs.waikato.ac.nz/ml/weka/" target="_blank" rel="noopener">官网</a>原文介绍如下：</p>
 <blockquote>
 <p>Weka is a collection of machine learning algorithms for data mining tasks. The algorithms can either be applied directly to a dataset or called from your own Java code. Weka contains tools for data pre-processing, classification, regression, clustering, association rules, and visualization. It is also well-suited for developing new machine learning schemes.</p>
@@ -216,7 +216,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/dataset-format-of-weka-ARFF.html" data-id="cjnb4zwm20029g6dqv3q6f0tk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/dataset-format-of-weka-ARFF.html" data-id="cjnzzo6em002784dq08x9z9ms" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -388,10 +388,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -411,7 +431,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -431,7 +451,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -451,7 +471,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -462,26 +482,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -618,20 +618,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -649,5 +664,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="在线网站有很多，但是提供下载链接的很少。一般都是会采取下载客户端，要求你在客户端缓存的策略，但是有没有什么方法可以让你不在客户端就可以直接在PC端（包括Linux端 &amp;amp; Mac端）下载呢？答案是肯定的，You-Get便是其中的一种选择。 什么是You-Get？You-Get是一个非常轻量级的命令行实用工具，可以用来从网上下载媒体内容（比如视频，音频，图片）。当没有其它什么方便的途径下载的时">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/you-get-thumbnail.png">
-<meta property="og:updated_time" content="2017-03-15T12:25:22.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/you-get-thumbnail.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.503Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用You-Get下载YouTube视频">
 <meta name="twitter:description" content="在线网站有很多，但是提供下载链接的很少。一般都是会采取下载客户端，要求你在客户端缓存的策略，但是有没有什么方法可以让你不在客户端就可以直接在PC端（包括Linux端 &amp;amp; Mac端）下载呢？答案是肯定的，You-Get便是其中的一种选择。 什么是You-Get？You-Get是一个非常轻量级的命令行实用工具，可以用来从网上下载媒体内容（比如视频，音频，图片）。当没有其它什么方便的途径下载的时">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/you-get-thumbnail.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/you-get-thumbnail.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/you-get-thumbnail.png" alt="You-Get"><br>在线网站有很多，但是提供下载链接的很少。一般都是会采取下载客户端，要求你在客户端缓存的策略，但是有没有什么方法可以让你不在客户端就可以直接在PC端（包括Linux端 &amp; Mac端）下载呢？答案是肯定的，You-Get便是其中的一种选择。</p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/you-get-thumbnail.png" alt="You-Get"><br>在线网站有很多，但是提供下载链接的很少。一般都是会采取下载客户端，要求你在客户端缓存的策略，但是有没有什么方法可以让你不在客户端就可以直接在PC端（包括Linux端 &amp; Mac端）下载呢？答案是肯定的，You-Get便是其中的一种选择。</p>
 <h2 id="什么是You-Get？"><a href="#什么是You-Get？" class="headerlink" title="什么是You-Get？"></a>什么是You-Get？</h2><p>You-Get是一个非常轻量级的命令行实用工具，可以用来从网上下载媒体内容（比如视频，音频，图片）。当没有其它什么方便的途径下载的时候它是一个不错的选择。</p>
 <p><strong>看看它能做什么？给定一条视频的播放地址，它就能自动读取视频流并解析然后下载。</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ you-get http://www.fsf.org/blogs/rms/20140407-geneva-tedx-talk-free-software-free-society</span><br><span class="line">Site:       fsf.org</span><br><span class="line">Title:      TEDxGE2014_Stallman05_LQ</span><br><span class="line">Type:       WebM video (video/webm)</span><br><span class="line">Size:       27.12 MiB (28435804 Bytes)</span><br><span class="line"></span><br><span class="line">Downloading TEDxGE2014_Stallman05_LQ.webm ...</span><br><span class="line">100.0% ( 27.1/27.1 MB) ├████████████████████████████████████████┤[1/1]   12 MB/s</span><br></pre></td></tr></table></figure>
@@ -763,7 +763,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/you-get-video-downloader.html" data-id="cjnb4zx0r015hg6dqgfe8lglx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/you-get-video-downloader.html" data-id="cjnzzo6ue015g84dq5xnopoer" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -935,10 +935,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -958,7 +978,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -978,7 +998,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -998,7 +1018,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -1009,26 +1029,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -1165,20 +1165,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1196,5 +1211,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

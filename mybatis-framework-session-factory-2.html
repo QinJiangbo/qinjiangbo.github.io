@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="安装MyBatis要使用 MyBatis， 只需将 mybatis-x.x.x.jar 文件置于 classpath 中即可。 如果使用 Maven 来构建项目，则需将下面的 dependency 代码置于 pom.xml 文件中： 12345&amp;lt;dependency&amp;gt;  &amp;lt;groupId&amp;gt;org.mybatis&amp;lt;/groupId&amp;gt;  &amp;lt;artifactId">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/mybatis-thumbnail.jpg">
-<meta property="og:updated_time" content="2018-04-02T09:01:01.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/mybatis-thumbnail.jpg">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis框架-2-构建SqlSessionFactory">
 <meta name="twitter:description" content="安装MyBatis要使用 MyBatis， 只需将 mybatis-x.x.x.jar 文件置于 classpath 中即可。 如果使用 Maven 来构建项目，则需将下面的 dependency 代码置于 pom.xml 文件中： 12345&amp;lt;dependency&amp;gt;  &amp;lt;groupId&amp;gt;org.mybatis&amp;lt;/groupId&amp;gt;  &amp;lt;artifactId">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/mybatis-thumbnail.jpg">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/mybatis-thumbnail.jpg">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -222,13 +222,14 @@ var _hmt = _hmt || [];
 <p>在你的所有的代码中一致性地使用这种模式来保证所有数据库资源都能被正确地关闭。</p>
 <h3 id="映射器实例（Mapper-Instances）"><a href="#映射器实例（Mapper-Instances）" class="headerlink" title="映射器实例（Mapper Instances）"></a>映射器实例（Mapper Instances）</h3><p>映射器是创建用来绑定映射语句的接口。映射器接口的实例是从 SqlSession 中获得的。因此从技术层面讲，映射器实例的最大范围是和 SqlSession 相同的，因为它们都是从 SqlSession 里被请求的。尽管如此，映射器实例的最佳范围是方法范围。也就是说，映射器实例应该在调用它们的方法中被请求，用过之后即可废弃。并不需要显式地关闭映射器实例，尽管在整个请求范围（request scope）保持映射器实例也不会有什么问题，但是很快你会发现，像 SqlSession 一样，在这个范围上管理太多的资源的话会难于控制。所以要保持简单，最好把映射器放在方法范围（method scope）内。下面的示例就展示了这个实践：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  BlogMapper mapper = session.getMapper(BlogMapper.class);</span><br><span class="line">  <span class="comment">// do work</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://qinjiangbo.com/mybatis-framework-session-factory-2.html" data-id="cjnb4zwzm0141g6dqpwafysrq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/mybatis-framework-session-factory-2.html" data-id="cjnzzo6t8014384dqpc0i0k3q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -400,10 +401,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -423,7 +444,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -443,7 +464,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -463,7 +484,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -474,26 +495,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -630,20 +631,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -661,5 +677,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

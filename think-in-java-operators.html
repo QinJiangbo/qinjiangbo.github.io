@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="本文将的操作符就不像书中那样描述啦，博主总结一些比较重要而且比较容易出错的点。这些点弄明白了操作符这一块才能真正地搞清楚。 “+”操作符有人说“+”这个操作符也需要讲？Naive！如果只是简单地描述1+1=2，那这个篇文章就没有啥存在的意义了。这里主要描述的是与字符串相关的操作。 str1 + str2Java为我们做了一件很重要的事情就是让String支持+操作符。这样做有利也有弊。首先说说好处">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/ThinkingInJava.png">
-<meta property="og:updated_time" content="2017-03-22T06:30:52.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/ThinkingInJava.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java编程思想之操作符（三）">
 <meta name="twitter:description" content="本文将的操作符就不像书中那样描述啦，博主总结一些比较重要而且比较容易出错的点。这些点弄明白了操作符这一块才能真正地搞清楚。 “+”操作符有人说“+”这个操作符也需要讲？Naive！如果只是简单地描述1+1=2，那这个篇文章就没有啥存在的意义了。这里主要描述的是与字符串相关的操作。 str1 + str2Java为我们做了一件很重要的事情就是让String支持+操作符。这样做有利也有弊。首先说说好处">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/ThinkingInJava.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/ThinkingInJava.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -189,7 +189,7 @@ var _hmt = _hmt || [];
 <p>可以看到，其实只创建了两个数组而不是三个数组，其中<code>a</code>和<code>c</code>表示的是同一个数组，<code>b</code>单独表示一个数组。对于<code>a</code>和<code>c</code>，不管哪一个改变了数组的元素，通过另个引用去访问数组元素都会和之前不同。这是一个很容易犯的错误。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// People(name, age, hobby)</span></span><br><span class="line"><span class="comment">// toString() &#123; return name + "-" + age + "-" + hobby;  &#125;</span></span><br><span class="line">People p = <span class="keyword">new</span> People(<span class="string">"Richard"</span>, <span class="number">24</span>, <span class="string">"Girl"</span>); </span><br><span class="line"><span class="comment">// method</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">chgName</span><span class="params">(People p)</span> </span>&#123;</span><br><span class="line">	p = <span class="keyword">new</span> People(<span class="string">"Jimmy"</span>, <span class="number">24</span>, <span class="string">"Girl"</span>);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(p);</span><br></pre></td></tr></table></figure>
 <p>那么这个时候<code>p</code>到底变成了什么呢？不少同学说<code>p</code>的名字已经变成了<code>Jimmy</code>，所以会打印<code>Jimmy-24-Girl</code>。恭喜你！成功避开正确选项。正确答案还是<code>Richard-24-Girl</code>。为什么会这样呢？我们注意到在<code>chgName</code>方法里面，局部变量<code>p</code>在调用的时候被初始化为<code>Richard-24-Girl</code>的这个对象，但是在方法体里面，这个局部变量<code>p</code>又被重新赋了一个新的对象<code>Jimmy-24-Girl</code>。这个时候我们知道这个局部变量和原来的那个对象便没有的什么关系，所以原来的对象并不会发生改变。可以见下图：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/string-alias.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/string-alias.png" alt=""></p>
 <h2 id="自增和自减"><a href="#自增和自减" class="headerlink" title="自增和自减"></a>自增和自减</h2><p>自增<code>++</code>和自减<code>--</code>这个其实不难理解，无非就是将自身的值加一或者减一呗。但是这里一旦和变量的赋值操作结合起来就比较有意思了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">7</span>;</span><br><span class="line"><span class="keyword">int</span> b = a++;</span><br><span class="line"><span class="keyword">int</span> c = ++a;</span><br></pre></td></tr></table></figure>
 <p><code>a, b, c</code>的结果应该会是什么呢？有人可能会回答<code>9, 8, 9</code>。恭喜你，又答错了！正确的答案是<code>9, 7, 9</code>。为啥呢？我们注意到<code>int b = a++;</code>这一句是针对变量<code>b</code>赋值，但是需要注意这个赋值的顺序，是先将<code>a</code>赋值给<code>b</code>，然后<code>a++</code>， 因此<code>b</code>为7。变量<code>c</code>又是什么情况呢？注意到<code>int c = ++a;</code>在赋值语句右边紧跟着的是<code>++</code>自增语句，因此<code>a</code>会先自增为9，然后将<code>a</code>的值赋给<code>c</code>，所以<code>c</code>的取值是9。</p>
@@ -201,7 +201,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/think-in-java-operators.html" data-id="cjnb4zwrv00eog6dqtr8v77c2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/think-in-java-operators.html" data-id="cjnzzo6l300ev84dqlwfp6r90" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -373,10 +373,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -396,7 +416,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -416,7 +436,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -436,7 +456,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -447,26 +467,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -603,20 +603,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -634,5 +649,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

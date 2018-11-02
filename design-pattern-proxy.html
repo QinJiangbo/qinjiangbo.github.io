@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="什么是代理模式代理模式(Proxy Design Pattern)为另一个对象提供一个替身或占位符以控制对这个对象的访问。 理解代理模式代理模式所要解决的问题其实是要控制对某一个对象的访问，这句话怎么理解呢？就好比生活中我们需要去做某些事情，比如买房，出国旅游等，由于我们对买房，出国旅游的相关办理手续不是很熟悉，所以我们希望找一个人帮助我们去解决这个事情。委托他代理我们去找相关的机构办理相关的业务">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/proxy-pattern.png">
-<meta property="og:updated_time" content="2017-12-23T14:19:46.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/proxy-pattern.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式学习之代理模式">
 <meta name="twitter:description" content="什么是代理模式代理模式(Proxy Design Pattern)为另一个对象提供一个替身或占位符以控制对这个对象的访问。 理解代理模式代理模式所要解决的问题其实是要控制对某一个对象的访问，这句话怎么理解呢？就好比生活中我们需要去做某些事情，比如买房，出国旅游等，由于我们对买房，出国旅游的相关办理手续不是很熟悉，所以我们希望找一个人帮助我们去解决这个事情。委托他代理我们去找相关的机构办理相关的业务">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/proxy-pattern.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/proxy-pattern.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -181,7 +181,7 @@ var _hmt = _hmt || [];
 <li>虚拟代理控制访问创建开销大的资源</li>
 <li>保护代理基于权限控制对资源的访问</li>
 </ul>
-<h2 id="代理模式类图"><a href="#代理模式类图" class="headerlink" title="代理模式类图"></a>代理模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-class-diagram.png" alt="代理模式类图"></p>
+<h2 id="代理模式类图"><a href="#代理模式类图" class="headerlink" title="代理模式类图"></a>代理模式类图</h2><p><img src="https://image.qinjiangbo.com/blog/image/proxy-class-diagram.png" alt="代理模式类图"></p>
 <p>下面分别介绍类图中各个组件的作用：</p>
 <p><code>Proxy</code>和<code>RealSubject</code>都实现了<code>Subject</code>接口，这允许任何客户都可以像处理<code>RealSubject</code>对象一样来处理<code>Proxy</code>对象。</p>
 <p><code>Proxy</code>持有<code>Subject</code>的引用，所以必要时它可以将请求转发给<code>Subject</code>。</p>
@@ -189,7 +189,7 @@ var _hmt = _hmt || [];
 <p>在某些例子中，<code>Proxy</code>还会负责<code>RealSubject</code>对象的创建和销毁。客户和<code>RealSubject</code>的交互都必须通过<code>Proxy</code>。因为<code>Proxy</code>和<code>RealSubject</code>实现了想用的接口（<code>Subject</code>），所以任何用到<code>RealSubject</code>的地方都可以用<code>Proxy</code>取代。<code>Proxy</code>也控制了对<code>RealSubject</code>的访问，在某些情况下，我们可能需要这样的控制。这些情况包括<code>RealSubject</code>是远程的对象，<code>RealSubject</code>创建开销大，或者是<code>RealSubject</code>需要被保护。</p>
 <h2 id="实例分析-CD封面虚拟代理"><a href="#实例分析-CD封面虚拟代理" class="headerlink" title="实例分析-CD封面虚拟代理"></a>实例分析-CD封面虚拟代理</h2><p>我们知道使用CD播放机来播放CD的时候我们可以看到每一首歌曲的封面，其实这里面也是使用到了代理模式。现在其实播放CD的很少了，不过很久以前非常流行，那个时候电脑内存小，磁盘速度慢，因此打开一张图需要缓冲一段时间，因此需要在加载的时候给用户提供一个不错的提示，能让他“耐心”地等一会儿。</p>
 <p>先展示这个CD封面加载模式的类图结构吧：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-instance-class-diagram.png" alt="CD封面虚拟代理模式"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/proxy-instance-class-diagram.png" alt="CD封面虚拟代理模式"></p>
 <p>简单说明一下系统的逻辑，我们可以看到，代理<code>ProxyImage</code>比真实对象<code>RealImage</code>少了一个方法<code>loadFromDisk()</code>。这个非常重要，说明代理对象最终的目的是为了控制这个对象的访问而不是改变或者新增这个对象的行为。</p>
 <p>创建一个Image接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.proxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 23/12/2017 9:44 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Image</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -202,7 +202,7 @@ var _hmt = _hmt || [];
 <p>结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Loading yesterday-once-more.png</span><br><span class="line">Displaying yesterday-once-more.png</span><br><span class="line">==================================</span><br><span class="line">Displaying yesterday-once-more.png</span><br></pre></td></tr></table></figure>
 <h2 id="装饰者模式-vs-代理模式"><a href="#装饰者模式-vs-代理模式" class="headerlink" title="装饰者模式 vs 代理模式"></a>装饰者模式 vs 代理模式</h2><p>其实这个两个模式非常容易被人搞混，为什么呢？因为这两个模式在结构上几乎没什么区别。我们再来回顾一下装饰者模式的类图：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/decorator-01.png" alt="装饰者模式类图"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/decorator-01.png" alt="装饰者模式类图"></p>
 <p>可以看到装饰者模式和代理模式都是需要实现一个公共的接口，不管是装饰者与被装饰者还是代理者与被代理者。当然还是有很多不一样的地方的，我们细细道来：</p>
 <ol>
 <li>代理模式中只是对真实对象的“代表”，而不是“装饰”对象。</li>
@@ -214,7 +214,7 @@ var _hmt = _hmt || [];
 <li>客户端调用某个对象的方法，代理接收到这个请求以后将相关方法、参数等信息通过序列化的方式发送给服务端，服务端收到以后完成本地方法调用。</li>
 <li>服务端调用完成以后，返回给本地代理，代理奖将结果进行序列化传递给客户端，客户端收到结果，就像在本地一样，完全无感知。</li>
 </ul>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-01.png" alt="客户端发送请求"><br><img src="https://obrxbqjbi.qnssl.com/blog/image/proxy-02.png" alt="客户端接收结果"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/proxy-01.png" alt="客户端发送请求"><br><img src="https://image.qinjiangbo.com/blog/image/proxy-02.png" alt="客户端接收结果"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>代理模式非常的重要，以至于我后面还会重点写一篇文章来介绍代理模式在Java中的几种典型代表。它在我们的生产中有着非常重要的作用，比如我们最常见的Dubbo，HSF等RPC框架，都是基于代理模式来实现的。掌握好代理模式，我们也能自己实现一个RPC框架，这对于我们理解网络，代理，反射等各种技术要点理解都是有非常重要的提升和锻炼作用的。</p>
 
         </div>
@@ -223,7 +223,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/design-pattern-proxy.html" data-id="cjnb4zwmf002tg6dqz9ye1vkq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/design-pattern-proxy.html" data-id="cjnzzo6f1002u84dqtmmiscn1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -395,10 +395,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -418,7 +438,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -438,7 +458,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -458,7 +478,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -469,26 +489,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -625,20 +625,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -656,5 +671,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="本文背景昨天夜里本来想写一篇设计模式的博文，先去查看了一下博客，忽然发现博客系统的css和js样式全部失效了。通过默认的访问方式全部都没有用，整个博客的用户体验非常差。然后我就开始找原因，因为采用的是阿里云CDN加速的，又是在深夜，我在想是不是阿里云官方在升级CDN系统导致我的全站样式文件全部失效，后来发现过了俩小时还不行，那就不是阿里云的问题了。然后一直找到3点钟还没有头绪，就睡了一觉，睡的时候">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/qiniu-logo.png">
-<meta property="og:updated_time" content="2016-11-04T02:12:55.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/qiniu-logo.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.452Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用七牛云给Hexo博客加速">
 <meta name="twitter:description" content="本文背景昨天夜里本来想写一篇设计模式的博文，先去查看了一下博客，忽然发现博客系统的css和js样式全部失效了。通过默认的访问方式全部都没有用，整个博客的用户体验非常差。然后我就开始找原因，因为采用的是阿里云CDN加速的，又是在深夜，我在想是不是阿里云官方在升级CDN系统导致我的全站样式文件全部失效，后来发现过了俩小时还不行，那就不是阿里云的问题了。然后一直找到3点钟还没有头绪，就睡了一觉，睡的时候">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/qiniu-logo.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/qiniu-logo.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -177,18 +177,18 @@ var _hmt = _hmt || [];
             <h2 id="本文背景"><a href="#本文背景" class="headerlink" title="本文背景"></a>本文背景</h2><p>昨天夜里本来想写一篇设计模式的博文，先去查看了一下博客，忽然发现博客系统的css和js样式全部失效了。通过默认的访问方式全部都没有用，整个博客的用户体验非常差。然后我就开始找原因，因为采用的是阿里云CDN加速的，又是在深夜，我在想是不是阿里云官方在升级CDN系统导致我的全站样式文件全部失效，后来发现过了俩小时还不行，那就不是阿里云的问题了。然后一直找到3点钟还没有头绪，就睡了一觉，睡的时候还在想如何加载这个css和js的问题。</p>
 <p>到了今天早上终于有头绪了，因为发现默认<code>访问路径是当前路径加上当前系统根路径</code>。那既然我的默认的访问方式不支持，那为什么不把相对路径改为绝对路径，这个时候我又想起了远方的朋友—七牛云！</p>
 <h2 id="问题详述"><a href="#问题详述" class="headerlink" title="问题详述"></a>问题详述</h2><p>首先说一下我的博客系统，采用<strong>hexo 3.0+版本</strong>，主题采用的是<strong>PPOffice的Hueman</strong>。因为接下来的变化和修改都是基于这个主题来的，但是大家也不要担心，其实别的主题结构也一样，对照着改就行了。我们可以看到执行<code>hexo g</code>命令以后根路径下面会生成<code>public</code>文件夹，这个文件夹里面有我们需要的样式文件，是从<code>hueman</code>主题文件夹下的<code>source</code>文件夹拷贝过来的。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir01.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/hexo-dir01.png" alt=""></p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们下面的任务就是将上图中的<code>css，js和vendor</code>三个文件夹全部上传至七牛云，怎么做呢？七牛云为我们提供了了官方的sdk支持，这下就方便多了。先贴一下脚本代码：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">   Date: 04/11/2016</span></span><br><span class="line"><span class="string">   Author: qinjiangbo@github.io</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> qiniu <span class="keyword">import</span> Auth, put_file</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">access_key = <span class="string">'/YOUR/ACCESS/KEY/HERE'</span></span><br><span class="line">secret_key = <span class="string">'/YOUR/SECRET/KEY/HERE'</span></span><br><span class="line"></span><br><span class="line">q = Auth(access_key, secret_key)</span><br><span class="line">bucket_name = <span class="string">'static'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根路径(对应修改为你博客的根路径)</span></span><br><span class="line">blog = <span class="string">'/Users/Richard/Github/qinjiangbo.github.io/'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#public文件夹</span></span><br><span class="line">vendor_dir = <span class="string">'public/vendor'</span></span><br><span class="line">css_dir = <span class="string">'public/css'</span></span><br><span class="line">js_dir = <span class="string">'public/js'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_file</span><span class="params">(file_path)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> path <span class="keyword">in</span> os.listdir(file_path):</span><br><span class="line">        full_path = os.path.join(file_path, path)</span><br><span class="line">        <span class="keyword">if</span> os.path.isfile(full_path):</span><br><span class="line">            key = re.sub(<span class="string">r".*?public/"</span>, <span class="string">""</span>, full_path)</span><br><span class="line">            token = q.upload_token(bucket_name, key, <span class="number">3600</span>)</span><br><span class="line">            ret, info = put_file(token, key, full_path)</span><br><span class="line">            print(ret)</span><br><span class="line">            print(info)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(full_path):</span><br><span class="line">            list_file(full_path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list_file(blog + vendor_dir)</span><br><span class="line">list_file(blog + css_dir)</span><br><span class="line">list_file(blog + js_dir)</span><br></pre></td></tr></table></figure>
 <p>等一下，先别着急运行代码，因为没有导入七牛的SDK一定会报错！！！具体有以下几步需要做：</p>
 <ul>
 <li>首先到七牛的官网下载SDK，如果你还没注册七牛云的话需要先注册，然后进入开发者中心。如下</li>
 </ul>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir02.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/hexo-dir02.png" alt=""></p>
 <ul>
 <li>其次进入你的控制台，到个人面板里面找到密钥管理—&gt;访问密钥(AK)和授权密钥(SK)。复制</li>
 </ul>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir03.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/hexo-dir03.png" alt=""></p>
 <ul>
 <li>到上面的代码中相应的位置填上。</li>
 </ul>
@@ -197,9 +197,9 @@ var _hmt = _hmt || [];
 <p>修改hueman主题的配置文件<code>.config.yml</code>，添加一个路径<code>cdn_prefix</code>，这个路径是你的七牛云的对象存储里面CDN加速的路径，你可以点击https随机生成一个，或者是添加自定义的域名，博主建议你选择前者。</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cdn</span></span><br><span class="line"><span class="attr">cdn_prefix:</span> <span class="attr">https://og3d9wq14.qnssl.com/</span></span><br></pre></td></tr></table></figure>
 <p>进入这个目录<code>/Users/Richard/GitHub/qinjiangbo.github.io/themes/hueman/layout</code>，修改为你对应的就行，可以看到下面这些文件</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir04.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/hexo-dir04.png" alt=""></p>
 <p>你需要更改的文件夹<code>common</code>和<code>plugin</code>，先进入<code>common</code>，找到<code>head.ejs</code>，修改如下代码</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/hexo-dir05.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/hexo-dir05.png" alt=""></p>
 <p><code>plugin</code>下面的<code>scripts.ejs</code>也是一样的，就不赘述了。读者朋友们可以根据自己的实际情况去查看自己博客中对应的文件，不一定非得和博主一样，只要是涉及到前面说的<code>jss, css和vendor</code>三个文件夹下面的脚本文件的，全部都这么处理。后面记得把<code>layout</code>文件夹下面的<code>.DS_Store</code>文件删除（如果有的话，不然<code>hexo g</code>会报错）</p>
 <p>好了，基本上大功告成！运行<code>hexo d</code>发布博客，就可以看效果了！</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>出现问题不可怕，一定会解决的！那还担心啥！心态调整好，该睡觉睡觉，该思考思考！换个角度想问题可能会更好！</p>
@@ -210,7 +210,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/speed-hexo-blog-with-qiniu-cloud.html" data-id="cjnb4zwr800d7g6dqt2dcj64h" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/speed-hexo-blog-with-qiniu-cloud.html" data-id="cjnzzo6kb00d884dqa4u7nqpz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -382,10 +382,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -405,7 +425,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -425,7 +445,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -445,7 +465,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -456,26 +476,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -612,20 +612,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -643,5 +658,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

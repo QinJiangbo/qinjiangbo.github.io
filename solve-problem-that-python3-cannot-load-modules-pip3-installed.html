@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="最近要跑一个机器学习的demo，按照要求使用pip3命令安装好了相关的模块，结果出现了一个重大的问题，就是使用python3命令导入相关模块的时候直接出现了一个很尴尬的问题，无法查找到该模块。如下： 12345678$ python3Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) [GCC 4.2.1 (Apple Inc. bui">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png">
-<meta property="og:updated_time" content="2018-01-06T04:15:06.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/python-thumbnail.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决Python3不能导入pip3安装包问题">
 <meta name="twitter:description" content="最近要跑一个机器学习的demo，按照要求使用pip3命令安装好了相关的模块，结果出现了一个重大的问题，就是使用python3命令导入相关模块的时候直接出现了一个很尴尬的问题，无法查找到该模块。如下： 12345678$ python3Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) [GCC 4.2.1 (Apple Inc. bui">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/python-thumbnail.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png" alt=""></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/python-thumbnail.png" alt=""></p>
 <p>最近要跑一个机器学习的demo，按照要求使用<code>pip3</code>命令安装好了相关的模块，结果出现了一个重大的问题，就是使用<code>python3</code>命令导入相关模块的时候直接出现了一个很尴尬的问题，无法查找到该模块。如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ python3</span><br><span class="line">Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) </span><br><span class="line">[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> or <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; import imutils</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line 1, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">ModuleNotFoundError: No module named <span class="string">'imutils'</span></span><br></pre></td></tr></table></figure>
 <h2 id="pip3安装包位置与python3引用位置不同"><a href="#pip3安装包位置与python3引用位置不同" class="headerlink" title="pip3安装包位置与python3引用位置不同"></a>pip3安装包位置与python3引用位置不同</h2><p>在命令行查看一下<code>pip3</code>到底是什么？</p>
@@ -192,7 +192,7 @@ var _hmt = _hmt || [];
 <p>说明导入成功了！</p>
 <h2 id="其它博客的解决方案"><a href="#其它博客的解决方案" class="headerlink" title="其它博客的解决方案"></a>其它博客的解决方案</h2><p>在网上之前找了很多解决方案，其中比较多的就是说在<code>/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages</code>目录中建立一个<code>.pth</code>文件，指定另一个<code>site-packages</code>目录的地址，然后<code>site.py</code>文件会自动去查找，但是这种方案仅针对<code>python2.7</code>，我还没有试过，不过觉得比较麻烦，而且不一定能成功，所以就没有采取这种方法。</p>
 <h2 id="PyCharm安装目录"><a href="#PyCharm安装目录" class="headerlink" title="PyCharm安装目录"></a>PyCharm安装目录</h2><p>我们在使用PyCharm去安装一些模块的时候会到这里进行安装：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/pycharm-pip.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/pycharm-pip.png" alt=""></p>
 <p>看到上面的项目解释器(Project Interpreter)，就是我们上面提到的<code>Python3.6.3</code>，它的安装目录地址就是<code>/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages</code>，因此PyCharm在这个解释器的情况下会安装到<code>/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages</code>这个目录。和我们在命令行使用<code>pip3</code>安装模块的目录是一样的。我们使用<code>pip3</code>安装一些目录以后，重新打开这个窗口，就会发现这里全部显示出来了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个应该算是Python环境里面的一个大坑了吧，对于Python不太熟悉的朋友很有可能会被这么多的安装位置搞晕，搞懵。不过我们在遇到这个问题的时候还是要冷静思考，多Google，看得多了，自己也就对这个问题慢慢熟悉了，然后才能有自己的解决方案。所以一定要有足够的Input，才能有Output。</p>
 
@@ -202,7 +202,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/solve-problem-that-python3-cannot-load-modules-pip3-installed.html" data-id="cjnb4zwr600d0g6dqlf4w9rxy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/solve-problem-that-python3-cannot-load-modules-pip3-installed.html" data-id="cjnzzo6kc00da84dqg0rg051r" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -374,10 +374,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -397,7 +417,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -417,7 +437,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -437,7 +457,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -448,26 +468,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -604,20 +604,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -635,5 +650,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

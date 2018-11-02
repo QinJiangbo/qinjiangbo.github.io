@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="什么是工厂方法模式工厂方法模式(Factory Method Design Pattern)定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到了子类。 是时候从new中解放出来啦当我们看到new，就会立马想到具体。是的，的确是这样的，我们在使用new创建一个对象的时候，我们实际上是针对实现编程，而不是针对接口。设计模式中有一个原则就是针对接口编程而不是针对实现编">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/factory-method.png">
-<meta property="og:updated_time" content="2017-03-09T17:54:21.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/factory-method.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.425Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式学习之工厂方法模式">
 <meta name="twitter:description" content="什么是工厂方法模式工厂方法模式(Factory Method Design Pattern)定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到了子类。 是时候从new中解放出来啦当我们看到new，就会立马想到具体。是的，的确是这样的，我们在使用new创建一个对象的时候，我们实际上是针对实现编程，而不是针对接口。设计模式中有一个原则就是针对接口编程而不是针对实现编">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/factory-method.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/factory-method.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -176,7 +176,7 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <h2 id="什么是工厂方法模式"><a href="#什么是工厂方法模式" class="headerlink" title="什么是工厂方法模式"></a>什么是工厂方法模式</h2><p><strong>工厂方法模式(Factory Method Design Pattern)</strong><code>定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到了子类。</code></p>
 <h2 id="是时候从new中解放出来啦"><a href="#是时候从new中解放出来啦" class="headerlink" title="是时候从new中解放出来啦"></a>是时候从<code>new</code>中解放出来啦</h2><p>当我们看到<code>new</code>，就会立马想到<code>具体</code>。是的，的确是这样的，我们在使用<code>new</code>创建一个对象的时候，我们实际上是针对实现编程，而不是针对接口。设计模式中有一个原则就是<code>针对接口编程而不是针对实现编程</code>。针对接口编程，可以隔离掉以后系统可能发生的一大堆<strong>改变</strong>。为什么呢？因为代码是针对接口编写的，通过多态，它可以与任何新类实现该接口。但是，当代码使用大量的具体类时，等于自找麻烦，因为一旦加入新的具体类，我们就必须改代码。</p>
-<h2 id="工厂方法模式类图"><a href="#工厂方法模式类图" class="headerlink" title="工厂方法模式类图"></a>工厂方法模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/factory-method-01.png" alt="工厂方法模式类图"></p>
+<h2 id="工厂方法模式类图"><a href="#工厂方法模式类图" class="headerlink" title="工厂方法模式类图"></a>工厂方法模式类图</h2><p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/factory-method-01.png" alt="工厂方法模式类图"></p>
 <p><code>Product</code>是所有的产品必须实现的一个共同的接口，这样一来，使用这些产品的类就可以引用这个接口，而不是具体类。</p>
 <p><code>Creator</code>是一个抽象创建者类，它实现了所有操作产品的方法，但不实现工厂方法。它的子类必须实现这个<code>factoryMethod()</code>方法。</p>
 <p><code>ConcreteProduct</code>是具体产品类，实现了<code>Product</code>接口。</p>
@@ -187,7 +187,7 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.factory.simpleFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Pizza pizza;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SimpleFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//no args</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生产Pizza对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> type</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Pizza <span class="title">createPizza</span><span class="params">(String type)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (type.equals(<span class="string">"Pepperoni"</span>)) &#123;</span><br><span class="line">            pizza = <span class="keyword">new</span> PepperoniPizza();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"Clam"</span>)) &#123;</span><br><span class="line">            pizza = <span class="keyword">new</span> ClamPizza();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"Veggie"</span>)) &#123;</span><br><span class="line">            pizza = <span class="keyword">new</span> VeggiePizza();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">"Cheese"</span>)) &#123;</span><br><span class="line">            pizza = <span class="keyword">new</span> CheesePizza();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"Invalid Type!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pizza;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>似乎问题好像变得容易多了，至少下一次你想去掉或者增加一个新品种的披萨时，只需要跟代工厂说一下（<strong>只需要修改这一处的代码</strong>）。但是如果我想要开另一家店呢？</p>
 <h3 id="卑鄙的我"><a href="#卑鄙的我" class="headerlink" title="卑鄙的我"></a>卑鄙的我</h3><p>我也看到了商机啊，我说，给你保守这个秘密可以，但是前提是我自己加盟你的披萨店，成立一个连锁店，如何？你说：嗯，好啊！太好了！（缺心眼？？哈哈）于是我就顺（臭）理（不）成（要）章（脸）地成立了自己的披萨店。我们使用同样一个代工厂帮我们生产披萨，但是我有自己的想法，我说，我需要研发自己的一种披萨风味，和你的不一样，你的是纽约风味，我的要做成芝加哥风味。这个时候，代工厂这边就需要做很大的改变了，他需要<strong>为两家店同时制作不同口味的披萨</strong>。不过还好我负责和代工厂老板沟通具体制作事宜。</p>
-<h2 id="披萨连锁店系统的结构图"><a href="#披萨连锁店系统的结构图" class="headerlink" title="披萨连锁店系统的结构图"></a>披萨连锁店系统的结构图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/factory-method-02.png" alt="系统的结构图"></p>
+<h2 id="披萨连锁店系统的结构图"><a href="#披萨连锁店系统的结构图" class="headerlink" title="披萨连锁店系统的结构图"></a>披萨连锁店系统的结构图</h2><p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/factory-method-02.png" alt="系统的结构图"></p>
 <p>这张图很好理解，但是还是需要解释一下，右边是创建者类，它是一个抽象类，定义了一个抽闲的方法，下面的<code>NYPizzaStore</code>和<code>ChicagoPizzaStore</code>是这个创建者类的两个实现类，分别负责创建不同风味的披萨。这个也就代表了我们两家不同的连锁店。</p>
 <p>左边的这个很重要，你还是坚持你的纽约风味的披萨，但是我坚持采用全新的芝加哥风味，所以我们两家的披萨产品虽然都源自于<code>Pizza</code>这个产品类别，但是已经完全不一样了。</p>
 <h3 id="披萨生产流程说明"><a href="#披萨生产流程说明" class="headerlink" title="披萨生产流程说明"></a>披萨生产流程说明</h3><p><code>ChicagoPizzaStore</code>只负责生产芝加哥风味的披萨，<code>NYPizzaStore</code>只负责生产纽约风味的披萨。职责相当明确，不能混合生产，必须独立分开生产。</p>
@@ -229,7 +229,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/design-pattern-factory-method.html" data-id="cjnb4zwy80128g6dqsnrtzww2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/design-pattern-factory-method.html" data-id="cjnzzo6rl012784dqa2vuykcr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -401,10 +401,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -424,7 +444,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -444,7 +464,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -464,7 +484,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -475,26 +495,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -631,20 +631,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -662,5 +677,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

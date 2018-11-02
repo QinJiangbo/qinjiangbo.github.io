@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="什么是观察者模式观察者模式(Observer Design Pattern)定义了对象之间的一对多依赖，这样一来，当一个对象改变状态的时候，它的所有依赖者都会收到通知并自动更新。 出版者+订阅者=观察者模式如果你了解报纸的订阅方式，我想你基本上也就知道了观察者模式是怎样的一回事了。在观察者模式中我们一般使用主题来表示出版者，用观察者来表示订阅者。 观察者模式类图 可以看到整个类图非常简单，定义了两">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/observer-pattern.png">
-<meta property="og:updated_time" content="2017-03-09T17:54:28.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/observer-pattern.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式学习之观察者模式">
 <meta name="twitter:description" content="什么是观察者模式观察者模式(Observer Design Pattern)定义了对象之间的一对多依赖，这样一来，当一个对象改变状态的时候，它的所有依赖者都会收到通知并自动更新。 出版者+订阅者=观察者模式如果你了解报纸的订阅方式，我想你基本上也就知道了观察者模式是怎样的一回事了。在观察者模式中我们一般使用主题来表示出版者，用观察者来表示订阅者。 观察者模式类图 可以看到整个类图非常简单，定义了两">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/observer-pattern.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/observer-pattern.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -176,11 +176,11 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <h2 id="什么是观察者模式"><a href="#什么是观察者模式" class="headerlink" title="什么是观察者模式"></a>什么是观察者模式</h2><p><strong>观察者模式(Observer Design Pattern)</strong><code>定义了对象之间的一对多依赖，这样一来，当一个对象改变状态的时候，它的所有依赖者都会收到通知并自动更新。</code></p>
 <h2 id="出版者-订阅者-观察者模式"><a href="#出版者-订阅者-观察者模式" class="headerlink" title="出版者+订阅者=观察者模式"></a>出版者+订阅者=观察者模式</h2><p>如果你了解报纸的订阅方式，我想你基本上也就知道了观察者模式是怎样的一回事了。在观察者模式中我们一般使用<code>主题</code>来表示<code>出版者</code>，用<code>观察者</code>来表示<code>订阅者</code>。</p>
-<h2 id="观察者模式类图"><a href="#观察者模式类图" class="headerlink" title="观察者模式类图"></a>观察者模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/observer-01.png" alt=""></p>
+<h2 id="观察者模式类图"><a href="#观察者模式类图" class="headerlink" title="观察者模式类图"></a>观察者模式类图</h2><p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/observer-01.png" alt=""></p>
 <p>可以看到整个类图非常简单，定义了两个接口<code>Subject</code>和<code>Observer</code>，然后<code>Subject</code>中包含了<code>Observer</code>的引用，以便于数据变化时能及时调用<code>Observer</code>的更新方法。<code>Subject</code>和<code>Observer</code>分别有自己的具体实现类，<code>ConcreteSubject</code>和<code>ConcreteObserver</code>。这个很重要，我们说过一个原则，<code>针对接口编程，不针对实现编程</code>。另外，大家也看到，具体的观察者<code>ConcreteObserver</code>中包含了一个<code>ConcreteSubject</code>的引用，这个是为了在<code>Subject</code>注册自己用的。</p>
 <h2 id="实例分析-气象站"><a href="#实例分析-气象站" class="headerlink" title="实例分析-气象站"></a>实例分析-气象站</h2><p>现在有一个气象站找到你做一个需求，要求做一个天气状况和天气预报推送的软件。这个系统分为三个部分。<strong>气象站</strong>（获取实际气象数据的物理装置）、<strong>天气数据对象</strong>（追踪天气天气数据，并更新布告板）以及<strong>布告板</strong>（显示天气给用户看）。</p>
 <p>系统的结构简单描述下</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/observer-02.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/observer-02.png" alt=""></p>
 <p>如果我们接受这个项目，那我们需要做的事情就是建立一个应用，利用这个WeatherData对数据采样并及时更新三个布告板：目前状况、气象统计和天气预报。</p>
 <p>好了，怎么做呢？我们挨个分析。</p>
 <h3 id="WeatherData气象数据类（主题）"><a href="#WeatherData气象数据类（主题）" class="headerlink" title="WeatherData气象数据类（主题）"></a>WeatherData气象数据类（主题）</h3><p>我们需要弄清楚这个WeatherData的具体功能是什么？目前已知的就是</p>
@@ -223,7 +223,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/design-pattern-observation.html" data-id="cjnb4zwye012dg6dqjyaet4is" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/design-pattern-observation.html" data-id="cjnzzo6rp012c84dqvjd0eesr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -395,10 +395,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -418,7 +438,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -438,7 +458,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -458,7 +478,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -469,26 +489,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -625,20 +625,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -656,5 +671,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

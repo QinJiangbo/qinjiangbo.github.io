@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="最近研究了一下验证码识别的技术，基本上都是在做图像的识别，具体一点来说就是文字的识别。比较流行的就是使用Google的Tesseract OCR引擎来做支撑，识别图像中的文字。本文主要讲解如何利用Tesseract OCR识别最简单的验证码和文章内容。 安装Tesseract OCR引擎关于Windows下如何安装Tesseract OCR引擎的文章实在是太多了，我就不赘述了，这里重点讲一下如何在">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png">
-<meta property="og:updated_time" content="2018-01-06T14:02:34.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/python-thumbnail.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Tesseract OCR引擎识别验证码">
 <meta name="twitter:description" content="最近研究了一下验证码识别的技术，基本上都是在做图像的识别，具体一点来说就是文字的识别。比较流行的就是使用Google的Tesseract OCR引擎来做支撑，识别图像中的文字。本文主要讲解如何利用Tesseract OCR识别最简单的验证码和文章内容。 安装Tesseract OCR引擎关于Windows下如何安装Tesseract OCR引擎的文章实在是太多了，我就不赘述了，这里重点讲一下如何在">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/python-thumbnail.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/python-thumbnail.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -184,27 +184,27 @@ var _hmt = _hmt || [];
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install Pillow</span><br><span class="line">pip3 install pytesseract</span><br></pre></td></tr></table></figure>
 <p>安装完毕以后基本上就可以用来识别一些简单的图片验证码啦，还有一些比较清晰的文字。</p>
 <h2 id="简单验证码识别实例"><a href="#简单验证码识别实例" class="headerlink" title="简单验证码识别实例"></a>简单验证码识别实例</h2><p>我们以一些简单的图片为例演示一下如何使用Python3来识别验证码或图片文字。以下面的一个验证码为例：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/7025.png" alt="7025.png"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/7025.png" alt="7025.png"></p>
 <p>可以通过Pytersseract来识别：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">image = Image.open(<span class="string">"data/7025.png"</span>)</span><br><span class="line">image = image.convert(<span class="string">"L"</span>)</span><br><span class="line">image.load()</span><br><span class="line">image.split()</span><br><span class="line">image.save(<span class="string">"data/gray_7025.png"</span>)</span><br><span class="line">print(pytesseract.image_to_string(image))</span><br></pre></td></tr></table></figure>
 <p>结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">7025</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
 <p>另外在<code>data</code>目录下我们还可以看到一张二值化后的图片：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/gray_7025.png" alt="gray_7025"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/gray_7025.png" alt="gray_7025"></p>
 <p>能够非常准确滴将这种简单的验证码识别出来。</p>
 <h2 id="标准文字图片实例"><a href="#标准文字图片实例" class="headerlink" title="标准文字图片实例"></a>标准文字图片实例</h2><p>这一节我们以CNN网站上的新闻文字为例，截取了一张CNN的新闻文字图片，如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/cnn-news-image.png" alt="cnn-news"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/cnn-news-image.png" alt="cnn-news"></p>
 <p>我们看一下它的识别效果如何？看一下运行结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">The President‘s own lies and distortions, which are key</span><br><span class="line">features of his leadership style, make it impossible for</span><br><span class="line">anyone to rely on him and his aides in a normal way.</span><br><span class="line"></span><br><span class="line">As a private citizen, Trump developed this squid—ink</span><br><span class="line">method so that he could sell himself like a human</span><br><span class="line">product. In falsely claiming that various starlets pursued</span><br><span class="line">him for dates, or the British royals were eying Trump</span><br><span class="line">real estate, he played a game with reality.</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
 <p>基本上没有什么错误地识别出来了。</p>
 <h2 id="关于Tesseract-OCR其它语言包以及复杂验证码问题"><a href="#关于Tesseract-OCR其它语言包以及复杂验证码问题" class="headerlink" title="关于Tesseract OCR其它语言包以及复杂验证码问题"></a>关于Tesseract OCR其它语言包以及复杂验证码问题</h2><p>本文主要讨论的是如何利用Tesseract OCR引擎解决简单验证码和图片文字识别的问题。但是验证码可能会比较复杂，比如说加了干扰线等等。另外，Tesseract OCR用来识别中文会如何？这一些问题都是值得好好研究的。</p>
 <h3 id="Tesseract-OCR其它语言包的问题"><a href="#Tesseract-OCR其它语言包的问题" class="headerlink" title="Tesseract OCR其它语言包的问题"></a>Tesseract OCR其它语言包的问题</h3><p>在这个页面下可以看到很全的语言包信息。<a href="https://github.com/tesseract-ocr/tesseract/wiki/Data-Files" target="_blank" rel="noopener">https://github.com/tesseract-ocr/tesseract/wiki/Data-Files</a></p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/tesseract-data-files.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/tesseract-data-files.png" alt=""></p>
 <p>大家可以下载对应的包去处理对应的文字信息。关于如何使用这些包，我以中文为例演示一下，首先在刚刚的网址下载一个中文的包，我们可以先看一下自己的tesseract-ocr版本是多少？</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tesseract --version</span><br><span class="line">tesseract 3.05.01</span><br><span class="line"> leptonica-1.74.4</span><br><span class="line">  libjpeg 9b : libpng 1.6.34 : libtiff 4.0.9 : zlib 1.2.11</span><br></pre></td></tr></table></figure>
 <p>所以，我们下载3.05版本的中文包，<a href="https://github.com/tesseract-ocr/tessdata/raw/3.04.00/chi_sim.traineddata" target="_blank" rel="noopener">点我下载</a>。</p>
 <p>把这个包加载到一个名叫<code>lang</code>的目录下，名字可以随便定，但是<code>lang</code>这个包要和我们的代码在同一个目录。一下面这幅图为例：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/163-news-image.png" alt="163-news"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/163-news-image.png" alt="163-news"></p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">image = Image.open(<span class="string">"data/163-news-image.png"</span>)</span><br><span class="line">image.load()</span><br><span class="line">image.split()</span><br><span class="line">tesseract_data_config = <span class="string">'--tessdata-dir "lang"'</span></span><br><span class="line">print(pytesseract.image_to_string(image, lang=<span class="string">"chi_sim"</span>, config=tesseract_data_config))</span><br></pre></td></tr></table></figure>
 <p>结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">这是习近立总书记在新进口央委员会的委员` 候补委员和省部级三要领导二部学</span><br><span class="line">&gt;J贝彻刁近其新时代口玉特色社会二二义思想和党的十九大精神研讨班开班式上说的一</span><br><span class="line">句=目一新` 息昧深长的话。</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
@@ -218,7 +218,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/recognize-captcha-via-tesseract-ocr-engine.html" data-id="cjnb4zwqe00bcg6dqv2t35wgz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/recognize-captcha-via-tesseract-ocr-engine.html" data-id="cjnzzo6jf00bb84dq334tipla" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -390,10 +390,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -413,7 +433,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -433,7 +453,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -453,7 +473,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -464,26 +484,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -620,20 +620,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -651,5 +666,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

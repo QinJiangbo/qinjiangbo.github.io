@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="最近需要给一些新来的同学讲一讲爬虫相关的知识，决定写一个简单的入门系列教程吧。会从基础到进阶逐渐加深，并结合一些常见的网站给出爬虫的实战教程。下面主要从六个方面来介绍爬虫的基本原理以及进行爬虫实战所遵循的基本思路。 爬虫是什么爬虫是什么？根据维基百科的定义，网络爬虫也叫网络蜘蛛(Web Spider)，是一种用来自动浏览万维网的网络机器人(Web Robot)。本质上就是一些根据特定的规则访问万">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png">
-<meta property="og:updated_time" content="2018-05-15T17:16:36.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/web-crawlers.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络爬虫原理简析">
 <meta name="twitter:description" content="最近需要给一些新来的同学讲一讲爬虫相关的知识，决定写一个简单的入门系列教程吧。会从基础到进阶逐渐加深，并结合一些常见的网站给出爬虫的实战教程。下面主要从六个方面来介绍爬虫的基本原理以及进行爬虫实战所遵循的基本思路。 爬虫是什么爬虫是什么？根据维基百科的定义，网络爬虫也叫网络蜘蛛(Web Spider)，是一种用来自动浏览万维网的网络机器人(Web Robot)。本质上就是一些根据特定的规则访问万">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/web-crawlers.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,12 +174,12 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/web-crawlers.png" alt="图片来自于https://www.keycdn.com/blog/web-crawlers/"></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/web-crawlers.png" alt="图片来自于https://www.keycdn.com/blog/web-crawlers/"></p>
 <p>最近需要给一些新来的同学讲一讲爬虫相关的知识，决定写一个简单的入门系列教程吧。会从基础到进阶逐渐加深，并结合一些常见的网站给出爬虫的实战教程。下面主要从六个方面来介绍爬虫的基本原理以及进行爬虫实战所遵循的基本思路。</p>
 <h2 id="爬虫是什么"><a href="#爬虫是什么" class="headerlink" title="爬虫是什么"></a>爬虫是什么</h2><p>爬虫是什么？<strong>根据维基百科的定义，网络爬虫也叫网络蜘蛛(Web Spider)，是一种用来自动浏览万维网的网络机器人(Web Robot)。本质上就是一些根据特定的规则访问万维网资源并下载网页内容的脚本或者程序。</strong>  </p>
 <p>它的基本流程就是开始于一张被称为“种子”的统一资源地址(URL)列表，爬虫会依次访问种子中的 URL，解析出页面中包含的其它链接，并将这些 URL 放入到一个爬行疆域(Crawl Frontier)，也就是待爬取 URL 列表。然后从爬行疆域中取出 URL 进行访问，通过 DNS 解析得到目标网站的 IP 地址，然后将这个目标网页保存下来， 并将其中的内容抽取出来保存到本地进行归档存储，以便于后面进行索引和查找。根据相同的规则将所有的 URL 进行遍历，并采集对应的网页内容，这个过程就是网络爬行。</p>
 <h2 id="爬虫的基本架构"><a href="#爬虫的基本架构" class="headerlink" title="爬虫的基本架构"></a>爬虫的基本架构</h2><p>下面是一个通用爬虫的系统架构，我们来看一看通用爬虫的具体工作组件模块相互之间是怎样进行数据的沟通和协调的？</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/general-crawler-architecture.png" alt="通用网络爬虫架构"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/general-crawler-architecture.png" alt="通用网络爬虫架构"></p>
 <ul>
 <li><strong>Web</strong>：这个指的是网络上各种资源，也就是爬虫要爬取的各种资源。</li>
 <li><strong>DNS解析器</strong>：这个模块主要是解析HTTP请求的地址，寻找到目标网站的实际IP地址。这个不是爬虫技术关注的重点。</li>
@@ -210,11 +210,11 @@ var _hmt = _hmt || [];
 <ul>
 <li><strong>CSS选择器</strong>，这个是现在比较通用的一种方式，主要是根据HTML网页结构中的目标内容所在的标签包含的一些属性信息，比如ID，Class还有其他属性等，以豆瓣网站为例，如下图所示。这里得到的css选择器表达式是<code>#content &gt; div &gt; div.article &gt; ol &gt; li:nth-child(1) &gt; div &gt; div.info &gt; div.hd &gt; a</code>，一般来说，按照它默认给的就好了。但是如果为了追求代码的简洁，自己稍加分析得到一个更简单的表达式也是可以的，而且博主更倾向于后者。</li>
 </ul>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/css-selector.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/css-selector.png" alt=""></p>
 <ul>
 <li><strong>XPATH选择器</strong>，这个主要是利用XML里面的路径表达式来定位元素信息，因为本质上来说，HTML文件就是一种XML文件，因此可以使用XML文件的那一套操作。还是和上面的例子一样，可以使用Chrome工具来创建XPATH路径表达式。，如<code>//*[@id=&quot;content&quot;]/div/div[1]/ol/li[1]/div/div[2]/div[1]/a</code>。这里的要求和上面也一样，通常情况下使用Chrome默认的就好了，但是自己如果能够写出更简洁的方式也是更好的。</li>
 </ul>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/xpath-selector.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/xpath-selector.png" alt=""></p>
 <ul>
 <li><strong>正则表达式</strong>，这个主要是利用正则表达式在文本中进行匹配搜索，这个就没有利用HTML文件的这种结构特性，只是单纯地将这个HTML文本当做一个字符串来对待了。一般来说，  写正则表达式的要求会高很多。博主不建议在通常情况下就使用这种方式来抽取文本。</li>
 </ul>
@@ -234,7 +234,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/introduction-to-web-spiders.html" data-id="cjnb4zwz7013dg6dqe4oi9bpj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/introduction-to-web-spiders.html" data-id="cjnzzo6sg013c84dq2hgi7nal" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -406,10 +406,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -429,7 +449,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -449,7 +469,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -469,7 +489,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -480,26 +500,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -636,20 +636,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -667,5 +682,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

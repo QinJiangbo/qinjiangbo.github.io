@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="在线广告发展到竞价阶段，可以说基本的计算格局已经建立，大多数重要的产品和技术问题也都浮出水面并得到研究。然而，随着需求方优化效果的要求进一步加强，广告网络在产品形态上已经无法完全满足需要，而市场的发展方向是向需求方彻底开放。具体而言，除了允许广告主按照已经定义好的用户划分来购买，还要进一步提供广告主自行选择流量和在每次展示上独立出价的功能。这样的功能，必然要求询价、出价和竞价在展示时进行，这也就产">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
-<meta property="og:updated_time" content="2018-10-07T14:33:02.032Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/computational-ads.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.550Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="06计算广告笔记-程序化交易广告">
 <meta name="twitter:description" content="在线广告发展到竞价阶段，可以说基本的计算格局已经建立，大多数重要的产品和技术问题也都浮出水面并得到研究。然而，随着需求方优化效果的要求进一步加强，广告网络在产品形态上已经无法完全满足需要，而市场的发展方向是向需求方彻底开放。具体而言，除了允许广告主按照已经定义好的用户划分来购买，还要进一步提供广告主自行选择流量和在每次展示上独立出价的功能。这样的功能，必然要求询价、出价和竞价在展示时进行，这也就产">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/computational-ads.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -175,7 +175,7 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
             <p>在线广告发展到竞价阶段，可以说基本的计算格局已经建立，大多数重要的产品和技术问题也都浮出水面并得到研究。然而，随着需求方优化效果的要求进一步加强，广告网络在产品形态上已经无法完全满足需要，而市场的发展方向是向需求方彻底开放。具体而言，除了允许广告主按照已经定义好的用户划分来购买，还要进一步提供广告主自行选择流量和在每次展示上独立出价的功能。这样的功能，必然要求<strong>询价、出价</strong>和<strong>竞价</strong>在展示时进行，这也就产生了以实时竞价即 RTB 为核心的程序化交易市场。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-061.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/computational-ads-061.png" alt=""></p>
 <p>RTB 的产生，使得广告市场向着透明的比价平台的方向发展，这样的平台就是广告交易平台，即 ADX， 其主要特征即是用 RTB 的方式实时得到广告候选，并按照其出价简单完成投放决策。与广告交易平台对应的采买方，我们称为需求方平台即 DSP。</p>
 <p>从需求方来看，定制化的用户划分能力使得广告主可以像优化自己的推荐系统那样优化广告购买，唯一的区别是这个推荐系统是放在站外的。出价需求的存在和广告主预算范围内的套利要求 DSP 具备点击率预测、点击价值估计、流量预测、站外推荐等多方面的运算能力。</p>
 <p>在需求方的利益得到了充分的保证以后，媒体的变现手段也发生了相应的变化。到现在为止，媒体至少有四种常用的广告变现选择：<strong>担保式投送的合约售卖方式</strong>、<strong>自营广告网络</strong>、<strong>托管给其他广告网络</strong>、<strong>通过 RTB 变现</strong>。如何动态地选择这四种模式中变现价值最高的那种，以最大化媒体收益，这是供给方面临的市场需求。在这样的需求驱动下，产生了供给方平台这样的完全优化媒体利益的产品。</p>
@@ -190,7 +190,7 @@ var _hmt = _hmt || [];
 <p>用定制化标签指导广告投放是实时竞价的关键产品目标。</p>
 </blockquote>
 <h3 id="实时竞价流程"><a href="#实时竞价流程" class="headerlink" title="实时竞价流程"></a>实时竞价流程</h3><p>实时竞价的接口可以分成两个过程，即预先进行的将 ADX 与 DSP 的用户标识对应起来的 cookie 映射(cookie mapping)过程和线上广告请求时的竞价和投放过程，如图 6-2 所示。下面我们分别介绍这两个过程。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-062.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/computational-ads-062.png" alt=""></p>
 <h4 id="Cookie映射-Cookie-Mapping"><a href="#Cookie映射-Cookie-Mapping" class="headerlink" title="Cookie映射(Cookie Mapping)"></a>Cookie映射(Cookie Mapping)</h4><p>cookie 映射一般是由 DSP 在广告主网站上发起，这样做的原因是，一般情况下 DSP 负责的是加工广告主定制受众标签，因而不需要对所有用户都建立对应关系。具体步骤分为两步：</p>
 <ul>
 <li>1.1 从广告主网站向 DSP 服务器发起 cookie 映射请求。</li>
@@ -214,8 +214,8 @@ var _hmt = _hmt || [];
 <li>优选</li>
 <li>私有市场</li>
 </ul>
-<h3 id="程序化相关交易方式-IAB版本"><a href="#程序化相关交易方式-IAB版本" class="headerlink" title="程序化相关交易方式(IAB版本)"></a>程序化相关交易方式(IAB版本)</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-063.png" alt=""></p>
-<h3 id="广告交易方式谱系"><a href="#广告交易方式谱系" class="headerlink" title="广告交易方式谱系"></a>广告交易方式谱系</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-064.png" alt=""></p>
+<h3 id="程序化相关交易方式-IAB版本"><a href="#程序化相关交易方式-IAB版本" class="headerlink" title="程序化相关交易方式(IAB版本)"></a>程序化相关交易方式(IAB版本)</h3><p><img src="https://image.qinjiangbo.com/blog/image/computational-ads-063.png" alt=""></p>
+<h3 id="广告交易方式谱系"><a href="#广告交易方式谱系" class="headerlink" title="广告交易方式谱系"></a>广告交易方式谱系</h3><p><img src="https://image.qinjiangbo.com/blog/image/computational-ads-064.png" alt=""></p>
 <h2 id="广告交易平台"><a href="#广告交易平台" class="headerlink" title="广告交易平台"></a>广告交易平台</h2><p>广告交易平台，即 ADX，是程序化交易时代的关键产品，它负责将媒体流量以拍卖的方式售卖给 DSP， 可以类比于证券市场中的交易所。</p>
 <p>ADX 的产品策略较为简单，由于所有的广告竞价都是实时进行，因此不需要保存广告库，因而也不需要广告检索流程，排序过程也非常简单。<strong>广告交易平台中需要注意的产品策略，主要是如何解决给多个 DSP 发广告请求带来的带宽和机器成本的上升</strong>。这一问题，我们称为<strong>询价优化(call out optimization)</strong>。</p>
 <p><strong>ADX 一般为 CPM 结算方式。</strong>这里的逻辑在于，<strong>实时竞价中广告决策是由 DSP 完成的</strong>，而且对每次展示都可以得到广告位信息。因此，<strong>虽然各个广告位的点击率差别很大，DSP 还是可以自行精细估计点击率，并实时计算出当前展示的合理 eCPM</strong>。 并且，由于第一方数据在程序化交易中的广泛使用，DSP 对于人群在特定广告上产生的效果往往能够估计得更加精细。因此， 按照 CPM 结算，将 eCPM 整体的估计都交给需求方是比较合适的市场分工。</p>
@@ -265,7 +265,7 @@ var _hmt = _hmt || [];
 <h3 id="新客推荐-look-alike"><a href="#新客推荐-look-alike" class="headerlink" title="新客推荐(look-alike)"></a>新客推荐(look-alike)</h3><p><strong>由广告主根据自己的第一方数据提供一部分种子用户，再由拥有更丰富数据的第二方数据的广告平台分析这些用户网络行为的特征，并根据这些特征找到具有相似特征的拓展人群</strong>。很显然，这也是一种定制化用户标签。这样的标签加工策略称为新客推荐，即 look-alike。</p>
 <h2 id="供给方平台"><a href="#供给方平台" class="headerlink" title="供给方平台"></a>供给方平台</h2><p>竞价时，从自运营广告主库中找出 eCPM 较高的，并估算可供调用的若干广告网络的 eCPM， 在这两者之间找到较高的广告候选，再以此作为 MRP，通过 RTB 接口向接入的各 DSP 实时询价。可以看出，在这样的逻辑中，广告请求是被分配到自运营广告库，还是其他广告网络，或者是 DSP， 是根据他们的收益在线动态决定的，这样的方案称为动态分配(dynamic allocation)。</p>
 <h3 id="供给方平台产品策略"><a href="#供给方平台产品策略" class="headerlink" title="供给方平台产品策略"></a>供给方平台产品策略</h3><p>动态分配决策过程示意如下图：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-065.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/computational-ads-065.png" alt=""></p>
 <p>这一过程有如下五个步骤：</p>
 <ul>
 <li>从自有广告库中根据当前受众标签检索合适的广告候选，并估计每个广告候选的 eCPM。</li>
@@ -276,7 +276,7 @@ var _hmt = _hmt || [];
 </ul>
 <p><strong>先进行本地广告检索和 eCPM 估计再进行 RTB 的好处是可以根据当前展示的情况动态调整 RTB 的底价，而当底价高到一定程度时，即可以略去 RTB 的过程，从而减轻服务器的负担。</strong></p>
 <h2 id="数据加工与交易"><a href="#数据加工与交易" class="headerlink" title="数据加工与交易"></a>数据加工与交易</h2><p>在精准广告中，可以把<strong>用户的行为类比于石油工业中的原材料</strong>，<strong>日志收集和清洗系统的作用就相当于油田的挖掘设备</strong>。而<strong>受众定向的平台就可以类比于炼油厂</strong>，它把原油，即清洗过的日志，加工成用户标签，而这些<strong>用户标签就像汽油一样，是可以被销售和使用</strong>。而传统广告中起关键作用的广告位在这里仅仅变成了加油站，负责完成产品消费的过程而已。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/computational-ads-066.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/computational-ads-066.png" alt=""></p>
 <h3 id="有价值的数据来源"><a href="#有价值的数据来源" class="headerlink" title="有价值的数据来源"></a>有价值的数据来源</h3><p>可以重点关注下面的几类：</p>
 <ul>
 <li><strong>用户标识。</strong>对广告而言，如何确定哪些行为来自于同一个用户是非常关键的问题。</li>
@@ -298,7 +298,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/06-notes-of-computational-ads-programmed-exchange-ads.html" data-id="cjnb4zwxx011ug6dqhipse6uq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/06-notes-of-computational-ads-programmed-exchange-ads.html" data-id="cjnzzo6r9011t84dqtofdnk4q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -470,10 +470,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -493,7 +513,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -513,7 +533,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -533,7 +553,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -544,26 +564,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -700,20 +700,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -731,5 +746,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

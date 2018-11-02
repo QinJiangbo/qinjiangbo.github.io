@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。 登录Docker Hub首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/docker-logo.jpeg">
-<meta property="og:updated_time" content="2018-01-06T16:14:43.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/docker-logo.jpeg">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker制作镜像并提交到Docker Hub">
 <meta name="twitter:description" content="前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。 登录Docker Hub首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/docker-logo.jpeg">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/docker-logo.jpeg">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -177,11 +177,11 @@ var _hmt = _hmt || [];
             <p>前面研究过Docker的基本命令和使用，但是一直没有介绍如何制作自己的一个镜像并将其提交到Docker Hub镜像中心，本文今天就介绍如何来制作一个关于IDEA授权服务器的Docker镜像并提交到Docker Hub。</p>
 <h2 id="登录Docker-Hub"><a href="#登录Docker-Hub" class="headerlink" title="登录Docker Hub"></a>登录Docker Hub</h2><p>首先我们需要注册一个Docker Hub的用户名，以我的为例：qinjiangbo。登录Hub以后，需要创建一个repository，作为我们后面提交的仓库。如下图：</p>
 <p>第一步，找到create菜单</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/create-repository.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/create-repository.png" alt=""></p>
 <p>第二步，填写相关信息</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/create-repository-page.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/create-repository-page.png" alt=""></p>
 <p>第三步，查看已创建仓库</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/repository-detail-page.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/repository-detail-page.png" alt=""></p>
 <h2 id="终端登录Docker"><a href="#终端登录Docker" class="headerlink" title="终端登录Docker"></a>终端登录Docker</h2><p>我使用的是macOS版本，因此直接打开Docker应用就可以了。如果没有使用Docker应用的话，可以直接在终端输入<code>docker login</code>来登录的。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don<span class="string">'t have a Docker ID, head over to https://hub.docker.com to create one.</span></span><br><span class="line"><span class="string">Username (qinjiangbo): qinjiangbo</span></span><br><span class="line"><span class="string">Password: </span></span><br><span class="line"><span class="string">Login Succeeded</span></span><br></pre></td></tr></table></figure>
 <h2 id="下载授权服务器程序"><a href="#下载授权服务器程序" class="headerlink" title="下载授权服务器程序"></a>下载授权服务器程序</h2><p>我们制作的镜像是关于IDEA的授权服务器的，因此需要先下载这个授权服务器运行程序。下面给出磁力链接：</p>
@@ -216,7 +216,7 @@ var _hmt = _hmt || [];
 <p>中间可能会报以下错误：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker push qinjiangbo/idea-license-server:latest</span><br><span class="line">The push refers to a repository [docker.io/qinjiangbo/idea-license-server]</span><br><span class="line">Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on 192.168.65.1:53: <span class="built_in">read</span> udp 192.168.65.2:56209-&gt;192.168.65.1:53: i/o timeout</span><br></pre></td></tr></table></figure>
 <p>没关系，重试几次就好了，最好加上VPN会比较稳定一点。</p>
-<h2 id="查看Docker-Hub个人仓库"><a href="#查看Docker-Hub个人仓库" class="headerlink" title="查看Docker Hub个人仓库"></a>查看Docker Hub个人仓库</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/docker-hub-user-repository.png" alt=""></p>
+<h2 id="查看Docker-Hub个人仓库"><a href="#查看Docker-Hub个人仓库" class="headerlink" title="查看Docker Hub个人仓库"></a>查看Docker Hub个人仓库</h2><p><img src="https://image.qinjiangbo.com/blog/image/docker-hub-user-repository.png" alt=""></p>
 <p>可以看到，我们的镜像已经制作并提交成功了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是如何制作一个Docker镜像并提交到Docker Hub仓库的基本流程。需要注意自己是基于别人镜像的容器改进的还是自己从零开始制作的，因为方式是不一样的。上面也提到了两者的制作方式。大家有什么好的镜像都可以踊跃地向社区提交，优秀的东西应该和大家一起分享嘛！</p>
 
@@ -226,7 +226,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/make-docker-images-and-push-to-docker-hub-center.html" data-id="cjnb4zwp9008ng6dqeblcxrw3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/make-docker-images-and-push-to-docker-hub-center.html" data-id="cjnzzo6i8008q84dqfdaa2oe6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -398,10 +398,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -421,7 +441,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -441,7 +461,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -461,7 +481,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -472,26 +492,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -628,20 +628,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -659,5 +674,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

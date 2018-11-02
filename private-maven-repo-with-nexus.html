@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="说明：这是我去年写的一篇文章，一直在印象笔记里存着，这几天整理的时候发现了，觉得还是有不少参考价值的，故重新整理一下发表出来。由于当时直接截的图，所以本文中图片比较多，使用手机流量者慎入，土豪随意。 正文使用Maven也有一段时间了，现在总结几个比较需要注意的地方，以便以后可以更快搭建一个私服。我的当前版本是nexus-2.13.0-01,所以以这个来说明。 （1）设置私服的端口和根路径名称进入目">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/maven-thumbnail.png">
-<meta property="og:updated_time" content="2017-05-11T01:12:16.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/maven-thumbnail.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下使用Nexus搭建Maven私服">
 <meta name="twitter:description" content="说明：这是我去年写的一篇文章，一直在印象笔记里存着，这几天整理的时候发现了，觉得还是有不少参考价值的，故重新整理一下发表出来。由于当时直接截的图，所以本文中图片比较多，使用手机流量者慎入，土豪随意。 正文使用Maven也有一段时间了，现在总结几个比较需要注意的地方，以便以后可以更快搭建一个私服。我的当前版本是nexus-2.13.0-01,所以以这个来说明。 （1）设置私服的端口和根路径名称进入目">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/maven-thumbnail.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/maven-thumbnail.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -177,23 +177,23 @@ var _hmt = _hmt || [];
             <p><code>说明</code>：这是我去年写的一篇文章，一直在印象笔记里存着，这几天整理的时候发现了，觉得还是有不少参考价值的，故重新整理一下发表出来。由于当时直接截的图，所以本文中图片比较多，使用手机流量者慎入，土豪随意。</p>
 <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>使用Maven也有一段时间了，现在总结几个比较需要注意的地方，以便以后可以更快搭建一个私服。我的当前版本是nexus-2.13.0-01,所以以这个来说明。</p>
 <h3 id="（1）设置私服的端口和根路径名称"><a href="#（1）设置私服的端口和根路径名称" class="headerlink" title="（1）设置私服的端口和根路径名称"></a>（1）设置私服的端口和根路径名称</h3><p>进入目录nexus-2.13.0-01的conf目录，通过vim打开nexus.properties文件如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-01.png" alt=""><br>可以看到application-port字段和nexus-webapp-context-path字段，修改它们为所需字段，保存退出。</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-01.png" alt=""><br>可以看到application-port字段和nexus-webapp-context-path字段，修改它们为所需字段，保存退出。</p>
 <h3 id="（2）修改Central的Remote-Indexes策略"><a href="#（2）修改Central的Remote-Indexes策略" class="headerlink" title="（2）修改Central的Remote Indexes策略"></a>（2）修改Central的Remote Indexes策略</h3><p>登录主页，默认用户名和密码是admin/admin123<br>看到如下信息，将Download remote indexes设置为True</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-02.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-02.png" alt=""></p>
 <h3 id="（3）添加自定义的用户名和密码"><a href="#（3）添加自定义的用户名和密码" class="headerlink" title="（3）添加自定义的用户名和密码"></a>（3）添加自定义的用户名和密码</h3><p>进入左侧菜单Security下的Users子菜单，添加一个用户，这个用户是你自己使用的，拥有超级权限。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-03.png" alt=""><br>然后使用这个账号登录系统，并将默认的admin账号删除。同时将central移到ordered repositories。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-04.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-03.png" alt=""><br>然后使用这个账号登录系统，并将默认的admin账号删除。同时将central移到ordered repositories。</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-04.png" alt=""></p>
 <h3 id="（4）Maven配置—-settings文件设置"><a href="#（4）Maven配置—-settings文件设置" class="headerlink" title="（4）Maven配置—-settings文件设置"></a>（4）Maven配置—-settings文件设置</h3><p>首先配置两个服务器server</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-05.png" alt=""><br>其中用户名和密码就是前面说的自定义的用户名和密码，id可以随便填，但是后面在pom中会用到。</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-05.png" alt=""><br>其中用户名和密码就是前面说的自定义的用户名和密码，id可以随便填，但是后面在pom中会用到。</p>
 <h3 id="（5）Maven配置—-mirrors镜像配置"><a href="#（5）Maven配置—-mirrors镜像配置" class="headerlink" title="（5）Maven配置—-mirrors镜像配置"></a>（5）Maven配置—-mirrors镜像配置</h3><p>mirrors必须要配置，因为如果不配置的话maven很有可能会直接绕过私服去中心库下载，并且不会将jar包丢到私服，这样我们的私服就没起到作用。所以必须添加一个镜像管理，值得所有的下载都得通过镜像也就是我们的私服。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-06.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-06.png" alt=""></p>
 <h3 id="（6）Maven配置—-profiles配置"><a href="#（6）Maven配置—-profiles配置" class="headerlink" title="（6）Maven配置—-profiles配置"></a>（6）Maven配置—-profiles配置</h3><p>定义jar库和plugin库的位置，同时还需要确定jdk版本，我的定义的是1.8</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-07.png" alt=""><br><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-08.png" alt=""><br> 别忘了最后有一个激活的操作。</p>
-<h3 id="（7）Maven配置—-pom配置"><a href="#（7）Maven配置—-pom配置" class="headerlink" title="（7）Maven配置—-pom配置"></a>（7）Maven配置—-pom配置</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-09.png" alt=""><br>这个其实是Maven项目中用来向私服提交jar的一个配置，主要是在项目的deploy操作中起作用。</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-07.png" alt=""><br><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-08.png" alt=""><br> 别忘了最后有一个激活的操作。</p>
+<h3 id="（7）Maven配置—-pom配置"><a href="#（7）Maven配置—-pom配置" class="headerlink" title="（7）Maven配置—-pom配置"></a>（7）Maven配置—-pom配置</h3><p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-09.png" alt=""><br>这个其实是Maven项目中用来向私服提交jar的一个配置，主要是在项目的deploy操作中起作用。</p>
 <h3 id="（8）Gradle配置—-build-gradle配置"><a href="#（8）Gradle配置—-build-gradle配置" class="headerlink" title="（8）Gradle配置—-build.gradle配置"></a>（8）Gradle配置—-build.gradle配置</h3><p>a）引入以下插件</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-10.png" alt=""><br>b）定义任务和jar包版本属性<br>c）发布jar到私服上去</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-11.png" alt=""><br><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-12.png" alt=""><br>d）确定repository库位置</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/maven-nexus-13.png" alt=""><br>e）执行gradle tasks查看可用的任务，并且执行gradle install uploadArchives任务将jar上传到私服，否则会报找不到mavenmeta.xml错误。</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-10.png" alt=""><br>b）定义任务和jar包版本属性<br>c）发布jar到私服上去</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-11.png" alt=""><br><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-12.png" alt=""><br>d）确定repository库位置</p>
+<p><img src="https://image.qinjiangbo.com/blog/image/maven-nexus-13.png" alt=""><br>e）执行gradle tasks查看可用的任务，并且执行gradle install uploadArchives任务将jar上传到私服，否则会报找不到mavenmeta.xml错误。</p>
 <h3 id="（9）分别对两个项目工具进行测试，如果下载地址是默认的下载地址则说明配置成功。"><a href="#（9）分别对两个项目工具进行测试，如果下载地址是默认的下载地址则说明配置成功。" class="headerlink" title="（9）分别对两个项目工具进行测试，如果下载地址是默认的下载地址则说明配置成功。"></a>（9）分别对两个项目工具进行测试，如果下载地址是默认的下载地址则说明配置成功。</h3>
         </div>
         <footer class="article-footer">
@@ -201,7 +201,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/private-maven-repo-with-nexus.html" data-id="cjnb4zwq200apg6dqzzkkpe66" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/private-maven-repo-with-nexus.html" data-id="cjnzzo6je00b884dq3r4l10ub" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -373,10 +373,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -396,7 +416,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -416,7 +436,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -436,7 +456,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -447,26 +467,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -603,20 +603,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -634,5 +649,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

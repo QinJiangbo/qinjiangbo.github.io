@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="其实对于IOS开发我只能属于入门级别，不对，是入门-级别。因此，对于如何将写好的应用部署到真机上进行测试确实是一脸懵逼，不知道怎么操作，对于一些证书的处理也不知道应该怎么做，本文今天借最近比较火的跳一跳小游戏作弊玩法的机会，着重介绍如何部署应用到真机上，小游戏只是后面的一个消遣啦。注意：虽然这里是介绍如何部署WebDriverAgent应用到真机上，但是本文的介绍的方法是通用的，针对所有应用！">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/ios-logo.png">
-<meta property="og:updated_time" content="2018-01-13T15:16:29.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/ios-logo.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xcode部署应用到真机测试">
 <meta name="twitter:description" content="其实对于IOS开发我只能属于入门级别，不对，是入门-级别。因此，对于如何将写好的应用部署到真机上进行测试确实是一脸懵逼，不知道怎么操作，对于一些证书的处理也不知道应该怎么做，本文今天借最近比较火的跳一跳小游戏作弊玩法的机会，着重介绍如何部署应用到真机上，小游戏只是后面的一个消遣啦。注意：虽然这里是介绍如何部署WebDriverAgent应用到真机上，但是本文的介绍的方法是通用的，针对所有应用！">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/ios-logo.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/ios-logo.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/iOS-developer.jpg" alt=""></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/iOS-developer.jpg" alt=""></p>
 <p>其实对于IOS开发我只能属于<code>入门</code>级别，不对，是<code>入门-</code>级别。因此，对于如何将写好的应用部署到真机上进行测试确实是一脸懵逼，不知道怎么操作，对于一些证书的处理也不知道应该怎么做，本文今天借最近比较火的<code>跳一跳</code>小游戏作弊玩法的机会，着重介绍如何部署应用到真机上，小游戏只是后面的一个消遣啦。<strong>注意：虽然这里是介绍如何部署WebDriverAgent应用到真机上，但是本文的介绍的方法是通用的，针对所有应用！</strong></p>
 <h2 id="下载WebDriverAgent应用"><a href="#下载WebDriverAgent应用" class="headerlink" title="下载WebDriverAgent应用"></a>下载WebDriverAgent应用</h2><p>这个项目是Facebook在Github上开源的一个应用，主要用于IOS端的测试。由于是要对小游戏进行作弊破解，因此这个工具还是很有必要的。地址是：<a href="https://github.com/facebook/WebDriverAgent" target="_blank" rel="noopener">https://github.com/facebook/WebDriverAgent</a>。把整个项目克隆或者下载到本地。下载以后打开文件夹如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ WebDriverAgent-master ls</span><br><span class="line">CONTRIBUTING.md          LICENSE                  WebDriverAgent.xcodeproj</span><br><span class="line">Cartfile                 PATENTS                  WebDriverAgentLib</span><br><span class="line">Cartfile.resolved        PrivateHeaders           WebDriverAgentRunner</span><br><span class="line">Carthage                 README.md                WebDriverAgentTests</span><br><span class="line">Configurations           Resources</span><br><span class="line">Inspector                Scripts</span><br></pre></td></tr></table></figure>
@@ -182,34 +182,34 @@ var _hmt = _hmt || [];
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install carthage</span><br></pre></td></tr></table></figure>
 <p>然后再执行<code>./Scripts/bootstrap.sh</code>，如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ WebDriverAgent-master ./Scripts/bootstrap.sh</span><br><span class="line">Fetching dependencies</span><br><span class="line">Building Inspector</span><br><span class="line">Creating bundle directory...</span><br><span class="line">Fetching Inspector dependencies...</span><br><span class="line">npm WARN react-dom@15.6.2 requires a peer of react@^15.6.2 but none was installed.</span><br><span class="line">npm WARN web-driver-inspector@1.0.0 No repository field.</span><br><span class="line"></span><br><span class="line">up to date <span class="keyword">in</span> 3.148s</span><br><span class="line">Validating Inspector</span><br><span class="line">Launching Flow server <span class="keyword">for</span> /Users/richard/Downloads/WebDriverAgent-master/Inspector</span><br><span class="line">Spawned flow server (pid=3281)</span><br><span class="line">Logs will go to /private/tmp/flow/zSUserszSrichardzSDownloadszSWebDriverAgent-masterzSInspector.log</span><br><span class="line">No errors!</span><br><span class="line">Building Inspector...</span><br><span class="line"></span><br><span class="line">&gt; web-driver-inspector@1.0.0 build /Users/richard/Downloads/WebDriverAgent-master/Inspector</span><br><span class="line">&gt; webpack --progress --colors</span><br><span class="line"></span><br><span class="line">Hash: 8cac1428c00de3caad87  </span><br><span class="line">Version: webpack 1.15.0</span><br><span class="line">Time: 2141ms</span><br><span class="line">       Asset    Size  Chunks             Chunk Names</span><br><span class="line">inspector.js  859 kB       0  [emitted]  main</span><br><span class="line">   [0] multi main 28 bytes &#123;0&#125; [built]</span><br><span class="line">    + 226 hidden modules</span><br><span class="line">Done</span><br></pre></td></tr></table></figure>
-<p>接着我们就可以使用Xcode打开这个项目了。点击下图中的<code>WebDriverAgent.xcodeproj</code>文件即可：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/WebDriverAgent-project.png" alt=""></p>
-<h2 id="设置证书"><a href="#设置证书" class="headerlink" title="设置证书"></a>设置证书</h2><p>使用Xcode打开项目以后是这个样子的：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/Xcode-WebAdriverAgent-project.png" alt=""></p>
+<p>接着我们就可以使用Xcode打开这个项目了。点击下图中的<code>WebDriverAgent.xcodeproj</code>文件即可：<br><img src="https://image.qinjiangbo.com/blog/image/WebDriverAgent-project.png" alt=""></p>
+<h2 id="设置证书"><a href="#设置证书" class="headerlink" title="设置证书"></a>设置证书</h2><p>使用Xcode打开项目以后是这个样子的：<br><img src="https://image.qinjiangbo.com/blog/image/Xcode-WebAdriverAgent-project.png" alt=""></p>
 <p>在运行之前，我们需要设置好证书，不然无法在真机上调试，目前有两种模式的证书，一种是直接到苹果开发者官网购买证书，一年99刀。博主比较穷，所以就选择免费的个人证书啦。关于个人证书如何生成？见下图：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/accounts-certificates.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/accounts-certificates.png" alt=""></p>
 <p>不过你得先登录你的iCloud账户才能开始添加，这一步完成以后我们就可以开始设置整个项目的证书啦：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/certificates-settings.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/certificates-settings.png" alt=""></p>
 <p>红框框的顺序是从左往右，从上往下。我这里是将中间那个<code>Targets</code>列表每一个都设置了证书，而且还需要注意的是，我们由于是免费证书，因此需要更改这个<code>BundleID</code>，如最右边第二个我们就改为了<code>com.qinjiangbo</code>，保证唯一性就可以了，不然<code>Signing</code>这个模块不会成功的。至于<code>Signing</code>这个选项我们所有的都默认为<code>Automatically manage signing</code>自动管理签名。</p>
 <p>这里附一张<code>IntegrationTests_1</code>这个<code>Target</code>的BundleID修改方式，<code>IntegrationTests_2</code>及后面的两个都是一样的方式：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/IntegrationTests-BundleID-modification.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/IntegrationTests-BundleID-modification.png" alt=""></p>
 <p>只要不是Facebook默认的那个就行了。最好是选择我们自己的域名的反写，这样肯定是唯一的。</p>
-<h2 id="编译运行项目"><a href="#编译运行项目" class="headerlink" title="编译运行项目"></a>编译运行项目</h2><h3 id="Xcode请求签名输入密码"><a href="#Xcode请求签名输入密码" class="headerlink" title="Xcode请求签名输入密码"></a>Xcode请求签名输入密码</h3><p>当我们点击左边的运行按钮的时候，在编译的过程中可能会弹出这个框框：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/keychain-access.png" alt=""></p>
+<h2 id="编译运行项目"><a href="#编译运行项目" class="headerlink" title="编译运行项目"></a>编译运行项目</h2><h3 id="Xcode请求签名输入密码"><a href="#Xcode请求签名输入密码" class="headerlink" title="Xcode请求签名输入密码"></a>Xcode请求签名输入密码</h3><p>当我们点击左边的运行按钮的时候，在编译的过程中可能会弹出这个框框：<br><img src="https://image.qinjiangbo.com/blog/image/keychain-access.png" alt=""></p>
 <p>这里是说项目需要访问我们的系统的<code>KeyChain</code>，即使密码输入正确，它也会弹很多次，这里我们在输入密码后，只需点击<code>Always Allow</code>就好了。如果不小心点击了<code>Deny</code>，那么项目将会一直编译失败，而且是<code>Unknown Error</code>，这个时候，我们需要手动地将<code>KeyChain</code>中的记录删除：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/keychain-access-certificate.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/keychain-access-certificate.png" alt=""></p>
 <p>选中证书直接右击鼠标，点击删除就可以了。然后重新编译就会再次弹出这个框框了，按照上面输入正确的密码后点击<code>Always Allow</code>就好了。</p>
 <h3 id="选择设备和Target"><a href="#选择设备和Target" class="headerlink" title="选择设备和Target"></a>选择设备和Target</h3><p>如下图：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/target-device-selection.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/target-device-selection.png" alt=""></p>
 <p>然后点击菜单栏中的<code>Product-&gt;Test</code>就可以编译执行了。</p>
 <h3 id="可能的问题"><a href="#可能的问题" class="headerlink" title="可能的问题"></a>可能的问题</h3><p>比如提示说我iPhone的版本为<code>11.2.1 (15C153)</code>不被当前版本的Xcode支持，但是我们又不想升级Xcode的，如何做呢？是需要添加一个<code>11.2</code>版本的IOS SDK就可以了。具体下载地址如下：<a href="https://pan.baidu.com/s/1pLKHgsr" target="_blank" rel="noopener">https://pan.baidu.com/s/1pLKHgsr</a> ，密码是: <code>73c5</code>。</p>
-<p>选择<code>11.2</code>版本的下载下来丢进这个目录<code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport/</code>即可，<br><img src="https://obrxbqjbi.qnssl.com/blog/image/device-support-directory.png" alt=""></p>
+<p>选择<code>11.2</code>版本的下载下来丢进这个目录<code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport/</code>即可，<br><img src="https://image.qinjiangbo.com/blog/image/device-support-directory.png" alt=""></p>
 <h3 id="手机上安装描述文件"><a href="#手机上安装描述文件" class="headerlink" title="手机上安装描述文件"></a>手机上安装描述文件</h3><p>重启Xcode，然后再重新连接你的iPhone就可以了，中间还可能出现一个问题就是，启动程序失败，如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/device-management-configurations.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/device-management-configurations.png" alt=""></p>
 <p>原因很简单，就是手机上需要<code>信任这个描述文件</code>，如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/trust-developer-certificates.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/trust-developer-certificates.png" alt=""></p>
 <p>然后就可以在我们的手机上安装成功了。</p>
 <h3 id="转发端口到Mac上"><a href="#转发端口到Mac上" class="headerlink" title="转发端口到Mac上"></a>转发端口到Mac上</h3><p>我们希望在Mac上可以直接通过<code>localhost</code>来访问到目标设备，而不是<code>192.168.1.145</code>这样的内网地址，怎么做呢？如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install libimobiledevice</span><br><span class="line">$ iproxy 8100 8100</span><br></pre></td></tr></table></figure>
 <p>注意上面的是<code>libimobiledevice</code>，<code>imobiledevice</code>已经不存在了，应该是升级成<code>libimobiledevice</code>这个了。然后我们在浏览器输入：<code>localhost:8100/inspector</code>就可以看到如下界面了：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/web-driver-agent-inspector.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/web-driver-agent-inspector.png" alt=""></p>
 <p>说明端口转发成功！</p>
 <h2 id="运行Python3脚本"><a href="#运行Python3脚本" class="headerlink" title="运行Python3脚本"></a>运行Python3脚本</h2><p>这个Python3脚本依赖一个包<code>https://github.com/openatx/facebook-wda</code>，这个包是<code>WebDriverAgent</code>的一个Python操作库，因此我们先安装这个包：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install --pre facebook-wda</span><br></pre></td></tr></table></figure>
@@ -222,7 +222,7 @@ var _hmt = _hmt || [];
 <p>手动模式：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 wechat_jump_iOS_py3.py</span><br></pre></td></tr></table></figure>
 <p>推荐手动模式，自己测距然后再点比较准确一点，自动模式好像到105分左右就会挂掉，不太靠谱。下面晒一晒自己的“战绩”：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/rank-of-jump-jump.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/rank-of-jump-jump.png" alt=""></p>
 <p>一下子刷到了好友排名第三名，哈哈，不搞第一了，大家都懂。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文通过微信小程序游戏<strong>“跳一跳”</strong>作弊操作为例，<strong>详细讲解了如何将Xcode中的应用部署到真机上进行测试的操作流程</strong>，以前一直都不熟悉这一块，因此每次搞几下就放弃了。但是2018年都来了，要钻进去，一定可以找到解决方案，果然不负自己所望。面对不懂的问题，可以搁置，但是不能次次都搁置，否则现在不懂，到以后还是不懂。及时解决问题的心态和能力也是非常重要的。</p>
 
@@ -232,7 +232,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/using-xcode-deploy-applications-to-real-devices-for-testing.html" data-id="cjnb4zx0k0156g6dqmzxa1xey" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/using-xcode-deploy-applications-to-real-devices-for-testing.html" data-id="cjnzzo6u5015584dqajlqgjv8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -404,10 +404,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -427,7 +447,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -447,7 +467,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -467,7 +487,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -478,26 +498,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -634,20 +634,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -665,5 +680,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

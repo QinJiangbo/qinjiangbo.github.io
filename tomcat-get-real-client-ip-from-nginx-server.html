@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用httpServletRequest.getRemoteAddr()一直都是127.0.0.1。我们先来说一说为什么是这样？ 为什么getRemoteAddr()一直是127.0.0.1？首先需要明白整体的架构图，如下">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/tomcat-nginx.png">
-<meta property="og:updated_time" content="2017-12-12T03:25:22.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/tomcat-nginx.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.527Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat从Nginx服务器获取客户端IP">
 <meta name="twitter:description" content="这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用httpServletRequest.getRemoteAddr()一直都是127.0.0.1。我们先来说一说为什么是这样？ 为什么getRemoteAddr()一直是127.0.0.1？首先需要明白整体的架构图，如下">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/tomcat-nginx.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/tomcat-nginx.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,10 +174,10 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/tomcat-nginx.png" alt=""></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/tomcat-nginx.png" alt=""></p>
 <p>这篇文章的信息量有点多，因为需要从这一点衍生出不少容易踩的坑。先说说标题中的问题，主要是使用了Nginx做反向代理服务器，然后后端Tomcat服务器无法获取用户真实的IP地址，使用<code>httpServletRequest.getRemoteAddr()</code>一直都是<code>127.0.0.1</code>。我们先来说一说为什么是这样？</p>
 <h2 id="为什么getRemoteAddr-一直是127-0-0-1？"><a href="#为什么getRemoteAddr-一直是127-0-0-1？" class="headerlink" title="为什么getRemoteAddr()一直是127.0.0.1？"></a>为什么getRemoteAddr()一直是127.0.0.1？</h2><p>首先需要明白整体的架构图，如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/nginx-tomcat-architecture.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/nginx-tomcat-architecture.png" alt=""></p>
 <p>可以看到，用户访问网站的时候是通过Nginx做了一层反向代理，请求被分发到后端的某一台Tomcat服务器。其中，用户请求到Nginx的时候IP地址是<code>202.114.78.189</code>，而Nginx反向代理到Tomcat服务器的时候是<code>127.0.0.1</code>。我们知道在网络中可能会存在一些中间结点，比如代理服务器，而这里的代理服务器就是Nginx。</p>
 <p>好，Nginx能获取到用户的IP地址，这个没问题。那么，为什么Tomcat不能获取到用户的真实地址呢？那是因为<code>Tomcat的用户地址就是Nginx啊，Tomcat并没有直接和用户连接</code>，所以这里我们就不难理解，Tomcat通过方法<code>httpServletRequest.getRemoteAddr()</code>只能够获取到Nginx的真实地址，而这个架构图中Nginx服务器和Tomcat服务器又处于同一个局域网，所以为<code>127.0.0.1</code>很正常。那么如何来解决这个问题呢？</p>
 <h2 id="使用Nginx透传用户IP的请求头信息"><a href="#使用Nginx透传用户IP的请求头信息" class="headerlink" title="使用Nginx透传用户IP的请求头信息"></a>使用Nginx透传用户IP的请求头信息</h2><p>其实前面的几篇文章已经将Nginx的这个配置给出了，如下：</p>
@@ -191,7 +191,7 @@ var _hmt = _hmt || [];
 <p>这样后端就能通过这几个参数获取到客户端的真实地址了。但是一般我更加喜欢使用第二个配置，就是<code>proxy_set_header   X-Real-IP   $remote_addr;</code>这里，我需要在Tomcat里面写上一个能够读取<code>X-Real-IP</code>请求头信息的方法，这样就可以拿到真实客户端地址。</p>
 <h2 id="问题解决方案"><a href="#问题解决方案" class="headerlink" title="问题解决方案"></a>问题解决方案</h2><p>使用装饰器模式来封装HttpServletRequest类，可以达到更改某一个方法的行为的目的。也就是说我们需要使用一个能包装HttpServletRequest类的包装类，在这个包装类中，我们重写<code>getRemoteAddr()</code>方法。关于装饰器模式，我不想在这里再一次说了，有需要的可以看一下我的这篇博客《<a href="https://qinjiangbo.com/design-pattern-decoration.html">设计模式学习之装饰者模式</a>》，需要注意的一点就是装饰者和被装饰者需要实现共同的接口，不然被装饰者没法被装饰者替换嘛！</p>
 <p>仔细看一下ServletRequest的类图我们就可以知道要使用哪一个类了。类图如下：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/servlet-request-class-diagram.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/servlet-request-class-diagram.png" alt=""></p>
 <p>我们可以看到，<code>HttpServletRequest</code>接口继承自<code>ServletRequest</code>接口。<code>ServletRequestWrapper</code>类实现了<code>ServletRequest</code>接口，而<code>HttpServletRequestWrapper</code>类继承自<code>ServletRequestWrapper</code>类，所以直观上来看，<code>HttpServletRequestWrapper</code>类是可以作为<code>HttpServletRequest</code>类的装饰者的。我们需要自己写一个类继承自<code>HttpServletRequestWrapper</code>类，然后实现自己的方法逻辑。</p>
 <h3 id="实现RequestWrapper类"><a href="#实现RequestWrapper类" class="headerlink" title="实现RequestWrapper类"></a>实现RequestWrapper类</h3><p>我实现的包装类叫做<code>RequestWrapper</code>，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinjiangbo.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequestWrapper;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 11/12/2017 5:50 PM</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: qinjiangbo@github.io</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> *      装饰器类，主要用于处理Tomcat本地获取客户端IP一直都是127.0.0.1的情况</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestWrapper</span> <span class="keyword">extends</span> <span class="title">HttpServletRequestWrapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * X-Real-IP头名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String X_REAL_IP = <span class="string">"X-Real-IP"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs a request object wrapping the given request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IllegalArgumentException if the request is null</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RequestWrapper</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(request);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRemoteAddr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 直接获取X-Real-IP头的信息</span></span><br><span class="line">        String realIP = getHeader(X_REAL_IP);</span><br><span class="line">        <span class="keyword">if</span> (realIP != <span class="keyword">null</span> &amp;&amp; !<span class="string">""</span>.equals(realIP)) &#123;</span><br><span class="line">            <span class="keyword">return</span> realIP;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getRemoteAddr();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -228,7 +228,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/tomcat-get-real-client-ip-from-nginx-server.html" data-id="cjnb4zx0e014zg6dq8bsuet8y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/tomcat-get-real-client-ip-from-nginx-server.html" data-id="cjnzzo6ty014y84dqpjjizkf0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -400,10 +400,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -423,7 +443,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -443,7 +463,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -463,7 +483,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -474,26 +494,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -630,20 +630,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -661,5 +676,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

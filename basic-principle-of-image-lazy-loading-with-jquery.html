@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="在网页中，常常需要用到图片，而图片需要消耗较大的流量。正常情况下，浏览器会解析整个HTML代码，然后从上到下依次加载&amp;lt;img src=&amp;quot;xxx&amp;quot;&amp;gt;的图片标签。如果页面很长，隐藏在页面下方的图片其实已经被浏览器加载了。如果用户不向下滚动页面，就没有看到这些图片，相当于白白浪费了图片的流量。 所以，淘宝、京东这些流量非常巨大的电商，商品介绍页又必须有大量的图片，因此，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/image-lazy-loading.jpeg">
-<meta property="og:updated_time" content="2018-04-02T08:57:12.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/image-lazy-loading.jpeg">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.546Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转]使用jQuery实现图片懒加载原理">
 <meta name="twitter:description" content="在网页中，常常需要用到图片，而图片需要消耗较大的流量。正常情况下，浏览器会解析整个HTML代码，然后从上到下依次加载&amp;lt;img src=&amp;quot;xxx&amp;quot;&amp;gt;的图片标签。如果页面很长，隐藏在页面下方的图片其实已经被浏览器加载了。如果用户不向下滚动页面，就没有看到这些图片，相当于白白浪费了图片的流量。 所以，淘宝、京东这些流量非常巨大的电商，商品介绍页又必须有大量的图片，因此，">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/image-lazy-loading.jpeg">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/image-lazy-loading.jpeg">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/image-lazy-loading.jpeg" alt=""></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/image-lazy-loading.jpeg" alt=""></p>
 <p>在网页中，常常需要用到图片，而图片需要消耗较大的流量。正常情况下，浏览器会解析整个HTML代码，然后从上到下依次加载<code>&lt;img src=&quot;xxx&quot;&gt;</code>的图片标签。如果页面很长，隐藏在页面下方的图片其实已经被浏览器加载了。如果用户不向下滚动页面，就没有看到这些图片，相当于白白浪费了图片的流量。</p>
 <p>所以，淘宝、京东这些流量非常巨大的电商，商品介绍页又必须有大量的图片，因此，这些页面的图片都是“按需加载”，即用户滚动页面时显示出来的时候才加载图片。当网速非常快的时候，用户并不能感知懒加载的动作，既省流量又不影响用户浏览。</p>
 <p>本文给出一种利用jQuery实现图片懒加载的原理。它的基本思想是：在输出HTML的时候，不要直接输出<code>&lt;img src=&quot;xxx&quot;</code>，而是输出如下的<code>img</code>标签：</p>
@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意: 需要引入jQuery和underscore</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取window的引用:</span></span><br><span class="line">    <span class="keyword">var</span> $<span class="built_in">window</span> = $(<span class="built_in">window</span>);</span><br><span class="line">    <span class="comment">// 获取包含data-src属性的img，并以jQuery对象存入数组:</span></span><br><span class="line">    <span class="keyword">var</span> lazyImgs = _.map($(<span class="string">'img[data-src]'</span>).get(), <span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $(i);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 定义事件函数:</span></span><br><span class="line">    <span class="keyword">var</span> onScroll = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 获取页面滚动的高度:</span></span><br><span class="line">        <span class="keyword">var</span> wtop = $<span class="built_in">window</span>.scrollTop();</span><br><span class="line">        <span class="comment">// 判断是否还有未加载的img:</span></span><br><span class="line">        <span class="keyword">if</span> (lazyImgs.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 获取可视区域高度:</span></span><br><span class="line">            <span class="keyword">var</span> wheight = $<span class="built_in">window</span>.height();</span><br><span class="line">            <span class="comment">// 存放待删除的索引:</span></span><br><span class="line">            <span class="keyword">var</span> loadedIndex = [];</span><br><span class="line">            <span class="comment">// 循环处理数组的每个img元素:</span></span><br><span class="line">            _.each(lazyImgs, <span class="function"><span class="keyword">function</span> (<span class="params">$i, index</span>) </span>&#123;</span><br><span class="line">                <span class="comment">// 判断是否在可视范围内:</span></span><br><span class="line">                <span class="keyword">if</span> ($i.offset().top - wtop &lt; wheight) &#123;</span><br><span class="line">                    <span class="comment">// 设置src属性:</span></span><br><span class="line">                    $i.attr(<span class="string">'src'</span>, $i.attr(<span class="string">'data-src'</span>));</span><br><span class="line">                    <span class="comment">// 添加到待删除数组:</span></span><br><span class="line">                    loadedIndex.unshift(index);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="comment">// 删除已处理的对象:</span></span><br><span class="line">            _.each(loadedIndex, <span class="function"><span class="keyword">function</span> (<span class="params">index</span>) </span>&#123;</span><br><span class="line">                lazyImgs.splice(index, <span class="number">1</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 绑定事件:</span></span><br><span class="line">    $<span class="built_in">window</span>.scroll(onScroll);</span><br><span class="line">    <span class="comment">// 手动触发一次:</span></span><br><span class="line">    onScroll();</span><br></pre></td></tr></table></figure>
 <p><code>onScroll()</code>函数最后要手动触发一次，因为页面显示时，并未触发scroll事件。如果图片已经在可视区域内，这些图片仍然是loading状态，需要手动触发一次，就可以正常显示。</p>
 <p>要测试图片懒加载效果，可以在Chrome浏览器的控制台选择“Network”，把“Online”改为“Slow 3G”就可以模拟慢速网络下浏览器懒加载图片的效果：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/image-lazy-loading-2.jpeg" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/image-lazy-loading-2.jpeg" alt=""></p>
 <p><code>原文地址</code>：<a href="https://www.liaoxuefeng.com/article/00151045553343934ba3bb4ed684623b1bf00488231d88d000" target="_blank" rel="noopener">https://www.liaoxuefeng.com/article/00151045553343934ba3bb4ed684623b1bf00488231d88d000</a></p>
 
         </div>
@@ -193,7 +193,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/basic-principle-of-image-lazy-loading-with-jquery.html" data-id="cjnb4zwla0012g6dq3gau2c3s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/basic-principle-of-image-lazy-loading-with-jquery.html" data-id="cjnzzo6ds001384dqdeu4n7pw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -365,10 +365,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -388,7 +408,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -408,7 +428,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -428,7 +448,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -439,26 +459,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -595,20 +595,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -626,5 +641,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

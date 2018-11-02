@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="其实网上关于搭建科学上网的文章非常多，只不过百度搜索的时候没显示出来罢了，做这篇文章的目的主要是验证最新的科学上网服务搭建实践。首先当然是选择国外的服务商了，我没有选择亚马逊是因为它连接我电脑太慢了（其他人电脑估计不一样）。下面列举两个国外性价比比较高的服务商：  Vultr Digital Ocean  大家可以去百度上搜索这两家公司。本文以第一家公司的产品为例，讲解一下科学上网环境如何搭建。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/Vultr-Logo.png">
-<meta property="og:updated_time" content="2017-10-30T08:15:57.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/Vultr-Logo.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Vultr搭建科学上网工具">
 <meta name="twitter:description" content="其实网上关于搭建科学上网的文章非常多，只不过百度搜索的时候没显示出来罢了，做这篇文章的目的主要是验证最新的科学上网服务搭建实践。首先当然是选择国外的服务商了，我没有选择亚马逊是因为它连接我电脑太慢了（其他人电脑估计不一样）。下面列举两个国外性价比比较高的服务商：  Vultr Digital Ocean  大家可以去百度上搜索这两家公司。本文以第一家公司的产品为例，讲解一下科学上网环境如何搭建。">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/Vultr-Logo.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/Vultr-Logo.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,7 +174,7 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/Vultr-Logo.png" alt="Vultr"></p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/Vultr-Logo.png" alt="Vultr"></p>
 <p>其实网上关于搭建科学上网的文章非常多，只不过百度搜索的时候没显示出来罢了，做这篇文章的目的主要是验证最新的科学上网服务搭建实践。首先当然是选择国外的服务商了，我没有选择亚马逊是因为它连接我电脑太慢了（其他人电脑估计不一样）。下面列举两个国外性价比比较高的服务商：</p>
 <ul>
 <li>Vultr</li>
@@ -182,13 +182,13 @@ var _hmt = _hmt || [];
 </ul>
 <p>大家可以去百度上搜索这两家公司。本文以第一家公司的产品为例，讲解一下科学上网环境如何搭建。</p>
 <h2 id="搭建服务器"><a href="#搭建服务器" class="headerlink" title="搭建服务器"></a>搭建服务器</h2><p>具体配置信息可以选择下面的实例，因为ShadowSocks本身并不会消耗太多的服务器资源，所以我选择最优惠的那种类型（估计这种就是为了科学上网服务的，哈哈）。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/vultr-deploy-servers.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/vultr-deploy-servers.png" alt=""></p>
 <p>搭建好服务器以后我们需要登录服务器做一些操作：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@[your_server_ip]</span><br></pre></td></tr></table></figure>
 <p>注意，服务器密码在服务详情里面：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/vultr-server-detail.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/vultr-server-detail.png" alt=""></p>
 <h2 id="安装ShadowSocks"><a href="#安装ShadowSocks" class="headerlink" title="安装ShadowSocks"></a>安装ShadowSocks</h2><p>其实可以参考ShadowSocks在Github上的官方教程：<a href="https://github.com/shadowsocks/shadowsocks/tree/master" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks/tree/master</a></p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/shadowsocks-github-tutorials.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/shadowsocks-github-tutorials.png" alt=""></p>
 <p>我们就直接输入命令安装啦：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python-pip</span><br><span class="line"><span class="comment">## 这个必须先安装，否则会报错 </span></span><br><span class="line">wget https://bootstrap.pypa.io/ez_setup.py -O - | python</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
 <p>好啦，安装完成！</p>
@@ -198,8 +198,8 @@ var _hmt = _hmt || [];
 <p>后台启动：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ssserver -p 443 -k password -m aes-256-cfb --user nobody -d start</span><br></pre></td></tr></table></figure>
 <p>上面的<code>password</code>要替换成你自己的密码，随便什么都可以，只不过别太简单。后面的<code>nobody</code>这个可以忽略，它是指以什么身份启动，这里默认就可以了。</p>
-<h2 id="客户端配置服务"><a href="#客户端配置服务" class="headerlink" title="客户端配置服务"></a>客户端配置服务</h2><p>我使用的系统是MacOS High Sierra，所以我使用的客户端是<a href="https://github.com/shadowsocks/shadowsocks-iOS/releases/download/2.6.3/ShadowsocksX-2.6.3.dmg" target="_blank" rel="noopener">ShadowsocksX-2.6.3.dmg</a>。配置方式如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/macOS-shadowsocks-ng-config.png" alt=""></p>
-<h2 id="访问目标网页"><a href="#访问目标网页" class="headerlink" title="访问目标网页"></a>访问目标网页</h2><p>访问一下Google试试：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/shadowsocks-google-index-page.png" alt=""></p>
+<h2 id="客户端配置服务"><a href="#客户端配置服务" class="headerlink" title="客户端配置服务"></a>客户端配置服务</h2><p>我使用的系统是MacOS High Sierra，所以我使用的客户端是<a href="https://github.com/shadowsocks/shadowsocks-iOS/releases/download/2.6.3/ShadowsocksX-2.6.3.dmg" target="_blank" rel="noopener">ShadowsocksX-2.6.3.dmg</a>。配置方式如下：<br><img src="https://image.qinjiangbo.com/blog/image/macOS-shadowsocks-ng-config.png" alt=""></p>
+<h2 id="访问目标网页"><a href="#访问目标网页" class="headerlink" title="访问目标网页"></a>访问目标网页</h2><p>访问一下Google试试：<br><img src="https://image.qinjiangbo.com/blog/image/shadowsocks-google-index-page.png" alt=""></p>
 <p>Bingo！成功了！说明我们的配置是OK的！</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于科学上网方案，其实有很多种选择，VPN和ShadowSocks都是使用比较多的情形，其实现在主流的服务提供商都是提供VPN服务。作为消费者本身来说，选择哪一种方式完全取决于当前的实际需要，其实我们也可以找一些ShadowSocks服务提供商（貌似特别难找，如果有的话欢迎在下面评论区留言，感激不尽！）。我自己之前使用的是DEVPN，但是七块钱一个月才分给我10G流量，不能忍，直接自己搭建一个多舒服！2.5美刀500G多划算。</p>
 
@@ -209,7 +209,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/build-vpn-service-with-vultr.html" data-id="cjnb4zwlo001jg6dqi8pzudll" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/build-vpn-service-with-vultr.html" data-id="cjnzzo6e8001j84dqsz2aewzc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -381,10 +381,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -404,7 +424,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -424,7 +444,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -444,7 +464,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -455,26 +475,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -611,20 +611,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -642,5 +657,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

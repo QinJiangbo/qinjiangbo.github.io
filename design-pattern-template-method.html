@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="什么是模板方法模式模板方法模式(Template Method Pattern)在一个方法中定义一个算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以在不改变算法接口的情况下，重新定义算法的某些步骤。 理解模板方法模式这个模式是用来创建一个算法的模板的。什么是模板呢？其实模板就是一个方法，只不过这个方法可以有很多不同的实现方法而已。更具体地说，这个方法将算法定义成一系列步骤，其中的任何步骤">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/template-pattern.png">
-<meta property="og:updated_time" content="2017-12-25T05:19:14.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/template-pattern.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式学习之模板方法模式">
 <meta name="twitter:description" content="什么是模板方法模式模板方法模式(Template Method Pattern)在一个方法中定义一个算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以在不改变算法接口的情况下，重新定义算法的某些步骤。 理解模板方法模式这个模式是用来创建一个算法的模板的。什么是模板呢？其实模板就是一个方法，只不过这个方法可以有很多不同的实现方法而已。更具体地说，这个方法将算法定义成一系列步骤，其中的任何步骤">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/template-pattern.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/template-pattern.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -176,13 +176,13 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <h2 id="什么是模板方法模式"><a href="#什么是模板方法模式" class="headerlink" title="什么是模板方法模式"></a>什么是模板方法模式</h2><p><strong>模板方法模式(Template Method Pattern)</strong><code>在一个方法中定义一个算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以在不改变算法接口的情况下，重新定义算法的某些步骤。</code></p>
 <h2 id="理解模板方法模式"><a href="#理解模板方法模式" class="headerlink" title="理解模板方法模式"></a>理解模板方法模式</h2><p>这个模式是用来创建一个算法的模板的。什么是模板呢？其实模板就是一个方法，只不过这个方法可以有很多不同的实现方法而已。更具体地说，这个方法将算法定义成一系列步骤，其中的任何步骤都可以是抽象的，被子类根据实际情况具体实现。这样呢，即可以保证算法的整体结构不变，又可以让子类重新定义自己的算法。</p>
-<h2 id="模板方法模式类图"><a href="#模板方法模式类图" class="headerlink" title="模板方法模式类图"></a>模板方法模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/template-method-class-diagram.png" alt="模板方法模式类图"></p>
+<h2 id="模板方法模式类图"><a href="#模板方法模式类图" class="headerlink" title="模板方法模式类图"></a>模板方法模式类图</h2><p><img src="https://image.qinjiangbo.com/blog/image/template-method-class-diagram.png" alt="模板方法模式类图"></p>
 <p>下面分别来说说各部分的作用：</p>
 <p><code>AbstractClass</code>就是一个抽象方法，它定义了一些抽象的方法比如<code>primitiveOperation1()</code>和<code>primitiveOperation2()</code>，同时也定义了一个模板方法<code>templateMethod()</code>。模板方法在实现的过程当中使用到了这两个抽象方法，但是模板方法和它们的具体实现解耦了。</p>
 <p><code>ConcreteClass</code>是一个具体的方法，是上面的<code>AbstractClass</code>抽象类的子类，可能不止一个子类。这个类实现具体的操作，当模板方法需要这两个方法的时候就会调用它们。</p>
 <h2 id="实例分析-茶饮之道"><a href="#实例分析-茶饮之道" class="headerlink" title="实例分析-茶饮之道"></a>实例分析-茶饮之道</h2><p>我们知道现在的奶茶的品类非常的多，有绿茶，红茶，珍珠奶茶，红豆奶茶，还有卡布奇诺等等。这些奶茶是如何被做出来的呢，工具都一样，流程也一样，但是做出来的产品却不同，秘密是什么？其实这里面就藏着我们今天的主角-模板方法模式。</p>
 <p>先来分析一下做奶茶需要哪几步？</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/startbuzz-recipe.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/startbuzz-recipe.png" alt=""></p>
 <p>可以看到这份培训手册中明确说明了咖啡和茶的生产工艺，都是有四个步骤，</p>
 <ul>
 <li><strong>烧</strong>，将水烧开</li>
@@ -219,7 +219,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/design-pattern-template-method.html" data-id="cjnb4zwmg002vg6dqszm4cfvn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/design-pattern-template-method.html" data-id="cjnzzo6f2002w84dqi4fe5zri" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -391,10 +391,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -414,7 +434,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -434,7 +454,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -454,7 +474,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -465,26 +485,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -621,20 +621,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -652,5 +667,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

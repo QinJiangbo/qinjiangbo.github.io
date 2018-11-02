@@ -7,7 +7,7 @@
     <title>设计模式学习之抽象工厂模式 | 秦江波的个人博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="抽象工厂模式,设计模式" />
+        <meta name="keywords" content="设计模式,抽象工厂模式" />
     
     <meta name="description" content="什么是抽象工厂模式抽象工厂模式（Abstract Factory Design Pattern）提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。 是时候使用抽象工厂模式啦抽象工厂允许客户使用抽象的接口来创建一组相关的产品，而不需要知道（或者关心）实际产出的具体产品是什么。这样一来，客户就从具体的产品中被解耦。 抽象工厂模式类图 Client客户的代码中只需要涉及抽象工厂，运行时">
 <meta name="keywords" content="抽象工厂模式,设计模式">
@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="什么是抽象工厂模式抽象工厂模式（Abstract Factory Design Pattern）提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。 是时候使用抽象工厂模式啦抽象工厂允许客户使用抽象的接口来创建一组相关的产品，而不需要知道（或者关心）实际产出的具体产品是什么。这样一来，客户就从具体的产品中被解耦。 抽象工厂模式类图 Client客户的代码中只需要涉及抽象工厂，运行时">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/abstract-factory.png">
-<meta property="og:updated_time" content="2017-03-09T17:54:23.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/abstract-factory.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式学习之抽象工厂模式">
 <meta name="twitter:description" content="什么是抽象工厂模式抽象工厂模式（Abstract Factory Design Pattern）提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。 是时候使用抽象工厂模式啦抽象工厂允许客户使用抽象的接口来创建一组相关的产品，而不需要知道（或者关心）实际产出的具体产品是什么。这样一来，客户就从具体的产品中被解耦。 抽象工厂模式类图 Client客户的代码中只需要涉及抽象工厂，运行时">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/abstract-factory.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/abstract-factory.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -176,13 +176,13 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <h2 id="什么是抽象工厂模式"><a href="#什么是抽象工厂模式" class="headerlink" title="什么是抽象工厂模式"></a>什么是抽象工厂模式</h2><p><strong>抽象工厂模式（Abstract Factory Design Pattern）</strong><code>提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类</code>。</p>
 <h2 id="是时候使用抽象工厂模式啦"><a href="#是时候使用抽象工厂模式啦" class="headerlink" title="是时候使用抽象工厂模式啦"></a>是时候使用抽象工厂模式啦</h2><p>抽象工厂允许客户使用抽象的接口来创建一组相关的产品，而不需要知道（或者关心）实际产出的具体产品是什么。这样一来，客户就从具体的产品中被解耦。</p>
-<h2 id="抽象工厂模式类图"><a href="#抽象工厂模式类图" class="headerlink" title="抽象工厂模式类图"></a>抽象工厂模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/abstract-factory-01.png" alt="抽象工厂模式类图"></p>
+<h2 id="抽象工厂模式类图"><a href="#抽象工厂模式类图" class="headerlink" title="抽象工厂模式类图"></a>抽象工厂模式类图</h2><p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/abstract-factory-01.png" alt="抽象工厂模式类图"></p>
 <p><code>Client</code>客户的代码中只需要涉及抽象工厂，运行时将使用实际的工厂。</p>
 <p><code>AbstractFactory</code>抽象工厂定义了一个接口，所有的具体工厂都必须实现此接口，这个接口中包含一组方法用来生产产品。</p>
 <p><code>ConcreteFactory</code>具体工厂实现不同的产品家族，要创建一个产品，客户完全不需要知道产品是如何创建的，它只需要使用其中的一个具体工厂即可。</p>
 <p> <code>AbstractProduct</code>是抽象产品类，是所有具体产品类必须实现的类。<code>AbstractProductA</code>和<code>AbstractProductB</code>形成了一个产品族。每个具体工厂类都能产生一整组的产品。</p>
 <h2 id="实例分析-调料工厂"><a href="#实例分析-调料工厂" class="headerlink" title="实例分析-调料工厂"></a>实例分析-调料工厂</h2><p>前面我们说了这个披萨店的问题，发现不同的披萨店可以生产不同的披萨，但是为什么披萨的口味会不同呢？答案当然是调料不一样啦。那么纽约风味的披萨店和芝加哥风味的披萨店他们的调料从哪儿来呢？这里可以很容易的想到，从两个不同城市的工厂直接就近运输过来。所以是两个工厂来生产这个调料。</p>
-<h3 id="调料工厂的类图"><a href="#调料工厂的类图" class="headerlink" title="调料工厂的类图"></a>调料工厂的类图</h3><p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/abstract-factory-02.png" alt="调料工厂的类图"></p>
+<h3 id="调料工厂的类图"><a href="#调料工厂的类图" class="headerlink" title="调料工厂的类图"></a>调料工厂的类图</h3><p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/abstract-factory-02.png" alt="调料工厂的类图"></p>
 <p>哇！好复杂的图！别急，骚年~仔细一看其实还是很简单滴~这个类图待我慢慢给你解释。</p>
 <p>首先对照上面的抽象工厂模式类图，我们会发现，披萨店的两个具体实例（<code>NYPizzaStore</code>和<code>ChicagoPizzaStore</code>）就是抽象工厂的客户。图中给出的是<code>NYPizzaStore</code>，大概是因为它做出来的东西好吃吧。</p>
 <p>其次我们会发现原料工厂<code>PizzaingredientFactory</code>，这是一个原料工厂接口，它定义了如何产生一组相关产品的家族。这个家族包含了所有制作披萨的原料。下面两个<code>NYPizzaingredientFactory</code>和<code>ChicagoingredientFactory</code>则是这个接口的两个具体实现工厂，这两个具体工厂专门负责生产披萨的原料，每个工厂都知道如何去生产符合本地区口味的原料。对于这个产品家族，每个原料工厂都有自己不同的实现。</p>
@@ -200,7 +200,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/design-pattern-abstract-factory.html" data-id="cjnb4zwm3002cg6dqdnbdp5hg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/design-pattern-abstract-factory.html" data-id="cjnzzo6er002h84dq38cpykrj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -372,10 +372,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -395,7 +415,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -415,7 +435,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -435,7 +455,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -446,26 +466,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -602,20 +602,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -633,5 +648,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

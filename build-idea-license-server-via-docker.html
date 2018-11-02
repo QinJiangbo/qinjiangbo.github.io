@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="上一篇我们提到过如何构建一个Docker镜像并提交到Docker Hub仓库，还记得我们制作的是什么镜像吗？没错，就是IDEA License Server！因此，本文就接着上一篇文章的内容，我们来搭建一个授权服务器。 拉取镜像我们先看一下授权服务器镜像在仓库中的样子：  可以在右侧看到这样一行命令：docker pull qinjiangbo/idea-license-server，因此我们在命">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/intellij-idea-ide.png">
-<meta property="og:updated_time" content="2018-03-19T13:46:07.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/intellij-idea-ide.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.415Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Docker搭建IDEA授权服务器">
 <meta name="twitter:description" content="上一篇我们提到过如何构建一个Docker镜像并提交到Docker Hub仓库，还记得我们制作的是什么镜像吗？没错，就是IDEA License Server！因此，本文就接着上一篇文章的内容，我们来搭建一个授权服务器。 拉取镜像我们先看一下授权服务器镜像在仓库中的样子：  可以在右侧看到这样一行命令：docker pull qinjiangbo/idea-license-server，因此我们在命">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/intellij-idea-ide.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/intellij-idea-ide.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -176,7 +176,7 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <p>上一篇我们提到过如何构建一个Docker镜像并提交到Docker Hub仓库，还记得我们制作的是什么镜像吗？没错，就是IDEA License Server！因此，本文就接着上一篇文章的内容，我们来搭建一个授权服务器。</p>
 <h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><p>我们先看一下授权服务器镜像在仓库中的样子：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/repository-detail-page.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/repository-detail-page.png" alt=""></p>
 <p>可以在右侧看到这样一行命令：<code>docker pull qinjiangbo/idea-license-server</code>，因此我们在命令行直接执行这个命令：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull qinjiangbo/idea-license-server</span><br></pre></td></tr></table></figure>
 <p>拉取完成后我们使用<code>docker images</code>命令来查看镜像：</p>
@@ -186,9 +186,9 @@ var _hmt = _hmt || [];
 <p>后面的<code>e9d376fd30b0</code>是镜像的ID号，这里还可以通过<code>-e</code>选项加上一个参数<code>USER=yourname</code>来指定激活的用户名。容器启动以后我们通过<code>docker ps</code>来查看正在运行中的容器：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED                  STATUS              PORTS                  NAMES</span><br><span class="line">ad81821362a2        e9d376fd30b0        <span class="string">"/docker-entrypoin..."</span>   Less than a second ago   Up 1 second         0.0.0.0:80-&gt;1017/tcp   heuristic_keller</span><br></pre></td></tr></table></figure>
 <h2 id="访问授权服务器地址"><a href="#访问授权服务器地址" class="headerlink" title="访问授权服务器地址"></a>访问授权服务器地址</h2><p>这里我们可以直接通过浏览器访问授权服务器地址，如果我们在本地启动，在浏览器输入<code>127.0.0.1</code>，我们可以看到：</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/idea-license-server-local.png" alt="本地服务器页面"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/idea-license-server-local.png" alt="本地服务器页面"></p>
 <h2 id="激活IDEA产品"><a href="#激活IDEA产品" class="headerlink" title="激活IDEA产品"></a>激活IDEA产品</h2><p>按照上面的操作，我们打开Intellij进行注册，如下，已经注册成功！</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/register-window-local.png" alt="本地服务注册窗口"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/register-window-local.png" alt="本地服务注册窗口"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实大家完全可以自己搞一台服务器，买一个域名，这样的话就可以通过域名来进行注册了。虽然区别不大，但是看起来舒服点，专业点。使用Docker的好处就是可以<code>package one place, deploy everywhere</code>！非常棒的体验！</p>
 <p><code>更新</code>：最近发现一个问题，如果不指定<code>-u</code>参数，这个授权服务器授权的用户名字会以第一个成功授权的用户名作为所有用户授权的用户名。也就是说<code>Licensed to [yourname]</code>这个<code>yourname</code>就是第一个成功被授权的用户，这是一个BUG，作者在1.5版本里面还没有修复，期待作者能快速修复。</p>
 
@@ -198,7 +198,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/build-idea-license-server-via-docker.html" data-id="cjnb4zwlj0018g6dqv8unjkl7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/build-idea-license-server-via-docker.html" data-id="cjnzzo6dx001a84dq065r3414" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -370,10 +370,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -393,7 +413,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -413,7 +433,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -433,7 +453,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -444,26 +464,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -600,20 +600,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -631,5 +646,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

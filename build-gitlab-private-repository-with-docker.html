@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="现在越来越多的公司开始使用Git来进行协作开发了，那么如何来管理项目中的代码呢？目前市面上做的非常优秀的工具有Github，几乎每一个开发人员都知道它。国内的有码云，也是一个非常优秀的代码托管平台。但是企业内部的代码不可能放到这些第三方平台托管，因为风险太大了，万一它们没处理好，我们的数据几乎等于和盘托出。所以，Gitlab顺势而生！今天重点介绍如何利用Docker搭建一个内部Gitlab代码托管">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/gitlab-logo.jpeg">
-<meta property="og:updated_time" content="2017-10-14T14:05:23.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/gitlab-logo.jpeg">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Docker建立Gitlab私服">
 <meta name="twitter:description" content="现在越来越多的公司开始使用Git来进行协作开发了，那么如何来管理项目中的代码呢？目前市面上做的非常优秀的工具有Github，几乎每一个开发人员都知道它。国内的有码云，也是一个非常优秀的代码托管平台。但是企业内部的代码不可能放到这些第三方平台托管，因为风险太大了，万一它们没处理好，我们的数据几乎等于和盘托出。所以，Gitlab顺势而生！今天重点介绍如何利用Docker搭建一个内部Gitlab代码托管">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/gitlab-logo.jpeg">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/gitlab-logo.jpeg">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -174,17 +174,17 @@ var _hmt = _hmt || [];
             </div>
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-logo.jpeg" alt="Gitlab"><br>现在越来越多的公司开始使用Git来进行协作开发了，那么如何来管理项目中的代码呢？目前市面上做的非常优秀的工具有<strong>Github</strong>，几乎每一个开发人员都知道它。国内的有<strong>码云</strong>，也是一个非常优秀的代码托管平台。但是企业内部的代码不可能放到这些第三方平台托管，因为风险太大了，万一它们没处理好，我们的数据几乎等于和盘托出。所以，Gitlab顺势而生！今天重点介绍如何利用Docker搭建一个内部Gitlab代码托管平台。</p>
+            <p><img src="https://image.qinjiangbo.com/blog/image/gitlab-logo.jpeg" alt="Gitlab"><br>现在越来越多的公司开始使用Git来进行协作开发了，那么如何来管理项目中的代码呢？目前市面上做的非常优秀的工具有<strong>Github</strong>，几乎每一个开发人员都知道它。国内的有<strong>码云</strong>，也是一个非常优秀的代码托管平台。但是企业内部的代码不可能放到这些第三方平台托管，因为风险太大了，万一它们没处理好，我们的数据几乎等于和盘托出。所以，Gitlab顺势而生！今天重点介绍如何利用Docker搭建一个内部Gitlab代码托管平台。</p>
 <h2 id="安装Gitlab镜像"><a href="#安装Gitlab镜像" class="headerlink" title="安装Gitlab镜像"></a>安装Gitlab镜像</h2><p>使用<code>docker search gitlab</code>命令查询一下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker search gitlab</span><br><span class="line">NAME                                         DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED</span><br><span class="line">gitlab/gitlab-ce                             GitLab Community Edition docker image base...   1417                                    [OK]</span><br><span class="line">sameersbn/gitlab                             Dockerized gitlab web server                    947                                     [OK]</span><br><span class="line">gitlab/gitlab-runner                         GitLab CI Multi Runner used to fetch and r...   230                                     [OK]</span><br><span class="line">gitlab/gitlab-ee                             GitLab Enterprise Edition docker image bas...   69</span><br></pre></td></tr></table></figure>
 <p>以上是前5条记录，我们需要下载第一条记录。可以看到这个是一个官方镜像，而且我告诉你哦，这个镜像有1G以上，所以，是不是需要搞一个代理呢？待会儿会说明具体如何操作。设置好代理之后，我们可以通过<code>docker pull gitlab/gitlab-ce</code>这个命令将镜像拉取下来。</p>
 <h2 id="添加Aliyun代理"><a href="#添加Aliyun代理" class="headerlink" title="添加Aliyun代理"></a>添加Aliyun代理</h2><p>我使用的系统是MacOS High Sierra，所以，我直接在Docker工具里面添加了。你需要先到Aliyun注册一个账号（如果有的话当我没说），然后开通容器服务。具体步骤如下：</p>
 <ol>
-<li>开通服务：<a href="https://www.aliyun.com/product/containerservice" target="_blank" rel="noopener">https://www.aliyun.com/product/containerservice</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/aliyun-container-service.png" alt=""></li>
-<li>选择镜像仓库控制台：<a href="https://cs.console.aliyun.com/" target="_blank" rel="noopener">https://cs.console.aliyun.com/</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/container-console.png" alt=""></li>
-<li>获取镜像加速地址：<a href="https://cr.console.aliyun.com/" target="_blank" rel="noopener">https://cr.console.aliyun.com/</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/container-mirror-accelerate.png" alt=""></li>
+<li>开通服务：<a href="https://www.aliyun.com/product/containerservice" target="_blank" rel="noopener">https://www.aliyun.com/product/containerservice</a><br><img src="https://image.qinjiangbo.com/blog/image/aliyun-container-service.png" alt=""></li>
+<li>选择镜像仓库控制台：<a href="https://cs.console.aliyun.com/" target="_blank" rel="noopener">https://cs.console.aliyun.com/</a><br><img src="https://image.qinjiangbo.com/blog/image/container-console.png" alt=""></li>
+<li>获取镜像加速地址：<a href="https://cr.console.aliyun.com/" target="_blank" rel="noopener">https://cr.console.aliyun.com/</a><br><img src="https://image.qinjiangbo.com/blog/image/container-mirror-accelerate.png" alt=""></li>
 </ol>
-<p>我的代理地址是：<code>https://9cc5rund.mirror.aliyuncs.com</code>。设置代理的方式如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/docker-registry-proxy.png" alt=""><br>下面的<code>registry-mirrors:No certs for...</code>警告可以忽略。</p>
+<p>我的代理地址是：<code>https://9cc5rund.mirror.aliyuncs.com</code>。设置代理的方式如下：<br><img src="https://image.qinjiangbo.com/blog/image/docker-registry-proxy.png" alt=""><br>下面的<code>registry-mirrors:No certs for...</code>警告可以忽略。</p>
 <h2 id="修改Gitlab内部配置"><a href="#修改Gitlab内部配置" class="headerlink" title="修改Gitlab内部配置"></a>修改Gitlab内部配置</h2><p>下载好镜像之后，我们需要将其run起来。命令如下：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 80:80 -p 22:22 -p 443:443 gitlab/gitlab-ce</span><br></pre></td></tr></table></figure>
 <p>然后使用<code>docker ps -a</code>命令查看容器情况：</p>
@@ -196,11 +196,11 @@ var _hmt = _hmt || [];
 <p>上面的<code>192.168.31.145</code>是本机的ip地址。设置完毕以后重启容器：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker restart e21</span><br></pre></td></tr></table></figure>
 <p>OK！</p>
-<h2 id="运行应用"><a href="#运行应用" class="headerlink" title="运行应用"></a>运行应用</h2><p>我们打开地址<code>http://localhost</code>，80端口可以省略端口号的。可能一开始会出现502的画面，就像这样：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-502-page.png" alt=""><br>没关系，那是因为Gitlab的各项系统服务正在启动，过一会儿刷新就好啦。然后会要求设置新的密码，设置完成以后我们就进入了Gitlab的页面。<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-index-page.png" alt=""><br>创建一个项目<code>Hexo-Workflow</code>，如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-project-page.png" alt=""><br>其中我们可以看到<code>git clone</code>的地址是<code>git@192.168.31.145:Richard/Hexo-Workflow.git</code>，在我们进行git clone之前，我们需要向Gitlab添加一下我们本机的SSH Key实现免登。具体页面如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-ssh-key.png" alt=""><br>好的，添加完成以后，我们就可以在本地把这项目拉取下来啦。</p>
+<h2 id="运行应用"><a href="#运行应用" class="headerlink" title="运行应用"></a>运行应用</h2><p>我们打开地址<code>http://localhost</code>，80端口可以省略端口号的。可能一开始会出现502的画面，就像这样：<br><img src="https://image.qinjiangbo.com/blog/image/gitlab-502-page.png" alt=""><br>没关系，那是因为Gitlab的各项系统服务正在启动，过一会儿刷新就好啦。然后会要求设置新的密码，设置完成以后我们就进入了Gitlab的页面。<br><img src="https://image.qinjiangbo.com/blog/image/gitlab-index-page.png" alt=""><br>创建一个项目<code>Hexo-Workflow</code>，如下：<br><img src="https://image.qinjiangbo.com/blog/image/gitlab-project-page.png" alt=""><br>其中我们可以看到<code>git clone</code>的地址是<code>git@192.168.31.145:Richard/Hexo-Workflow.git</code>，在我们进行git clone之前，我们需要向Gitlab添加一下我们本机的SSH Key实现免登。具体页面如下：<br><img src="https://image.qinjiangbo.com/blog/image/gitlab-ssh-key.png" alt=""><br>好的，添加完成以后，我们就可以在本地把这项目拉取下来啦。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@192.168.31.145:Richard/Hexo-Workflow.git</span><br><span class="line">Cloning into <span class="string">'Hexo-Workflow'</span>...</span><br><span class="line">The authenticity of host <span class="string">'192.168.31.145 (192.168.31.145)'</span> can<span class="string">'t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:SYHTQxwLpe9OaeQW6f/QRhtQDnXl+zkaQVtZzeObjGQ.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added '</span>192.168.31.145<span class="string">' (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">remote: Counting objects: 13, done.</span></span><br><span class="line"><span class="string">remote: Total 13 (delta 0), reused 0 (delta 0)</span></span><br><span class="line"><span class="string">Receiving objects: 100% (13/13), 19.95 KiB | 6.65 MiB/s, done.</span></span><br><span class="line"><span class="string">Resolving deltas: 100% (2/2), done.</span></span><br></pre></td></tr></table></figure>
 <p>然后就和在Github提交代码等操作是一样。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Gitlab作为一种非常优秀的代码托管工具已经被广泛地应用到了各个大公司，一般是作为企业内部的代码托管工具。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/gitlab-enterprise.png" alt=""></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/gitlab-enterprise.png" alt=""></p>
 <p>搭建内部代码托管平台的好处不言而喻，关键是非常地易于管理，给管理员有很大的自主性，而不是受制于第三方平台的约束。</p>
 
         </div>
@@ -209,7 +209,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/build-gitlab-private-repository-with-docker.html" data-id="cjnb4zwlm001eg6dqb16znf3e" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/build-gitlab-private-repository-with-docker.html" data-id="cjnzzo6du001684dq6sf8039t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -381,10 +381,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -404,7 +424,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -424,7 +444,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -444,7 +464,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -455,26 +475,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -611,20 +611,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -642,5 +657,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

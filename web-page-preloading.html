@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="随着现在网站数量的爆炸式增长，越来越多的用户感到了信息爆炸带来的压力。互联网企业如何让自己的网站在如此众多的网站中脱颖而出，不仅需要自身强劲的企业实力，还需要一个好看的“门面”，这里指的是网站的UI或者App的UI。本文主要是探讨网络情况不佳时如何让用户的体验不那么糟糕？虽然这个要求比较急切，但是很多企业根本就不重视，这样是不好滴！今天就跟大家聊一聊网站的预加载。 作品赏析在进行深入的讨论之前我们">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader.png">
-<meta property="og:updated_time" content="2017-02-21T13:12:36.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/HTML-Preloader.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.549Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="预加载让页面生动起来">
 <meta name="twitter:description" content="随着现在网站数量的爆炸式增长，越来越多的用户感到了信息爆炸带来的压力。互联网企业如何让自己的网站在如此众多的网站中脱颖而出，不仅需要自身强劲的企业实力，还需要一个好看的“门面”，这里指的是网站的UI或者App的UI。本文主要是探讨网络情况不佳时如何让用户的体验不那么糟糕？虽然这个要求比较急切，但是很多企业根本就不重视，这样是不好滴！今天就跟大家聊一聊网站的预加载。 作品赏析在进行深入的讨论之前我们">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/HTML-Preloader.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -176,14 +176,14 @@ var _hmt = _hmt || [];
         <div class="article-entry" itemprop="articleBody">
             <p>随着现在网站数量的爆炸式增长，越来越多的用户感到了信息爆炸带来的压力。互联网企业如何让自己的网站在如此众多的网站中脱颖而出，不仅需要自身强劲的企业实力，还需要一个好看的“门面”，这里指的是网站的UI或者App的UI。本文主要是探讨网络情况不佳时如何让用户的体验不那么糟糕？虽然这个要求比较急切，但是很多企业根本就不重视，这样是不好滴！今天就跟大家聊一聊网站的预加载。</p>
 <h2 id="作品赏析"><a href="#作品赏析" class="headerlink" title="作品赏析"></a>作品赏析</h2><p>在进行深入的讨论之前我们先看一看国外的优秀网站是如何进行预加载的设计的。这对我们设计自己的网页有非常大的启发。</p>
-<p><strong>TINIA</strong> <a href="http://demos.artbees.net/jupiter5/tinia/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader.png" alt="TINIA"></p>
-<p><strong>Orthosie</strong> <a href="http://demos.artbees.net/jupiter5/orthosie/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader2.png" alt="Orthosie"></p>
-<p><strong>JOVIAL</strong> <a href="http://demos.artbees.net/jupiter5/jovial/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader3.png" alt="JOVIAL"></p>
-<p><strong>Dies-Pater</strong> <a href="http://demos.artbees.net/jupiter5/dies-pater/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader4.png" alt="Dies-Pater"></p>
-<p><strong>EUPORIE</strong> <a href="http://demos.artbees.net/jupiter5/euporie/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader5.png" alt="EUPORIE"></p>
-<p><strong>TARA</strong> <a href="http://demos.artbees.net/jupiter5/tara/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader6.png" alt="TARA"></p>
+<p><strong>TINIA</strong> <a href="http://demos.artbees.net/jupiter5/tinia/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader.png" alt="TINIA"></p>
+<p><strong>Orthosie</strong> <a href="http://demos.artbees.net/jupiter5/orthosie/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader2.png" alt="Orthosie"></p>
+<p><strong>JOVIAL</strong> <a href="http://demos.artbees.net/jupiter5/jovial/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader3.png" alt="JOVIAL"></p>
+<p><strong>Dies-Pater</strong> <a href="http://demos.artbees.net/jupiter5/dies-pater/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader4.png" alt="Dies-Pater"></p>
+<p><strong>EUPORIE</strong> <a href="http://demos.artbees.net/jupiter5/euporie/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader5.png" alt="EUPORIE"></p>
+<p><strong>TARA</strong> <a href="http://demos.artbees.net/jupiter5/tara/" target="_blank" rel="noopener">点击查看Demo</a><br><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader6.png" alt="TARA"></p>
 <h2 id="审查代码"><a href="#审查代码" class="headerlink" title="审查代码"></a>审查代码</h2><p>在Chrome打开这些网站，在控制台选中正在加载中的页面，我们不难看出，他们都在每一个页面中加入了一段相同的代码。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/HTML-Preloader-Inspection.png" alt="审查元素"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/HTML-Preloader-Inspection.png" alt="审查元素"></p>
 <p>图片中代码如下：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mk-body-loader-overlay page-preloader"</span> <span class="attr">style</span>=<span class="string">"background-color: rgb(208, 17, 43); display: none;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">"Tara Template - Jupiter WordPress Theme"</span> <span class="attr">class</span>=<span class="string">"preloader-logo"</span> <span class="attr">src</span>=<span class="string">"http://demos.artbees.net/jupiter5/tara/wp-content/uploads/sites/156/2016/12/icon-04.png"</span> <span class="attr">width</span>=<span class="string">"109"</span> <span class="attr">height</span>=<span class="string">"79"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"preloader-preview-area"</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ball-pulse-sync"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color: #ffffff"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color: #ffffff"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"background-color: #ffffff"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，上面的代码是在每一个页面最开始加载的时候执行的，它的组成部分主要是一张背景图（大多是纯色背景，也可以有图案），还有一个加载动画组成。加载动画的形式可以多种多样，在上面的示例图中可以看到。</p>
@@ -209,7 +209,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/web-page-preloading.html" data-id="cjnb4zwsn00g9g6dqoh1ly6l9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/web-page-preloading.html" data-id="cjnzzo6lq00gc84dqb4q17sz7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -381,10 +381,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -404,7 +424,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -424,7 +444,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -444,7 +464,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -455,26 +475,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -611,20 +611,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -642,5 +657,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

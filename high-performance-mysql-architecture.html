@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="众所周知，MySQL是一款非常优秀的开源数据库，根据最新的DB-Engines(https://db-engines.com/en/ranking)排名来看，MySQL使用量已经跃居第二了。和Oracle以及Microsoft SQL Server一起稳稳地占据着前三名的绝对地位。不过我们也应该关注另一个发展迅猛的数据库就是PostgreSQL，不过在这个系列里面我们就不聊PostgreSQL啦。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/high-performance-mysql.png">
-<meta property="og:updated_time" content="2017-05-14T12:44:59.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/high-performance-mysql.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.461Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能MySQL之逻辑架构（一）">
 <meta name="twitter:description" content="众所周知，MySQL是一款非常优秀的开源数据库，根据最新的DB-Engines(https://db-engines.com/en/ranking)排名来看，MySQL使用量已经跃居第二了。和Oracle以及Microsoft SQL Server一起稳稳地占据着前三名的绝对地位。不过我们也应该关注另一个发展迅猛的数据库就是PostgreSQL，不过在这个系列里面我们就不聊PostgreSQL啦。">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/high-performance-mysql.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/high-performance-mysql.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -175,8 +175,8 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
             <p>众所周知，MySQL是一款非常优秀的开源数据库，根据最新的DB-Engines(<a href="https://db-engines.com/en/ranking" target="_blank" rel="noopener">https://db-engines.com/en/ranking</a>)排名来看，MySQL使用量已经跃居第二了。和Oracle以及Microsoft SQL Server一起稳稳地占据着前三名的绝对地位。不过我们也应该关注另一个发展迅猛的数据库就是PostgreSQL，不过在这个系列里面我们就不聊PostgreSQL啦。</p>
-<p><img src="https://obrxbqjbi.qnssl.com/blog/image/DB-Engines-2017-04.png" alt="DB-Engines排名"></p>
-<p>如果你能在大脑中勾画出一个MySQL各个组件之间相互协调工作的架构图，那么说明你已经比较了解MySQL的相关机制了，也更加有利于我们去理解MySQL服务器的工作原理。下面是一个MySQL的逻辑架构图。<br><img src="https://obrxbqjbi.qnssl.com/blog/image/mysql-architecture.png" alt="MySQL逻辑架构图"></p>
+<p><img src="https://image.qinjiangbo.com/blog/image/DB-Engines-2017-04.png" alt="DB-Engines排名"></p>
+<p>如果你能在大脑中勾画出一个MySQL各个组件之间相互协调工作的架构图，那么说明你已经比较了解MySQL的相关机制了，也更加有利于我们去理解MySQL服务器的工作原理。下面是一个MySQL的逻辑架构图。<br><img src="https://image.qinjiangbo.com/blog/image/mysql-architecture.png" alt="MySQL逻辑架构图"></p>
 <p>需要解释一下上面各个组件的作用，可以看到，<strong>最上层的服务并不是MySQL所独有的，大多数基于网络的C/S（客户端/服务端）的工具或者服务都有类似的架构。</strong>比如连接处理，授权认证，安全等。</p>
 <p><strong>第二层架构是MySQL最核心的部分。</strong>大多数MySQL的核心功能都在这里实现，比如查询解析、分析、优化、缓存以及所有的内置函数（built-in functions）（比如，日期，时间，数学和加密函数），所有跨存储引擎的功能都在这一层实现：存储过程、触发器、视图等。</p>
 <p><strong>第三层是存储引擎。</strong>MySQL的存储引擎有很多，其中最出名的存储引擎有两种：Innodb和MyISAM。存储引擎负责MySQL中数据的存储与提取。和GNU/Linux下面的文件系统一样，每个存储引擎都有它自己的优势和劣势。服务器通过API与存储引擎进行通信。这些接口屏蔽了不同存储引擎的具体实现上的差异。使得这些差异对于上层的查询是透明的。存储过程API包含几十个底层函数，用于执行诸如“开始一个事务”或者“根据主键提取一行数据”等操作。但是存储引擎不回去解析SQL（但是Innodb是一个例外，它会解析外键定义，因为MySQL本身并没有实现这个功能），不同的存储引擎之间也不会相互通信，而只是简单地响应上层的请求。</p>
@@ -188,7 +188,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/high-performance-mysql-architecture.html" data-id="cjnb4zwoc006hg6dq0ap5zlby" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/high-performance-mysql-architecture.html" data-id="cjnzzo6h2006c84dq4odyvzge" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -360,10 +360,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -383,7 +403,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -403,7 +423,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -423,7 +443,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -434,26 +454,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -590,20 +590,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -621,5 +636,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>

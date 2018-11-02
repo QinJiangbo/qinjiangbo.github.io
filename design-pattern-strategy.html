@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="什么是策略模式策略模式（Strategy Design Pattern）定义算法族，分别封装起来，让他们之间可以相互替换，此模式让算法的“变化”独立于使用算法的客户。 策略模式类图 策略模式实例分析先从一个简单的例子开始（盗用Head First图片哈），假设你的公司要你做一个鸭子模拟的游戏SimDuck，这个很简单吧，我们只需要熟悉OO设计原则即可以利用继承，多态来做。于是，我们有了以下的设计图">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-pattern.png">
-<meta property="og:updated_time" content="2017-03-09T17:54:25.000Z">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-pattern.png">
+<meta property="og:updated_time" content="2018-11-02T12:20:11.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式学习之策略模式">
 <meta name="twitter:description" content="什么是策略模式策略模式（Strategy Design Pattern）定义算法族，分别封装起来，让他们之间可以相互替换，此模式让算法的“变化”独立于使用算法的客户。 策略模式类图 策略模式实例分析先从一个简单的例子开始（盗用Head First图片哈），假设你的公司要你做一个鸭子模拟的游戏SimDuck，这个很简单吧，我们只需要熟悉OO设计原则即可以利用继承，多态来做。于是，我们有了以下的设计图">
-<meta name="twitter:image" content="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-pattern.png">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-pattern.png">
     
 
     
@@ -30,19 +30,19 @@
     
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/titillium-web/styles.css">
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/source-code-pro/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
 
-    <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/css/style.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
 
-    <script src="https://og3d9wq14.qnssl.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
     
     
-        <link rel="stylesheet" href="https://og3d9wq14.qnssl.com/vendor/scrollLoading/style.css">
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
     
     
     
@@ -175,15 +175,15 @@ var _hmt = _hmt || [];
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="什么是策略模式"><a href="#什么是策略模式" class="headerlink" title="什么是策略模式"></a>什么是策略模式</h2><p><strong>策略模式（Strategy Design Pattern）</strong><code>定义算法族，分别封装起来，让他们之间可以相互替换，此模式让算法的“变化”独立于使用算法的客户</code>。</p>
-<h2 id="策略模式类图"><a href="#策略模式类图" class="headerlink" title="策略模式类图"></a>策略模式类图</h2><p><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-07.png" alt="具体实例类图"></p>
-<h2 id="策略模式实例分析"><a href="#策略模式实例分析" class="headerlink" title="策略模式实例分析"></a>策略模式实例分析</h2><p>先从一个简单的例子开始（盗用Head First图片哈），假设你的公司要你做一个鸭子模拟的游戏SimDuck，这个很简单吧，我们只需要熟悉OO设计原则即可以利用继承，多态来做。于是，我们有了以下的设计图：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-01.png" alt=""></p>
+<h2 id="策略模式类图"><a href="#策略模式类图" class="headerlink" title="策略模式类图"></a>策略模式类图</h2><p><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-07.png" alt="具体实例类图"></p>
+<h2 id="策略模式实例分析"><a href="#策略模式实例分析" class="headerlink" title="策略模式实例分析"></a>策略模式实例分析</h2><p>先从一个简单的例子开始（盗用Head First图片哈），假设你的公司要你做一个鸭子模拟的游戏SimDuck，这个很简单吧，我们只需要熟悉OO设计原则即可以利用继承，多态来做。于是，我们有了以下的设计图：<br><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-01.png" alt=""></p>
 <p>这幅图我们并不感觉复杂，在Duck类里面定义了quack(), swim(), display()三个方法，然后display()方法被子类重写了，原因其实很简单，因为不同的鸭子他们的外观是不一样的，所以这里我们要重写这个display()方法。</p>
-<p>好啦，这样我们的任务就完成了，然后开开心心给老板提交项目，结果老板也觉得还不错。过了两天，老板说，我们的游戏里面鸭子最好能飞就好啦！然后给你改，觉得如何？所以我们就直接在Duck里面加入了fly()方法，如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-02.png" alt=""></p>
+<p>好啦，这样我们的任务就完成了，然后开开心心给老板提交项目，结果老板也觉得还不错。过了两天，老板说，我们的游戏里面鸭子最好能飞就好啦！然后给你改，觉得如何？所以我们就直接在Duck里面加入了fly()方法，如下：<br><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-02.png" alt=""></p>
 <p>这样就好了吗？答案是否定的！因为，并不是所有的鸭子都会飞，所以这样就不行！也许有人还在说，我们可以在子类中重写fly()方法，然后在方法体里面啥也不写！有人会说这样也行？！那么，为什么不行呢？！但是这个不是一个好的设计，因为，如果我们加入一个玩具鸭子呢？模型鸭子呢？他们既不会游泳，也不会叫也不会飞。肿么办？我们是不希望他们具备飞这个属性或者能力的，对吧？但是这种继承的方法会使得我们在子类中存在这个属性或者方法，那是与实际情况不符的！</p>
-<p>有人想到了接口，那么用接口会如何呢？<br><br>我们可以把我们需要的方法单独写在一个接口里面，供那些子类来调用和实现，比如我们可以有Flyable和Quackable接口，里面分别写上抽象方法fly()， quack()。然后子类继承Duck父类并实现这两个接口。如下图：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-03.png" alt=""></p>
+<p>有人想到了接口，那么用接口会如何呢？<br><br>我们可以把我们需要的方法单独写在一个接口里面，供那些子类来调用和实现，比如我们可以有Flyable和Quackable接口，里面分别写上抽象方法fly()， quack()。然后子类继承Duck父类并实现这两个接口。如下图：<br><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-03.png" alt=""></p>
 <p>这样一来我们只需要在需要实现fly()或者quack()的类里面实现相应的接口即可。这样不是很好吗？你觉得呢？方正我当时觉得挺好的，不过当你往下看你就会注意到问题了。假设我们采用这种方式了，那么，我们会遇到什么情况呢？那就是你要多写很多很多行代码，因为每一个鸭子的子类中都会实现这两个方法中的一个，方法重复率太高了！而且我们需要去修改这个方法的时候，我们需要改动的代码数量可是相当庞大的！所以这个方式看似可以，实则不行！</p>
-<p>那么我们如何处理这个问题呢？<br><br>其实有很多种方法，这里博主介绍自己的方法，那就是将我们项目变化的部分单独提取“封装”起来，让它不对项目的其它部分不受到影响。具体的做法是，我们可以将quack()和fly()两种方法，原则上变化部分还有display()，但是我们的display()方法只有一种类型的行为，也就是只有一个方法，所以这里没有必要把它单独写在一个接口里面，直接写在子类里面实现就好了。<br>那么，下面我们可以将这个结构画出来了，<br><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-04.png" alt=""></p>
-<p>那么这样一来，我们就可以相同的方法添加许多其他的行为，而不会影响到这个原有的功能。这样程序里面个对象的耦合程度就比较低了，更便于管理和维护。我们需要在Duck类里面引用这两个接口的对象，但是不要求初始化，因为这个初始化的工作是交给子类去做的。那么，你可能会问，不是说“<code>面向接口编程，不要面向实现</code>”嘛！额，好吧，的确是这样的，我们也确实这么干了，但是我们要知道，到目前为止，我们还没有接触到其他的设计模式，所以目前就先这么写着，到了后面我们会有解决方法的，比如采用getBehavior()方法来动态地加载某个接口，这样我们就可在运行时动态地实现相关地方法。当然，这个本小节不提到。<br>那么，我们现在这个设计已经很不错了，至少灵活性很高，而且非常好维护。概念图如下：<br><img src="https://obrxbqjbi.qnssl.com/blog/image/desgin-patterns/strategy-05.png" alt=""></p>
+<p>那么我们如何处理这个问题呢？<br><br>其实有很多种方法，这里博主介绍自己的方法，那就是将我们项目变化的部分单独提取“封装”起来，让它不对项目的其它部分不受到影响。具体的做法是，我们可以将quack()和fly()两种方法，原则上变化部分还有display()，但是我们的display()方法只有一种类型的行为，也就是只有一个方法，所以这里没有必要把它单独写在一个接口里面，直接写在子类里面实现就好了。<br>那么，下面我们可以将这个结构画出来了，<br><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-04.png" alt=""></p>
+<p>那么这样一来，我们就可以相同的方法添加许多其他的行为，而不会影响到这个原有的功能。这样程序里面个对象的耦合程度就比较低了，更便于管理和维护。我们需要在Duck类里面引用这两个接口的对象，但是不要求初始化，因为这个初始化的工作是交给子类去做的。那么，你可能会问，不是说“<code>面向接口编程，不要面向实现</code>”嘛！额，好吧，的确是这样的，我们也确实这么干了，但是我们要知道，到目前为止，我们还没有接触到其他的设计模式，所以目前就先这么写着，到了后面我们会有解决方法的，比如采用getBehavior()方法来动态地加载某个接口，这样我们就可在运行时动态地实现相关地方法。当然，这个本小节不提到。<br>那么，我们现在这个设计已经很不错了，至少灵活性很高，而且非常好维护。概念图如下：<br><img src="https://image.qinjiangbo.com/blog/image/desgin-patterns/strategy-05.png" alt=""></p>
 <p>我们可以看到，这里面多了两个方法peformQuack()和performFly()，这是为了替换那个接口中得两个方法，我们不希望子类访问到父类的成员变量的方法里面去，这样耦合程度太高，而且也不利于维护。因为我们采用的是继承，所以子类直接能用flyBehavior和quackBehavior两个父类的成员变量。所以，我们就用peformQuack()和performFly()这两个方法来“封装”它。<br>首先来看父类Duck的源码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    FlyBehavior flyBehavior;</span><br><span class="line">    QuackBehavior quackBehavior;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performFly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        flyBehavior.fly();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performQuack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        quackBehavior.quack();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"All ducks float, even decoys!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>再看子类MollardDuck的源码：</p>
@@ -220,7 +220,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/design-pattern-strategy.html" data-id="cjnb4zwyi012gg6dqx4mv0jt2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/design-pattern-strategy.html" data-id="cjnzzo6rs012f84dqav3g48mg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -392,10 +392,30 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
     
     
 </a>
@@ -415,7 +435,7 @@ var _hmt = _hmt || [];
                             <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
     
     
 </a>
@@ -435,7 +455,7 @@ var _hmt = _hmt || [];
                             <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -455,7 +475,7 @@ var _hmt = _hmt || [];
                             <a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="06计算广告笔记-程序化交易广告" class="thumbnail-image"></span>
     
     
 </a>
@@ -466,26 +486,6 @@ var _hmt = _hmt || [];
                             <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
                             <p class="item-title"><a href="/06-notes-of-computational-ads-programmed-exchange-ads.html" class="title">06计算广告笔记-程序化交易广告</a></p>
                             <p class="item-date"><time datetime="2018-10-05T04:56:22.000Z" itemprop="datePublished">2018-10-05</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://obrxbqjbi.qnssl.com/blog/image/computational-ads.png)" alt="05计算广告笔记-搜索与竞价广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/05-notes-of-computational-ads-search-bidding-ads.html" class="title">05计算广告笔记-搜索与竞价广告</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T08:02:58.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -622,20 +622,35 @@ var _hmt = _hmt || [];
 
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
     
 
     
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
-        <script src="https://og3d9wq14.qnssl.com/vendor/scrollLoading/main.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
     
 
 
 
 <!-- Custom Scripts -->
-<script src="https://og3d9wq14.qnssl.com/js/main.js"></script>
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -653,5 +668,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>
