@@ -4,13 +4,13 @@
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="baidu-site-verification" content="cXXVgPSRLA" />
     
-    <title>标签：: ssh | 秦江波的个人博客</title>
+    <title>标签：: SSH | 秦江波的个人博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="description" content="秦江波的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="秦江波的个人博客">
-<meta property="og:url" content="http://qinjiangbo.com/tags/ssh/index.html">
+<meta property="og:url" content="http://qinjiangbo.com/tags/SSH/index.html">
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="秦江波的个人博客">
 <meta property="og:locale" content="zh-CN">
@@ -140,7 +140,7 @@ var _hmt = _hmt || [];
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>ssh</em>
+    <i class="icon fa fa-tag"></i>标签：: <em>SSH</em>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -163,17 +163,17 @@ var _hmt = _hmt || [];
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/macOS-ssh-terminal-Chinese-character-display-setting.html" class="thumbnail">
+        <a href="/centos-auto-login-via-ssh.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/shell-window.png)" alt="macOS命令行SSH中文显示" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/centos-ssh-login.png)" alt="服务器SSH自动登录脚本" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/macOS-ssh-terminal-Chinese-character-display-setting.html">0</span>
+        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/centos-auto-login-via-ssh.html">0</span>
     
 </span>
 
@@ -186,66 +186,18 @@ var _hmt = _hmt || [];
             <p class="category">
             <a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a>
             </p>
-            <p class="date"><time datetime="2017-11-27T07:00:41.000Z" itemprop="datePublished">2017-11-27</time></p>
+            <p class="date"><time datetime="2017-11-11T09:25:20.000Z" itemprop="datePublished">2017-11-11</time></p>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/macOS-ssh-terminal-Chinese-character-display-setting.html">macOS命令行SSH中文显示</a>
+        <a href="/centos-auto-login-via-ssh.html">服务器SSH自动登录脚本</a>
         </h1>
     
 
         <p class="article-excerpt">
             
-使用macOS开发的同学对于终端的依赖程度应该是非常高的，虽然我们有ZOC，有iTerm等等工具，但是自家的能够用当然是希望使用自家的产品了。关于如何使用macOS系统自带的terminal应用连接远程Linux服务器我就不在这里介绍了，有需要的读者可以查询ssh命令是如何使用的。
-那么本文其实就是做了一个记录，关于中文字符在macOS终端里面显示乱码的问题，这里其实解决方案非常简单，找到.ba
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/create-ssh-connection-with-docker.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/docker-family.png)" alt="利用Docker创建SSH容器连接" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/create-ssh-connection-with-docker.html">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <p class="category">
-            <a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Docker/">Docker</a>
-            </p>
-            <p class="date"><time datetime="2017-10-11T06:28:15.000Z" itemprop="datePublished">2017-10-11</time></p>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/create-ssh-connection-with-docker.html">利用Docker创建SSH容器连接</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            
-本文主要是记录如何利用Docker创建一个可以进行SSH连接的容器，关于Docker的基础命令大家可以自行找官方文档学习。创建Docker镜像主要有两种方式，一种是docker commit，另一种是Dockerfile，第一种的弊端非常明显，因为它不能适应快速变化的部署环境，需要进行手动操作，然后提交到镜像当中；而后一种则可以快速适应变化，只要有Docker的地方它就可以很好地运行。所以，我们
+发现一个有趣的事情，就是很久之前想过的一个问题，不知道解决方案，然后就忘记了。突然某一天（比如今天）又想起来了，于是乎趁这个机会要好好弄明白到底是怎么回事。这个问题就是Linux系统中如何实现对命令的自动回答。举个简单的例子哈，比如我们使用yum install命令进行安装的时候，如果没有加上-y参数，我们几乎很多时候都会在程序安装的过程当中被要求输入yes/no，如果不输入程序则停止住了。那么
         </p>
     </div>
 </article>
@@ -553,6 +505,63 @@ var _hmt = _hmt || [];
         //去除畅言广告
         dsq = setInterval('if(document.getElementById("feedAv")){document.getElementById("feedAv").id="feedAvi";window.clearInterval(dsq);}', 1000);
         loadCssCode('#feedAvi{position: absolute !important;z-index: -9999;top: -1000px;}');
+        loadCssCode('#pop_ad{display: none !important;}');
+    </script>
+    
+
+
+
+    
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+</html>
+p: -1000px;}');
         loadCssCode('#pop_ad{display: none !important;}');
     </script>
     
