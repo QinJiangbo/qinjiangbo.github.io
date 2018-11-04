@@ -18,7 +18,7 @@
 <meta property="og:description" content="一直以来对于Java中日志类的框架启动流程都一直是黑盒，对于Log4j、commons-logging、Logback以及Slf4j等等这些框架的了解都是停留在基本了解，而不是深入研究。直到碰到了一个大坑，就是项目突然打印了大量的Debug日志，但是又没有方法关闭。以前倒是碰到过相似的问题，找到初步原因是Logback引起的，当时的解决方案就是把Logback移除掉，但是仅仅是简单移除掉并不能回答">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://image.qinjiangbo.com/blog/image/logback-thumbnail.png">
-<meta property="og:updated_time" content="2018-11-04T14:27:05.905Z">
+<meta property="og:updated_time" content="2018-11-04T14:31:11.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Log日志框架启动源码分析">
 <meta name="twitter:description" content="一直以来对于Java中日志类的框架启动流程都一直是黑盒，对于Log4j、commons-logging、Logback以及Slf4j等等这些框架的了解都是停留在基本了解，而不是深入研究。直到碰到了一个大坑，就是项目突然打印了大量的Debug日志，但是又没有方法关闭。以前倒是碰到过相似的问题，找到初步原因是Logback引起的，当时的解决方案就是把Logback移除掉，但是仅仅是简单移除掉并不能回答">
@@ -222,7 +222,11 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Logger <span class="title">getLogger</span><span class="params">(<span class="keyword">final</span> String name)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (name == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"name argument cannot be null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if we are asking for the root logger, then let us return it without</span></span><br><span class="line">    <span class="comment">// wasting time</span></span><br><span class="line">    <span class="keyword">if</span> (Logger.ROOT_LOGGER_NAME.equalsIgnoreCase(name)) &#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    Logger logger = root;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check if the desired logger exists, if it does, return it</span></span><br><span class="line">    <span class="comment">// without further ado.</span></span><br><span class="line">    Logger childLogger = (Logger) loggerCache.get(name);</span><br><span class="line">    <span class="comment">// if we have the child, then let us return it without wasting time</span></span><br><span class="line">    <span class="keyword">if</span> (childLogger != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> childLogger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if the desired logger does not exist, them create all the loggers</span></span><br><span class="line">    <span class="comment">// in between as well (if they don't already exist)</span></span><br><span class="line">    String childName;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> h = LoggerNameUtil.getSeparatorIndexOf(name, i);</span><br><span class="line">        <span class="keyword">if</span> (h == -<span class="number">1</span>) &#123;</span><br><span class="line">            childName = name;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            childName = name.substring(<span class="number">0</span>, h);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// move i left of the last point</span></span><br><span class="line">        i = h + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">synchronized</span> (logger) &#123;</span><br><span class="line">            childLogger = logger.getChildByName(childName);</span><br><span class="line">            <span class="keyword">if</span> (childLogger == <span class="keyword">null</span>) &#123;</span><br><span class="line">                childLogger = logger.createChildByName(childName);</span><br><span class="line">                loggerCache.put(childName, childLogger);</span><br><span class="line">                incSize();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        logger = childLogger;</span><br><span class="line">        <span class="keyword">if</span> (h == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> childLogger;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里我就简单地跟大家说一下他们生成Logger的逻辑好了，如果说你传递过来的名称是<code>Logger.ROOT_LOGGER_NAME</code>也就是字符串<code>ROOT</code>的话，那么直接返回Root Logger。否则就会将我们传递过来的名称，前面说到的比如<code>com.qinjiangbo.com.log4j.LogTest</code>按照分隔符一级一级创建Logger，直到创建完<code>LogTest</code>这一层。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实顺着这个思路大家把这个启动过程捋一下以后还是会比较清晰的，后面哪一步出现了问题都可以很快地排查到问题所在。下面列举几个常见问题：</p>
-<h3 id="项目总是频繁地打印DEBUG级别的日志如何处理"><a href="#项目总是频繁地打印DEBUG级别的日志如何处理" class="headerlink" title="项目总是频繁地打印DEBUG级别的日志如何处理"></a>项目总是频繁地打印DEBUG级别的日志如何处理</h3><p>这个首先考虑是否引入了Logback包，因为Logback包会有非常高的优先级，而且它的默认级别就是DEBUG。这里消除它的方法也比较简单，找到<code>logback.xml</code>文件，如果没有就创建一个。在SpringBoot中整合的好像是<code>logback-spring.xml</code>这个文件。大家可以在这个文件里面将日志级别设定为<code>ERROR</code>级别。</p>
+<h3 id="项目总是频繁地打印DEBUG级别的日志如何处理"><a href="#项目总是频繁地打印DEBUG级别的日志如何处理" class="headerlink" title="项目总是频繁地打印DEBUG级别的日志如何处理"></a>项目总是频繁地打印DEBUG级别的日志如何处理</h3><p>这个首先考虑是否引入了Logback包，因为Logback包会有非常高的优先级，而且它的默认级别就是DEBUG。这里消除它的方法也比较简单，两种方法：</p>
+<ul>
+<li>找到<code>logback.xml</code>文件，如果没有就创建一个。在SpringBoot中整合的好像是<code>logback-spring.xml</code>这个文件。大家可以在这个文件里面将日志级别设定为<code>ERROR</code>级别。</li>
+<li>排掉Logback包，具体的排包方法大家自行Google。</li>
+</ul>
 <h3 id="项目总是报多个SLF4J的实现类冲突"><a href="#项目总是报多个SLF4J的实现类冲突" class="headerlink" title="项目总是报多个SLF4J的实现类冲突"></a>项目总是报多个SLF4J的实现类冲突</h3><p>这个是由于在绑定阶段的时候，在类路径上读取到了多个Slf4j的实现类，因此，需要大家花时间排包，排除多余的slf4j的包。</p>
 
         </div>
@@ -231,7 +235,7 @@ var _hmt = _hmt || [];
 
 
 
-    <a data-url="http://qinjiangbo.com/code-review-of-boot-of-log4j-framework.html" data-id="cjo2z1u4q019eyhdqisv0z4vp" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/code-review-of-boot-of-log4j-framework.html" data-id="cjo2z5pdo019ebndq19axqb4x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -647,7 +651,22 @@ var _hmt = _hmt || [];
 <!-- Custom Scripts -->
 <script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -665,5 +684,6 @@ var _hmt = _hmt || [];
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>
