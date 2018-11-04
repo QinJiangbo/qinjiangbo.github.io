@@ -163,6 +163,104 @@ var _hmt = _hmt || [];
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/guide-of-redis-installations-in-centos7.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/redis.png)" alt="CentOS7安装redis集群指南" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/guide-of-redis-installations-in-centos7.html">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <p class="category">
+            <a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a>
+            </p>
+            <p class="date"><time datetime="2017-02-20T10:04:39.000Z" itemprop="datePublished">2017-02-20</time></p>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/guide-of-redis-installations-in-centos7.html">CentOS7安装redis集群指南</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+写在前面先说一说为什么要写这一篇博客，主要是因为今天在配置redis集群的时候被恶心到了，各种杂七杂八的问题一涌而现，搞得我摸不着北。写这篇博文主要是起一个记录的作用，以免自己日后再遇到此类问题时不知所措，浪费时间。网上的一些博客大多数都写的是单机上的多个实例的情况，这个不符合实际的生产环境要求，所以本文按照完全分布式的情况来部署。本博客的Q&amp;A环节放在下一篇博客里面。现在按照常规的步骤
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/ssh-non-login-configurations.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/centos72.jpg)" alt="CentOS7 SSH免登录配置" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/ssh-non-login-configurations.html">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <p class="category">
+            <a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Linux/">Linux</a>
+            </p>
+            <p class="date"><time datetime="2017-02-19T04:46:37.000Z" itemprop="datePublished">2017-02-19</time></p>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/ssh-non-login-configurations.html">CentOS7 SSH免登录配置</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            之前写过一篇关于SSH免登录的文章，不过那个是专门针对hadoop来设置的，感觉写的不是很详细，所以重新写一篇操作更具体的文章。供大家参考参考。本文的操作环境是CentOS7系统，一共有四台服务器，分别被命名为master，slave1， slave2以及slave3。
+设置hostname在CentOS7中，hosts文件的所在地是/etc/hosts里面，大家直接使用vim工具将这个hosts
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/effective-counters-in-java.html" class="thumbnail">
     
     
@@ -564,111 +662,6 @@ Hi，各位小伙伴们，大家新年快乐！由于满满的论文写作安排
 </article>
     
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/mechanism-of-double-locking-check.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/desgin-patterns/singleton-pattern.png)" alt="单例模式双重检查锁机制" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/mechanism-of-double-locking-check.html">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <p class="category">
-            <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
-            </p>
-            <p class="date"><time datetime="2016-12-04T19:45:47.000Z" itemprop="datePublished">2016-12-05</time></p>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/mechanism-of-double-locking-check.html">单例模式双重检查锁机制</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            单例模式的特点：
-首先，单例模式使类在程序生命周期的任何时刻都只有一个实例，
-然后，单例的构造函数是私有的，外部程序如果想要访问这个单例类的话，
-必须通过getInstance()来请求（注意是请求）得到这个单例类的实例。
-
-有的时候，总是容易把全局变量和单例模式给弄混了，下面就剖析一下全局变量和单例模式相比的缺点：
-首先，全局变量呢就是对一个对象的静态引用，全局变量确实可以提供单例模式实现的全局
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/design-pattern-abstract-factory.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/desgin-patterns/abstract-factory.png)" alt="设计模式学习之抽象工厂模式" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/design-pattern-abstract-factory.html">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <p class="category">
-            <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
-            </p>
-            <p class="date"><time datetime="2016-12-04T16:50:24.000Z" itemprop="datePublished">2016-12-05</time></p>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/design-pattern-abstract-factory.html">设计模式学习之抽象工厂模式</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            什么是抽象工厂模式抽象工厂模式（Abstract Factory Design Pattern）提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。
-是时候使用抽象工厂模式啦抽象工厂允许客户使用抽象的接口来创建一组相关的产品，而不需要知道（或者关心）实际产出的具体产品是什么。这样一来，客户就从具体的产品中被解耦。
-抽象工厂模式类图
-Client客户的代码中只需要涉及抽象工厂，运行时
-        </p>
-    </div>
-</article>
-    
-
 
     </div></section>
 
@@ -750,6 +743,46 @@ Client客户的代码中只需要涉及抽象工厂，运行时
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/code-review-of-boot-of-log4j-framework.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/logback-thumbnail.png)" alt="Log4j日志框架启动源码分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Java/">Java</a></p>
+                            <p class="item-title"><a href="/code-review-of-boot-of-log4j-framework.html" class="title">Log4j日志框架启动源码分析</a></p>
+                            <p class="item-date"><time datetime="2018-11-04T11:19:55.000Z" itemprop="datePublished">2018-11-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/shutdown-the-debug-level-log-of-logback-framework.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/logback-thumbnail.png)" alt="关闭Logback框架debug日志" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Java/">Java</a></p>
+                            <p class="item-title"><a href="/shutdown-the-debug-level-log-of-logback-framework.html" class="title">关闭Logback框架debug日志</a></p>
+                            <p class="item-date"><time datetime="2018-11-04T05:18:03.000Z" itemprop="datePublished">2018-11-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/upgrade-https-user-defined-domain-in-qiniu-cloud.html" class="thumbnail">
     
     
@@ -807,46 +840,6 @@ Client客户的代码中只需要涉及抽象工厂，运行时
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/adjust-dark-mode-in-macOS-mojave.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/macOS-Mojave-thumbnail.png)" alt="macOS深色主题调整" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a></p>
-                            <p class="item-title"><a href="/adjust-dark-mode-in-macOS-mojave.html" class="title">macOS深色主题调整</a></p>
-                            <p class="item-date"><time datetime="2018-10-08T01:29:30.000Z" itemprop="datePublished">2018-10-08</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="07计算广告笔记-移动原生广告" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
-                            <p class="item-title"><a href="/07-notes-of-computational-ads-mobile-native-ads.html" class="title">07计算广告笔记-移动原生广告</a></p>
-                            <p class="item-date"><time datetime="2018-10-07T14:38:29.000Z" itemprop="datePublished">2018-10-07</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -856,7 +849,7 @@ Client客户的代码中只需要涉及抽象工厂，运行时
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">100</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">80</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">54</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算广告/">计算广告</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">102</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">82</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">54</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算广告/">计算广告</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
         </div>
     </div>
 

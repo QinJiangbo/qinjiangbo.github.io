@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="baidu-site-verification" content="cXXVgPSRLA" />
+    
+    <title>Log4j日志框架启动源码分析 | 秦江波的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Log4j,Logback,Slf4j,commons-logging,源码分析" />
+    
+    <meta name="description" content="一直以来对于Java中日志类的框架启动流程都一直是黑盒，对于Log4j、commons-logging、Logback以及Slf4j等等这些框架的了解都是停留在基本了解，而不是深入研究。直到碰到了一个大坑，就是项目突然打印了大量的Debug日志，但是又没有方法关闭。以前倒是碰到过相似的问题，找到初步原因是Logback引起的，当时的解决方案就是把Logback移除掉，但是仅仅是简单移除掉并不能回答">
+<meta name="keywords" content="Log4j,Logback,Slf4j,commons-logging,源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log4j日志框架启动源码分析">
+<meta property="og:url" content="http://qinjiangbo.com/code-review-of-boot-of-log4j-framework.html">
+<meta property="og:site_name" content="秦江波的个人博客">
+<meta property="og:description" content="一直以来对于Java中日志类的框架启动流程都一直是黑盒，对于Log4j、commons-logging、Logback以及Slf4j等等这些框架的了解都是停留在基本了解，而不是深入研究。直到碰到了一个大坑，就是项目突然打印了大量的Debug日志，但是又没有方法关闭。以前倒是碰到过相似的问题，找到初步原因是Logback引起的，当时的解决方案就是把Logback移除掉，但是仅仅是简单移除掉并不能回答">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://image.qinjiangbo.com/blog/image/logback-thumbnail.png">
+<meta property="og:updated_time" content="2018-11-04T14:06:32.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Log4j日志框架启动源码分析">
+<meta name="twitter:description" content="一直以来对于Java中日志类的框架启动流程都一直是黑盒，对于Log4j、commons-logging、Logback以及Slf4j等等这些框架的了解都是停留在基本了解，而不是深入研究。直到碰到了一个大坑，就是项目突然打印了大量的Debug日志，但是又没有方法关闭。以前倒是碰到过相似的问题，找到初步原因是Logback引起的，当时的解决方案就是把Logback移除掉，但是仅仅是简单移除掉并不能回答">
+<meta name="twitter:image" content="https://image.qinjiangbo.com/blog/image/logback-thumbnail.png">
+    
+
+    
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/titillium-web/styles.css">
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="https://static.qinjiangbo.com/css/style.css">
+
+    <script src="https://static.qinjiangbo.com/vendor/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.css">
+    
+    
+        <link rel="stylesheet" href="https://static.qinjiangbo.com/vendor/scrollLoading/style.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a0e256d0086924d62a9116fdbab18bdf";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">DON&#39;T BE THE SAME, BE BETTER!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/计算广告/">计算广告</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/设计模式/">设计模式</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/">数据科学</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/大数据/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/数据科学/MySQL/">MySQL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/">架构师</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/微服务/">微服务</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/软件工程/">软件工程</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/算法/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构师/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/">经验感悟</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/摄影/">摄影</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/编程经验/">编程经验</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/经验感悟/心灵港/">心灵港</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/">开发技术</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/IOS/">IOS</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/前端/">前端</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/开发技术/Java/">Java</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/">关于作者</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/开发技术/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-code-review-of-boot-of-log4j-framework" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Log4j日志框架启动源码分析
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/code-review-of-boot-of-log4j-framework.html" class="article-date">
+    <time datetime="2018-11-04T11:19:55.000Z" itemprop="datePublished">2018-11-04</time>
+</a>
+                
+    <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log4j/">Log4j</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logback/">Logback</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Slf4j/">Slf4j</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/commons-logging/">commons-logging</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码分析/">源码分析</a></li></ul>
+
+            </div>
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>一直以来对于Java中日志类的框架启动流程都一直是黑盒，对于Log4j、commons-logging、Logback以及Slf4j等等这些框架的了解都是停留在基本了解，而不是深入研究。直到碰到了一个大坑，就是项目突然打印了大量的Debug日志，但是又没有方法关闭。以前倒是碰到过相似的问题，找到初步原因是Logback引起的，当时的解决方案就是把Logback移除掉，但是仅仅是简单移除掉并不能回答这个大坑产生的根本原因。因此，本文也是以这个为契机，来看一看到底Log日志在启动的时候做了哪些操作。</p>
+<h2 id="项目示例"><a href="#项目示例" class="headerlink" title="项目示例"></a>项目示例</h2><p>为了研究这几个框架并存的时候，系统会如何选择日志框架，本文将这几种框架同时引入，并且专门写一个测试类来进行测试，看项目日志是如何初始化的。这里使用的是Apache Commons-Logging门面框架，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.Log;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.LogFactory;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> jiangbo.qjb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/11/4</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Log log = LogFactory.getLog(LogTest.class);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面跟着我一起深入到<code>LogFactory.getLog</code>方法里面一探究竟。</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>首先是进入了<code>LogFactory</code>类的<code>getLog</code>方法里面，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Log <span class="title">getLog</span><span class="params">(Class clazz)</span> <span class="keyword">throws</span> LogConfigurationException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (getFactory().getInstance(clazz));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="org-apache-commons-logging-LogFactory-getLogFactory"><a href="#org-apache-commons-logging-LogFactory-getLogFactory" class="headerlink" title="org.apache.commons.logging.LogFactory.getLogFactory"></a>org.apache.commons.logging.LogFactory.getLogFactory</h3><p>这里面比较关键的就是<code>getFactory()</code>方法了，需要拿到一个<code>LogFactory</code>的具体实例，也就是具体实现类，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LogFactory <span class="title">getFactory</span><span class="params">()</span> <span class="keyword">throws</span> LogConfigurationException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Identify the class loader we will be using</span></span><br><span class="line">    ClassLoader contextClassLoader =</span><br><span class="line">        (ClassLoader)AccessController.doPrivileged(</span><br><span class="line">            <span class="keyword">new</span> PrivilegedAction() &#123;</span><br><span class="line">                <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> getContextClassLoader();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return any previously registered factory for this class loader</span></span><br><span class="line">    LogFactory factory = getCachedFactory(contextClassLoader);</span><br><span class="line">    <span class="keyword">if</span> (factory != <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> factory;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Load properties file.</span></span><br><span class="line">    <span class="comment">// Will be used one way or another in the end.</span></span><br><span class="line"></span><br><span class="line">    Properties props=<span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        InputStream stream = getResourceAsStream(contextClassLoader,</span><br><span class="line">                                                 FACTORY_PROPERTIES);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (stream != <span class="keyword">null</span>) &#123;</span><br><span class="line">            props = <span class="keyword">new</span> Properties();</span><br><span class="line">            props.load(stream);</span><br><span class="line">            stream.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// First, try the system property</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String factoryClass = System.getProperty(FACTORY_PROPERTY);</span><br><span class="line">        <span class="keyword">if</span> (factoryClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">            factory = newFactory(factoryClass, contextClassLoader);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">        ;  <span class="comment">// ignore</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Second, try to find a service by using the JDK1.3 jar</span></span><br><span class="line">    <span class="comment">// discovery mechanism. This will allow users to plug a logger</span></span><br><span class="line">    <span class="comment">// by just placing it in the lib/ directory of the webapp ( or in</span></span><br><span class="line">    <span class="comment">// CLASSPATH or equivalent ). This is similar to the second</span></span><br><span class="line">    <span class="comment">// step, except that it uses the (standard?) jdk1.3 location in the jar.</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (factory == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            InputStream is = getResourceAsStream(contextClassLoader,</span><br><span class="line">                                                 SERVICE_ID);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( is != <span class="keyword">null</span> ) &#123;</span><br><span class="line">                <span class="comment">// This code is needed by EBCDIC and other strange systems.</span></span><br><span class="line">                <span class="comment">// It's a fix for bugs reported in xerces</span></span><br><span class="line">                BufferedReader rd;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    rd = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(is, <span class="string">"UTF-8"</span>));</span><br><span class="line">                &#125; <span class="keyword">catch</span> (java.io.UnsupportedEncodingException e) &#123;</span><br><span class="line">                    rd = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(is));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                String factoryClassName = rd.readLine();</span><br><span class="line">                rd.close();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (factoryClassName != <span class="keyword">null</span> &amp;&amp;</span><br><span class="line">                    ! <span class="string">""</span>.equals(factoryClassName)) &#123;</span><br><span class="line"></span><br><span class="line">                    factory= newFactory( factoryClassName, contextClassLoader );</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span>( Exception ex ) &#123;</span><br><span class="line">            ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Third try a properties file.</span></span><br><span class="line">    <span class="comment">// If the properties file exists, it'll be read and the properties</span></span><br><span class="line">    <span class="comment">// used. IMHO ( costin ) System property and JDK1.3 jar service</span></span><br><span class="line">    <span class="comment">// should be enough for detecting the class name. The properties</span></span><br><span class="line">    <span class="comment">// should be used to set the attributes ( which may be specific to</span></span><br><span class="line">    <span class="comment">// the webapp, even if a default logger is set at JVM level by a</span></span><br><span class="line">    <span class="comment">// system property )</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (factory == <span class="keyword">null</span>  &amp;&amp;  props != <span class="keyword">null</span>) &#123;</span><br><span class="line">        String factoryClass = props.getProperty(FACTORY_PROPERTY);</span><br><span class="line">        <span class="keyword">if</span> (factoryClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">            factory = newFactory(factoryClass, contextClassLoader);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Fourth, try the fallback implementation class</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (factory == <span class="keyword">null</span>) &#123;</span><br><span class="line">        factory = newFactory(FACTORY_DEFAULT, LogFactory.class.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (factory != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Always cache using context class loader.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        cacheFactory(contextClassLoader, factory);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( props!=<span class="keyword">null</span> ) &#123;</span><br><span class="line">            Enumeration names = props.propertyNames();</span><br><span class="line">            <span class="keyword">while</span> (names.hasMoreElements()) &#123;</span><br><span class="line">                String name = (String) names.nextElement();</span><br><span class="line">                String value = props.getProperty(name);</span><br><span class="line">                factory.setAttribute(name, value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> factory;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码有点长，捋一下这段代码的基本逻辑就是要通过下面的一个顺序查找<code>LogFactory</code>的实现类：</p>
+<ul>
+<li>查找系统属性(System Property)中是否包含<code>org.apache.commons.logging.LogFactory</code>属性，这个属性会指定它的具体实现类；</li>
+<li>基于JDK1.3的服务发现机制，在CLASSPATH中查找包含该服务的Jar包，这个服务的ID就是<code>META-INF/services/org.apache.commons.logging.LogFactory</code>；</li>
+<li>查找<code>commons-logging.properties</code>文件，对，没错，名称就是这个。找到以后，再到这个文件里面查询上面提到过的<code>org.apache.commons.logging.LogFactory</code>属性；</li>
+<li>如果都找不到的话，那就只能指定一个默认的实现类了，<code>org.apache.commons.logging.impl.LogFactoryImpl</code>。</li>
+</ul>
+<p>补充一下，<code>Factory</code>类有以下几个具体的实现类：</p>
+<ul>
+<li>org.apache.commons.logging.impl.Log4jFactory</li>
+<li>org.apache.commons.logging.impl.LogFactoryImpl</li>
+<li>org.apache.commons.logging.impl.SLF4JLogFactory</li>
+</ul>
+<p>这段代码其实有很多种执行的方式，取决于<code>LogFactory</code>这个类具体的实现类是什么，由于本例中存在slf4j的jar包，因此，这段代码由于上述查找机制中的第三条，也就是查找到了<code>META-INF/services/org.apache.commons.logging.LogFactory</code>这个文件，这里可以打开这个文件看一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">org.apache.commons.logging.impl.SLF4JLogFactory</span><br><span class="line"></span><br><span class="line"># Axis gets at JCL through its own mechanism as defined by Commons Discovery, which</span><br><span class="line"># in turn follows the instructions found at: </span><br><span class="line"># http://java.sun.com/j2se/1.3/docs/guide/jar/jar.html#Service Provider</span><br></pre></td></tr></table></figure>
+<h3 id="org-apache-commons-logging-impl-SLF4JLogFactory-getInstance"><a href="#org-apache-commons-logging-impl-SLF4JLogFactory-getInstance" class="headerlink" title="org.apache.commons.logging.impl.SLF4JLogFactory.getInstance"></a>org.apache.commons.logging.impl.SLF4JLogFactory.getInstance</h3><p>接着就进入了<code>SLF4JLogFactory.getInstance</code>方法里面了。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Log <span class="title">getInstance</span><span class="params">(Class clazz)</span> <span class="keyword">throws</span> LogConfigurationException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (getInstance(clazz.getName()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Log <span class="title">getInstance</span><span class="params">(String name)</span> <span class="keyword">throws</span> LogConfigurationException </span>&#123;</span><br><span class="line">    Log instance = loggerMap.get(name);</span><br><span class="line">    <span class="keyword">if</span> (instance != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Log newInstance;</span><br><span class="line">        Logger slf4jLogger = LoggerFactory.getLogger(name);</span><br><span class="line">        <span class="keyword">if</span> (slf4jLogger <span class="keyword">instanceof</span> LocationAwareLogger) &#123;</span><br><span class="line">            newInstance = <span class="keyword">new</span> SLF4JLocationAwareLog((LocationAwareLogger) slf4jLogger);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            newInstance = <span class="keyword">new</span> SLF4JLog(slf4jLogger);</span><br><span class="line">        &#125;</span><br><span class="line">        Log oldInstance = loggerMap.putIfAbsent(name, newInstance);</span><br><span class="line">        <span class="keyword">return</span> oldInstance == <span class="keyword">null</span> ? newInstance : oldInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="org-slf4j-LoggerFactory-getLogger"><a href="#org-slf4j-LoggerFactory-getLogger" class="headerlink" title="org.slf4j.LoggerFactory.getLogger"></a>org.slf4j.LoggerFactory.getLogger</h3><p>可以看到，这段代码的核心逻辑就是创建一个<code>Logger</code>对象，核心代码是<code>Logger slf4jLogger = LoggerFactory.getLogger(name);</code>，进入这个方法里面去看就能发现Logger被创建的具体细节。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Logger <span class="title">getLogger</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    ILoggerFactory iLoggerFactory = getILoggerFactory();</span><br><span class="line">    <span class="keyword">return</span> iLoggerFactory.getLogger(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个ILoggerFactory就是一个通过名字(<code>getLogger(name)</code>)来查找和管理Logger的类，所以，很显然这里的<code>getILoggerFactory</code>方法就是来根据名称创建<code>LoggerFactory</code>，一般来说，我们的名称是类的全类名，比如<code>com.qinjiangbo.com.log4j.LogTest</code>。这个<code>getILoggerFactory</code>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ILoggerFactory <span class="title">getILoggerFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (INITIALIZATION_STATE == UNINITIALIZED) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (LoggerFactory.class) &#123;</span><br><span class="line">            <span class="keyword">if</span> (INITIALIZATION_STATE == UNINITIALIZED) &#123;</span><br><span class="line">                INITIALIZATION_STATE = ONGOING_INITIALIZATION;</span><br><span class="line">                performInitialization();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> (INITIALIZATION_STATE) &#123;</span><br><span class="line">    <span class="keyword">case</span> SUCCESSFUL_INITIALIZATION:</span><br><span class="line">        <span class="keyword">return</span> StaticLoggerBinder.getSingleton().getLoggerFactory();</span><br><span class="line">    <span class="keyword">case</span> NOP_FALLBACK_INITIALIZATION:</span><br><span class="line">        <span class="keyword">return</span> NOP_FALLBACK_FACTORY;</span><br><span class="line">    <span class="keyword">case</span> FAILED_INITIALIZATION:</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(UNSUCCESSFUL_INIT_MSG);</span><br><span class="line">    <span class="keyword">case</span> ONGOING_INITIALIZATION:</span><br><span class="line">        <span class="comment">// support re-entrant behavior.</span></span><br><span class="line">        <span class="comment">// See also http://jira.qos.ch/browse/SLF4J-97</span></span><br><span class="line">        <span class="keyword">return</span> SUBST_FACTORY;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Unreachable code"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="org-slf4j-impl-StaticLoggerBinder-getLoggerFactory"><a href="#org-slf4j-impl-StaticLoggerBinder-getLoggerFactory" class="headerlink" title="org.slf4j.impl.StaticLoggerBinder.getLoggerFactory"></a>org.slf4j.impl.StaticLoggerBinder.getLoggerFactory</h3><p>还是要说明一下关键代码，这里的关键代码是<code>StaticLoggerBinder.getSingleton().getLoggerFactory();</code>，可以看到这个<code>StaticLoggerBinder.getSingleton</code>类就是来自于Logback包里面的类，也就是说明Slf4j优先选择的是Logback作为具体实现类。执行这一段的时候，<code>StaticLoggerBinder</code>类里面会默认执行一段<code>init</code>方法，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    SINGLETON.init();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">new</span> ContextInitializer(defaultLoggerContext).autoConfig();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (JoranException je) &#123;</span><br><span class="line">            Util.report(<span class="string">"Failed to auto configure default logger context"</span>, je);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// logback-292</span></span><br><span class="line">        <span class="keyword">if</span> (!StatusUtil.contextHasStatusListener(defaultLoggerContext)) &#123;</span><br><span class="line">            StatusPrinter.printInCaseOfErrorsOrWarnings(defaultLoggerContext);</span><br><span class="line">        &#125;</span><br><span class="line">        contextSelectorBinder.init(defaultLoggerContext, KEY);</span><br><span class="line">        initialized = <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception t) &#123; <span class="comment">// see LOGBACK-1159</span></span><br><span class="line">        Util.report(<span class="string">"Failed to instantiate ["</span> + LoggerContext.class.getName() + <span class="string">"]"</span>, t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里面的这个<code>ContextInitializer</code>类的<code>autoConfig</code>方法非常重要，因为它自动配置了logback的配置信息。具体的逻辑如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">autoConfig</span><span class="params">()</span> <span class="keyword">throws</span> JoranException </span>&#123;</span><br><span class="line">    StatusListenerConfigHelper.installIfAsked(loggerContext);</span><br><span class="line">    URL url = findURLOfDefaultConfigurationFile(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">if</span> (url != <span class="keyword">null</span>) &#123;</span><br><span class="line">        configureByResource(url);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Configurator c = EnvUtil.loadFromServiceLoader(Configurator.class);</span><br><span class="line">        <span class="keyword">if</span> (c != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                c.setContext(loggerContext);</span><br><span class="line">                c.configure(loggerContext);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> LogbackException(String.format(<span class="string">"Failed to initialize Configurator: %s using ServiceLoader"</span>, c != <span class="keyword">null</span> ? c.getClass()</span><br><span class="line">                                .getCanonicalName() : <span class="string">"null"</span>), e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            BasicConfigurator basicConfigurator = <span class="keyword">new</span> BasicConfigurator();</span><br><span class="line">            basicConfigurator.setContext(loggerContext);</span><br><span class="line">            basicConfigurator.configure(loggerContext);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> URL <span class="title">findURLOfDefaultConfigurationFile</span><span class="params">(<span class="keyword">boolean</span> updateStatus)</span> </span>&#123;</span><br><span class="line">    ClassLoader myClassLoader = Loader.getClassLoaderOfObject(<span class="keyword">this</span>);</span><br><span class="line">    URL url = findConfigFileURLFromSystemProperties(myClassLoader, updateStatus);</span><br><span class="line">    <span class="keyword">if</span> (url != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    url = getResource(GROOVY_AUTOCONFIG_FILE, myClassLoader, updateStatus);</span><br><span class="line">    <span class="keyword">if</span> (url != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    url = getResource(TEST_AUTOCONFIG_FILE, myClassLoader, updateStatus);</span><br><span class="line">    <span class="keyword">if</span> (url != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> getResource(AUTOCONFIG_FILE, myClassLoader, updateStatus);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的这几个常量的名称分别如下：</p>
+<ul>
+<li>GROOVY_AUTOCONFIG_FILE—&gt;<strong>logback.groovy</strong></li>
+<li>TEST_AUTOCONFIG_FILE—&gt;<strong>logback-test.xml</strong></li>
+<li>AUTOCONFIG_FILE—&gt;<strong>logback.xml</strong></li>
+</ul>
+<p><strong>这里非常重要的一点：从代码逻辑上可以看出，名称是写死的，并不是什么相似匹配，因此要想让logback配置生效，这里必须写这几个名称。</strong></p>
+<h3 id="org-slf4j-LoggerFactory-performInitialization"><a href="#org-slf4j-LoggerFactory-performInitialization" class="headerlink" title="org.slf4j.LoggerFactory.performInitialization"></a>org.slf4j.LoggerFactory.performInitialization</h3><p>前面叙述<code>getILoggerFactory</code>方法里面还有一个关键代码就是<code>performInitialization();</code>，这个方法里面包含一个<code>bind</code>方法，具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">performInitialization</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    bind();</span><br><span class="line">    <span class="keyword">if</span> (INITIALIZATION_STATE == SUCCESSFUL_INITIALIZATION) &#123;</span><br><span class="line">        versionSanityCheck();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bind</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Set&lt;URL&gt; staticLoggerBinderPathSet = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">// skip check under android, see also</span></span><br><span class="line">        <span class="comment">// http://jira.qos.ch/browse/SLF4J-328</span></span><br><span class="line">        <span class="keyword">if</span> (!isAndroid()) &#123;</span><br><span class="line">            staticLoggerBinderPathSet = findPossibleStaticLoggerBinderPathSet();</span><br><span class="line">            reportMultipleBindingAmbiguity(staticLoggerBinderPathSet);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// the next line does the binding</span></span><br><span class="line">        StaticLoggerBinder.getSingleton();</span><br><span class="line">        INITIALIZATION_STATE = SUCCESSFUL_INITIALIZATION;</span><br><span class="line">        reportActualBinding(staticLoggerBinderPathSet);</span><br><span class="line">        fixSubstituteLoggers();</span><br><span class="line">        replayEvents();</span><br><span class="line">        <span class="comment">// release all resources in SUBST_FACTORY</span></span><br><span class="line">        SUBST_FACTORY.clear();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoClassDefFoundError ncde) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125; <span class="keyword">catch</span> (java.lang.NoSuchMethodError nsme) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        failedBinding(e);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Unexpected initialization failure"</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化成功以后就把状态置为成功了，<code>INITIALIZATION_STATE = SUCCESSFUL_INITIALIZATION;</code>。其中如果我们导入了多个slf4j的jar包的话，这里会出现<strong>绑定冲突</strong>，检验冲突的方法就是<code>reportMultipleBindingAmbiguity(staticLoggerBinderPathSet);</code>这个方法的逻辑非常简单，就是看找到的LoggerBinder有多个：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isAmbiguousStaticLoggerBinderPathSet</span><span class="params">(Set&lt;URL&gt; binderPathSet)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> binderPathSet.size() &gt; <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ch-qos-logback-classic-LoggerContext-getLogger"><a href="#ch-qos-logback-classic-LoggerContext-getLogger" class="headerlink" title="ch.qos.logback.classic.LoggerContext.getLogger"></a>ch.qos.logback.classic.LoggerContext.getLogger</h3><p>然后我们再来看获取Logger的代码<code>iLoggerFactory.getLogger(name);</code>，这里的<code>iLoggerFactory</code>的具体实现类是<code>ch.qos.logback.classic.LoggerContext</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Logger <span class="title">getLogger</span><span class="params">(<span class="keyword">final</span> String name)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (name == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"name argument cannot be null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if we are asking for the root logger, then let us return it without</span></span><br><span class="line">    <span class="comment">// wasting time</span></span><br><span class="line">    <span class="keyword">if</span> (Logger.ROOT_LOGGER_NAME.equalsIgnoreCase(name)) &#123;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    Logger logger = root;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check if the desired logger exists, if it does, return it</span></span><br><span class="line">    <span class="comment">// without further ado.</span></span><br><span class="line">    Logger childLogger = (Logger) loggerCache.get(name);</span><br><span class="line">    <span class="comment">// if we have the child, then let us return it without wasting time</span></span><br><span class="line">    <span class="keyword">if</span> (childLogger != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> childLogger;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if the desired logger does not exist, them create all the loggers</span></span><br><span class="line">    <span class="comment">// in between as well (if they don't already exist)</span></span><br><span class="line">    String childName;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> h = LoggerNameUtil.getSeparatorIndexOf(name, i);</span><br><span class="line">        <span class="keyword">if</span> (h == -<span class="number">1</span>) &#123;</span><br><span class="line">            childName = name;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            childName = name.substring(<span class="number">0</span>, h);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// move i left of the last point</span></span><br><span class="line">        i = h + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">synchronized</span> (logger) &#123;</span><br><span class="line">            childLogger = logger.getChildByName(childName);</span><br><span class="line">            <span class="keyword">if</span> (childLogger == <span class="keyword">null</span>) &#123;</span><br><span class="line">                childLogger = logger.createChildByName(childName);</span><br><span class="line">                loggerCache.put(childName, childLogger);</span><br><span class="line">                incSize();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        logger = childLogger;</span><br><span class="line">        <span class="keyword">if</span> (h == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> childLogger;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我就简单地跟大家说一下他们生成Logger的逻辑好了，如果说你传递过来的名称是<code>Logger.ROOT_LOGGER_NAME</code>也就是字符串<code>ROOT</code>的话，那么直接返回Root Logger。否则就会将我们传递过来的名称，前面说到的比如<code>com.qinjiangbo.com.log4j.LogTest</code>按照分隔符一级一级创建Logger，直到创建完<code>LogTest</code>这一层。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实顺着这个思路大家把这个启动过程捋一下以后还是会比较清晰的，后面哪一步出现了问题都可以很快地排查到问题所在。下面列举几个常见问题：</p>
+<h3 id="项目总是频繁地打印DEBUG级别的日志如何处理"><a href="#项目总是频繁地打印DEBUG级别的日志如何处理" class="headerlink" title="项目总是频繁地打印DEBUG级别的日志如何处理"></a>项目总是频繁地打印DEBUG级别的日志如何处理</h3><p>这个首先考虑是否引入了Logback包，因为Logback包会有非常高的优先级，而且它的默认级别就是DEBUG。这里消除它的方法也比较简单，找到<code>logback.xml</code>文件，如果没有就创建一个。在SpringBoot中整合的好像是<code>logback-spring.xml</code>这个文件。大家可以在这个文件里面将日志级别设定为<code>ERROR</code>级别。</p>
+<h3 id="项目总是报多个SLF4J的实现类冲突"><a href="#项目总是报多个SLF4J的实现类冲突" class="headerlink" title="项目总是报多个SLF4J的实现类冲突"></a>项目总是报多个SLF4J的实现类冲突</h3><p>这个是由于在绑定阶段的时候，在类路径上读取到了多个Slf4j的实现类，因此，需要大家花时间排包，排除多余的slf4j的包。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://qinjiangbo.com/code-review-of-boot-of-log4j-framework.html" data-id="cjo2ya15j015u6mdqold8352j" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        <!-- 打赏 -->
+        <div style="text-align:center">
+        <div id="cyReward" role="cylabs" data-use="reward" sid="http://qinjiangbo.com/code-review-of-boot-of-log4j-framework.html"></div>
+        </div>
+        
+        <div id="SOHUCS" sid="http://qinjiangbo.com/code-review-of-boot-of-log4j-framework.html"></div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="http://www.linkedin.com/in/qin-jiangbo-87b844a9?trk=hp-identity-name" target="_blank">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://facebook.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://plus.google.com/u/0/107864724867549174963" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/qinjiangbo" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="http://weibo.com/qinjiangbo1994" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/shutdown-the-debug-level-log-of-logback-framework.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">关闭Logback框架debug日志</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/code-review-of-boot-of-log4j-framework.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/logback-thumbnail.png)" alt="Log4j日志框架启动源码分析" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Java/">Java</a></p>
+                            <p class="item-title"><a href="/code-review-of-boot-of-log4j-framework.html" class="title">Log4j日志框架启动源码分析</a></p>
+                            <p class="item-date"><time datetime="2018-11-04T11:19:55.000Z" itemprop="datePublished">2018-11-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/shutdown-the-debug-level-log-of-logback-framework.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/logback-thumbnail.png)" alt="关闭Logback框架debug日志" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Java/">Java</a></p>
+                            <p class="item-title"><a href="/shutdown-the-debug-level-log-of-logback-framework.html" class="title">关闭Logback框架debug日志</a></p>
+                            <p class="item-date"><time datetime="2018-11-04T05:18:03.000Z" itemprop="datePublished">2018-11-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/upgrade-https-user-defined-domain-in-qiniu-cloud.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/qiniu-cloud-thumbnail.png)" alt="七牛云升级HTTPS自定义域名" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/经验感悟/">经验感悟</a></p>
+                            <p class="item-title"><a href="/upgrade-https-user-defined-domain-in-qiniu-cloud.html" class="title">七牛云升级HTTPS自定义域名</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T13:24:24.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/ocr-via-tesseract.js-tool.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/tesseract-js.png)" alt="利用tesseract.js实现OCR" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/数据科学/">数据科学</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/数据科学/机器学习/">机器学习</a></p>
+                            <p class="item-title"><a href="/ocr-via-tesseract.js-tool.html" class="title">利用tesseract.js实现OCR</a></p>
+                            <p class="item-date"><time datetime="2018-11-02T07:45:23.000Z" itemprop="datePublished">2018-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/08-notes-of-computational-ads-online-ads-practice.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/computational-ads.png)" alt="08计算广告笔记-在线广告实践" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/计算广告/">计算广告</a></p>
+                            <p class="item-title"><a href="/08-notes-of-computational-ads-online-ads-practice.html" class="title">08计算广告笔记-在线广告实践</a></p>
+                            <p class="item-date"><time datetime="2018-10-15T07:51:40.000Z" itemprop="datePublished">2018-10-15</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/">开发技术</a><span class="category-list-count">102</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/IOS/">IOS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Java/">Java</a><span class="category-list-count">82</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/Python/">Python</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发技术/前端/">前端</a><span class="category-list-count">8</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/">数据科学</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/MySQL/">MySQL</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据科学/机器学习/">机器学习</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/">架构师</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Docker/">Docker</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/Linux/">Linux</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/微服务/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/算法/">算法</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构师/软件工程/">软件工程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/">经验感悟</a><span class="category-list-count">54</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/心灵港/">心灵港</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/摄影/">摄影</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/编程经验/">编程经验</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/经验感悟/面试集锦/">面试集锦</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算广告/">计算广告</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/">设计模式</a><span class="category-list-count">18</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://jm.taobao.org/">阿里中间件团队博客</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://www.whu.edu.cn">武汉大学</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/u011763190">心灵港</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wuwenan.com">Aaron Wu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://pengxiaolei.com/">Bazingagain</a>
+                    </li>
+                
+                    <li>
+                        <a href="https://youngerfary.github.io/">YoungerFary</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 QinJiangbo</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt0xMpao"></script>
+    <script type="text/javascript">
+        (function () {
+            var appid = 'cyt0xMpao';
+            var conf = '49e8e331acbd57a201788b61958e0e26';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+                window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+            } else {
+                var loadJs = function (d, a) {
+                    var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                    var b = document.createElement("script");
+                    b.setAttribute("type", "text/javascript");
+                    b.setAttribute("charset", "UTF-8");
+                    b.setAttribute("src", d);
+                    if (typeof a === "function") {
+                        if (window.attachEvent) {
+                            b.onreadystatechange = function () {
+                                var e = b.readyState;
+                                if (e === "loaded" || e === "complete") {
+                                    b.onreadystatechange = null;
+                                    a()
+                                }
+                            }
+                        } else {
+                            b.onload = a
+                        }
+                    }
+                    c.appendChild(b)
+                };
+                loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+                    window.changyan.api.config({
+                        appid: appid,
+                        conf: conf
+                    })
+                });
+            }
+        })();
+
+        function loadCssCode(code) {
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.rel = 'stylesheet';
+            //for Chrome Firefox Opera Safari
+            style.appendChild(document.createTextNode(code));
+            //for IE
+            //style.styleSheet.cssText = code;
+            var head = document.getElementsByTagName('head')[0];
+            head.appendChild(style);
+        }
+        var dsq = null;
+        //去除畅言广告
+        dsq = setInterval('if(document.getElementById("feedAv")){document.getElementById("feedAv").id="feedAvi";window.clearInterval(dsq);}', 1000);
+        loadCssCode('#feedAvi{position: absolute !important;z-index: -9999;top: -1000px;}');
+        loadCssCode('#pop_ad{display: none !important;}');
+    </script>
+    
+
+
+
+    
+        <script src="https://static.qinjiangbo.com/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+    
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/jquery.scrollLoading.js"></script>
+        <script src="https://static.qinjiangbo.com/vendor/scrollLoading/main.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="https://static.qinjiangbo.com/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+</html>
