@@ -4,13 +4,13 @@
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="baidu-site-verification" content="cXXVgPSRLA" />
     
-    <title>标签：: SpringMVC | 秦江波的个人博客</title>
+    <title>标签：: springmvc | 秦江波的个人博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="description" content="秦江波的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="秦江波的个人博客">
-<meta property="og:url" content="http://qinjiangbo.com/tags/SpringMVC/index.html">
+<meta property="og:url" content="http://qinjiangbo.com/tags/springmvc/index.html">
 <meta property="og:site_name" content="秦江波的个人博客">
 <meta property="og:description" content="秦江波的个人博客">
 <meta property="og:locale" content="zh-CN">
@@ -140,7 +140,7 @@ var _hmt = _hmt || [];
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-tag"></i>标签：: <em>SpringMVC</em>
+    <i class="icon fa fa-tag"></i>标签：: <em>springmvc</em>
     </h1>
 </div>
                         <div class="main-body-content">
@@ -163,17 +163,17 @@ var _hmt = _hmt || [];
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/integration-between-drools-and-springmvc.html" class="thumbnail">
+        <a href="/run-springmvc-web-application-in-tomcat-with-docker.html" class="thumbnail">
     
     
-        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/drools-springmvc.png)" alt="Drools与SpringMVC整合" class="thumbnail-image"></span>
+        <span style="background-image:url(https://image.qinjiangbo.com/blog/image/docker-logo.jpeg)" alt="利用Docker运行SpringMVC程序" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/integration-between-drools-and-springmvc.html">0</span>
+        <span class="cy_cmt_count" id="sourceId::http://qinjiangbo.com/run-springmvc-web-application-in-tomcat-with-docker.html">0</span>
     
 </span>
 
@@ -184,27 +184,23 @@ var _hmt = _hmt || [];
         
         <div class="article-meta">
             <p class="category">
-            <a class="article-category-link" href="/categories/开发技术/">开发技术</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/开发技术/Java/">Java</a>
+            <a class="article-category-link" href="/categories/架构师/">架构师</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构师/Docker/">Docker</a>
             </p>
-            <p class="date"><time datetime="2017-11-01T08:22:49.000Z" itemprop="datePublished">2017-11-01</time></p>
+            <p class="date"><time datetime="2017-10-13T13:12:55.000Z" itemprop="datePublished">2017-10-13</time></p>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/integration-between-drools-and-springmvc.html">Drools与SpringMVC整合</a>
+        <a href="/run-springmvc-web-application-in-tomcat-with-docker.html">利用Docker运行SpringMVC程序</a>
         </h1>
     
 
         <p class="article-excerpt">
-            本文主要介绍Drools6.4.Final版本与SpringMVC的整合。网上现有的教程大多数不能完整运行，本文将会提供具体的操作过程以及相应的注意事项，保证Demo代码是可以跑通的。
-开发环境
-macOS High Sierra
-Intellij IDEA 2017.2
-Drools 6.4.0.Final
-SpringMVC 4.3.12.RELEASE
-JDK 1.8.0_144
+            
+本文主要介绍如何利用Docker来运行一个Web应用程序。因为博主是以Java为主，所以来讲一讲我们最熟悉的SpringMVC应用程序是如何在Docker中跑起来的。首先要检查一下我们需要的东西：
 
-搭建Ma
+Docker (https://store.docker.com/editions/community/docker-ce-desktop-mac)
+Tomcat (http://www-eu.ap
         </p>
     </div>
 </article>
@@ -450,8 +446,10 @@ JDK 1.8.0_144
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2019 QinJiangbo</p>
-                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+                <p>&copy; 2020 QinJiangbo <a
+                        href="http://www.beian.miit.gov.cn">鄂ICP备15011478号</a></p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice"
+                        target="_blank">PPOffice</a></p>
             </div>
         </div>
     </div>
@@ -532,9 +530,39 @@ JDK 1.8.0_144
 <!-- Custom Scripts -->
 <script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</body>
-</html>
-><!-- hexo-inject:end -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
 </body>
 </html>

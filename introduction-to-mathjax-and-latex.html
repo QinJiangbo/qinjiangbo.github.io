@@ -644,7 +644,7 @@ a_3x+b_3y+c_3z &=d_3
 
 
 
-    <a data-url="http://qinjiangbo.com/introduction-to-mathjax-and-latex.html" data-id="cjziezb5g019hy0dq5kjenvyd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://qinjiangbo.com/introduction-to-mathjax-and-latex.html" data-id="ck7bm19ap009drddq8v02i7k7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -978,8 +978,10 @@ a_3x+b_3y+c_3z &=d_3
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2019 QinJiangbo</p>
-                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+                <p>&copy; 2020 QinJiangbo <a
+                        href="http://www.beian.miit.gov.cn">鄂ICP备15011478号</a></p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice"
+                        target="_blank">PPOffice</a></p>
             </div>
         </div>
     </div>
@@ -1060,7 +1062,22 @@ a_3x+b_3y+c_3z &=d_3
 <!-- Custom Scripts -->
 <script src="https://static.qinjiangbo.com/js/main.js"></script>
 
-    </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1078,5 +1095,6 @@ a_3x+b_3y+c_3z &=d_3
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 </html>
